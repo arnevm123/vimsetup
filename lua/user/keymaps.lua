@@ -32,16 +32,19 @@ keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
+keymap("n", "<leader>l", ":bnext<CR>", opts)
+keymap("n", "<leader>h", ":bprevious<CR>", opts)
 
 -- Move text up and down
-keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
-keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
+keymap("n", "<A-j>", ":m .+1<CR>==", opts)
+keymap("n", "<A-k>", ":m .-2<CR>==", opts)
+keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
+keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Insert --
 -- Press jk fast to exit insert mode 
 keymap("i", "jk", "<ESC>", opts)
+keymap("n", "<leader>n", ":noh<CR>", opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -55,15 +58,37 @@ keymap("v", "p", '"_dP', opts)
 
 -- Visual Block --
 -- Move text up and down
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
+-- keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+-- keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- Terminal --
 -- Better terminal navigation
--- keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
--- keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
--- keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
--- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
+keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
+keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
+keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
+
+-- doesn't overwrite yank
+keymap('v', '<leader>c', '"_c', term_opts)
+keymap('v', '<leader>d', '"_d', term_opts)
+keymap('n', '<leader>c', '"_c', term_opts)
+keymap('n', '<leader>d', '"_d', term_opts)
+keymap('v', '<leader>s', '"_s', term_opts)
+keymap('v', '<leader>x', '"_x', term_opts)
+keymap('n', '<leader>s', '"_s', term_opts)
+keymap('n', '<leader>x', '"_x', term_opts)
+keymap('v', '<leader>p', '"_p', term_opts)
+keymap('n', '<leader>p', '"_p', term_opts)
+
+keymap('n', 'gj', '<C-o>', term_opts)
+keymap('n', 'gk', '<C-i>', term_opts)
+
+keymap('n', 'n', 'nzzzv', term_opts)
+keymap('n', 'N', 'Nzzzv', term_opts)
+
+keymap('n', 'Q', 'gqq', term_opts)
+keymap('n', 'g.', '`.', term_opts)
+keymap('v', '<leader>r', '"hy:%s/<C-r>h//gc<left><left><left>', term_opts)

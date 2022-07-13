@@ -78,7 +78,7 @@ lualine.setup({
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
 		lualine_x = { diff, spaces, "encoding", filetype },
 		lualine_y = { location },
-		lualine_z = { progress },
+		lualine_z = {},
 	},
 	inactive_sections = {
 		lualine_a = {},
@@ -86,7 +86,7 @@ lualine.setup({
 		lualine_c = { "filename" },
 		lualine_x = { "location" },
 		lualine_y = {},
-		lualine_z = {},
+		lualine_z = { progress },
 	},
 	tabline = {},
 	extensions = {},

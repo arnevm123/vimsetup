@@ -34,7 +34,7 @@ bufferline.setup {
     max_name_length = 30,
     max_prefix_length = 30, -- prefix used when a buffer is de-duplicated
     tab_size = 21,
-    diagnostics = false, -- | "nvim_lsp" | "coc",
+    diagnostics = "nvim_lsp", -- | "nvim_lsp" | "coc",
     diagnostics_update_in_insert = false,
     -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
     --   return "("..count..")"
@@ -56,10 +56,10 @@ bufferline.setup {
     --   end
     -- end,
     offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
-    show_buffer_icons = true,
-    show_buffer_close_icons = true,
-    show_close_icon = true,
-    show_tab_indicators = true,
+    show_buffer_icons = false,
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    show_tab_indicators = false,
     persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
     -- can also be a table containing 2 custom separators
     -- [focused and unfocused]. eg: { '|', '|' }
@@ -70,7 +70,7 @@ bufferline.setup {
     --   -- add custom logic
     --   return buffer_a.modified > buffer_b.modified
     -- end
-  },
+        },
   highlights = {
     fill = {
       guifg = { attribute = "fg", highlight = "#ff0000" },
@@ -81,11 +81,11 @@ bufferline.setup {
       guibg = { attribute = "bg", highlight = "TabLine" },
     },
 
-    -- buffer_selected = {
-    --   guifg = {attribute='fg',highlight='#ff0000'},
-    --   guibg = {attribute='bg',highlight='#0000ff'},
-    --   gui = 'none'
-    --   },
+     buffer_selected = {
+       guifg = {attribute='fg',highlight='#ff0000'},
+       guibg = {attribute='bg',highlight='#0000ff'},
+       gui = 'none'
+       },
     buffer_visible = {
       guifg = { attribute = "fg", highlight = "TabLine" },
       guibg = { attribute = "bg", highlight = "TabLine" },
@@ -163,5 +163,5 @@ bufferline.setup {
       guifg = { attribute = "fg", highlight = "LspDiagnosticsDefaultHint" },
       guibg = { attribute = "bg", highlight = "Normal" },
     },
-  },
+        },
 }
