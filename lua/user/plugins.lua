@@ -59,7 +59,6 @@ return packer.startup(function(use)
     use({"gruvbox-community/gruvbox"})
     use({"rktjmp/lush.nvim"})
     use({"mcchrish/zenbones.nvim"})
-	use({ "folke/tokzenbonesyonight.nvim"})
 	use("lunarvim/darkplus.nvim")
 
 	-- cmp plugins
