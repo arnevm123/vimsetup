@@ -54,7 +54,6 @@ keymap("v", ">", ">gv", opts)
 -- Move text up and down
 keymap("v", "<A-j>", ":m .+1<CR>==", opts)
 keymap("v", "<A-k>", ":m .-2<CR>==", opts)
-keymap("v", "p", '"_dP', opts)
 
 -- Visual Block --
 -- Move text up and down
@@ -72,23 +71,22 @@ keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 
 -- doesn't overwrite yank
-keymap('v', '<leader>c', '"_c', term_opts)
-keymap('v', '<leader>d', '"_d', term_opts)
-keymap('n', '<leader>c', '"_c', term_opts)
-keymap('n', '<leader>d', '"_d', term_opts)
-keymap('v', '<leader>s', '"_s', term_opts)
-keymap('v', '<leader>x', '"_x', term_opts)
-keymap('n', '<leader>s', '"_s', term_opts)
-keymap('n', '<leader>x', '"_x', term_opts)
-keymap('v', '<leader>p', '"_p', term_opts)
-keymap('n', '<leader>p', '"_p', term_opts)
+keymap('v', 'c', '"_c', opts)
+keymap('v', '<leader>d', '"_d', opts)
+keymap('n', 'c', '"_c', opts)
+keymap('n', '<leader>d', '"_d', opts)
+keymap('v', '<leader>s', '"_s', opts)
+keymap('v', '<leader>x', '"_x', opts)
+keymap('n', '<leader>s', '"_s', opts)
+keymap('n', '<leader>x', '"_x', opts)
+keymap('v', '<leader>p', 'pyiw', opts)
 
-keymap('n', 'gj', '<C-o>', term_opts)
-keymap('n', 'gk', '<C-i>', term_opts)
+keymap('n', 'gj', '<C-o>', opts)
+keymap('n', 'gk', '<C-i>', opts)
 
-keymap('n', 'n', 'nzzzv', term_opts)
-keymap('n', 'N', 'Nzzzv', term_opts)
+keymap('n', 'n', 'nzzzv', opts)
+keymap('n', 'N', 'Nzzzv', opts)
 
-keymap('n', 'Q', 'gqq', term_opts)
-keymap('n', 'g.', '`.', term_opts)
-keymap('v', '<leader>r', '"hy:%s/<C-r>h//gc<left><left><left>', term_opts)
+keymap('n', 'Q', 'gqq', opts)
+keymap('n', 'g.', '`.', opts)
+keymap('v', '<leader>r', '"hy:%s/<C-r>h//gc<left><left><left>', opts)
