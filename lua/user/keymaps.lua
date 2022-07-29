@@ -32,8 +32,8 @@ keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
-keymap("n", "<leader>k", ":bnext<CR>", opts)
-keymap("n", "<leader>j", ":bprevious<CR>", opts)
+keymap("n", "L", ":bn <CR>", opts)
+keymap("n", "H", ":bp <CR>", opts)
 
 -- Move text up and down
 keymap("n", "<A-j>", ":m .+1<CR>==", opts)
@@ -72,14 +72,7 @@ keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- doesn't overwrite yank
 keymap('v', 'c', '"_c', opts)
-keymap('v', '<leader>d', '"_d', opts)
 keymap('n', 'c', '"_c', opts)
-keymap('n', '<leader>d', '"_d', opts)
-keymap('v', '<leader>s', '"_s', opts)
-keymap('v', '<leader>x', '"_x', opts)
-keymap('n', '<leader>s', '"_s', opts)
-keymap('n', '<leader>x', '"_x', opts)
-keymap('v', '<leader>p', 'pyiw', opts)
 
 keymap('n', 'gj', '<C-o>', opts)
 keymap('n', 'gk', '<C-i>', opts)
@@ -92,8 +85,10 @@ keymap('n', 'g.', '`.', opts)
 keymap('v', '<leader>r', '"hy:%s/<C-r>h//gc<left><left><left>', opts)
 
 keymap('n', '<leader>w', ':w!<CR>', opts)
-keymap('n', '<leader>q', ':q!<CR>', opts)
+keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
 keymap('n', '<leader>f', ':Telescope find_files theme=dropdown<cr>', opts)
+keymap('n', '<leader>b', ':Telescope buffers theme=dropdown<cr>', opts)
+keymap('n', '<leader>o', ':Telescope oldfiles theme=dropdown<cr>', opts)
 keymap('n', '<leader>F', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>a', ':Alpha<cr>', opts)
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
@@ -117,3 +112,4 @@ keymap('n', '<leader>go', '<cmd>Telescope git_status<cr>', opts)
 keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>', opts)
 keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', opts)
 keymap('n', '<leader>gd', '<cmd>Gitsigns diffthis HEAD<cr>', opts)
+vim.keymap.set( "", "<Leader>z", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })

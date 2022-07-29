@@ -68,6 +68,7 @@ return packer.startup(function(use)
 	use({ "saadparwaiz1/cmp_luasnip"}) -- snippet completions
 	use({ "hrsh7th/cmp-nvim-lsp"})
 	use({ "hrsh7th/cmp-nvim-lua"})
+	use({ "fatih/vim-go"})
  	use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
 
 	-- snippets
@@ -78,18 +79,20 @@ return packer.startup(function(use)
 	use({ "williamboman/nvim-lsp-installer"}) -- simple to use language server installer
 	use({ "jose-elias-alvarez/null-ls.nvim"}) -- for formatters and linters
 	use({ "ThePrimeagen/refactoring.nvim" }) -- for formatters and linters
-
+    use({ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" })
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim"})
-
+    use { "nvim-telescope/telescope-file-browser.nvim" }
 	-- Treesitter
     use({ "nvim-treesitter/nvim-treesitter", run=":TSInstall" })
 
 	-- Git
 	use({ "lewis6991/gitsigns.nvim"})
-
+    use({ "sindrets/diffview.nvim"})
+    use { 'TimUntersberger/neogit', requires ='sindrets/diffview.nvim', 'nvim-lua/plenary.nvim' }
     --comment out stuff
-    use ({ "b3nj5m1n/kommentary" })
+    use { 'numToStr/Comment.nvim' }
+    use 'mg979/vim-visual-multi'
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
