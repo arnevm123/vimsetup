@@ -92,7 +92,7 @@ local mappings = {
     k = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", "Prev Diagnostic" },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
     q = { "<cmd>Telescope quickfix<cr>", "Quickfix" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+    r = { "<cmd>lua LspRename()<cr>", "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
     t = { '<cmd>lua require "lsp_lines".toggle<cr>', "Toggle lsplines" }
@@ -101,3 +101,5 @@ local mappings = {
 
 which_key.setup(setup)
 which_key.register(mappings, opts)
+
+

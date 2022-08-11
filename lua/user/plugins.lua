@@ -1,6 +1,6 @@
 local fn = vim.fn
 
--- Automatically install packer
+-- Automatically install packe
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
 	PACKER_BOOTSTRAP = fn.system({
@@ -43,8 +43,7 @@ return packer.startup(function(use)
 	-- My plugins here
 	use({ "wbthomason/packer.nvim"}) -- Have packer manage itself
 	use({ "nvim-lua/plenary.nvim"}) -- Useful lua functions used by lots of plugins
-	use({ "numToStr/Comment.nvim"})
-	--use({ "JoosepAlviste/nvim-ts-context-commentstring"})
+  use({ "lewis6991/impatient.nvim" })
 	use({ "kyazdani42/nvim-web-devicons"})
 	use({ "kyazdani42/nvim-tree.lua"})
 	use({ "akinsho/bufferline.nvim"})
@@ -56,16 +55,16 @@ return packer.startup(function(use)
 	use("folke/which-key.nvim")
 
 	-- Colorschemes
-    use({"gruvbox-community/gruvbox"})
-    use({"rktjmp/lush.nvim"})
-    use({"mcchrish/zenbones.nvim"})
+  use({"gruvbox-community/gruvbox"})
+  use({"rktjmp/lush.nvim"})
+  use({"mcchrish/zenbones.nvim"})
 	use("lunarvim/darkplus.nvim")
 
 	-- cmp plugins
 	use({ "hrsh7th/nvim-cmp"}) -- The completion plugin
 	use({ "hrsh7th/cmp-buffer"}) -- buffer completions
 	use({ "hrsh7th/cmp-path"}) -- path completions
-	use({ "saadparwaiz1/cmp_luasnip"}) -- snippet completions
+  use({ "saadparwaiz1/cmp_luasnip"}) -- snippet completions
 	use({ "hrsh7th/cmp-nvim-lsp"})
 	use({ "hrsh7th/cmp-nvim-lua"})
 	use({ "fatih/vim-go"})
@@ -79,20 +78,32 @@ return packer.startup(function(use)
 	use({ "williamboman/nvim-lsp-installer"}) -- simple to use language server installer
 	use({ "jose-elias-alvarez/null-ls.nvim"}) -- for formatters and linters
 	use({ "ThePrimeagen/refactoring.nvim" }) -- for formatters and linters
-    use({ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" })
+  use({ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" })
 	-- Telescope
-	use({ "nvim-telescope/telescope.nvim"})
-    use { "nvim-telescope/telescope-file-browser.nvim" }
+	use { "kkharji/sqlite.lua" }
+	use { "nvim-telescope/telescope-file-browser.nvim" }
+  use { "nvim-telescope/telescope.nvim"}
+  use { "nvim-telescope/telescope-smart-history.nvim" }
+  use "nvim-telescope/telescope-frecency.nvim"
 	-- Treesitter
-    use({ "nvim-treesitter/nvim-treesitter", run=":TSInstall" })
+  use({ "nvim-treesitter/nvim-treesitter", run=":TSInstall" })
 
 	-- Git
 	use({ "lewis6991/gitsigns.nvim"})
-    use({ "sindrets/diffview.nvim"})
-    use { 'TimUntersberger/neogit', requires ='sindrets/diffview.nvim', 'nvim-lua/plenary.nvim' }
-    --comment out stuff
-    use { 'numToStr/Comment.nvim' }
-    use 'mg979/vim-visual-multi'
+  use({ "sindrets/diffview.nvim"})
+  use { 'TimUntersberger/neogit', requires ='sindrets/diffview.nvim', 'nvim-lua/plenary.nvim' }
+  --comment out stuff
+  use { 'numToStr/Comment.nvim' }
+  use 'mg979/vim-visual-multi'
+  use {
+    "AndrewRadev/splitjoin.vim",
+    keys = { "gJ", "gS" },
+  }
+  use({ "windwp/nvim-autopairs" })
+
+
+  -- TODO: Check out macvhakann/vim-sandwich at some point
+  use "tpope/vim-surround" -- Surround text objects easily
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

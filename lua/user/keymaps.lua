@@ -42,7 +42,7 @@ keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
 keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Insert --
--- Press jk fast to exit insert mode 
+-- Press jk fast to exit insert mode
 keymap("i", "jk", "<ESC>", opts)
 keymap("n", "<leader>n", ":noh<CR>", opts)
 
@@ -113,3 +113,10 @@ keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>', opts)
 keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', opts)
 keymap('n', '<leader>gd', '<cmd>Gitsigns diffthis HEAD<cr>', opts)
 vim.keymap.set( "", "<Leader>z", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+
+
+-- essetials
+keymap('n', 'gx', '<cmd>lua require("essentials").go_to_url()<CR>', opts)
+keymap('n', '<leader>gg', "<cmd>lua require('essentials').open_term('lazygit', 't', true)<CR>", opts)
+keymap('n', '<leader>r', "<cmd>lua require('essentials').rename()<CR>", opts)
+keymap('n', '<leader>cb', "<cmd>lua require('essentials').swap_bool()<CR>", opts)
