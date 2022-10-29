@@ -1,6 +1,8 @@
 local opts = { noremap = true, silent = true }
 
-local term_opts = { silent = true }
+
+local silent = { silent = true }
+
 
 -- Shorten function name
 local keymap = vim.api.nvim_set_keymap
@@ -20,6 +22,8 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 -- Better window navigation
+--
+--
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
@@ -36,10 +40,12 @@ keymap("n", "L", ":bn <CR>", opts)
 keymap("n", "H", ":bp <CR>", opts)
 
 -- Move text up and down
-keymap("n", "<A-j>", ":m .+1<CR>==", opts)
-keymap("n", "<A-k>", ":m .-2<CR>==", opts)
-keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
-keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
+-- keymap("n", "<A-j>", ":m .+1<CR>==", opts)
+-- keymap("n", "<A-k>", ":m .-2<CR>==", opts)
+-- keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
+-- keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
+keymap("v", "J", ":m '>+1<CR>gv=gv", opts)
+keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 
 -- Insert --
 -- Press jk fast to exit insert mode
@@ -52,50 +58,79 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- Move text up and down
-keymap("v", "<A-j>", ":m .+1<CR>==", opts)
-keymap("v", "<A-k>", ":m .-2<CR>==", opts)
 
 -- Visual Block --
 -- Move text up and down
 -- keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 -- keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+-- keymap("x", "<A-j>", ":m '>+1<CR>gv-gv", opts)
+-- keymap("x", "<A-k>", ":m '<-2<CR>gv-gv", opts)
 
 -- Terminal --
 -- Better terminal navigation
-keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", silent)
+keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", silent)
+keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", silent)
+keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", silent)
 
 
 -- doesn't overwrite yank
 keymap('v', 'c', '"_c', opts)
 keymap('n', 'c', '"_c', opts)
 
+-- next greatest remap ever : asbjornHaland
+keymap("n", "<leader>y", "\"+y", opts )
+keymap("v","<leader>y", "\"+y", opts)
+keymap("n", "<leader>Y", "\"+Y", silent)
+
+keymap("v", "<leader>d", "\"_d", opts)
+keymap("n", "<leader>d", "\"_d", opts)
+
+
 keymap('n', 'gj', '<C-o>', opts)
 keymap('n', 'gk', '<C-i>', opts)
 
-keymap('n', 'n', 'nzzzv', opts)
-keymap('n', 'N', 'Nzzzv', opts)
+keymap('n', 'n', 'nzztv', opts)
+keymap('n', 'N', 'Nzztv', opts)
+
+keymap('n', '<C-d>', '<C-d>zztv', opts)
+keymap('n', '<C-u>', '<C-u>zztv', opts)
 
 keymap('n', 'Q', 'gqq', opts)
 keymap('n', 'g.', '`.', opts)
-keymap('v', '<leader>r', '"hy:%s/<C-r>h//gc<left><left><left>', opts)
+keymap('v', '<leader>re', '"hy:%s/<C-r>h//gc<left><left><left>', opts)
 
 keymap('n', '<leader>w', ':w!<CR>', opts)
 keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
-keymap('n', '<leader>f', ':Telescope find_files theme=dropdown<cr>', opts)
+-- keymap('n', '<leader>q', '<Cmd>BufferClose<CR>', opts)
+keymap('n', '<C-p>', ':Telescope find_files theme=dropdown<cr>', opts)
 keymap('n', '<leader>b', ':Telescope buffers theme=dropdown<cr>', opts)
 keymap('n', '<leader>o', ':Telescope oldfiles theme=dropdown<cr>', opts)
-keymap('n', '<leader>F', ':Telescope live_grep<cr>', opts)
-keymap('n', '<leader>a', ':Alpha<cr>', opts)
+keymap('n', '<leader>f', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
 keymap('n', '<leader>s', ':Telescope<CR>', opts)
 keymap('n', '<leader>;', ':Telescope registers theme=dropdown<cr>', opts)
 keymap('n', '<C-f>;', ':Telescope current_buffer_fuzzy_find theme=dropdown<cr>', opts)
+keymap('n', '<leader>ra', ':Alpha<cr>', opts)
+keymap('n', '<leader>re', ':GoIfErr<cr>', opts)
+keymap('n', '<leader>rl', ':GoLint<cr>', opts)
+keymap('n', '<leader>rf', ':GoFillStruct<cr>', opts)
+keymap('n', '<leader>rn', ':GoRename<cr>', opts)
+keymap('n', '<leader>db', ':GoDebug -a<cr>', opts)
 
+-- remap to open the Telescope refactoring menu in visual mode
+vim.api.nvim_set_keymap( "v", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true })
+vim.api.nvim_set_keymap( "n", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true })
+
+-- You can also use below = true here to to change the position ofhe printf
+-- statement (or set two remaps for either one). This remap must be made in normal mode.
+vim.api.nvim_set_keymap( "n", "<leader>pd", ":lua require('refactoring').debug.printf({below = true})<CR>", { noremap = true })
+-- Remap in normal mode and passing { normal = true } will automatically find the variable under the cursor and print it
+vim.api.nvim_set_keymap("n", "<leader>pv", ":lua require('refactoring').debug.print_var({ normal = true })<CR>", { noremap = true })
+-- Remap in visual mode will print whatever is in the visual selection
+vim.api.nvim_set_keymap("v", "<leader>pv", ":lua require('refactoring').debug.print_var({})<CR>", { noremap = true })
+-- Cleanup function: this remap should be made in normal mode
+vim.api.nvim_set_keymap("n", "<leader>pc", ":lua require('refactoring').debug.cleanup({})<CR>", { noremap = true })
 
 -- git stuff
 keymap('n', '<leader>gg', '<cmd>lua _LAZYGIT_TOGGLE()<CR>', opts)
@@ -112,11 +147,16 @@ keymap('n', '<leader>go', '<cmd>Telescope git_status<cr>', opts)
 keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>', opts)
 keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', opts)
 keymap('n', '<leader>gd', '<cmd>Gitsigns diffthis HEAD<cr>', opts)
-vim.keymap.set( "", "<Leader>z", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+keymap('n', '<leader>gz', '<cmd>Gitsigns toggle_current_line_blame<CR>', opts)
+
+keymap('n', '<leader>pr', '<cmd>silent %!prettier --stdin-filepath %<CR>', opts)
 
 
--- essetials
-keymap('n', 'gx', '<cmd>lua require("essentials").go_to_url()<CR>', opts)
-keymap('n', '<leader>gg', "<cmd>lua require('essentials').open_term('lazygit', 't', true)<CR>", opts)
-keymap('n', '<leader>r', "<cmd>lua require('essentials').rename()<CR>", opts)
-keymap('n', '<leader>cb', "<cmd>lua require('essentials').swap_bool()<CR>", opts)
+
+
+keymap("n", "<leader>a", '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)
+keymap("n", "<leader>6", '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
+keymap("n", "<leader>7", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', opts)
+keymap("n", "<leader>8", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', opts)
+keymap("n", "<leader>9", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', opts)
+keymap("n", "<leader>0", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', opts)

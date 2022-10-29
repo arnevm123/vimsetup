@@ -106,3 +106,8 @@ telescope.setup {
     -- To get telescope-file-browser loaded and working with telescope,
     -- you need to call load_extension, somewhere after setup function:
 }
+
+-- load refactoring Telescope extension
+telescope.load_extension("refactoring")
+-- load harpoon Telescope extension
+telescope.load_extension('harpoon')

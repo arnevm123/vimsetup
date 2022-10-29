@@ -15,11 +15,13 @@ null_ls.setup({
 	sources = {
 		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.stylua,
-        formatting.gofmt,
-        formatting.gofumpt,
-        formatting.goimports,
-        code_actions.eslint_d,
-        code_actions.refactoring,
-        diagnostics.flake8
+		formatting.gofmt,
+		-- formatting.gofumpt,
+        diagnostics.golangci_lint,
+		formatting.goimports,
+		code_actions.eslint_d,
+		code_actions.refactoring,
+		diagnostics.flake8,
+		-- diagnostics.gofumpt
 	},
 })
