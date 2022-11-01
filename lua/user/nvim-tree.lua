@@ -12,8 +12,8 @@ local tree_cb = nvim_tree_config.nvim_tree_callback
 
 nvim_tree.setup {
   update_focused_file = {
-    enable = true,
-    update_cwd = true,
+    enable = false,
+    update_cwd = false,
   },
   renderer = {
     root_folder_modifier = ":t",
@@ -45,7 +45,7 @@ nvim_tree.setup {
   },
   diagnostics = {
     enable = true,
-    show_on_dirs = true,
+    show_on_dirs = false,
     -- icons = {
     --   hint = "",
     --   info = "",

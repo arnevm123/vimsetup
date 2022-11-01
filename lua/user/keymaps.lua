@@ -24,10 +24,10 @@ vim.g.maplocalleader = " "
 -- Better window navigation
 --
 --
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+-- keymap("n", "<C-h>", "<C-w>h", opts)
+-- keymap("n", "<C-j>", "<C-w>j", opts)
+-- keymap("n", "<C-k>", "<C-w>k", opts)
+-- keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
@@ -36,8 +36,8 @@ keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
-keymap("n", "L", ":bn <CR>", opts)
-keymap("n", "H", ":bp <CR>", opts)
+-- keymap("n", "L", ":bn <CR>", opts)
+-- keymap("n", "H", ":bp <CR>", opts)
 
 -- Move text up and down
 -- keymap("n", "<A-j>", ":m .+1<CR>==", opts)
@@ -110,7 +110,6 @@ keymap('n', '<leader>f', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>e', ':NvimTreeToggle<cr>', opts)
 keymap('n', '<leader>s', ':Telescope<CR>', opts)
 keymap('n', '<leader>;', ':Telescope registers theme=dropdown<cr>', opts)
-keymap('n', '<C-f>;', ':Telescope current_buffer_fuzzy_find theme=dropdown<cr>', opts)
 keymap('n', '<leader>ra', ':Alpha<cr>', opts)
 keymap('n', '<leader>re', ':GoIfErr<cr>', opts)
 keymap('n', '<leader>rl', ':GoLint<cr>', opts)
@@ -132,22 +131,24 @@ vim.api.nvim_set_keymap("v", "<leader>pv", ":lua require('refactoring').debug.pr
 -- Cleanup function: this remap should be made in normal mode
 vim.api.nvim_set_keymap("n", "<leader>pc", ":lua require('refactoring').debug.cleanup({})<CR>", { noremap = true })
 
--- git stuff
-keymap('n', '<leader>gg', '<cmd>lua _LAZYGIT_TOGGLE()<CR>', opts)
-keymap('n', '<leader>gj', '<cmd>lua require "gitsigns".next_hunk()<cr>', opts)
-keymap('n', '<leader>gk', '<cmd>lua require "gitsigns".prev_hunk()<cr>', opts)
-keymap('n', '<leader>gp', '<cmd>lua require "gitsigns".preview_hunk()<cr>', opts)
-keymap('n', '<leader>gr', '<cmd>lua require "gitsigns".reset_hunk()<cr>', opts)
-keymap('n', '<leader>gR', '<cmd>lua require "gitsigns".reset_buffer()<cr>', opts)
-keymap('n', '<leader>gs', '<cmd>lua require "gitsigns".stage_hunk()<cr>', opts)
-keymap('n', '<leader>gS', '<cmd>lua require "gitsigns".stage_buffer()<cr>', opts)
-keymap('n', '<leader>gu', '<cmd>lua require "gitsigns".undo_stage_hunk()<cr>', opts)
-keymap('n', '<leader>gU', '<cmd>lua require "gitsigns".undo_stage_buffer()<cr>', opts)
-keymap('n', '<leader>go', '<cmd>Telescope git_status<cr>', opts)
-keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>', opts)
-keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', opts)
-keymap('n', '<leader>gd', '<cmd>Gitsigns diffthis HEAD<cr>', opts)
-keymap('n', '<leader>gz', '<cmd>Gitsigns toggle_current_line_blame<CR>', opts)
+-- -- git stuff
+-- keymap('n', '<leader>gg', '<cmd>lua _LAZYGIT_TOGGLE()<CR>', opts)
+-- keymap('n', '<leader>gj', '<cmd>lua require "gitsigns".next_hunk()<cr>', opts)
+-- keymap('n', '<leader>gk', '<cmd>lua require "gitsigns".prev_hunk()<cr>', opts)
+-- keymap('n', '<leader>gp', '<cmd>lua require "gitsigns".preview_hunk()<cr>', opts)
+-- keymap('n', '<leader>gr', '<cmd>lua require "gitsigns".reset_hunk()<cr>', opts)
+-- keymap('n', '<leader>gR', '<cmd>lua require "gitsigns".reset_buffer()<cr>', opts)
+-- keymap('n', '<leader>gs', '<cmd>lua require "gitsigns".stage_hunk()<cr>', opts)
+-- keymap('n', '<leader>gS', '<cmd>lua require "gitsigns".stage_buffer()<cr>', opts)
+-- keymap('n', '<leader>gu', '<cmd>lua require "gitsigns".undo_stage_hunk()<cr>', opts)
+-- keymap('n', '<leader>gU', '<cmd>lua require "gitsigns".undo_stage_buffer()<cr>', opts)
+-- keymap('n', '<leader>go', '<cmd>Telescope git_status<cr>', opts)
+-- keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>', opts)
+-- keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', opts)
+-- keymap('n', '<leader>gd', '<cmd>Gitsigns diffthis HEAD<cr>', opts)
+-- keymap('n', '<leader>gz', '<cmd>Gitsigns toggle_current_line_blame<CR>', opts)
+-- keymap('n', '<leader>gw', ':lua require("telescope").extensions.git_worktree.git_worktrees()<CR>', opts)
+-- keymap('n', '<leader>ge', ':lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>', opts)
 
 keymap('n', '<leader>pr', '<cmd>silent %!prettier --stdin-filepath %<CR>', opts)
 
@@ -155,8 +156,9 @@ keymap('n', '<leader>pr', '<cmd>silent %!prettier --stdin-filepath %<CR>', opts)
 
 
 keymap("n", "<leader>a", '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)
-keymap("n", "<leader>6", '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
-keymap("n", "<leader>7", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', opts)
-keymap("n", "<leader>8", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', opts)
-keymap("n", "<leader>9", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', opts)
-keymap("n", "<leader>0", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', opts)
+keymap("n", "<leader>-", '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
+keymap("n", "<C-h>", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', opts)
+keymap("n", "<C-j>", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', opts)
+keymap("n", "<C-k>", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', opts)
+keymap("n", "<C-l>", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', opts)
+keymap("n", "<C-;>", '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', opts)

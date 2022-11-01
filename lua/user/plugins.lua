@@ -46,7 +46,7 @@ return packer.startup(function(use)
     -- use({ "akinsho/bufferline.nvim"}) -- Show buffer names at top
     use({ "nvim-lualine/lualine.nvim"}) -- Line at bottom with info
     -- use({ "lukas-reineke/indent-blankline.nvim"}) --show function lines & context
-    use({ "goolord/alpha-nvim"}) -- Start screen
+    -- use({ "goolord/alpha-nvim"}) -- Start screen
     use("folke/which-key.nvim") -- Show help for keycombos
     use("ellisonleao/glow.nvim") -- Markdown file viewer
 
@@ -75,6 +75,7 @@ use({ "atelierbram/Base2Tone-nvim" })
     use({ "jose-elias-alvarez/null-ls.nvim"}) -- for formatters and linters
     use({ "ThePrimeagen/refactoring.nvim" }) -- for formatters and linters
     use({ "ThePrimeagen/harpoon" }) -- for formatters and linters
+    use({ "ThePrimeagen/git-worktree.nvim" }) -- for formatters and linters
     use({'ray-x/go.nvim'})
     use({'ray-x/guihua.lua'})
     -- Telescope
@@ -134,6 +135,21 @@ use({ "atelierbram/Base2Tone-nvim" })
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
     -- use 'leoluz/nvim-dap-go'
     use 'theHamsta/nvim-dap-virtual-text'
+
+    -- Database
+    use {
+        "tpope/vim-dadbod",
+        opt = true,
+        requires = {
+            "kristijanhusak/vim-dadbod-ui",
+            "kristijanhusak/vim-dadbod-completion",
+        },
+        config = function()
+            require("config.dadbod").setup()
+        end,
+        cmd = { "DBUIToggle", "DBUI", "DBUIAddConnection", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUILastQueryInfo" },
+    }
+
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
