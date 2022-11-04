@@ -43,7 +43,7 @@ return packer.startup(function(use)
     use({ "lewis6991/impatient.nvim" }) -- Make nvim load faster
     use({ "kyazdani42/nvim-web-devicons"}) -- Nerd font helper
     use({ "kyazdani42/nvim-tree.lua"}) -- File tree
-    -- use({ "akinsho/bufferline.nvim"}) -- Show buffer names at top
+    use({ "akinsho/bufferline.nvim"}) -- Show buffer names at top
     use({ "nvim-lualine/lualine.nvim"}) -- Line at bottom with info
     -- use({ "lukas-reineke/indent-blankline.nvim"}) --show function lines & context
     -- use({ "goolord/alpha-nvim"}) -- Start screen
@@ -54,7 +54,7 @@ return packer.startup(function(use)
     --
     use("xiyaowong/nvim-transparent") -- remove background
     use { "mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim" }
-use({ "atelierbram/Base2Tone-nvim" })
+    use({ "atelierbram/Base2Tone-nvim" })
 
     -- cmp plugins
     use({ "hrsh7th/nvim-cmp"}) -- The completion plugin
@@ -65,6 +65,7 @@ use({ "atelierbram/Base2Tone-nvim" })
     use({ "hrsh7th/cmp-nvim-lua"})
     -- use({ "fatih/vim-go"})
     use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
+    use "lvimuser/lsp-inlayhints.nvim"
 
     -- snippets
     use({ "L3MON4D3/LuaSnip"}) --snippet engine
@@ -77,6 +78,7 @@ use({ "atelierbram/Base2Tone-nvim" })
     use({ "ThePrimeagen/harpoon" }) -- for formatters and linters
     use({ "ThePrimeagen/git-worktree.nvim" }) -- for formatters and linters
     use({'ray-x/go.nvim'})
+    use({'ray-x/lsp_signature.nvim'})
     use({'ray-x/guihua.lua'})
     -- Telescope
     use { "kkharji/sqlite.lua" }

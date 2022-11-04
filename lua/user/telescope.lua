@@ -110,4 +110,4 @@ telescope.setup {
 -- load refactoring Telescope extension
 telescope.load_extension("refactoring")
 -- load harpoon Telescope extension
-telescope.load_extension('harpoon')
+-- telescope.load_extension('harpoon')

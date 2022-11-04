@@ -13,16 +13,16 @@ bufferline.setup {
     max_name_length = 30,
     max_prefix_length = 30, -- prefix used when a buffer is de-duplicated
     tab_size = 21,
-    diagnostics = "nvim_lsp", -- | "nvim_lsp" | "coc",
-    diagnostics_update_in_insert = false,
+    -- diagnostics = "nvim_lsp", -- | "nvim_lsp" | "coc",
+    -- diagnostics_update_in_insert = false,
     offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
     show_buffer_icons = false,
     show_buffer_close_icons = false,
     show_close_icon = false,
     show_tab_indicators = false,
-    persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
+    -- persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
     separator_style = "thin", -- | "thick" | "thin" | { 'any', 'any' },
-    enforce_regular_tabs = true,
+    enforce_regular_tabs = false,
     always_show_bufferline = true,
         },
   highlights = {},
