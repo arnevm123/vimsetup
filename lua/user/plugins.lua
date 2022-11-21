@@ -54,7 +54,6 @@ return packer.startup(function(use)
     --
     use("xiyaowong/nvim-transparent") -- remove background
     use { "mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim" }
-    use({ "atelierbram/Base2Tone-nvim" })
 
     -- cmp plugins
     use({ "hrsh7th/nvim-cmp"}) -- The completion plugin
@@ -64,7 +63,6 @@ return packer.startup(function(use)
     use({ "hrsh7th/cmp-nvim-lsp"})
     use({ "hrsh7th/cmp-nvim-lua"})
     -- use({ "fatih/vim-go"})
-    use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
     use "lvimuser/lsp-inlayhints.nvim"
 
     -- snippets
@@ -85,7 +83,9 @@ return packer.startup(function(use)
     use { "nvim-telescope/telescope-file-browser.nvim" }
     use { "nvim-telescope/telescope.nvim"}
     use { "nvim-telescope/telescope-smart-history.nvim" }
-    use "nvim-telescope/telescope-frecency.nvim"
+    use { "nvim-telescope/telescope-frecency.nvim" }
+    use { "nvim-telescope/telescope-fzf-native.nvim", run = 'make' }
+
     -- Treesitter
     use("nvim-treesitter/nvim-treesitter", {
         run = ":TSUpdate"
@@ -101,26 +101,12 @@ return packer.startup(function(use)
 
     -- Various
     use { 'numToStr/Comment.nvim' }
+
     use({ "monaqa/dial.nvim" })
     use({ "machakann/vim-swap" })
     use({ "tommcdo/vim-exchange" })
-    use({ "RRethy/vim-illuminate",
-        config = function()
-            require('illuminate').configure({
-                providers = { 'lsp', 'treesitter', 'regex', },
-                delay = 0,
-                filetype_overrides = {},
-                filetypes_denylist = { 'dirvish', 'fugitive' },
-                filetypes_allowlist = {},
-                modes_denylist = {},
-                modes_allowlist = {},
-                providers_regex_syntax_denylist = {},
-                providers_regex_syntax_allowlist = {},
-                under_cursor = true,
-                max_file_lines = nil,
-            })
-        end
-    })
+    use({ "RRethy/vim-illuminate" })
+    use({ "mbbill/undotree" })
 
     use({
         "kylechui/nvim-surround",
@@ -151,6 +137,7 @@ return packer.startup(function(use)
         end,
         cmd = { "DBUIToggle", "DBUI", "DBUIAddConnection", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUILastQueryInfo" },
     }
+    use {"Everduin94/nvim-quick-switcher"}
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

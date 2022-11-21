@@ -43,6 +43,13 @@
 
 vim.cmd [[ colorscheme seoulbones ]]
 
+
+vim.cmd [[ hi TreesitterContext guibg=#4B4B4B  ]]
+vim.cmd [[ hi IlluminatedWordText gui=NONE guibg=#4B4B4B ]]
+vim.cmd [[ hi IlluminatedWordRead gui=NONE guibg=#4B4B4B ]]
+vim.cmd [[ hi IlluminatedWordWrite gui=NONE guibg=#4B4B4B ]]
+vim.cmd [[ hi ColorColumn guibg=#4B4B4B ]]
+
 require("transparent").setup({
     enable = true, -- boolean: enable transparent
     extra_groups = { -- table/string: additional groups that should be cleared

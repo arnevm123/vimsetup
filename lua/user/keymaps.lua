@@ -83,12 +83,10 @@ keymap("n", "<leader>y", "\"+y", opts )
 keymap("v","<leader>y", "\"+y", opts)
 keymap("n", "<leader>Y", "\"+Y", silent)
 
-keymap("v", "<leader>d", "\"_d", opts)
-keymap("n", "<leader>d", "\"_d", opts)
-
-
-keymap('n', 'gj', '<C-o>', opts)
-keymap('n', 'gk', '<C-i>', opts)
+keymap("n", "<leader>p", "\"+p", opts )
+keymap("v","<leader>p", "\"+p", opts)
+keymap("n", "<leader>P", "\"+P", silent)
+keymap("v", "<leader>P", "\"+P", silent)
 
 keymap('n', 'n', 'nzztv', opts)
 keymap('n', 'N', 'Nzztv', opts)
@@ -103,60 +101,89 @@ keymap('v', '<leader>re', '"hy:%s/<C-r>h//gc<left><left><left>', opts)
 keymap('n', '<leader>w', ':w!<CR>', opts)
 keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
 -- keymap('n', '<leader>q', '<Cmd>BufferClose<CR>', opts)
-keymap('n', '<C-p>', ':Telescope find_files theme=dropdown<cr>', opts)
-keymap('n', '<leader>b', ':Telescope buffers theme=dropdown<cr>', opts)
-keymap('n', '<leader>o', ':Telescope oldfiles theme=dropdown<cr>', opts)
-keymap('n', '<leader>f', ':Telescope live_grep<cr>', opts)
-keymap('n', '<leader>s', ':Telescope<CR>', opts)
-keymap('n', '<leader>;', ':Telescope registers theme=dropdown<cr>', opts)
-keymap('n', '<leader>ed', ':NvimTreeToggle<cr>', opts)
+keymap('n', '<leader>fp', ':Telescope find_files theme=dropdown<cr>', opts)
+keymap('n', '<leader>fb', ':Telescope buffers theme=dropdown<cr>', opts)
+keymap('n', '<leader>fo', ':Telescope oldfiles theme=dropdown<cr>', opts)
+keymap('n', '<leader>ff', ':Telescope live_grep<cr>', opts)
+keymap('n', '<leader>fq', ':Telescope quickfix<cr>', opts)
+keymap('n', '<leader>fs', ':Telescope<CR>', opts)
+keymap('n', '<leader>f/', ':Telescope current_buffer_fuzzy_find<CR>', opts)
+keymap('n', '<leader>f;', ':Telescope registers theme=dropdown<cr>', opts)
+keymap('n', '<leader>fg', ':Telescope git_branches  theme=dropdown<cr>', opts)
+keymap('n', '<leader>et', ':NvimTreeFindFileToggle<cr>', opts)
+keymap('n', '<leader>eu', ':UndoTreeToggle<cr>', opts)
 keymap('n', '<leader>ee', ':GoIfErr<cr>', opts)
 keymap('n', '<leader>el', ':GoLint<cr>', opts)
 keymap('n', '<leader>ef', ':GoFillStruct<cr>', opts)
-keymap('n', '<leader>db', ':GoDebug -a<cr>', opts)
+keymap('n', '<leader>ei', ':GoImport<cr>', opts)
+keymap('n', '<leader>eb', ':GoDebug -a<cr>', opts)
+keymap('n', '<leader>ecd', ':cd platform/scripts/local-full<cr>', opts)
+keymap('n', ']b', ':bn<CR>', opts)
+keymap('n', '[b', ':bp<CR>', opts)
+
 
 -- remap to open the Telescope refactoring menu in visual mode
-vim.api.nvim_set_keymap( "v", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true })
-vim.api.nvim_set_keymap( "n", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true })
+vim.api.nvim_set_keymap( "v", "<leader>la", "<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", opts)
+-- vim.api.nvim_set_keymap( "n", "<leader>la", "<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", opts)
 
 -- You can also use below = true here to to change the position ofhe printf
 -- statement (or set two remaps for either one). This remap must be made in normal mode.
-vim.api.nvim_set_keymap( "n", "<leader>pd", ":lua require('refactoring').debug.printf({below = true})<CR>", { noremap = true })
+vim.api.nvim_set_keymap( "n", "<leader>ek", ":lua require('refactoring').debug.printf({below = true})<CR>", opts)
 -- Remap in normal mode and passing { normal = true } will automatically find the variable under the cursor and print it
-vim.api.nvim_set_keymap("n", "<leader>pv", ":lua require('refactoring').debug.print_var({ normal = true })<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>ev", ":lua require('refactoring').debug.print_var({ normal = true })<CR>", opts)
 -- Remap in visual mode will print whatever is in the visual selection
-vim.api.nvim_set_keymap("v", "<leader>pv", ":lua require('refactoring').debug.print_var({})<CR>", { noremap = true })
+vim.api.nvim_set_keymap("v", "<leader>ev", ":lua require('refactoring').debug.print_var({})<CR>", opts)
 -- Cleanup function: this remap should be made in normal mode
-vim.api.nvim_set_keymap("n", "<leader>pc", ":lua require('refactoring').debug.cleanup({})<CR>", { noremap = true })
-
--- -- git stuff
--- keymap('n', '<leader>gg', '<cmd>lua _LAZYGIT_TOGGLE()<CR>', opts)
--- keymap('n', '<leader>gj', '<cmd>lua require "gitsigns".next_hunk()<cr>', opts)
--- keymap('n', '<leader>gk', '<cmd>lua require "gitsigns".prev_hunk()<cr>', opts)
--- keymap('n', '<leader>gp', '<cmd>lua require "gitsigns".preview_hunk()<cr>', opts)
--- keymap('n', '<leader>gr', '<cmd>lua require "gitsigns".reset_hunk()<cr>', opts)
--- keymap('n', '<leader>gR', '<cmd>lua require "gitsigns".reset_buffer()<cr>', opts)
--- keymap('n', '<leader>gs', '<cmd>lua require "gitsigns".stage_hunk()<cr>', opts)
--- keymap('n', '<leader>gS', '<cmd>lua require "gitsigns".stage_buffer()<cr>', opts)
--- keymap('n', '<leader>gu', '<cmd>lua require "gitsigns".undo_stage_hunk()<cr>', opts)
--- keymap('n', '<leader>gU', '<cmd>lua require "gitsigns".undo_stage_buffer()<cr>', opts)
--- keymap('n', '<leader>go', '<cmd>Telescope git_status<cr>', opts)
--- keymap('n', '<leader>gb', '<cmd>Telescope git_branches<cr>', opts)
--- keymap('n', '<leader>gc', '<cmd>Telescope git_commits<cr>', opts)
--- keymap('n', '<leader>gd', '<cmd>Gitsigns diffthis HEAD<cr>', opts)
--- keymap('n', '<leader>gz', '<cmd>Gitsigns toggle_current_line_blame<CR>', opts)
--- keymap('n', '<leader>gw', ':lua require("telescope").extensions.git_worktree.git_worktrees()<CR>', opts)
--- keymap('n', '<leader>ge', ':lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>', opts)
+vim.api.nvim_set_keymap("n", "<leader>ec", ":lua require('refactoring').debug.cleanup({})<CR>", opts)
 
 keymap('n', '<leader>pr', '<cmd>silent %!prettier --stdin-filepath %<CR>', opts)
+keymap('n', '<leader>s', '<cmd>setlocal spell!<CR>', opts)
 
-
-
-
+-- HARPOON
 keymap("n", "<leader>a", '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)
 keymap("n", "<leader>-", '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
+keymap("n", "<leader>run", '<cmd>:lua require("harpoon.tmux").sendCommand("make", "\3 make run-full")<CR>', opts)
+
 keymap("n", "<C-h>", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', opts)
 keymap("n", "<C-j>", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', opts)
 keymap("n", "<C-k>", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', opts)
 keymap("n", "<C-l>", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', opts)
 keymap("n", "<C-;>", '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', opts)
+
+
+keymap("n", "gx", ":lua go_to_url()<CR>", opts)
+
+-- -- WHICHKEY
+-- --LSP
+-- keymap("n", "<leader>la" ,"<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+-- keymap("n", "<leader>ld" ,"<cmd>Telescope lsp_document_diagnostics<cr>", opts)
+-- keymap("n", "<leader>lw", "<cmd>Telescope lsp_workspace_diagnostics<cr>", opts)
+-- keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{async=true}<cr>", opts)
+-- keymap("n", "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", opts)
+-- keymap("n", "<leader>lq", "<cmd>Telescope quickfix<cr>", opts)
+-- keymap("n", "<leader>lr", "<cmd>lua LspRename()<cr>", opts)
+-- keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", opts)
+-- keymap("n", "<leader>lS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", opts)
+-- -- Database
+-- keymap("n", "<leader>Du", "<Cmd>DBUIToggle<Cr>", opts)
+-- keymap("n", "<leader>Df", "<Cmd>DBUIFindBuffer<Cr>", opts)
+-- keymap("n", "<leader>Dr", "<Cmd>DBUIRenameBuffer<Cr>", opts)
+-- keymap("n", "<leader>Dq", "<Cmd>DBUILastQueryInfo<Cr>", opts)
+-- --GIT
+-- keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
+-- keymap("n", "<leader>gj", "<cmd>lua require 'gitsigns'.next_hunk()<cr>", opts)
+-- keymap("n", "<leader>gk", "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", opts)
+-- keymap("n", "<leader>gp", "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", opts)
+-- keymap("n", "<leader>gr", "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", opts)
+-- keymap("n", "<leader>gR", "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", opts)
+-- keymap("n", "<leader>gs", "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", opts)
+-- keymap("n", "<leader>gS", "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", opts)
+-- keymap("n", "<leader>gu", "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", opts)
+-- keymap("n", "<leader>gU", "<cmd>lua require 'gitsigns'.undo_stage_buffer()<cr>", opts)
+-- keymap("n", "<leader>go", "<cmd>Telescope git_status<cr>", opts)
+-- keymap("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", opts)
+-- keymap("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", opts)
+-- keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", opts)
+-- keymap("n", "<leader>gw", ":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", opts)
+-- keymap("n", "<leader>gz", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
+-- keymap("n", "<leader>ge", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)

@@ -10,21 +10,23 @@ end
 
 Worktree.on_tree_change(function(op, metadata)
     if op == Worktree.Operations.Create then
-        local worktree_path = "/Users/arnevm/Documents/moaprWorktree/moaprplatform.git/" .. "/" .. metadata.path
+        local worktree_path = "/Users/arnevm/Documents/moaprWorktree/" .. metadata.path
         local gitignored_path = "~/Documents/gitignored"
         local copy_all_cmd = "ln -s " .. gitignored_path .. "/* " .. worktree_path
         os.execute(copy_all_cmd)
+        local tmux_mvn = "tmux neww -d -n mvn 'cd ".. worktree_path .. "/platform && mvn package && git reset --hard; exec zsh'"
+        os.execute(tmux_mvn)
     end
 end)
 
 Worktree.on_tree_change(function(op, metadata)
     if op == Worktree.Operations.Switch then
+        vim.api.nvim_command(" cd platform/scripts/local-full")
         -- local worktree_path = "/Users/arnevm/Documents/moaprWorktree/moaprplatform.git/" .. "/" .. metadata.path
         local branch = branchname(metadata.path)
         local tmux_new = "tmux neww -dn ".. metadata.path .. " -n ".. branch .." -t 2"
         os.execute("tmux movew -d -s 2")
         os.execute(tmux_new)
-        -- print(tmux_new)
         print("Switched from " .. metadata.prev_path .. " to " .. metadata.path)
     end
 end)
