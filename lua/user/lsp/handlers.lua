@@ -57,16 +57,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
-local function lsp_highlight_document(client)
-    -- Set autocommands conditional on server_capabilities
-    -- local status_ok, illuminate = pcall(require, "illuminate")
-    -- if not status_ok then
-    --     return
-    -- end
-    -- illuminate.on_attach(client)
-    -- end
-end
-
 local function lsp_keymaps(bufnr)
     local opts = { noremap = true, silent = true }
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
@@ -88,13 +78,13 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-    -- vim.notify(client.name .. " starting...")
+    vim.notify(client.name .. " starting...")
     -- TODO: refactor this into a method that checks if string in list
     if client.name == "tsserver" then
         client.server_capabilities.document_formatting = false
     end
     lsp_keymaps(bufnr)
-    -- lsp_highlight_document(client)
+    vim.notify(client.name .. " started")
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

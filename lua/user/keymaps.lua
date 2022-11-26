@@ -50,7 +50,8 @@ keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 -- Insert --
 -- Press jk fast to exit insert mode
 keymap("i", "jk", "<ESC>", opts)
-keymap("n", "<leader>n", ":noh<CR>", opts)
+-- Clear highlights with esc
+keymap("n", "<esc>", ":noh<CR><esc>", opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -100,9 +101,11 @@ keymap('v', '<leader>re', '"hy:%s/<C-r>h//gc<left><left><left>', opts)
 
 keymap('n', '<leader>w', ':w!<CR>', opts)
 keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
--- keymap('n', '<leader>q', '<Cmd>BufferClose<CR>', opts)
+
+-- Telescope
 keymap('n', '<leader>fp', ':Telescope find_files theme=dropdown<cr>', opts)
 keymap('n', '<leader>fb', ':Telescope buffers theme=dropdown<cr>', opts)
+keymap('n', '<leader>fc', ':Telescope buffers theme=dropdown<cr>', opts)
 keymap('n', '<leader>fo', ':Telescope oldfiles theme=dropdown<cr>', opts)
 keymap('n', '<leader>ff', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fq', ':Telescope quickfix<cr>', opts)
@@ -110,6 +113,8 @@ keymap('n', '<leader>fs', ':Telescope<CR>', opts)
 keymap('n', '<leader>f/', ':Telescope current_buffer_fuzzy_find<CR>', opts)
 keymap('n', '<leader>f;', ':Telescope registers theme=dropdown<cr>', opts)
 keymap('n', '<leader>fg', ':Telescope git_branches  theme=dropdown<cr>', opts)
+keymap('n', '<leader>fa', ':lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', opts)
+
 keymap('n', '<leader>et', ':NvimTreeFindFileToggle<cr>', opts)
 keymap('n', '<leader>eu', ':UndoTreeToggle<cr>', opts)
 keymap('n', '<leader>ee', ':GoIfErr<cr>', opts)
@@ -120,7 +125,8 @@ keymap('n', '<leader>eb', ':GoDebug -a<cr>', opts)
 keymap('n', '<leader>ecd', ':cd platform/scripts/local-full<cr>', opts)
 keymap('n', ']b', ':bn<CR>', opts)
 keymap('n', '[b', ':bp<CR>', opts)
-
+keymap('n', ']g',  '<cmd>lua require "gitsigns".next_hunk()<cr>',  opts)
+keymap('n', '[g',  '<cmd>lua require "gitsigns".prev_hunk()<cr>',  opts)
 
 -- remap to open the Telescope refactoring menu in visual mode
 vim.api.nvim_set_keymap( "v", "<leader>la", "<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", opts)
@@ -138,6 +144,8 @@ vim.api.nvim_set_keymap("n", "<leader>ec", ":lua require('refactoring').debug.cl
 
 keymap('n', '<leader>pr', '<cmd>silent %!prettier --stdin-filepath %<CR>', opts)
 keymap('n', '<leader>s', '<cmd>setlocal spell!<CR>', opts)
+keymap('n', '<leader>k', '<cmd>:TSJSplit<CR>', opts)
+keymap('n', '<leader>j', '<cmd>:TSJJoin<CR>', opts)
 
 -- HARPOON
 keymap("n", "<leader>a", '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)
@@ -187,3 +195,25 @@ keymap("n", "gx", ":lua go_to_url()<CR>", opts)
 -- keymap("n", "<leader>gw", ":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", opts)
 -- keymap("n", "<leader>gz", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
 -- keymap("n", "<leader>ge", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)
+
+local previewers = require("telescope.previewers")
+local builtin = require("telescope.builtin")
+
+local delta = previewers.new_termopen_previewer({
+	get_command = function(entry)
+		return { "git", "-c", "core.pager=delta", "-c", "delta.side-by-side=false", "diff", entry.value .. "^!" }
+	end,
+})
+
+Delta_git_commits = function(options)
+	options = options or {}
+	options.previewer = {
+		delta,
+		previewers.git_commit_message.new(options),
+		previewers.git_commit_diff_as_was.new(options),
+	}
+	builtin.git_commits(options)
+end
+
+keymap("n", "<leader>fw", "<cmd>lua Delta_git_commits()<CR>", opts)
+

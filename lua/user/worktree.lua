@@ -21,7 +21,6 @@ end)
 
 Worktree.on_tree_change(function(op, metadata)
     if op == Worktree.Operations.Switch then
-        vim.api.nvim_command(" cd platform/scripts/local-full")
         -- local worktree_path = "/Users/arnevm/Documents/moaprWorktree/moaprplatform.git/" .. "/" .. metadata.path
         local branch = branchname(metadata.path)
         local tmux_new = "tmux neww -dn ".. metadata.path .. " -n ".. branch .." -t 2"

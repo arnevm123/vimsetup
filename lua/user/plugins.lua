@@ -124,6 +124,14 @@ return packer.startup(function(use)
     -- use 'leoluz/nvim-dap-go'
     use 'theHamsta/nvim-dap-virtual-text'
 
+    use({
+        'Wansmer/treesj',
+        requires = { 'nvim-treesitter' },
+        config = function()
+            require('treesj').setup({ use_default_keymaps = false})
+        end,
+    })
+
     -- Database
     use {
         "tpope/vim-dadbod",

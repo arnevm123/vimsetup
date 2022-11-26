@@ -93,7 +93,8 @@ function FoldText()
 let foldtextstart = repeat(' ', indent(nextnonblank(v:foldstart)))
 let uglyLine = getline(v:foldstart)
 let line = substitute(uglyLine, '^\s*\(.\{-}\)\s*$', '\1', '')
-let lineEnd = getline(v:foldend)
+let uglyLineEnd = getline(v:foldend)
+let lineEnd = substitute(uglyLineEnd, '^\s*\(.\{-}\)\s*$', '\1', '')
 let foldDept = getline(v:foldlevel)
 let numOfLines = v:foldend - v:foldstart
 return foldtextstart . line . ' ... ' . lineEnd . ' ' . '(' . numOfLines . ' Lines)'

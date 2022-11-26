@@ -43,7 +43,6 @@
 
 vim.cmd [[ colorscheme seoulbones ]]
 
-
 vim.cmd [[ hi TreesitterContext guibg=#4B4B4B  ]]
 vim.cmd [[ hi IlluminatedWordText gui=NONE guibg=#4B4B4B ]]
 vim.cmd [[ hi IlluminatedWordRead gui=NONE guibg=#4B4B4B ]]
