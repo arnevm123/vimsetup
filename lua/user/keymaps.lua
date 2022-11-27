@@ -105,7 +105,7 @@ keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
 -- Telescope
 keymap('n', '<leader>fp', ':Telescope find_files theme=dropdown<cr>', opts)
 keymap('n', '<leader>fb', ':Telescope buffers theme=dropdown<cr>', opts)
-keymap('n', '<leader>fc', ':lua telescope_diff_master()<CR>', opts)
+keymap('n', '<leader>fc', ':lua Telescope_diff_master()<CR>', opts)
 keymap('n', '<leader>fo', ':Telescope oldfiles theme=dropdown<cr>', opts)
 keymap('n', '<leader>ff', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fq', ':Telescope quickfix<cr>', opts)
