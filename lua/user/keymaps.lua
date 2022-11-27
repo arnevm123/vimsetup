@@ -105,7 +105,7 @@ keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
 -- Telescope
 keymap('n', '<leader>fp', ':Telescope find_files theme=dropdown<cr>', opts)
 keymap('n', '<leader>fb', ':Telescope buffers theme=dropdown<cr>', opts)
-keymap('n', '<leader>fc', ':Telescope buffers theme=dropdown<cr>', opts)
+keymap('n', '<leader>fc', ':lua telescope_diff_master()<CR>', opts)
 keymap('n', '<leader>fo', ':Telescope oldfiles theme=dropdown<cr>', opts)
 keymap('n', '<leader>ff', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fq', ':Telescope quickfix<cr>', opts)
@@ -150,7 +150,6 @@ keymap('n', '<leader>j', '<cmd>:TSJJoin<CR>', opts)
 -- HARPOON
 keymap("n", "<leader>a", '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)
 keymap("n", "<leader>-", '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', opts)
-keymap("n", "<leader>run", '<cmd>:lua require("harpoon.tmux").sendCommand("make", "\3 make run-full")<CR>', opts)
 
 keymap("n", "<C-h>", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', opts)
 keymap("n", "<C-j>", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', opts)

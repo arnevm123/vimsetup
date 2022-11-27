@@ -85,6 +85,7 @@ return packer.startup(function(use)
     use { "nvim-telescope/telescope-smart-history.nvim" }
     use { "nvim-telescope/telescope-frecency.nvim" }
     use { "nvim-telescope/telescope-fzf-native.nvim", run = 'make' }
+    use { "axkirillov/easypick.nvim"}
 
     -- Treesitter
     use("nvim-treesitter/nvim-treesitter", {

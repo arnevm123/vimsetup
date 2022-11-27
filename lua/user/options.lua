@@ -38,6 +38,7 @@ local options = {
     foldexpr = "nvim_treesitter#foldexpr()",
     listchars = 'tab:→ ,leadmultispace:·',
     -- list = true,
+    gdefault = true
 }
 
 vim.opt.shortmess:append "c"
