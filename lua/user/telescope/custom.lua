@@ -40,7 +40,7 @@ end
 function Telescope_diff_master()
 	local command = "git diff --name-only --relative $(git merge-base master HEAD)"
 
-    local previewer = branch_diff({base_branch = "$(git merge-base master HEAD)" })
+    local previewer = branch_diff({base_branch = "master" })
 	local entry_maker = function(entry)
 		return {
 			value = entry,
