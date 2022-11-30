@@ -38,9 +38,8 @@ local branch_diff = function (opts)
 end
 
 function Telescope_diff_master()
-    vim.api.nvim_command("cd `git rev-parse --show-toplevel`")
-	local command = "git diff --name-only $(git merge-base master HEAD)"
-    local previewer = branch_diff({base_branch = "master" })
+	local command = "git diff --name-only --relative $(git merge-base master HEAD)"
+    local previewer = branch_diff({base_branch = "$(git merge-base master HEAD)" })
 	local entry_maker = function(entry)
 		return {
 			value = entry,

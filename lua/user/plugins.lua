@@ -132,6 +132,12 @@ return packer.startup(function(use)
             require('treesj').setup({ use_default_keymaps = false})
         end,
     })
+    use {
+        "AckslD/nvim-neoclip.lua",
+        requires = {
+            {'kkharji/sqlite.lua', module = 'sqlite'},
+        },
+    }
 
     -- Database
     use {

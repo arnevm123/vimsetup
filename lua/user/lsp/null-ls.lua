@@ -13,8 +13,6 @@ local code_actions = null_ls.builtins.code_actions
 null_ls.setup({
 	debug = true,
 	sources = {
-		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
-		formatting.stylua,
 		formatting.gofmt,
 		-- formatting.gofumpt,
         diagnostics.golangci_lint,
@@ -23,5 +21,12 @@ null_ls.setup({
 		code_actions.refactoring,
 		diagnostics.flake8,
 		-- diagnostics.gofumpt
+		formatting.stylua,
+		formatting.prettier.with({ extra_args = {
+            "--single-quote",
+            "--jsx-single-quote",
+            "--print-width 120",
+            "--tabWidth 2",
+        } }),
 	},
 })

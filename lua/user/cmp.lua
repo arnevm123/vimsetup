@@ -139,7 +139,7 @@ cmp.setup {
     documentation = true,
   },
   experimental = {
-    ghost_text = true,
+    ghost_text = false,
     native_menu = false,
   },
 }

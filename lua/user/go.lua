@@ -74,8 +74,8 @@ require('go').setup({
                            -- false: do not use keymap in go/dap.lua.  you must define your own.
                            -- windows: use visual studio keymap
   dap_debug_gui = true, -- set to true to enable dap gui, highly recommend
-  dap_debug_vt = true, -- set to true to enable dap virtual text
-  build_tags = "tag1,tag2", -- set default build tags
+  dap_debug_vt = false, -- set to false to enable dap virtual text
+  -- build_tags = "", -- set default build tags
   textobjects = true, -- enable default text jobects through treesittter-text-objects
   test_runner = 'go', -- one of {`go`, `richgo`, `dlv`, `ginkgo`, `gotestsum`}
   verbose_tests = true, -- set to add verbose flag to tests

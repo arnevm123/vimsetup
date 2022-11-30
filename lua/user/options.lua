@@ -47,6 +47,8 @@ for k, v in pairs(options) do
     vim.opt[k] = v
 end
 
+alt_file = vim.fn.expand('%:r') .. "_test.go"
+
 -- Don't auto commenting new lines
 vim.api.nvim_create_autocmd('BufEnter', {
   pattern = '',
