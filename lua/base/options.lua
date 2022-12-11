@@ -11,7 +11,7 @@ local options = {
     pumheight = 10,                          -- pop up menu height
     showmode = false,                        -- we don't need to see things like -- INSERT -- anymore
     smartcase = true,                        -- smart case
-    smartindent = true,                      -- make indenting smarter again
+    smartindent = true,                      -- make indenting smarter againopt
     splitbelow = true,                       -- force all horizontal splits to go below current window
     splitright = true,                       -- force all vertical splits to go to the right of current window
     swapfile = false,                        -- creates a swapfile
@@ -23,7 +23,7 @@ local options = {
     expandtab = true,                        -- convert tabs to spaces
     shiftwidth = 4,                          -- the number of spaces inserted for each indentation
     tabstop = 4,                             -- insert 2 spaces for a tab
-    cursorline = false,                       -- highlight the current line
+    cursorline = true,                       -- highlight the current line
     number = true,                           -- set numbered lines
     relativenumber = true,                   -- set relative numbered lines
     numberwidth = 2,                         -- set number column width to 2 {default 4}
@@ -66,6 +66,7 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 local augroup = vim.api.nvim_create_augroup
 local yank_group = augroup('HighlightYank', {})
 local autocmd = vim.api.nvim_create_autocmd
+local fn = vim.fn
 
 autocmd('TextYankPost', {
     group = yank_group,
@@ -83,13 +84,15 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     command = [[%s/\s\+$//e]],
 })
 
-vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').gofmt() ]], false)
-
-require('glow').setup({
-    style = "dark",
-    width = 200,
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    pattern = { "*.go" },
+    command = ":GoImport",
 })
 
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    pattern = { "*.go" },
+    command = ":GoFmt",
+})
 
 vim.cmd [[
 function FoldText()
@@ -115,4 +118,3 @@ function go_to_url(cmd)
     vim.notify("Going to "..url, 'info', { title="Opening browser..." })
     vim.fn.jobstart({cmd or "open", url}, {on_exit=function() end})
 end
-

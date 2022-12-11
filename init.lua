@@ -1,25 +1,35 @@
-require "user.options"
-require "user.keymaps"
-require "user.plugins"
-require "user.colorscheme"
-require "user.cmp"
-require "user.lsp"
-require "user.telescope"
-require "user.treesitter"
-require "user.gitsigns"
-require "user.nvim-tree"
-require "user.bufferline"
-require "user.whichkey"
-require "user.lualine"
-require "user.neogit"
-require "user.comment"
-require "user.autopairs"
-require "user.impatient"
-require "user.dial"
-require "user.go"
-require "user.worktree"
-require "user.dadbod"
-require "user.lspSignature"
-require "user.harpoon"
-require "user.quickSwitch"
-require "user.illuminate"
+-- Speed up startup
+require'impatient'.enable_profile()
+
+-- The base
+require "base.options"
+require "base.keymaps"
+require "base.plugins"
+require "base.colorscheme"
+require "base.cmp"
+require "base.lsp"
+require "base.telescope"
+require "base.treesitter"
+require "arne.whichkey"
+
+-- Other plugins
+require "arne.dadbod"
+require "arne.debug"
+require "arne.comment"
+require "arne.lspSignature" -- stuff that tells function parameters
+require "arne.harpoon"
+require "arne.dial"
+require "arne.illuminate"
+
+-- make stuff pretty
+require "arne.bufferline"
+require "arne.lualine"
+
+-- Git
+require "arne.neogit"
+require "arne.worktree"
+require "arne.gitsigns"
+
+-- Language specific
+require "arne.go"
+require "arne.quickSwitch"

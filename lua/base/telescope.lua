@@ -3,10 +3,11 @@ if not status_ok then
     return
 end
 
-require "user.telescope.custom"
+require "base.telescope.custom"
 
 local actions = require "telescope.actions"
 telescope.load_extension "file_browser"
+telescope.load_extension "dap"
 telescope.load_extension "fzf"
 telescope.setup {
     defaults = {
@@ -93,7 +94,7 @@ telescope.setup {
         file_browser = {
             theme = "ivy",
             -- disables netrw and use telescope-file-browser in its place
-            hijack_netrw = true,
+            hijack_netrw = false,
             mappings = {
                 ["i"] = {
                     -- your custom insert mode mappings

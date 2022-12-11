@@ -17,7 +17,7 @@ require('go').setup({
                    -- false: do nothing
                    -- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
                    --   lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
-  lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
+  lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
   lsp_on_attach = nil, -- nil: use on_attach function defined in go/lsp.lua,
                        --      when lsp_cfg is true
                        -- if lsp_on_attach is a function: use this function as on_attach function for gopls
@@ -70,10 +70,10 @@ require('go').setup({
   gocoverage_sign = "█",
   sign_priority = 5, -- change to a higher number to override other signs
   dap_debug = true, -- set to false to disable dap
-  dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
+  dap_debug_keymap = false, -- true: use keymap for debugger defined in go/dap.lua
                            -- false: do not use keymap in go/dap.lua.  you must define your own.
                            -- windows: use visual studio keymap
-  dap_debug_gui = true, -- set to true to enable dap gui, highly recommend
+  dap_debug_gui = false, -- set to true to enable dap gui, highly recommend
   dap_debug_vt = false, -- set to false to enable dap virtual text
   -- build_tags = "", -- set default build tags
   textobjects = true, -- enable default text jobects through treesittter-text-objects
@@ -84,6 +84,6 @@ require('go').setup({
 
   trouble = false, -- true: use trouble to open quickfix
   test_efm = false, -- errorfomat for quickfix, default mix mode, set to true will be efm only
-  luasnip = false, -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
+  luasnip = true, -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
   --  Do not enable this if you already added the path, that will duplicate the entries
 })

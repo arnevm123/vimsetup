@@ -42,13 +42,9 @@ return packer.startup(function(use)
     use({ "nvim-lua/plenary.nvim"}) -- Useful lua functions used by lots of plugins
     use({ "lewis6991/impatient.nvim" }) -- Make nvim load faster
     use({ "kyazdani42/nvim-web-devicons"}) -- Nerd font helper
-    use({ "kyazdani42/nvim-tree.lua"}) -- File tree
     use({ "akinsho/bufferline.nvim"}) -- Show buffer names at top
     use({ "nvim-lualine/lualine.nvim"}) -- Line at bottom with info
-    -- use({ "lukas-reineke/indent-blankline.nvim"}) --show function lines & context
-    -- use({ "goolord/alpha-nvim"}) -- Start screen
     use("folke/which-key.nvim") -- Show help for keycombos
-    use("ellisonleao/glow.nvim") -- Markdown file viewer
 
     -- Colorschemes
     --
@@ -63,7 +59,7 @@ return packer.startup(function(use)
     use({ "hrsh7th/cmp-nvim-lsp"})
     use({ "hrsh7th/cmp-nvim-lua"})
     -- use({ "fatih/vim-go"})
-    use "lvimuser/lsp-inlayhints.nvim"
+    -- use "lvimuser/lsp-inlayhints.nvim"
 
     -- snippets
     use({ "L3MON4D3/LuaSnip"}) --snippet engine
@@ -85,12 +81,10 @@ return packer.startup(function(use)
     use { "nvim-telescope/telescope-smart-history.nvim" }
     use { "nvim-telescope/telescope-frecency.nvim" }
     use { "nvim-telescope/telescope-fzf-native.nvim", run = 'make' }
-    use { "axkirillov/easypick.nvim"}
+    use { "nvim-telescope/telescope-dap.nvim" }
 
     -- Treesitter
-    use("nvim-treesitter/nvim-treesitter", {
-        run = ":TSUpdate"
-    })
+    use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
     use({ "nvim-treesitter/nvim-treesitter-context" })
     use({ "nvim-treesitter/nvim-treesitter-textobjects" })
     use({ "nvim-treesitter/playground" })
@@ -102,22 +96,13 @@ return packer.startup(function(use)
 
     -- Various
     use { 'numToStr/Comment.nvim' }
-
     use({ "monaqa/dial.nvim" })
     use({ "machakann/vim-swap" })
     use({ "tommcdo/vim-exchange" })
     use({ "RRethy/vim-illuminate" })
     use({ "mbbill/undotree" })
 
-    use({
-        "kylechui/nvim-surround",
-        tag = "*", -- Use for stability; omit for the latest features
-        config = function()
-            require("nvim-surround").setup({
-                -- Configuration here, or leave empty to use defaults
-            })
-        end
-    })
+    use({ "kylechui/nvim-surround", tag = "*", config = function() require("nvim-surround").setup({ }) end })
 
     -- Not using these right now, might figure these out later.
     use 'mfussenegger/nvim-dap'
@@ -128,16 +113,9 @@ return packer.startup(function(use)
     use({
         'Wansmer/treesj',
         requires = { 'nvim-treesitter' },
-        config = function()
-            require('treesj').setup({ use_default_keymaps = false})
-        end,
+        config = function() require('treesj').setup({ use_default_keymaps = false}) end,
     })
-    use {
-        "AckslD/nvim-neoclip.lua",
-        requires = {
-            {'kkharji/sqlite.lua', module = 'sqlite'},
-        },
-    }
+    use { "AckslD/nvim-neoclip.lua", requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } } }
 
     -- Database
     use {
@@ -152,6 +130,7 @@ return packer.startup(function(use)
         end,
         cmd = { "DBUIToggle", "DBUI", "DBUIAddConnection", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUILastQueryInfo" },
     }
+
     use {"Everduin94/nvim-quick-switcher"}
 
     -- Automatically set up your configuration after cloning packer.nvim

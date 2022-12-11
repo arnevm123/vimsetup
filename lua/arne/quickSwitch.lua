@@ -11,18 +11,18 @@ keymap("n", "<leader>ot", "<cmd>:lua require('nvim-quick-switcher').find('.+test
 -- keymap("n", "<leader>oq", "<cmd>:lua require('nvim-quick-switcher').find('*query*')<CR>", opts)
 -- keymap("n", "<leader>ow", "<cmd>:lua require('nvim-quick-switcher').find('*store*')<CR>", opts)
 
--- Stylesheets
-keymap("n", "<leader>oi", "<cmd>:lua require('nvim-quick-switcher').find('.+css|.+scss|.+sass', { regex = true, prefix='full' })<CR>", opts)
-
--- Angular
--- Using find over switch to look backwards incase in a redux-like folder "/state"
-keymap("n", "<leader>os", "<cmd>:lua require('nvim-quick-switcher').find('.service.ts')<CR>", opts)
-keymap("n", "<leader>ou", "<cmd>:lua require('nvim-quick-switcher').find('.component.ts')<CR>", opts)
-keymap("n", "<leader>oo", "<cmd>:lua require('nvim-quick-switcher').find('.component.html')<CR>", opts)
-keymap("n", "<leader>op", "<cmd>:lua require('nvim-quick-switcher').find('.module.ts')<CR>", opts)
-
--- Switches for - or _ e.g. controller-util.lua
-keymap("n", "<leader>ol", "<cmd>:lua require('nvim-quick-switcher').find('*util.*', { prefix='short' })<CR>", opts)
+-- -- Stylesheets
+-- keymap("n", "<leader>oi", "<cmd>:lua require('nvim-quick-switcher').find('.+css|.+scss|.+sass', { regex = true, prefix='full' })<CR>", opts)
+--
+-- -- Angular
+-- -- Using find over switch to look backwards incase in a redux-like folder "/state"
+-- keymap("n", "<leader>os", "<cmd>:lua require('nvim-quick-switcher').find('.service.ts')<CR>", opts)
+-- keymap("n", "<leader>ou", "<cmd>:lua require('nvim-quick-switcher').find('.component.ts')<CR>", opts)
+-- keymap("n", "<leader>oo", "<cmd>:lua require('nvim-quick-switcher').find('.component.html')<CR>", opts)
+-- keymap("n", "<leader>op", "<cmd>:lua require('nvim-quick-switcher').find('.module.ts')<CR>", opts)
+--
+-- -- Switches for - or _ e.g. controller-util.lua
+-- keymap("n", "<leader>ol", "<cmd>:lua require('nvim-quick-switcher').find('*util.*', { prefix='short' })<CR>", opts)
 
 -- Legacy
 -- keymap("n", "<leader>ou", "<cmd>:lua require('nvim-quick-switcher').switch('component.ts')<CR>", opts)
