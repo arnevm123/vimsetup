@@ -1,21 +1,14 @@
-vim.cmd [[ colorscheme seoulbones ]]
+vim.cmd.colorscheme("seoulbones")
 
-vim.cmd [[ hi TreesitterContext guibg=#4B4B4B  ]]
-vim.cmd [[ hi IlluminatedWordText gui=NONE guibg=#4B4B4B ]]
-vim.cmd [[ hi IlluminatedWordRead gui=NONE guibg=#4B4B4B ]]
-vim.cmd [[ hi IlluminatedWordWrite gui=NONE guibg=#4B4B4B ]]
-vim.cmd [[ hi ColorColumn guibg=#353535 ]]
-vim.cmd [[ hi CursorLine guibg=#353535 ]]
-
-require("transparent").setup({
-    enable = true, -- boolean: enable transparent
-    extra_groups = { -- table/string: additional groups that should be cleared
-        -- In particular, when you set it to 'all', that means all available groups
-        -- example of akinsho/nvim-bufferline.lua
-        "NvimTreeNormal",
-        "NormalFloat",
-        "FloatBorder",
-    },
-    exclude = {}, -- table: groups you don't want to clear
-})
+vim.api.nvim_set_hl(0, "TreesitterContext", { bg ="#4B4B4B" })
+vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg="#4B4B4B"})
+vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#4B4B4B"})
+vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#4B4B4B" })
+vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#353535" })
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#353535" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
 

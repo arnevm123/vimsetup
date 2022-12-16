@@ -118,3 +118,7 @@ function go_to_url(cmd)
     vim.notify("Going to "..url, 'info', { title="Opening browser..." })
     vim.fn.jobstart({cmd or "open", url}, {on_exit=function() end})
 end
+
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 25
