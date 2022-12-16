@@ -5,22 +5,23 @@ end
 
 gitsigns.setup {
     signs = {
-        add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr" },
-        change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr" },
-        delete = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr" },
-        topdelete = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr" },
-        changedelete = { hl = "GitSignsDelete", text = "~", numhl = "GitSignsChangeNr" },
+        add = { hl = "gitsignsadd", text = "│", numhl = "gitsignsaddnr" },
+        change = { hl = "gitsignschange", text = "│", numhl = "gitsignschangenr" },
+        delete = { hl = "gitsignsdelete", text = "_", numhl = "gitsignsdeletenr" },
+        topdelete = { hl = "gitsignsdelete", text = "‾", numhl = "gitsignsdeletenr" },
+        changedelete = { hl = "gitsignsdelete", text = "~", numhl = "gitsignschangenr" },
+        untracked    = { hl = 'gitsignsadd'   , text = '║', numhl='gitsignsaddnr'},
     },
-    signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-    numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-    linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
-    word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
+    signcolumn = true, -- toggle with `:gitsigns toggle_signs`
+    numhl = false, -- toggle with `:gitsigns toggle_numhl`
+    linehl = false, -- toggle with `:gitsigns toggle_linehl`
+    word_diff = false, -- toggle with `:gitsigns toggle_word_diff`
     watch_gitdir = {
         interval = 1000,
         follow_files = true,
     },
     attach_to_untracked = true,
-    current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+    current_line_blame = false, -- toggle with `:gitsigns toggle_current_line_blame`
     current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
@@ -32,10 +33,10 @@ gitsigns.setup {
     },
     sign_priority = 6,
     update_debounce = 100,
-    status_formatter = nil, -- Use default
+    status_formatter = nil, -- use default
     max_file_length = 40000,
     preview_config = {
-        -- Options passed to nvim_open_win
+        -- options passed to nvim_open_win
         border = "single",
         style = "minimal",
         relative = "cursor",
