@@ -2,16 +2,16 @@
 require'impatient'.enable_profile()
 
 -- The base
+require "base.plugins"
 require "base.options"
 require "base.keymaps"
-require "base.plugins"
 require "base.colorscheme"
 require "base.lspZero"
 require "base.telescope"
 require "base.treesitter"
-require "arne.whichkey"
 
 -- Other plugins
+require "arne.whichkey"
 require "arne.dadbod"
 require "arne.debug"
 require "arne.comment"

@@ -4,8 +4,10 @@ lsp.preset("recommended")
 
 lsp.ensure_installed({ "jsonls", "sumneko_lua", "gopls", "tsserver", "angularls", "eslint" })
 
+lsp.configure('sumneko_lua', { settings = { Lua = { diagnostics = { globals = { 'vim' } } } } })
+
 local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
@@ -32,12 +34,8 @@ lsp.set_preferences({
     }
 })
 
-vim.diagnostic.config({
-    virtual_text = true,
-})
-
 lsp.on_attach(function(client, bufnr)
-    local opts = {buffer = bufnr, remap = false}
+    local opts = { buffer = bufnr, remap = false }
     vim.keymap.set("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
     vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -46,8 +44,11 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev({ border = "rounded" }) end, opts)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next({ border = "rounded" }) end, opts)
-    vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format{async=true}' ]])
 end)
 
 lsp.setup()
 
+vim.diagnostic.config({
+    virtual_text = true,
+    float = true,
+})

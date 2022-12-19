@@ -116,6 +116,7 @@ keymap('n', '<leader>fdb', ':Telescope dap list_breakpoints<CR>', opts)
 keymap('n', '<leader>fdv', ':Telescope dap variables<CR>', opts)
 
 keymap('n', '<leader>eu', ':UndotreeToggle<cr>', opts)
+keymap('n', '<leader>ex', ':Explore<cr>', opts)
 keymap('n', '<leader>ee', ':GoIfErr<cr>', opts)
 keymap('n', '<leader>el', ':GoLint<cr>', opts)
 keymap('n', '<leader>ef', ':GoFillStruct<cr>', opts)
@@ -148,13 +149,13 @@ keymap("n", "<C-l>", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', opts)
 keymap("n", "<C-;>", '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', opts)
 
 
-keymap("n", "gx", ":lua go_to_url()<CR>", opts)
+keymap("n", "gx", ":lua Go_to_url()<CR>", opts)
 
 --LSP
 keymap("n", "<leader>la" ,"<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", opts)
 keymap("n", "<leader>ld" ,"<cmd>Telescope diagnostics<CR>", opts)
 keymap("n", "<leader>lw", "<cmd>Telescope lsp_workspace_diagnostics<cr>", opts)
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{async=true}<cr>", opts)
+keymap("n", "<leader>lf", "<cmd>LspZeroFormat<cr>", opts)
 keymap("n", "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", opts)
 keymap("n", "<leader>lq", "<cmd>Telescope quickfix<cr>", opts)
 keymap("n", "<leader>lr", "<<cmd>lua vim.lsp.buf.rename()<cr>", opts)

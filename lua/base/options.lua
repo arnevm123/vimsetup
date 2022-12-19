@@ -66,7 +66,6 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 local augroup = vim.api.nvim_create_augroup
 local yank_group = augroup('HighlightYank', {})
 local autocmd = vim.api.nvim_create_autocmd
-local fn = vim.fn
 
 autocmd('TextYankPost', {
     group = yank_group,
@@ -109,7 +108,7 @@ set foldtext=FoldText()
 set fillchars=fold:\  " removes trailing dots. Mind that there is a whitespace after the \!
 ]]
 
-function go_to_url(cmd)
+function Go_to_url(cmd)
     local url = vim.fn.expand('<cfile>', nil, nil)
     if not url:match("http") then
         url = "https://github.com/"..url
@@ -122,3 +121,8 @@ end
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
+
+local user_cmd = vim.api.nvim_create_user_command
+
+user_cmd('PrettyJson', ":%!jq '.'", {})
+
