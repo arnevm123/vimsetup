@@ -9,8 +9,6 @@ local keymap = vim.keymap.set
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
 -- Modes
 --   normal_mode = "n",
@@ -49,6 +47,9 @@ keymap('n', ']b', ':bn<CR>', opts)
 keymap('n', '[b', ':bp<CR>', opts)
 keymap('n', ']g',  '<cmd>lua require "gitsigns".next_hunk()<cr>',  opts)
 keymap('n', '[g',  '<cmd>lua require "gitsigns".prev_hunk()<cr>',  opts)
+keymap('n', ']c',  '<cmd>cnext<cr>',  opts)
+keymap('n', '[c',  '<cmd>cprevious<cr>',  opts)
+keymap('n', '-c',  '<cmd>cclose<cr>',  opts)
 
 keymap("n", "<Leader>xn", ":let @+=@%<cr>", { noremap = true, silent = true, desc = "Copy Buffer name and path" })
 
@@ -89,7 +90,7 @@ keymap('n', '<C-d>', '<C-d>zztv', opts)
 keymap('n', '<C-u>', '<C-u>zztv', opts)
 
 keymap('n', 'Q', 'gqq', opts)
-keymap('v', '<leader>re', '"hy:%s/<C-r>h//gc<left><left><left>', opts)
+keymap('v', '<leader>re', '"hy:%s/<C-r>h//c<left><left><left>', opts)
 
 keymap('n', '<leader>w', ':w!<CR>', opts)
 keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
@@ -116,7 +117,7 @@ keymap('n', '<leader>fdb', ':Telescope dap list_breakpoints<CR>', opts)
 keymap('n', '<leader>fdv', ':Telescope dap variables<CR>', opts)
 
 keymap('n', '<leader>eu', ':UndotreeToggle<cr>', opts)
-keymap('n', '<leader>ex', ':Explore<cr>', opts)
+keymap('n', '<leader>ex', ':Sexplore!<cr>', opts)
 keymap('n', '<leader>ee', ':GoIfErr<cr>', opts)
 keymap('n', '<leader>el', ':GoLint<cr>', opts)
 keymap('n', '<leader>ef', ':GoFillStruct<cr>', opts)
@@ -156,6 +157,7 @@ keymap("n", "<leader>la" ,"<cmd>lua require('telescope').extensions.refactoring.
 keymap("n", "<leader>ld" ,"<cmd>Telescope diagnostics<CR>", opts)
 keymap("n", "<leader>lw", "<cmd>Telescope lsp_workspace_diagnostics<cr>", opts)
 keymap("n", "<leader>lf", "<cmd>LspZeroFormat<cr>", opts)
+keymap("n", "<leader>lp", "<cmd>Prettier<cr>", opts)
 keymap("n", "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", opts)
 keymap("n", "<leader>lq", "<cmd>Telescope quickfix<cr>", opts)
 keymap("n", "<leader>lr", "<<cmd>lua vim.lsp.buf.rename()<cr>", opts)
@@ -193,11 +195,18 @@ keymap("n", "<leader>os", "<cmd>:lua require('nvim-quick-switcher').find('.servi
 keymap("n", "<leader>ou", "<cmd>:lua require('nvim-quick-switcher').find('.component.ts')<CR>", { noremap = true, silent = true, desc = "Go to TS" })
 keymap("n", "<leader>oo", "<cmd>:lua require('nvim-quick-switcher').find('.component.html')<CR>", { noremap = true, silent = true, desc = "Go to html" })
 keymap("n", "<leader>op", "<cmd>:lua require('nvim-quick-switcher').find('.module.ts')<CR>", { noremap = true, silent = true, desc = "Go to module" })
+
 -- Golang Test switcher
 keymap('n', '<leader>ot', ':GoAlt!<cr>', opts)
 
 -- Switches for - or _ e.g. controller-util.lua
 keymap("n", "<leader>ol", "<cmd>:lua require('nvim-quick-switcher').find('*util.*', { prefix='short' })<CR>", { noremap = true, silent = true, desc = "Go to util" })
+
+
+keymap("n", "<Leader>ng", ":lua require('neogen').generate()<CR>", opts)
+keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
+keymap("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
+keymap("n", "<Leader>nt", ":lua require('neogen').generate({ type = 'type' })<CR>", opts)
 
 local previewers = require("telescope.previewers")
 local builtin = require("telescope.builtin")

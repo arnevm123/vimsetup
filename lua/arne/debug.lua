@@ -13,7 +13,7 @@ vim.keymap.set("n", "<F7>", ":lua require'go.dap'.run()<CR>")
 vim.keymap.set("n", "<F6>", ":lua require'go.dap'.stop()<CR>")
 vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
 vim.keymap.set("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
-vim.keymap.set("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
+-- vim.keymap.set("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
 vim.keymap.set("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
 vim.keymap.set("n", "<leader>df", ":lua require('dapui').float_element('breakpoints')<CR>")
 require("dapui").setup({
@@ -100,16 +100,16 @@ require("dapui").setup({
 -- require('dap-go').setup()
 
 
--- local dap, dapui = require("dap"), require("dapui")
--- dap.listeners.after.event_initialized["dapui_config"] = function()
---     dapui.open()
--- end
--- dap.listeners.before.event_terminated["dapui_config"] = function()
---     dapui.close()
--- end
--- dap.listeners.before.event_exited["dapui_config"] = function()
---     dapui.close()
--- end
+local dapui = require("dapui")
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+end
 
 -- dap.adapters.go = function(callback, config)
 --     local stdout = vim.loop.new_pipe(false)

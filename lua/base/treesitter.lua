@@ -14,7 +14,15 @@ configs.setup({
         enable = true,
     },
     indent = { enable = true, disable = { "css" } },
-
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = '<c-space>',
+            node_incremental = '<c-space>',
+            scope_incremental = '<c-s>',
+            node_decremental = '<c-\\>',
+        },
+    },
     textobjects = {
         select = {
             enable = true,
@@ -26,18 +34,16 @@ configs.setup({
                 -- You can use the capture groups defined in textobjects.scm
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
+                ["at"] = "@attribute.outer",
+                ["it"] = "@attribute.inner",
                 ["aC"] = "@class.outer",
                 ["iC"] = "@class.inner",
                 ["ac"] = "@conditional.outer",
                 ["ic"] = "@conditional.inner",
-                ["is"] = "@statement.inner",
-                ["as"] = "@statement.outer",
-                ["am"] = "@call.outer",
-                ["im"] = "@call.inner",
                 ["al"] = "@loop.outer",
                 ["il"] = "@loop.inner",
-                ["ay"] = "@block.outer",
-                ["iy"] = "@block.inner",
+                ["aP"] = "@parameter.outer",
+                ["iP"] = "@parameter.inner",
             },
             -- You can choose the select mode (default is charwise 'v')
             selection_modes = {

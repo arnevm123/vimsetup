@@ -1,9 +1,10 @@
 -- Speed up startup
-require'impatient'.enable_profile()
+--require'impatient'.enable_profile()
 
 -- The base
-require "base.plugins"
+--require "base.plugins"
 require "base.options"
+require "base.lazy"
 require "base.keymaps"
 require "base.colorscheme"
 require "base.lspZero"
@@ -19,6 +20,7 @@ require "arne.lspSignature" -- stuff that tells function parameters
 require "arne.harpoon"
 require "arne.dial"
 require "arne.illuminate"
+require "arne.chatgpt"
 
 -- make stuff pretty
 require "arne.bufferline"

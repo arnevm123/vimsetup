@@ -25,5 +25,5 @@ require("illuminate").configure {
   modes_allowlist = {},
   providers_regex_syntax_denylist = {},
   providers_regex_syntax_allowlist = {},
-  under_cursor = false,
+  under_cursor = true,
 }
