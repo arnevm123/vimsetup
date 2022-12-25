@@ -12,7 +12,6 @@
   "dial.nvim": { "branch": "master", "commit": "61afb28f61ba090a67a88186f7bc8a94212e509a" },
   "diffview.nvim": { "branch": "main", "commit": "3812e296d3977a24db62f7c18025755b40968d3a" },
   "friendly-snippets": { "branch": "main", "commit": "1a6a02350568d6830bcfa167c72f9b6e75e454ae" },
-  "fzf-lua": { "branch": "main", "commit": "5abf66f63bf08121dd4e917488b59ccb693eee12" },
   "git-worktree.nvim": { "branch": "master", "commit": "d7f4e2584e81670154f07ca9fa5dd791d9c1b458" },
   "gitsigns.nvim": { "branch": "main", "commit": "2ab3bdf0a40bab53033048c6be75bda86316b55d" },
   "go.nvim": { "branch": "master", "commit": "9f0d92ab2d6d9338d6afbc2680afc9946ddabedc" },

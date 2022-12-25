@@ -96,18 +96,18 @@ keymap('n', '<leader>w', ':w!<CR>', opts)
 keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
 
 -- Telescope
-keymap('n', '<leader>fp', ':Telescope find_files theme=dropdown<cr>', opts)
-keymap('n', '<leader>fb', ':Telescope buffers theme=dropdown<cr>', opts)
+keymap('n', '<leader>fp', ':Telescope find_files<cr>', opts)
+keymap('n', '<leader>fb', ':Telescope buffers<cr>', opts)
 keymap('n', '<leader>fc', ':lua Telescope_diff_master()<CR>', opts)
-keymap('n', '<leader>fo', ':Telescope oldfiles theme=dropdown<cr>', opts)
+keymap('n', '<leader>fo', ':Telescope oldfiles<cr>', opts)
 keymap('n', '<leader>ff', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fq', ':Telescope quickfix<cr>', opts)
 keymap('n', '<leader>fs', ':Telescope<CR>', opts)
 keymap('n', '<leader>ft', ':Telescope file_browser<cr>', opts)
 keymap('n', '<leader>ft', ':Telescope file_browser path=%:p:h<cr>', opts)
 keymap('n', '<leader>f/', ':Telescope current_buffer_fuzzy_find<CR>', opts)
-keymap('n', '<leader>f"', ':Telescope registers theme=dropdown<cr>', opts)
-keymap('n', '<leader>fg', ':Telescope git_branches  theme=dropdown<cr>', opts)
+keymap('n', '<leader>f"', ':Telescope registers<cr>', opts)
+keymap('n', '<leader>fg', ':Telescope git_branches<cr>', opts)
 keymap('n', '<leader>f;', ':Telescope neoclip<cr>', opts)
 keymap('n', '<leader>fa', ':lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', opts)
 keymap("n", "<leader>fw", "<cmd>lua Delta_git_commits()<CR>", opts)
@@ -197,6 +197,7 @@ keymap("n", "<leader>oo", "<cmd>:lua require('nvim-quick-switcher').find('.compo
 keymap("n", "<leader>op", "<cmd>:lua require('nvim-quick-switcher').find('.module.ts')<CR>", { noremap = true, silent = true, desc = "Go to module" })
 
 -- Golang Test switcher
+-- keymap("n", "<leader>ot", "<cmd>:lua require('nvim-quick-switcher').find('.+test|.+spec', { regex = true, prefix='full' })<CR>", opts)
 keymap('n', '<leader>ot', ':GoAlt!<cr>', opts)
 
 -- Switches for - or _ e.g. controller-util.lua

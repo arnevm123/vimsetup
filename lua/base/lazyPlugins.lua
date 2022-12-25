@@ -67,11 +67,11 @@ return {
     "nvim-telescope/telescope.nvim",
     "nvim-telescope/telescope-smart-history.nvim",
     "nvim-telescope/telescope-frecency.nvim",
-    {"nvim-telescope/telescope-fzf-native.nvim", build="make"},
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "nvim-telescope/telescope-dap.nvim",
 
     -- Treesitter
-    { "nvim-treesitter/nvim-treesitter"},
+    { "nvim-treesitter/nvim-treesitter" },
     "nvim-treesitter/nvim-treesitter-context",
     "nvim-treesitter/nvim-treesitter-textobjects",
     "nvim-treesitter/playground",
@@ -98,18 +98,11 @@ return {
         -- tag = "*"
     },
 
-    {
-        "kylechui/nvim-surround",
-        config = function()
-            require("nvim-surround").setup({})
-        end
-    },
+    "kylechui/nvim-surround",
+
     {
         "Wansmer/treesj",
         dependencies = { "nvim-treesitter" },
-        config = function()
-            require('treesj').setup({ use_default_keymaps = false })
-        end,
     },
 
     { "AckslD/nvim-neoclip.lua", dependencies = { { "kkharji/sqlite.lua" } } },
@@ -121,15 +114,12 @@ return {
             "kristijanhusak/vim-dadbod-ui",
             "kristijanhusak/vim-dadbod-completion",
         },
-        config = function()
-            require("config.dadbod").setup()
-        end,
         cmd = { "DBUIToggle", "DBUI", "DBUIAddConnection", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUILastQueryInfo" },
     },
 
     "Everduin94/nvim-quick-switcher",
     "chrisbra/csv.vim",
-    "ibhagwan/fzf-lua",
+    -- "ibhagwan/fzf-lua",
 
     {
         "jackMort/ChatGPT.nvim",

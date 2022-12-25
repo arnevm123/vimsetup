@@ -33,4 +33,7 @@ require "arne.gitsigns"
 
 -- Language specific
 require "arne.go"
-require "arne.quickSwitch"
+
+-- random one line setups
+require('treesj').setup({ use_default_keymaps = false })
+require("nvim-surround").setup({})
