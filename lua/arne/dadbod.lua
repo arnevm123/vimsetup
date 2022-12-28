@@ -1,4 +1,3 @@
-require("dadbod").setup()
 local M = {}
 
 local function db_completion()

@@ -70,34 +70,41 @@ if not present then
     return
 end
 
-local null_opts = lsp.build_options('null-ls', {
-    on_attach = function(client)
-        if client.resolved_capabilities.document_formatting then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                desc = "Auto format before save",
-                pattern = "<buffer>",
-                callback = vim.lsp.buf.formatting_sync,
-            })
-        end
-    end
-})
+-- local null_opts = lsp.build_options('null-ls', {
+--     on_attach = function(client)
+--         if client.resolved_capabilities.document_formatting then
+--             vim.api.nvim_create_autocmd("BufWritePre", {
+--                 desc = "Auto format before save",
+--                 pattern = "<buffer>",
+--                 callback = vim.lsp.buf.formatting_sync,
+--             })
+--         end
+--     end
+-- })
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
 local formatting = null_ls.builtins.formatting
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
 local code_actions = null_ls.builtins.code_actions
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
--- local diagnostics = null_ls.builtins.diagnostics
+local diagnostics = null_ls.builtins.diagnostics
 
 null_ls.setup({
-    formatting.prettierd,
-    debug = true,
     sources = {
-        formatting.prettierd,
+        diagnostics.eslint_d,
         formatting.goimports,
         code_actions.eslint_d,
+        formatting.prettier,
     },
 })
 
-local default_node_modules = vim.fn.getcwd() .. "/node_modules"
-
+        -- formatting.prettierd.with({ extra_args = "/Users/arnevm/Documents/moaprfrontend/moapr/node_modules/prettier/bin-prettier.js"}),
+        -- formatting.prettier_d_slim.with({
+        --     extra_args = {
+        --         "--single-quote",
+        --         "--no-bracket-spacing",
+        --         "--jsx-single-quote",
+        --         "--print-width 120",
+        --         "--tabWidth 2",
+        --     },
+        -- }),

@@ -58,6 +58,14 @@ vim.api.nvim_create_autocmd('BufEnter', {
     command = 'set fo-=c fo-=r fo-=o'
 })
 
+
+vim.cmd [[
+augroup AutoDeleteNetrwHiddenBuffers
+  au!
+  au FileType netrw setlocal bufhidden=wipe
+augroup end
+]]
+
 -- vim.cmd [[
 -- autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 -- ]]
@@ -95,10 +103,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     pattern = { "*.go" },
     command = ":GoFmt",
 })
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-    pattern = { '*.xml', '*.html', '*.css', '*.js', '*.ts' },
-    command = ":Prettier",
-})
+
+-- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+--     pattern = { '*.xml', '*.html', '*.css', '*.js', '*.ts' },
+--     command = ":lua vim.lsp.buf.format()",
+-- })
 
 -- Set indentation to 2 spaces
 augroup('setIndent', { clear = true })

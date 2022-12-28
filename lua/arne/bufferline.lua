@@ -15,7 +15,7 @@ bufferline.setup {
     tab_size = 21,
     -- diagnostics = "nvim_lsp", -- | "nvim_lsp" | "coc",
     -- diagnostics_update_in_insert = false,
-    offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+    offsets = {},
     show_buffer_icons = false,
     show_buffer_close_icons = false,
     show_close_icon = false,

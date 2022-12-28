@@ -43,13 +43,27 @@ keymap("i", "jk", "<ESC>", opts)
 -- Clear highlights with esc
 keymap("n", "<esc>", ":noh<CR><esc>", opts)
 
-keymap('n', ']b', ':bn<CR>', opts)
-keymap('n', '[b', ':bp<CR>', opts)
-keymap('n', ']g',  '<cmd>lua require "gitsigns".next_hunk()<cr>',  opts)
-keymap('n', '[g',  '<cmd>lua require "gitsigns".prev_hunk()<cr>',  opts)
-keymap('n', ']c',  '<cmd>cnext<cr>',  opts)
-keymap('n', '[c',  '<cmd>cprevious<cr>',  opts)
-keymap('n', '-c',  '<cmd>cclose<cr>',  opts)
+keymap('n', ']g', '<cmd>lua require "gitsigns".next_hunk()<cr>', opts)
+keymap('n', '[g', '<cmd>lua require "gitsigns".prev_hunk()<cr>', opts)
+
+
+cToggle = function()
+    local qf_exists = false
+    for _, win in pairs(vim.fn.getwininfo()) do
+        if win["quickfix"] == 1 then
+            qf_exists = true
+        end
+    end
+    if qf_exists == true then
+        vim.cmd "cclose"
+        return
+    end
+    if not vim.tbl_isempty(vim.fn.getqflist()) then
+        vim.cmd "copen"
+    end
+end
+
+keymap('n', 'yoq', '<cmd>lua cToggle()<cr>', opts)
 
 keymap("n", "<Leader>xn", ":let @+=@%<cr>", { noremap = true, silent = true, desc = "Copy Buffer name and path" })
 
@@ -74,12 +88,12 @@ keymap('v', 'c', '"_c', opts)
 keymap('n', 'c', '"_c', opts)
 
 -- next greatest remap ever : asbjornHaland
-keymap("n", "<leader>y", "\"+y", opts )
-keymap("v","<leader>y", "\"+y", opts)
+keymap("n", "<leader>y", "\"+y", opts)
+keymap("v", "<leader>y", "\"+y", opts)
 keymap("n", "<leader>Y", "\"+Y", silent)
 
-keymap("n", "<leader>p", "\"+p", opts )
-keymap("v","<leader>p", "\"+p", opts)
+keymap("n", "<leader>p", "\"+p", opts)
+keymap("v", "<leader>p", "\"+p", opts)
 keymap("n", "<leader>P", "\"+P", silent)
 keymap("v", "<leader>P", "\"+P", silent)
 
@@ -93,24 +107,24 @@ keymap('n', 'Q', 'gqq', opts)
 keymap('v', '<leader>re', '"hy:%s/<C-r>h//c<left><left><left>', opts)
 
 keymap('n', '<leader>w', ':w!<CR>', opts)
-keymap('n', '<leader>q', ':bp<CR> :bd #<CR>', opts)
+keymap('n', '<leader>q', ':bp<CR> :bd! #<CR>', opts)
 
 -- Telescope
-keymap('n', '<leader>fp', ':Telescope find_files<cr>', opts)
+keymap('n', '<C-p>', ':Telescope find_files<cr>', opts)
 keymap('n', '<leader>fb', ':Telescope buffers<cr>', opts)
 keymap('n', '<leader>fc', ':lua Telescope_diff_master()<CR>', opts)
-keymap('n', '<leader>fo', ':Telescope oldfiles<cr>', opts)
+keymap('n', '<leader>fr', ':Telescope oldfiles<cr>', opts)
 keymap('n', '<leader>ff', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fq', ':Telescope quickfix<cr>', opts)
 keymap('n', '<leader>fs', ':Telescope<CR>', opts)
 keymap('n', '<leader>ft', ':Telescope file_browser<cr>', opts)
-keymap('n', '<leader>ft', ':Telescope file_browser path=%:p:h<cr>', opts)
+keymap('n', '<leader>fp', ':Telescope file_browser path=%:p:h<cr>', opts)
 keymap('n', '<leader>f/', ':Telescope current_buffer_fuzzy_find<CR>', opts)
 keymap('n', '<leader>f"', ':Telescope registers<cr>', opts)
 keymap('n', '<leader>fg', ':Telescope git_branches<cr>', opts)
 keymap('n', '<leader>f;', ':Telescope neoclip<cr>', opts)
 keymap('n', '<leader>fa', ':lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', opts)
-keymap("n", "<leader>fw", "<cmd>lua Delta_git_commits()<CR>", opts)
+keymap("n", "<leader>fw", ':lua Delta_git_commits()<CR>', opts)
 keymap('n', '<leader>fdf', ':Telescope dap frames<CR>', opts)
 keymap('n', '<leader>fdc', ':Telescope dap commands<CR>', opts)
 keymap('n', '<leader>fdb', ':Telescope dap list_breakpoints<CR>', opts)
@@ -118,6 +132,7 @@ keymap('n', '<leader>fdv', ':Telescope dap variables<CR>', opts)
 
 keymap('n', '<leader>eu', ':UndotreeToggle<cr>', opts)
 keymap('n', '<leader>ex', ':Sexplore!<cr>', opts)
+keymap('n', 'yoe', ':Lexplore!<cr>', opts)
 keymap('n', '<leader>ee', ':GoIfErr<cr>', opts)
 keymap('n', '<leader>el', ':GoLint<cr>', opts)
 keymap('n', '<leader>ef', ':GoFillStruct<cr>', opts)
@@ -127,17 +142,16 @@ keymap('n', '<leader>et', ':lua require("dapui").toggle()<cr>', opts)
 keymap('n', '<leader>ecd', ':cd platform/scripts/local-full<cr>', opts)
 -- You can also use below = true here to to change the position ofhe printf
 -- statement (or set two remaps for either one). This remap must be made in normal mode.
-keymap( "n", "<leader>ek", ":lua require('refactoring').debug.printf({below = true})<CR>", opts)
+keymap("n", "<leader>ek", ":lua require('refactoring').debug.printf({below = true})<CR>", opts)
 -- Remap in normal mode and passing { normal = true } will automatically find the variable under the cursor and print it
 keymap("n", "<leader>ev", ":lua require('refactoring').debug.print_var({ normal = true })<CR>", opts)
 -- Remap in visual mode will print whatever is in the visual selection
 keymap("v", "<leader>ev", ":lua require('refactoring').debug.print_var({})<CR>", opts)
 -- Cleanup function: this remap should be made in normal mode
 keymap("n", "<leader>ec", ":lua require('refactoring').debug.cleanup({})<CR>", opts)
-keymap('n', '<leader>es', '<cmd>setlocal spell!<CR>', opts)
 
-keymap('n', '<leader>k', '<cmd>:TSJSplit<CR>', opts)
-keymap('n', '<leader>j', '<cmd>:TSJJoin<CR>', opts)
+keymap('n', '<leader>j', '<cmd>TSJJoin<CR>', opts)
+keymap('n', '<leader>k', '<cmd>TSJSplit<CR>', opts)
 
 -- HARPOON
 keymap("n", "<leader>a", '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)
@@ -153,11 +167,11 @@ keymap("n", "<C-;>", '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', opts)
 keymap("n", "gx", ":lua Go_to_url()<CR>", opts)
 
 --LSP
-keymap("n", "<leader>la" ,"<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", opts)
-keymap("n", "<leader>ld" ,"<cmd>Telescope diagnostics<CR>", opts)
+keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+keymap("n", "<leader>lg", "<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", opts)
+keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", opts)
 keymap("n", "<leader>lw", "<cmd>Telescope lsp_workspace_diagnostics<cr>", opts)
-keymap("n", "<leader>lf", "<cmd>LspZeroFormat<cr>", opts)
-keymap("n", "<leader>lp", "<cmd>Prettier<cr>", opts)
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<cr>", opts)
 keymap("n", "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", opts)
 keymap("n", "<leader>lq", "<cmd>Telescope quickfix<cr>", opts)
 keymap("n", "<leader>lr", "<<cmd>lua vim.lsp.buf.rename()<cr>", opts)
@@ -182,26 +196,32 @@ keymap("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", opts)
 keymap("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", opts)
 keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", opts)
 keymap("n", "<leader>gD", "<cmd>Gitsigns diffthis master<cr>", opts)
-keymap("n", "<leader>gw", ":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", opts)
-keymap("n", "<leader>gz", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
+-- keymap("n", "<leader>gw", ":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", opts)
+-- keymap("n", "<leader>gz", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
 keymap("n", "<leader>ge", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)
 -- Stylesheets
-keymap("n", "<leader>oi", "<cmd>:lua require('nvim-quick-switcher').find('.+css|.+scss|.+sass', { regex = true, prefix='full' })<CR>",
+keymap("n", "<leader>oi",
+    "<cmd>:lua require('nvim-quick-switcher').find('.+css|.+scss|.+sass', { regex = true, prefix='full' })<CR>",
     { noremap = true, silent = true, desc = "Go to stylesheet" })
 
 -- Angular
 -- Using find over switch to look backwards incase in a redux-like folder "/state"
-keymap("n", "<leader>os", "<cmd>:lua require('nvim-quick-switcher').find('.service.ts')<CR>", { noremap = true, silent = true, desc = "Go to service" })
-keymap("n", "<leader>ou", "<cmd>:lua require('nvim-quick-switcher').find('.component.ts')<CR>", { noremap = true, silent = true, desc = "Go to TS" })
-keymap("n", "<leader>oo", "<cmd>:lua require('nvim-quick-switcher').find('.component.html')<CR>", { noremap = true, silent = true, desc = "Go to html" })
-keymap("n", "<leader>op", "<cmd>:lua require('nvim-quick-switcher').find('.module.ts')<CR>", { noremap = true, silent = true, desc = "Go to module" })
+keymap("n", "<leader>os", "<cmd>:lua require('nvim-quick-switcher').find('.service.ts')<CR>",
+    { noremap = true, silent = true, desc = "Go to service" })
+keymap("n", "<leader>ou", "<cmd>:lua require('nvim-quick-switcher').find('.component.ts')<CR>",
+    { noremap = true, silent = true, desc = "Go to TS" })
+keymap("n", "<leader>oo", "<cmd>:lua require('nvim-quick-switcher').find('.component.html')<CR>",
+    { noremap = true, silent = true, desc = "Go to html" })
+keymap("n", "<leader>op", "<cmd>:lua require('nvim-quick-switcher').find('.module.ts')<CR>",
+    { noremap = true, silent = true, desc = "Go to module" })
 
 -- Golang Test switcher
 -- keymap("n", "<leader>ot", "<cmd>:lua require('nvim-quick-switcher').find('.+test|.+spec', { regex = true, prefix='full' })<CR>", opts)
 keymap('n', '<leader>ot', ':GoAlt!<cr>', opts)
 
 -- Switches for - or _ e.g. controller-util.lua
-keymap("n", "<leader>ol", "<cmd>:lua require('nvim-quick-switcher').find('*util.*', { prefix='short' })<CR>", { noremap = true, silent = true, desc = "Go to util" })
+keymap("n", "<leader>ol", "<cmd>:lua require('nvim-quick-switcher').find('*util.*', { prefix='short' })<CR>",
+    { noremap = true, silent = true, desc = "Go to util" })
 
 
 keymap("n", "<Leader>ng", ":lua require('neogen').generate()<CR>", opts)
@@ -213,19 +233,17 @@ local previewers = require("telescope.previewers")
 local builtin = require("telescope.builtin")
 
 local delta = previewers.new_termopen_previewer({
-	get_command = function(entry)
-		return { "git", "-c", "core.pager=delta", "-c", "delta.side-by-side=false", "diff", entry.value .. "^!" }
-	end,
+    get_command = function(entry)
+        return { "git", "-c", "core.pager=delta", "-c", "delta.side-by-side=false", "diff", entry.value .. "^!" }
+    end,
 })
 
 Delta_git_commits = function(options)
-	options = options or {}
-	options.previewer = {
-		delta,
-		previewers.git_commit_message.new(options),
-		previewers.git_commit_diff_as_was.new(options),
-	}
-	builtin.git_commits(options)
+    options = options or {}
+    options.previewer = {
+        delta,
+        previewers.git_commit_message.new(options),
+        previewers.git_commit_diff_as_was.new(options),
+    }
+    builtin.git_commits(options)
 end
-
-
