@@ -10,23 +10,6 @@ local keymap = vim.keymap.set
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 
--- Modes
---   normal_mode = "n",
---   insert_mode = "i",
---   visual_mode = "v",
---   visual_block_mode = "x",
---   term_mode = "t",
---   command_mode = "c",
-
--- Normal --
--- Better window navigation
---
---
--- keymap("n", "<C-h>", "<C-w>h", opts)
--- keymap("n", "<C-j>", "<C-w>j", opts)
--- keymap("n", "<C-k>", "<C-w>k", opts)
--- keymap("n", "<C-l>", "<C-w>l", opts)
-
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
@@ -37,36 +20,15 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
--- Insert --
--- Press jk fast to exit insert mode
-keymap("i", "jk", "<ESC>", opts)
 -- Clear highlights with esc
 keymap("n", "<esc>", ":noh<CR><esc>", opts)
 
 keymap('n', ']g', '<cmd>lua require "gitsigns".next_hunk()<cr>', opts)
 keymap('n', '[g', '<cmd>lua require "gitsigns".prev_hunk()<cr>', opts)
 
-
-cToggle = function()
-    local qf_exists = false
-    for _, win in pairs(vim.fn.getwininfo()) do
-        if win["quickfix"] == 1 then
-            qf_exists = true
-        end
-    end
-    if qf_exists == true then
-        vim.cmd "cclose"
-        return
-    end
-    if not vim.tbl_isempty(vim.fn.getqflist()) then
-        vim.cmd "copen"
-    end
-end
-
 keymap('n', 'yoq', '<cmd>lua cToggle()<cr>', opts)
 
 keymap("n", "<Leader>xn", ":let @+=@%<cr>", { noremap = true, silent = true, desc = "Copy Buffer name and path" })
-
 keymap("n", "<Leader>xc", ":g/console.lo/d<cr>", { noremap = true, silent = true, desc = "Remove console.log" })
 
 -- Visual --
@@ -74,14 +36,12 @@ keymap("n", "<Leader>xc", ":g/console.lo/d<cr>", { noremap = true, silent = true
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
-
 -- Terminal --
 -- Better terminal navigation
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", silent)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", silent)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", silent)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", silent)
-
 
 -- doesn't overwrite yank
 keymap('v', 'c', '"_c', opts)
@@ -163,9 +123,6 @@ keymap("n", "<C-k>", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', opts)
 keymap("n", "<C-l>", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', opts)
 keymap("n", "<C-;>", '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', opts)
 
-
-keymap("n", "gx", ":lua Go_to_url()<CR>", opts)
-
 --LSP
 keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 keymap("n", "<leader>lg", "<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", opts)
@@ -182,7 +139,7 @@ keymap("n", "<leader>Du", "<Cmd>DBUIToggle<Cr>", opts)
 keymap("n", "<leader>Df", "<Cmd>DBUIFindBuffer<Cr>", opts)
 keymap("n", "<leader>Dr", "<Cmd>DBUIRenameBuffer<Cr>", opts)
 keymap("n", "<leader>Dq", "<Cmd>DBUILastQueryInfo<Cr>", opts)
---GIT
+-- GIT
 keymap("n", "<leader>gg", "<cmd>Neogit<CR>", opts)
 keymap("n", "<leader>gp", "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", opts)
 keymap("n", "<leader>gr", "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", opts)
@@ -200,34 +157,40 @@ keymap("n", "<leader>gD", "<cmd>Gitsigns diffthis master<cr>", opts)
 -- keymap("n", "<leader>gz", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
 keymap("n", "<leader>ge", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)
 -- Stylesheets
-keymap("n", "<leader>oi",
-    "<cmd>:lua require('nvim-quick-switcher').find('.+css|.+scss|.+sass', { regex = true, prefix='full' })<CR>",
-    { noremap = true, silent = true, desc = "Go to stylesheet" })
+keymap("n", "<leader>oi", "<cmd>:lua require('nvim-quick-switcher').find('.+css|.+scss|.+sass', { regex = true, prefix='full' })<CR>", { noremap = true, silent = true, desc = "Go to stylesheet" })
 
 -- Angular
 -- Using find over switch to look backwards incase in a redux-like folder "/state"
-keymap("n", "<leader>os", "<cmd>:lua require('nvim-quick-switcher').find('.service.ts')<CR>",
-    { noremap = true, silent = true, desc = "Go to service" })
-keymap("n", "<leader>ou", "<cmd>:lua require('nvim-quick-switcher').find('.component.ts')<CR>",
-    { noremap = true, silent = true, desc = "Go to TS" })
-keymap("n", "<leader>oo", "<cmd>:lua require('nvim-quick-switcher').find('.component.html')<CR>",
-    { noremap = true, silent = true, desc = "Go to html" })
-keymap("n", "<leader>op", "<cmd>:lua require('nvim-quick-switcher').find('.module.ts')<CR>",
-    { noremap = true, silent = true, desc = "Go to module" })
+keymap("n", "<leader>os", "<cmd>:lua require('nvim-quick-switcher').find('.service.ts')<CR>", { noremap = true, silent = true, desc = "Go to service" })
+keymap("n", "<leader>ou", "<cmd>:lua require('nvim-quick-switcher').find('.component.ts')<CR>", { noremap = true, silent = true, desc = "Go to TS" })
+keymap("n", "<leader>oo", "<cmd>:lua require('nvim-quick-switcher').find('.component.html')<CR>", { noremap = true, silent = true, desc = "Go to html" })
+keymap("n", "<leader>op", "<cmd>:lua require('nvim-quick-switcher').find('.module.ts')<CR>", { noremap = true, silent = true, desc = "Go to module" })
 
 -- Golang Test switcher
 -- keymap("n", "<leader>ot", "<cmd>:lua require('nvim-quick-switcher').find('.+test|.+spec', { regex = true, prefix='full' })<CR>", opts)
 keymap('n', '<leader>ot', ':GoAlt!<cr>', opts)
 
 -- Switches for - or _ e.g. controller-util.lua
-keymap("n", "<leader>ol", "<cmd>:lua require('nvim-quick-switcher').find('*util.*', { prefix='short' })<CR>",
-    { noremap = true, silent = true, desc = "Go to util" })
+keymap("n", "<leader>ol", "<cmd>:lua require('nvim-quick-switcher').find('*util.*', { prefix='short' })<CR>", { noremap = true, silent = true, desc = "Go to util" })
 
 
 keymap("n", "<Leader>ng", ":lua require('neogen').generate()<CR>", opts)
 keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
 keymap("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
 keymap("n", "<Leader>nt", ":lua require('neogen').generate({ type = 'type' })<CR>", opts)
+
+-- debug
+keymap("n", "<F5>", ":lua require'dap'.continue()<CR>", opts)
+keymap("n", "<F9>", ":lua require'dap'.run_to_cursor()<CR>", opts)
+keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", opts)
+keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", opts)
+keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", opts)
+keymap("n", "<F7>", ":lua require'go.dap'.run()<CR>", opts)
+keymap("n", "<F6>", ":lua require'go.dap'.stop()<CR>", opts)
+keymap("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>", opts)
+keymap("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
+keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts)
+keymap("n", "<leader>df", ":lua require('dapui').float_element('breakpoints')<CR>", opts)
 
 local previewers = require("telescope.previewers")
 local builtin = require("telescope.builtin")
@@ -246,4 +209,42 @@ Delta_git_commits = function(options)
         previewers.git_commit_diff_as_was.new(options),
     }
     builtin.git_commits(options)
+end
+
+function Go_to_url(cmd)
+    local url = vim.fn.expand('<cfile>', nil, nil)
+    if not url:match("http") then
+        url = "https://github.com/" .. url
+    end
+
+    vim.notify("Going to " .. url, 'info', { title = "Opening browser..." })
+    vim.fn.jobstart({ cmd or "open", url }, { on_exit = function() end })
+end
+
+-- make dd not remove last yank if empty
+local function smart_dd()
+    if vim.api.nvim_get_current_line():match('^%s*$') then
+        return '\"_dd'
+    else
+        return 'dd'
+    end
+end
+
+keymap('n', 'dd', smart_dd, { noremap = true, expr = true })
+keymap("n", "gx", ":lua Go_to_url()<CR>", opts)
+
+cToggle = function()
+    local qf_exists = false
+    for _, win in pairs(vim.fn.getwininfo()) do
+        if win["quickfix"] == 1 then
+            qf_exists = true
+        end
+    end
+    if qf_exists == true then
+        vim.cmd "cclose"
+        return
+    end
+    if not vim.tbl_isempty(vim.fn.getqflist()) then
+        vim.cmd "copen"
+    end
 end

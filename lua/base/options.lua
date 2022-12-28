@@ -49,37 +49,31 @@ end
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
-alt_file = vim.fn.expand('%:r') .. "_test.go"
-
--- Don't auto commenting new lines
-vim.api.nvim_create_autocmd('BufEnter', {
-    pattern = '',
-    command = 'set fo-=c fo-=r fo-=o'
-})
-
-
-vim.cmd [[
-augroup AutoDeleteNetrwHiddenBuffers
-  au!
-  au FileType netrw setlocal bufhidden=wipe
-augroup end
-]]
-
--- vim.cmd [[
--- autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
--- ]]
-
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 40
 vim.cmd "setlocal spell spelllang=en_gb"
 vim.cmd "setlocal spell!"
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 
 local augroup = vim.api.nvim_create_augroup
-local yank_group = augroup('HighlightYank', {})
 local autocmd = vim.api.nvim_create_autocmd
 
-autocmd('TextYankPost', {
-    group = yank_group,
+-- Don't auto commenting new lines
+autocmd('BufEnter', {
+    pattern = '',
+    command = 'set fo-=c fo-=r fo-=o'
+})
+
+vim.cmd [[
+augroup AutoDeleteNetrwHiddenBuffers
+au!
+au FileType netrw setlocal bufhidden=wipe
+augroup end
+]]
+
+autocmd ('TextYankPost', {
+    group = augroup('HighlightYank', {}),
     pattern = '*',
     callback = function()
         vim.highlight.on_yank({
@@ -89,33 +83,31 @@ autocmd('TextYankPost', {
     end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+-- remove eol spaces
+autocmd({ "BufWritePre" }, {
     pattern = { "*" },
     command = [[%s/\s\+$//e]],
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+autocmd({ "BufWritePre" }, {
     pattern = { "*.go" },
     command = ":GoImport",
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+autocmd({ "BufWritePre" }, {
     pattern = { "*.go" },
     command = ":GoFmt",
 })
 
--- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
---     pattern = { '*.xml', '*.html', '*.css', '*.js', '*.ts' },
---     command = ":lua vim.lsp.buf.format()",
--- })
-
--- Set indentation to 2 spaces
+-- Set indentation to 2 spaces for some file types
 augroup('setIndent', { clear = true })
 autocmd('Filetype', {
     group = 'setIndent',
     pattern = { 'xml', 'html', 'xhtml', 'css', 'scss', 'javascript', 'typescript', 'yaml' },
     command = 'setlocal shiftwidth=2 tabstop=2'
 })
+
+vim.api.nvim_create_user_command('PrettyJson', ":%!jq '.'", {})
 
 vim.cmd [[
 function FoldText()
@@ -132,31 +124,3 @@ set foldtext=FoldText()
 set fillchars=fold:\  " removes trailing dots. Mind that there is a whitespace after the \!
 ]]
 
-function Go_to_url(cmd)
-    local url = vim.fn.expand('<cfile>', nil, nil)
-    if not url:match("http") then
-        url = "https://github.com/" .. url
-    end
-
-    vim.notify("Going to " .. url, 'info', { title = "Opening browser..." })
-    vim.fn.jobstart({ cmd or "open", url }, { on_exit = function() end })
-end
-
-vim.g.netrw_browse_split = 0
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 40
-
-local user_cmd = vim.api.nvim_create_user_command
-
-user_cmd('PrettyJson', ":%!jq '.'", {})
-
--- make dd not remove last yank if empty
-local function smart_dd()
-    if vim.api.nvim_get_current_line():match('^%s*$') then
-        return '\"_dd'
-    else
-        return 'dd'
-    end
-end
-
-vim.keymap.set('n', 'dd', smart_dd, { noremap = true, expr = true })

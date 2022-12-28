@@ -1,3 +1,4 @@
+alt_file = vim.fn.expand('%:r') .. "_test.go"
 require('go').setup({
 
   disable_defaults = false, -- true|false when true set false to all boolean settings and replace all table

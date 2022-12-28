@@ -19,10 +19,12 @@ return {
         config = function() require("arne.whichkey") end,
         lazy = false,
     },
-
     -- Colorschemes
     {
         "mcchrish/zenbones.nvim",
+        priority = 1000,
+        config = function() require("base.colorscheme")  end,
+        lazy = false,
         dependencies = { "rktjmp/lush.nvim" },
     },
     -- LSP
@@ -69,17 +71,19 @@ return {
     },
 
     -- Debugger
-    "mfussenegger/nvim-dap",
     {
         "rcarriga/nvim-dap-ui",
-        dependencies = "mfussenegger/nvim-dap",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+            "theHamsta/nvim-dap-virtual-text",
+            "nvim-telescope/telescope-dap.nvim",
+        },
+        config = function() require("arne.debug") end,
+        cmd = "GoDebug",
     },
 
-    "nvim-telescope/telescope-dap.nvim",
-    "theHamsta/nvim-dap-virtual-text",
 
     -- Telescope
-    "kkharji/sqlite.lua",
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope.nvim",
     {
@@ -158,7 +162,6 @@ return {
     },
 
     -- General functionality
-    "Everduin94/nvim-quick-switcher",
     {
         "AckslD/nvim-neoclip.lua",
         dependencies = { { "kkharji/sqlite.lua" } },
@@ -193,6 +196,7 @@ return {
         config = function() require("arne.chatgpt") end,
         cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions", "ChatGPTRun" },
     },
+    "Everduin94/nvim-quick-switcher",
 }
 
 
