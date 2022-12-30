@@ -21,7 +21,7 @@ keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
 -- Clear highlights with esc
 keymap("n", "<esc>", ":noh<CR><esc>", opts)
-
+keymap('x', '<Leader>/', '<Esc>/\\%V')
 keymap('n', ']g', '<cmd>lua require "gitsigns".next_hunk()<cr>', opts)
 keymap('n', '[g', '<cmd>lua require "gitsigns".prev_hunk()<cr>', opts)
 keymap('n', 'yor', '<cmd>lua require("illuminate").toggle()<cr>', opts)
@@ -65,7 +65,8 @@ keymap('n', '<C-d>', '<C-d>zztv', opts)
 keymap('n', '<C-u>', '<C-u>zztv', opts)
 
 keymap('n', 'Q', 'gqq', opts)
-keymap('v', '<leader>re', '"hy:%s/<C-r>h//c<left><left><left>', opts)
+keymap('v', '<leader>re', '"hy:%s/<C-r>h//c <left><left><left>', opts)
+keymap('n', '<leader>re', ':%s/<C-r><C-w>//c <left><left><left>', opts)
 
 keymap('n', '<leader>w', ':w!<CR>', opts)
 keymap('n', '<leader>q', ':bp<CR> :bd! #<CR>', opts)

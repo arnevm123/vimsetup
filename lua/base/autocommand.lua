@@ -43,7 +43,7 @@ autocmd({ "FileType" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+autocmd({ "BufWinEnter" }, {
 	callback = function()
 	local line_count = vim.api.nvim_buf_line_count(0)
 		if line_count >= 5000 then
@@ -61,6 +61,8 @@ autocmd('Filetype', {
 })
 
 vim.api.nvim_create_user_command('PrettyJson', ":%!jq '.'", {})
+vim.api.nvim_create_user_command('CursorHighlightOn', ":lua require('illuminate').configure { under_cursor = true }", {})
+vim.api.nvim_create_user_command('CursorHighlightOff', ":lua require('illuminate').configure { under_cursor = false }", {})
 
 
 

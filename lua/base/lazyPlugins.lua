@@ -138,7 +138,6 @@ return {
     {
         "RRethy/vim-illuminate",
         config = function() require("arne.illuminate") end,
-        lazy = false,
     },
     {
         "mbbill/undotree",
