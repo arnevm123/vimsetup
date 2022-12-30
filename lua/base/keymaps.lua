@@ -1,6 +1,5 @@
+require "base.keymapFunctions"
 local opts = { noremap = true, silent = true }
-
-
 local silent = { silent = true }
 
 
@@ -25,10 +24,12 @@ keymap("n", "<esc>", ":noh<CR><esc>", opts)
 
 keymap('n', ']g', '<cmd>lua require "gitsigns".next_hunk()<cr>', opts)
 keymap('n', '[g', '<cmd>lua require "gitsigns".prev_hunk()<cr>', opts)
+keymap('n', 'yor', '<cmd>lua require("illuminate").toggle()<cr>', opts)
+keymap('n', ']r', '<cmd>lua require("illuminate").goto_next_reference(wrap)<cr>', opts)
+keymap('n', '[r', '<cmd>lua require("illuminate").goto_prev_reference(wrap)<cr>', opts)
 
-keymap('n', 'yoq', '<cmd>lua cToggle()<cr>', opts)
-
-keymap("n", "<Leader>xn", ":let @+=@%<cr>", { noremap = true, silent = true, desc = "Copy Buffer name and path" })
+keymap('n', 'yoq', CToggle, { noremap = true, expr = true })
+keymap("n", "<Leader>xn", ":call setreg('+', expand('%:.'))<CR>", { noremap = true, silent = true, desc = "Copy Buffer name and path" })
 keymap("n", "<Leader>xc", ":g/console.lo/d<cr>", { noremap = true, silent = true, desc = "Remove console.log" })
 
 -- Visual --
@@ -77,6 +78,7 @@ keymap('n', '<leader>fr', ':Telescope oldfiles<cr>', opts)
 keymap('n', '<leader>ff', ':Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fq', ':Telescope quickfix<cr>', opts)
 keymap('n', '<leader>fs', ':Telescope<CR>', opts)
+keymap('n', '<leader>fk', ':Telescope keymaps<CR>', opts)
 keymap('n', '<leader>ft', ':Telescope file_browser<cr>', opts)
 keymap('n', '<leader>fp', ':Telescope file_browser path=%:p:h<cr>', opts)
 keymap('n', '<leader>f/', ':Telescope current_buffer_fuzzy_find<CR>', opts)
@@ -84,7 +86,7 @@ keymap('n', '<leader>f"', ':Telescope registers<cr>', opts)
 keymap('n', '<leader>fg', ':Telescope git_branches<cr>', opts)
 keymap('n', '<leader>f;', ':Telescope neoclip<cr>', opts)
 keymap('n', '<leader>fa', ':lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', opts)
-keymap("n", "<leader>fw", ':lua Delta_git_commits()<CR>', opts)
+keymap("n", "<leader>fw", Delta_git_commits, { noremap = true, expr = true })
 keymap('n', '<leader>fdf', ':Telescope dap frames<CR>', opts)
 keymap('n', '<leader>fdc', ':Telescope dap commands<CR>', opts)
 keymap('n', '<leader>fdb', ':Telescope dap list_breakpoints<CR>', opts)
@@ -93,12 +95,12 @@ keymap('n', '<leader>fdv', ':Telescope dap variables<CR>', opts)
 keymap('n', '<leader>eu', ':UndotreeToggle<cr>', opts)
 keymap('n', '<leader>ex', ':Sexplore!<cr>', opts)
 keymap('n', 'yoe', ':Lexplore!<cr>', opts)
+keymap('n', 'yod', ':lua require("dapui").toggle()<cr>', opts)
 keymap('n', '<leader>ee', ':GoIfErr<cr>', opts)
 keymap('n', '<leader>el', ':GoLint<cr>', opts)
 keymap('n', '<leader>ef', ':GoFillStruct<cr>', opts)
 keymap('n', '<leader>ei', ':GoImport<cr>', opts)
 keymap('n', '<leader>eb', ':GoDebug -a<cr>', opts)
-keymap('n', '<leader>et', ':lua require("dapui").toggle()<cr>', opts)
 keymap('n', '<leader>ecd', ':cd platform/scripts/local-full<cr>', opts)
 -- You can also use below = true here to to change the position ofhe printf
 -- statement (or set two remaps for either one). This remap must be made in normal mode.
@@ -152,7 +154,7 @@ keymap("n", "<leader>go", "<cmd>Telescope git_status<cr>", opts)
 keymap("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", opts)
 keymap("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", opts)
 keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", opts)
-keymap("n", "<leader>gD", "<cmd>Gitsigns diffthis master<cr>", opts)
+keymap("n", "<leader>gm", "<cmd>Gitsigns diffthis master<cr>", opts)
 -- keymap("n", "<leader>gw", ":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", opts)
 -- keymap("n", "<leader>gz", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
 keymap("n", "<leader>ge", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)
@@ -182,69 +184,16 @@ keymap("n", "<Leader>nt", ":lua require('neogen').generate({ type = 'type' })<CR
 -- debug
 keymap("n", "<F5>", ":lua require'dap'.continue()<CR>", opts)
 keymap("n", "<F9>", ":lua require'dap'.run_to_cursor()<CR>", opts)
-keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", opts)
-keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", opts)
-keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", opts)
-keymap("n", "<F7>", ":lua require'go.dap'.run()<CR>", opts)
-keymap("n", "<F6>", ":lua require'go.dap'.stop()<CR>", opts)
-keymap("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>", opts)
-keymap("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
-keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts)
-keymap("n", "<leader>df", ":lua require('dapui').float_element('breakpoints')<CR>", opts)
+keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>")
+keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>")
+keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>")
+keymap("n", "<F7>", ":lua require'go.dap'.run()<CR>")
+keymap("n", "<F6>", ":lua require'go.dap'.stop()<CR>")
+keymap("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
+keymap("n", "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
+keymap("n", "<leader>df", ":lua require('dapui').float_element('breakpoints')<CR>")
 
-local previewers = require("telescope.previewers")
-local builtin = require("telescope.builtin")
+keymap('n', 'dd', Smart_dd, { noremap = true, expr = true })
+keymap("n", "gx", Go_to_url, { noremap = true, expr = true })
 
-local delta = previewers.new_termopen_previewer({
-    get_command = function(entry)
-        return { "git", "-c", "core.pager=delta", "-c", "delta.side-by-side=false", "diff", entry.value .. "^!" }
-    end,
-})
-
-Delta_git_commits = function(options)
-    options = options or {}
-    options.previewer = {
-        delta,
-        previewers.git_commit_message.new(options),
-        previewers.git_commit_diff_as_was.new(options),
-    }
-    builtin.git_commits(options)
-end
-
-function Go_to_url(cmd)
-    local url = vim.fn.expand('<cfile>', nil, nil)
-    if not url:match("http") then
-        url = "https://github.com/" .. url
-    end
-
-    vim.notify("Going to " .. url, 'info', { title = "Opening browser..." })
-    vim.fn.jobstart({ cmd or "open", url }, { on_exit = function() end })
-end
-
--- make dd not remove last yank if empty
-local function smart_dd()
-    if vim.api.nvim_get_current_line():match('^%s*$') then
-        return '\"_dd'
-    else
-        return 'dd'
-    end
-end
-
-keymap('n', 'dd', smart_dd, { noremap = true, expr = true })
-keymap("n", "gx", ":lua Go_to_url()<CR>", opts)
-
-cToggle = function()
-    local qf_exists = false
-    for _, win in pairs(vim.fn.getwininfo()) do
-        if win["quickfix"] == 1 then
-            qf_exists = true
-        end
-    end
-    if qf_exists == true then
-        vim.cmd "cclose"
-        return
-    end
-    if not vim.tbl_isempty(vim.fn.getqflist()) then
-        vim.cmd "copen"
-    end
-end

@@ -1,4 +1,5 @@
 require "base.options"
+require "base.autocommand"
 require "base.lazy"
 require "base.keymaps"
 require "base.colorscheme"
