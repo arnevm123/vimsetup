@@ -11,7 +11,6 @@ M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 M.setup = function()
     local signs = {
-
         { name = "DiagnosticSignError", text = "E" },
         { name = "DiagnosticSignWarn", text = "W" },
         { name = "DiagnosticSignHint", text = "h" },

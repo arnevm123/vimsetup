@@ -1,6 +1,7 @@
 require "base.options"
 require "base.autocommand"
 require "base.lazy"
+require "base.lsp"
 require "base.keymaps"
 require "base.colorscheme"
 require "base.telescope"
