@@ -27,3 +27,4 @@ require("illuminate").configure {
   providers_regex_syntax_allowlist = {},
   under_cursor = true,
 }
+require("illuminate").toggle()

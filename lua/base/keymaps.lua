@@ -137,6 +137,8 @@ keymap("n", "<leader>lq", "<cmd>Telescope quickfix<cr>", opts)
 keymap("n", "<leader>lr", "<<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", opts)
 keymap("n", "<leader>lS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", opts)
+keymap("n", "<leader>li", "<cmd>LspInfo<cr>", opts)
+keymap("n", "<leader>lI", "<cmd>Mason<cr>", opts)
 -- Database
 keymap("n", "<leader>Du", "<Cmd>DBUIToggle<Cr>", opts)
 keymap("n", "<leader>Df", "<Cmd>DBUIFindBuffer<Cr>", opts)
