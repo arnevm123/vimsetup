@@ -19,6 +19,11 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
+keymap("v", "*", '"ry/\\V<C-r>r<CR>', opts)
+keymap("v", "#", '"ry?\\V<C-r>r<CR>', opts)
+keymap("v", "u", "<Esc>u", opts)
+keymap("v", "<C-r>", "<Esc><C-r>gv", opts)
+
 -- Clear highlights with esc
 keymap("n", "<esc>", ":noh<CR><esc>", opts)
 keymap('x', '<Leader>/', '<Esc>/\\%V')
@@ -28,7 +33,7 @@ keymap('n', 'yor', '<cmd>lua require("illuminate").toggle()<cr>', opts)
 keymap('n', ']r', '<cmd>lua require("illuminate").goto_next_reference(wrap)<cr>', opts)
 keymap('n', '[r', '<cmd>lua require("illuminate").goto_prev_reference(wrap)<cr>', opts)
 
-keymap('n', 'yoq', CToggle, { noremap = true, expr = true })
+keymap('n', 'yoq', '<cmd>lua CToggle()<CR>', opts)
 keymap("n", "<Leader>xn", ":call setreg('+', expand('%:.'))<CR>", { noremap = true, silent = true, desc = "Copy Buffer name and path" })
 keymap("n", "<Leader>xc", ":g/console.lo/d<cr>", { noremap = true, silent = true, desc = "Remove console.log" })
 
@@ -64,7 +69,7 @@ keymap('n', 'N', 'Nzz', opts)
 keymap('n', '<C-d>', '<C-d>zztv', opts)
 keymap('n', '<C-u>', '<C-u>zztv', opts)
 
-keymap('n', 'Q', 'gqq', opts)
+keymap('n', 'Q', '@a', opts)
 keymap('v', '<leader>re', '"hy:%s/<C-r>h//c <left><left><left>', opts)
 keymap('n', '<leader>re', ':%s/<C-r><C-w>//c <left><left><left>', opts)
 
@@ -87,7 +92,7 @@ keymap('n', '<leader>f"', ':Telescope registers<cr>', opts)
 keymap('n', '<leader>fg', ':Telescope git_branches<cr>', opts)
 keymap('n', '<leader>f;', ':Telescope neoclip<cr>', opts)
 keymap('n', '<leader>fa', ':lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', opts)
-keymap("n", "<leader>fw", Delta_git_commits, { noremap = true, expr = true })
+keymap("n", "<leader>fw", '<cmd>lua Delta_git_commits()<CR>', opts)
 keymap('n', '<leader>fdf', ':Telescope dap frames<CR>', opts)
 keymap('n', '<leader>fdc', ':Telescope dap commands<CR>', opts)
 keymap('n', '<leader>fdb', ':Telescope dap list_breakpoints<CR>', opts)
@@ -157,10 +162,11 @@ keymap("n", "<leader>go", "<cmd>Telescope git_status<cr>", opts)
 keymap("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", opts)
 keymap("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", opts)
 keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", opts)
+keymap("n", "<leader>gb", "<cmd>0Gclog<cr>", opts)
 keymap("n", "<leader>gm", "<cmd>Gitsigns diffthis master<cr>", opts)
 -- keymap("n", "<leader>gw", ":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", opts)
 -- keymap("n", "<leader>gz", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
-keymap("n", "<leader>ge", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)
+keymap("n", "yog", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)
 -- Stylesheets
 keymap("n", "<leader>oi", "<cmd>:lua require('nvim-quick-switcher').find('.+css|.+scss|.+sass', { regex = true, prefix='full' })<CR>", { noremap = true, silent = true, desc = "Go to stylesheet" })
 
@@ -198,5 +204,5 @@ keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>")
 keymap("n", "<leader>df", ":lua require('dapui').float_element('breakpoints')<CR>")
 
 keymap('n', 'dd', Smart_dd, { noremap = true, expr = true })
-keymap("n", "gx", Go_to_url, { noremap = true, expr = true })
+keymap("n", "gx", '<cmd>lua Go_to_url()<CR>', opts)
 

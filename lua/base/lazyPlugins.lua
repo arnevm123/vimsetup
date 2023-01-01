@@ -113,6 +113,10 @@ return {
 		lazy = false,
 	},
 	{
+		"tpope/vim-fugitive",
+		lazy = false,
+	},
+	{
 		"TimUntersberger/neogit",
 		cmd = "Neogit",
 		config = function()
