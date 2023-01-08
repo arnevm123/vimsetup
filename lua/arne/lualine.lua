@@ -11,7 +11,7 @@ local diagnostics = {
 	"diagnostics",
 	sources = { "nvim_diagnostic" },
 	sections = { "error", "warn" },
-	-- symbols = { error = " ", warn = " " },
+	symbols = { error = "E ", warn = "W " },
 	colored = false,
 	update_in_insert = false,
 	always_visible = true,
@@ -21,14 +21,7 @@ local diff = {
 	"diff",
 	colored = false,
 	-- symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
-  cond = hide_in_width
-}
-
-local mode = {
-	"mode",
-	fmt = function(str)
-		return "-- " .. str .. " --"
-	end,
+	cond = hide_in_width,
 }
 
 local filetype = {
@@ -37,56 +30,60 @@ local filetype = {
 	icon = nil,
 }
 
+local endOfFileName = {
+	"filename",
+	path = 3,
+	fmt = function(str)
+		local t = {}
+		for s in string.gmatch(str, "([^" .. "/" .. "]+)") do
+			table.insert(t, s)
+		end
+		if #t < 3 then
+			return str
+		end
+		return t[#t - 2] .. "/" .. t[#t - 1] .. "/" .. t[#t]
+	end,
+}
+
 local branch = {
 	"branch",
 	icons_enabled = true,
-	icon = "",
+	-- icon = "",
+	fmt = function(str)
+		if #str > 33 then
+			str = string.sub(str, 1, 30) .. "..."
+		end
+		return str
+	end,
 }
 
-local location = {
-	"location",
-	padding = 0,
-}
-
--- cool function for progress
-local progress = function()
-	local current_line = vim.fn.line(".")
-	local total_lines = vim.fn.line("$")
-	local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-	local line_ratio = current_line / total_lines
-	local index = math.ceil(line_ratio * #chars)
-	return chars[index]
-end
-
-local spaces = function()
-	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-end
+local navic = require("nvim-navic")
 
 lualine.setup({
 	options = {
-		icons_enabled = true,
+		icons_enabled = false,
 		theme = "auto",
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
 		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
-		always_divide_middle = true,
+		always_divide_middle = false,
 	},
 	sections = {
-		lualine_a = { diagnostics },
-		lualine_b = { mode },
-		lualine_c = { {"filename", path = 1} },
+		lualine_a = {},
+		lualine_b = { endOfFileName },
+		lualine_c = { { navic.get_location, cond = navic.is_available } },
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = { branch },
-		lualine_y = { diff, spaces, "encoding", filetype },
-		lualine_z = { location },
+		lualine_x = { diff, branch, diagnostics },
+		lualine_y = {},
+		lualine_z = {},
 	},
 	inactive_sections = {
 		lualine_a = {},
 		lualine_b = {},
 		lualine_c = {},
-		lualine_x = { "location" },
+		lualine_x = {},
 		lualine_y = {},
-		lualine_z = { progress },
+		lualine_z = {},
 	},
 	tabline = {},
 	extensions = {},

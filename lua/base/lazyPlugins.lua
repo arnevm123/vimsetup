@@ -4,6 +4,18 @@ return {
 	-- Nerd font helper
 	"kyazdani42/nvim-web-devicons",
 	{
+		"elihunter173/dirbuf.nvim",
+		config = function()
+			require("dirbuf").setup({
+				hash_padding = 2,
+				show_hidden = true,
+				sort_order = "default",
+				write_cmd = "DirbufSync",
+			})
+		end,
+		cmd = "Dirbuf",
+	},
+	{
 		"akinsho/bufferline.nvim",
 		config = function()
 			require("arne.bufferline")
@@ -24,6 +36,21 @@ return {
 			require("arne.whichkey")
 		end,
 		lazy = false,
+	},
+	{
+		-- Show help for keycombos
+		"folke/zen-mode.nvim",
+		config = function()
+			require("zen-mode").setup({
+				window = {
+					width = 120,
+					options = {
+						number = true,
+						relativenumber = true,
+					},
+				},
+			})
+		end,
 	},
 	-- Colorschemes
 	{
@@ -55,6 +82,7 @@ return {
 
 	-- for formatters and linters
 	{ "jose-elias-alvarez/null-ls.nvim" },
+	{ "SmiteshP/nvim-navic" },
 
 	-- Function signature when typing
 	{
@@ -67,7 +95,12 @@ return {
 	},
 
 	-- Be fast
-	"ThePrimeagen/refactoring.nvim",
+	{
+		"ThePrimeagen/refactoring.nvim",
+		config = function()
+			require("arne.refactoring")
+		end,
+	},
 	{
 		"ThePrimeagen/harpoon",
 		config = function()
@@ -87,6 +120,10 @@ return {
 			require("arne.debug")
 		end,
 		cmd = "GoDebug",
+	},
+	{
+		"moll/vim-bbye",
+		cmd = { "Bdelete", "Bwipeout" },
 	},
 
 	-- Telescope

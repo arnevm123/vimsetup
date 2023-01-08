@@ -2,38 +2,32 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 -- Don't auto commenting new lines
-autocmd('BufEnter', {
-    pattern = '',
-    command = 'set fo-=c fo-=r fo-=o'
+autocmd("BufEnter", {
+	pattern = "",
+	command = "set fo-=c fo-=r fo-=o",
 })
 
-
-autocmd ('TextYankPost', {
-    group = augroup('HighlightYank', {}),
-    pattern = '*',
-    callback = function()
-        vim.highlight.on_yank({
-            higroup = 'IncSearch',
-            timeout = 50,
-        })
-    end,
+autocmd("TextYankPost", {
+	group = augroup("HighlightYank", {}),
+	pattern = "*",
+	callback = function()
+		vim.highlight.on_yank({
+			higroup = "IncSearch",
+			timeout = 50,
+		})
+	end,
 })
 
--- remove eol spaces
-autocmd({ "BufWritePre" }, {
-    pattern = { "*" },
-    command = [[%s/\s\+$//e]],
-})
+-- autocmd({ "BufWritePre" }, {
+-- 	pattern = "*",
+-- 	command = [[lua vim.lsp.buf.formatting_sync() ]],
+-- })
 
-autocmd({ "BufWritePre" }, {
-    pattern = { "*.go" },
-    command = ":GoImport",
-})
-
-autocmd({ "BufWritePre" }, {
-    pattern = { "*.go" },
-    command = ":GoFmt",
-})
+-- -- remove eol spaces
+-- autocmd({ "BufWritePre" }, {
+-- 	pattern = { "*" },
+-- 	command = [[%s/\s\+$//e]],
+-- })
 
 autocmd({ "FileType" }, {
 	pattern = { "gitcommit", "markdown" },
@@ -45,7 +39,7 @@ autocmd({ "FileType" }, {
 
 autocmd({ "BufWinEnter" }, {
 	callback = function()
-	local line_count = vim.api.nvim_buf_line_count(0)
+		local line_count = vim.api.nvim_buf_line_count(0)
 		if line_count >= 5000 then
 			vim.cmd("IlluminatePauseBuf")
 		end
@@ -53,21 +47,29 @@ autocmd({ "BufWinEnter" }, {
 })
 
 -- Set indentation to 2 spaces for some file types
-augroup('setIndent', { clear = true })
-autocmd('Filetype', {
-    group = 'setIndent',
-    pattern = { 'xml', 'html', 'xhtml', 'css', 'scss', 'javascript', 'typescript', 'yaml' },
-    command = 'setlocal shiftwidth=2 tabstop=2'
+augroup("setIndent", { clear = true })
+autocmd("Filetype", {
+	group = "setIndent",
+	pattern = { "xml", "html", "xhtml", "css", "scss", "javascript", "typescript", "yaml" },
+	command = "setlocal shiftwidth=2 tabstop=2",
 })
 
-vim.api.nvim_create_user_command('PrettyJson', ":%!jq '.'", {})
-vim.api.nvim_create_user_command('CursorHighlightOn', ":lua require('illuminate').configure { under_cursor = true }", {})
-vim.api.nvim_create_user_command('CursorHighlightOff', ":lua require('illuminate').configure { under_cursor = false }", {})
+vim.api.nvim_create_user_command("PrettyJson", ":%!jq '.'", {})
+vim.api.nvim_create_user_command(
+	"CursorHighlightOn",
+	":lua require('illuminate').configure { under_cursor = true }",
+	{}
+)
+vim.api.nvim_create_user_command(
+	"CursorHighlightOff",
+	":lua require('illuminate').configure { under_cursor = false }",
+	{}
+)
 
-
+vim.api.nvim_create_user_command("Chmod", "<cmd>!chmod +x %<CR>", {})
 
 -- vim commands
-vim.cmd [[
+vim.cmd([[
 function FoldText()
 let foldtextstart = repeat(' ', indent(nextnonblank(v:foldstart)))
 let uglyLine = getline(v:foldstart)
@@ -76,15 +78,15 @@ let uglyLineEnd = getline(v:foldend)
 let lineEnd = substitute(uglyLineEnd, '^\s*\(.\{-}\)\s*$', '\1', '')
 let foldDept = getline(v:foldlevel)
 let numOfLines = v:foldend - v:foldstart
-return foldtextstart . line . ' ... ' . lineEnd . ' ' . '(' . numOfLines . ' Lines)'
+return foldtextstart . line . ' ... ' . lineEnd . ' ' . '(' . numOfLines . 'ℓ)'
 endfunction
 set foldtext=FoldText()
 set fillchars=fold:\  " removes trailing dots. Mind that there is a whitespace after the \!
-]]
+]])
 
-vim.cmd [[
+vim.cmd([[
 augroup AutoDeleteNetrwHiddenBuffers
 au!
 au FileType netrw setlocal bufhidden=wipe
 augroup end
-]]
+]])

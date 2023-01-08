@@ -31,6 +31,6 @@ if not configs.golangcilsp then
     }
 end
 
-lspconfig.golangci_lint_ls.setup({
-    filetypes = { "go", "gomod" },
-})
+lspconfig.golangci_lint_ls.setup(
+    { filetypes = { "go", "gomod" } }
+)
