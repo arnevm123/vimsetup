@@ -8,5 +8,5 @@ require("base.telescope")
 require("base.treesitter")
 require("arne.refactoring")
 
--- still need to figure this one out
+-- TODO still need to figure this one out
 -- require "arne.dadbod"

@@ -91,6 +91,15 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 	dapui.close()
 end
 
+function Toggle_type_info()
+	local config = require("dapui.config")
+	if config.render().max_type_length == nil then
+		config.setup({ render = { max_type_length = 0 } })
+	else
+		config.setup({ render = { max_type_length = nil } })
+	end
+end
+
 -- dap.adapters.go = function(callback, config)
 --     local stdout = vim.loop.new_pipe(false)
 --     local handle

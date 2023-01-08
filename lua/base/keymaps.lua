@@ -264,4 +264,4 @@ keymap("n", "<leader>df", ":lua require('dapui').float_element('breakpoints')<CR
 
 keymap("n", "dd", Smart_dd, { noremap = true, expr = true })
 keymap("n", "gx", "<cmd>lua Go_to_url()<CR>", opts)
-keymap("n", "<leader>zz", ":lua require('zen-mode').toggle()<CR>", opts)
+keymap("n", "yoz", ":lua require('zen-mode').toggle()<CR>", opts)
