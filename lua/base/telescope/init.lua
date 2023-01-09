@@ -8,7 +8,7 @@ require("base.telescope.custom")
 local actions = require("telescope.actions")
 telescope.load_extension("file_browser")
 telescope.load_extension("dap")
-telescope.load_extension("harpoon")
+-- telescope.load_extension("harpoon")
 telescope.load_extension("fzf")
 -- local h_actions = require "telescope".extensions.harpoon.actions
 telescope.setup({

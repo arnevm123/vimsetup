@@ -148,8 +148,8 @@ keymap("v", "<leader>ev", ":lua require('refactoring').debug.print_var({})<CR>",
 -- Cleanup function: this remap should be made in normal mode
 keymap("n", "<leader>ec", ":lua require('refactoring').debug.cleanup({})<CR>", opts)
 
-keymap("n", "<leader>jj", "<cmd>TSJJoin<CR>", opts)
-keymap("n", "<leader>jk", "<cmd>TSJSplit<CR>", opts)
+keymap("n", "gj", "<cmd>TSJJoin<CR>", opts)
+keymap("n", "gs", "<cmd>TSJSplit<CR>", opts)
 
 -- HARPOON
 keymap("n", "<leader>a", '<cmd>lua require("harpoon.mark").add_file()<CR>', opts)

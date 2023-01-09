@@ -43,7 +43,7 @@ return {
 		config = function()
 			require("zen-mode").setup({
 				window = {
-					width = 120,
+					width = 160,
 					options = {
 						number = true,
 						relativenumber = true,
@@ -261,6 +261,37 @@ return {
 		cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions", "ChatGPTRun" },
 	},
 	"Everduin94/nvim-quick-switcher",
+
+	-- better diagnostics list and others
+	{
+		"folke/trouble.nvim",
+		cmd = { "TroubleToggle", "Trouble" },
+		opts = { use_diagnostic_signs = true },
+		keys = {
+			{ "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
+			{ "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+		},
+	},
+
+	-- todo comments
+	{
+		"folke/todo-comments.nvim",
+		cmd = { "TodoTrouble", "TodoTelescope" },
+		event = "BufReadPost",
+		config = {
+			keywords = {
+				DOTO = { icon = "A ", color = "warning" },
+			},
+		},
+    -- stylua: ignore
+    keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+      -- { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
+      { "<leader>xt", "<cmd>TodoQuickFix keywords=DOTO<cr>", desc = "Todo Trouble" },
+      { "<leader>xT", "<cmd>TodoTelescope keywords=DOTO<cr>", desc = "Todo Telescope" },
+    },
+	},
 }
 
 -- unused:

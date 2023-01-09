@@ -100,6 +100,13 @@ function Toggle_type_info()
 	end
 end
 
+local types_enabled = true
+toggle_types = function()
+	types_enabled = not types_enabled
+	dapui.update_render({ max_type_length = types_enabled and -1 or 0 })
+end
+
+vim.keymap.set("n", "<leader>dp", ":lua toggle_types()<CR>", {})
 -- dap.adapters.go = function(callback, config)
 --     local stdout = vim.loop.new_pipe(false)
 --     local handle
