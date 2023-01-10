@@ -53,5 +53,6 @@ bufferline.setup({
 		buffer_visible = { fg = "#7c7c7c" },
 		buffer_selected = { fg = "#dddddd", bg = "#575757", bold = false, italic = false },
 		modified_selected = { bg = "#575757" },
+		duplicate_selected = { fg = "#7c7c7c", bg = "#575757" },
 	},
 })

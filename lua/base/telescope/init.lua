@@ -14,6 +14,12 @@ telescope.load_extension("fzf")
 telescope.setup({
 	defaults = {
 
+		layout_config = {
+			vertical = { width = 0.8, height = 0.9 },
+			horizontal = { width = 0.9 },
+			-- other layout configuration here
+		},
+
 		path_display = { "smart" },
 
 		mappings = {

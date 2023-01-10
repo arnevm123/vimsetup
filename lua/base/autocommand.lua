@@ -101,3 +101,5 @@ au!
 au FileType netrw setlocal bufhidden=wipe
 augroup end
 ]])
+
+vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
