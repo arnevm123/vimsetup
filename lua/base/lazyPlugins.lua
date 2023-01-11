@@ -278,9 +278,9 @@ return {
 		"folke/todo-comments.nvim",
 		cmd = { "TodoTrouble", "TodoTelescope" },
 		event = "BufReadPost",
-		config = {
+		opts = {
 			keywords = {
-				DOTO = { icon = "A ", color = "warning" },
+				AAA = { icon = "A ", color = "error" },
 			},
 		},
     -- stylua: ignore
@@ -288,8 +288,8 @@ return {
       { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
       { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
       -- { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
-      { "<leader>xt", "<cmd>TodoQuickFix keywords=DOTO<cr>", desc = "Todo Trouble" },
-      { "<leader>xT", "<cmd>TodoTelescope keywords=DOTO<cr>", desc = "Todo Telescope" },
+      { "<leader>xt", "<cmd>TodoQuickFix keywords=AAA<cr>", desc = "Todo Trouble" },
+      { "<leader>xT", "<cmd>TodoTelescope keywords=AAA<cr>", desc = "Todo Telescope" },
     },
 	},
 }
