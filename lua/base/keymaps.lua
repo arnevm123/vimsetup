@@ -32,17 +32,14 @@ keymap("v", "<C-r>", "<Esc><C-r>gv", opts)
 -- Clear highlights with esc
 keymap("n", "<esc>", ":noh<CR><esc>", opts)
 keymap("x", "<Leader>/", "<Esc>/\\%V")
+keymap("n", "<Leader>sa", "ggVG")
+keymap("x", "<Leader>sa", "<esc>ggVG")
 keymap("n", "]g", '<cmd>lua require "gitsigns".next_hunk()<cr>', opts)
 keymap("n", "[g", '<cmd>lua require "gitsigns".prev_hunk()<cr>', opts)
 keymap("n", "yor", '<cmd>lua require("illuminate").toggle()<cr>', opts)
 keymap("n", "]r", '<cmd>lua require("illuminate").goto_next_reference(wrap)<cr>', opts)
 keymap("n", "[r", '<cmd>lua require("illuminate").goto_prev_reference(wrap)<cr>', opts)
 keymap("n", "yow", "<C-w>w", opts)
-keymap("n", "]w", "<C-w>l", opts)
-keymap("n", "[w", "<C-w>h", opts)
-keymap("n", "]v", "<C-w>k", opts)
-keymap("n", "[v", "<C-w>j", opts)
-
 keymap("n", "yoq", "<cmd>lua CToggle()<CR>", opts)
 keymap(
 	"n",
@@ -104,7 +101,7 @@ keymap("n", "<leader>w", function()
 			.. "written & formatted"
 	)
 end, opts)
-keymap("n", "<leader>qq", ":Bdelete<CR>", opts)
+keymap("n", "<leader>qq", ":Bdelete!<CR>", opts)
 
 -- Telescope
 keymap("n", "<C-p>", ":Telescope find_files<cr>", opts)
@@ -119,9 +116,9 @@ keymap("n", "<leader>ft", ":Telescope file_browser<cr>", opts)
 keymap("n", "<leader>fo", ":Telescope file_browser path=%:p:h<cr>", opts)
 keymap("n", "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", opts)
 keymap("n", '<leader>f"', ":Telescope registers<cr>", opts)
-keymap("n", "<leader>fg", ":Telescope git_branches<cr>", opts)
 keymap("n", "<leader>f;", ":Telescope neoclip<cr>", opts)
 keymap("n", "<leader>fa", ':lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', opts)
+keymap("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 keymap("n", "<leader>fw", "<cmd>lua Delta_git_commits()<CR>", opts)
 keymap("n", "<leader>fdf", ":Telescope dap frames<CR>", opts)
 keymap("n", "<leader>fdc", ":Telescope dap commands<CR>", opts)
@@ -137,7 +134,6 @@ keymap("n", "<leader>el", ":GoLint<cr>", opts)
 keymap("n", "<leader>ef", ":GoFillStruct<cr>", opts)
 keymap("n", "<leader>ei", ":GoImport<cr>", opts)
 keymap("n", "<leader>eb", ":GoDebug -a<cr>", opts)
-keymap("n", "<leader>ecd", ":cd platform/scripts/local-full<cr>", opts)
 -- You can also use below = true here to to change the position ofhe printf
 -- statement (or set two remaps for either one). This remap must be made in normal mode.
 keymap("n", "<leader>ek", ":lua require('refactoring').debug.printf({below = true})<CR>", opts)
@@ -196,7 +192,7 @@ keymap("n", "<leader>gb", "<cmd>0Gclog<cr>", opts)
 keymap("n", "<leader>gm", "<cmd>Gitsigns diffthis master<cr>", opts)
 -- keymap("n", "<leader>gw", ":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", opts)
 -- keymap("n", "<leader>gz", ":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", opts)
-keymap("n", "yog", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)
+keymap("n", "yob", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts)
 -- Stylesheets
 keymap(
 	"n",

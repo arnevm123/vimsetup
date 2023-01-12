@@ -119,7 +119,7 @@ return {
 		config = function()
 			require("arne.debug")
 		end,
-		cmd = "GoDebug",
+		cmd = { "GoDebug", "GoTest" },
 	},
 	{
 		"moll/vim-bbye",
@@ -133,6 +133,7 @@ return {
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "make",
 	},
+	"nvim-telescope/telescope-live-grep-args.nvim",
 
 	-- Treesitter
 	"nvim-treesitter/nvim-treesitter",
@@ -213,7 +214,7 @@ return {
 
 	-- Database
 	{
-		"tpope/vim-dadbod",
+		"arnevm123/vim-dadbod",
 		dependencies = {
 			"kristijanhusak/vim-dadbod-ui",
 			"kristijanhusak/vim-dadbod-completion",
@@ -280,17 +281,42 @@ return {
 		event = "BufReadPost",
 		opts = {
 			keywords = {
-				AAA = { icon = "A ", color = "error" },
+				AAA = { icon = "A ", color = "warning" },
+			},
+			highlight = {
+				before = "fg", -- "fg" or "bg" or empty
+				keyword = "bg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
 			},
 		},
-    -- stylua: ignore
-    keys = {
-      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-      -- { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
-      { "<leader>xt", "<cmd>TodoQuickFix keywords=AAA<cr>", desc = "Todo Trouble" },
-      { "<leader>xT", "<cmd>TodoTelescope keywords=AAA<cr>", desc = "Todo Telescope" },
-    },
+		keys = {
+			{ "]t", "<cmd> require('todo-comments').jump_next()<CR>", desc = "Next todo comment" },
+			{ "[t", "<cmd> require('todo-comments').jump_prev()<CR>", desc = "Previous todo comment" },
+			-- { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
+			{ "<leader>xa", "<cmd>TodoQuickFix keywords=AAA<cr>", desc = "Todo Trouble" },
+			{ "<leader>xt", "<cmd>TodoQuickFix<cr>", desc = "Todo Trouble" },
+			{ "<leader>xT", "<cmd>TodoTelescope keywords=AAA<cr>", desc = "Todo Telescope" },
+		},
+	},
+
+	{
+		-- TODO: use this when stable
+		-- "toppair/peek.nvim",
+		"hulufei/peek.nvim",
+		branch = "use-browser",
+		build = "deno task --quiet build:fast",
+		opts = {
+			auto_load = true, -- whether to automatically load preview when
+			-- entering another markdown buffer
+			close_on_bdelete = true, -- close preview window on buffer delete
+			syntax = true, -- enable syntax highlighting, affects performance
+			theme = "dark", -- 'dark' or 'light'
+			update_on_change = true,
+			-- relevant if update_on_change is true
+			throttle_at = 200000, -- start throttling when file exceeds this
+			-- amount of bytes in size
+			throttle_time = "auto", -- minimum amount of time in milliseconds
+			-- that has to pass before starting new render
+		},
 	},
 }
 

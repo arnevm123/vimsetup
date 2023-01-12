@@ -77,7 +77,11 @@ vim.api.nvim_create_user_command(
 	{}
 )
 
-vim.api.nvim_create_user_command("Chmod", "<cmd>!chmod +x %<CR>", {})
+vim.api.nvim_create_user_command("Chmod", ":!chmod +x %", {})
+vim.api.nvim_create_user_command("Cdlf", ":cd platform/scripts/local-full", {})
+vim.api.nvim_create_user_command("Cdtest", ":cd %:h", {})
+vim.api.nvim_create_user_command("PeekOpen", ":lua require('peek').open()", {})
+vim.api.nvim_create_user_command("PeekClose", ":lua require('peek').close()", {})
 
 -- vim commands
 vim.cmd([[

@@ -10,6 +10,8 @@ telescope.load_extension("file_browser")
 telescope.load_extension("dap")
 -- telescope.load_extension("harpoon")
 telescope.load_extension("fzf")
+telescope.load_extension("live_grep_args")
+local lga_actions = require("telescope-live-grep-args.actions")
 -- local h_actions = require "telescope".extensions.harpoon.actions
 telescope.setup({
 	defaults = {
@@ -24,8 +26,8 @@ telescope.setup({
 
 		mappings = {
 			i = {
-				["<C-j>"] = actions.cycle_history_next,
-				["<C-k>"] = actions.cycle_history_prev,
+				["<C-Down>"] = actions.cycle_history_next,
+				["<C-Up>"] = actions.cycle_history_prev,
 
 				["<C-n>"] = actions.move_selection_next,
 				["<C-p>"] = actions.move_selection_previous,
@@ -118,6 +120,14 @@ telescope.setup({
 			override_file_sorter = true, -- override the file sorter
 			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 			-- the default case_mode is "smart_case"
+		},
+		live_grep_args = {
+			auto_quoting = true, -- enable/disable auto-quoting
+			-- define mappings, e.g.
+			-- ... also accepts theme settings, for example:
+			-- theme = "dropdown", -- use dropdown theme
+			-- theme = { }, -- use own theme spec
+			-- layout_config = { mirror=true }, -- mirror preview pane
 		},
 		-- harpoon = {
 		-- 	mappings = {

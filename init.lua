@@ -9,4 +9,4 @@ require("base.treesitter")
 require("arne.refactoring")
 
 -- TODO: still need to figure this one out
--- require "arne.dadbod"
+require("arne.dadbod")

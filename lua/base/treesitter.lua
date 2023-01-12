@@ -60,9 +60,7 @@ configs.setup({
 		move = {
 			enable = true,
 			set_jumps = true,
-
 			goto_next_start = {
-				["]p"] = "@parameter.inner",
 				["]m"] = "@function.outer",
 				["]]"] = "@class.outer",
 			},
@@ -71,7 +69,6 @@ configs.setup({
 				["]["] = "@class.outer",
 			},
 			goto_previous_start = {
-				["[p"] = "@parameter.inner",
 				["[m"] = "@function.outer",
 				["[["] = "@class.outer",
 			},
