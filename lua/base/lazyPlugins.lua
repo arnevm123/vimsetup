@@ -3,6 +3,17 @@ return {
 	"nvim-lua/plenary.nvim",
 	-- Nerd font helper
 	"kyazdani42/nvim-web-devicons",
+	-- Colorschemes
+	{
+		"mcchrish/zenbones.nvim",
+		priority = 1000,
+		dependencies = { "rktjmp/lush.nvim" },
+		config = function()
+			require("base.colorscheme")
+		end,
+		lazy = false,
+	},
+
 	{
 		"elihunter173/dirbuf.nvim",
 		config = function()
@@ -20,14 +31,14 @@ return {
 		config = function()
 			require("arne.bufferline")
 		end,
-		lazy = false,
+		event = "BufReadPost",
 	},
 	{
 		"nvim-lualine/lualine.nvim",
 		config = function()
 			require("arne.lualine")
 		end,
-		lazy = false,
+		event = "BufReadPost",
 	},
 	{
 		-- Show help for keycombos
@@ -35,7 +46,7 @@ return {
 		config = function()
 			require("arne.whichkey")
 		end,
-		lazy = false,
+		event = "BufReadPost",
 	},
 	{
 		-- Show help for keycombos
@@ -52,60 +63,77 @@ return {
 			})
 		end,
 	},
-	-- Colorschemes
+	-- session management
 	{
-		"mcchrish/zenbones.nvim",
-		priority = 1000,
-		config = function()
-			require("base.colorscheme")
-		end,
-		lazy = false,
-		dependencies = { "rktjmp/lush.nvim" },
+		"folke/persistence.nvim",
+		event = "BufReadPre",
+		opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help" } },
+        -- stylua: ignore
+        keys = {
+            { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
+            { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
+            { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+        },
 	},
+
 	-- LSP
-	-- LSP Support
-	{ "neovim/nvim-lspconfig" },
-	{ "williamboman/mason.nvim" },
-	{ "williamboman/mason-lspconfig.nvim" },
-
-	-- Autocompletion
-	{ "hrsh7th/nvim-cmp" },
-	{ "hrsh7th/cmp-buffer" },
-	{ "hrsh7th/cmp-path" },
-	{ "saadparwaiz1/cmp_luasnip" },
-	{ "hrsh7th/cmp-nvim-lsp" },
-	{ "hrsh7th/cmp-nvim-lua" },
-
-	-- Snippets
-	{ "L3MON4D3/LuaSnip" },
-	{ "rafamadriz/friendly-snippets" },
-
-	-- for formatters and linters
-	{ "jose-elias-alvarez/null-ls.nvim" },
-	{ "SmiteshP/nvim-navic" },
-
-	-- Function signature when typing
 	{
-		-- stuff that tells function parameters
-		"ray-x/lsp_signature.nvim",
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			-- Autocompletion
+			"hrsh7th/nvim-cmp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"saadparwaiz1/cmp_luasnip",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lua",
+			-- Snippets
+			"L3MON4D3/LuaSnip",
+			"rafamadriz/friendly-snippets",
+			-- for formatters and linters
+			"jose-elias-alvarez/null-ls.nvim",
+			"SmiteshP/nvim-navic",
+			{
+				"j-hui/fidget.nvim",
+				opts = {
+					text = {
+						spinner = "dots",
+					},
+					window = {
+						blend = 0,
+					},
+				},
+			},
+		},
 		config = function()
-			require("arne.lspSignature")
+			require("base.lsp")
 		end,
-		lazy = false,
+		event = "BufEnter",
 	},
 
 	-- Be fast
 	{
 		"ThePrimeagen/refactoring.nvim",
-		config = function()
-			require("arne.refactoring")
-		end,
+		config = true,
 	},
 	{
 		"ThePrimeagen/harpoon",
-		config = function()
-			require("arne.harpoon")
-		end,
+		opts = {
+			-- sets the marks upon calling `toggle` on the ui, instead of require `:w`.
+			save_on_toggle = false,
+			-- saves the harpoon file upon every change. disabling is unrecommended.
+			save_on_change = true,
+			-- sets harpoon to run the command immediately as it's passed to the terminal when calling `sendCommand`.
+			enter_on_sendcmd = true,
+			-- closes any tmux windows harpoon that harpoon creates when you close Neovim.
+			tmux_autoclose_windows = false,
+			-- filetypes that you want to prevent from adding to the harpoon list menu.
+			excluded_filetypes = { "harpoon" },
+			-- set marks specific to each git branch inside git repository
+			mark_branch = true,
+		},
 	},
 
 	-- Debugger
@@ -127,20 +155,30 @@ return {
 	},
 
 	-- Telescope
-	"nvim-telescope/telescope-file-browser.nvim",
-	"nvim-telescope/telescope.nvim",
 	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "make",
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			"nvim-telescope/telescope-file-browser.nvim",
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			"nvim-telescope/telescope-live-grep-args.nvim",
+		},
+		config = function()
+			require("base.telescope")
+		end,
+		cmd = { "Telescope", "TelescopeDiffMaster", "TelescopeDelta" },
 	},
-	"nvim-telescope/telescope-live-grep-args.nvim",
 
 	-- Treesitter
-	"nvim-treesitter/nvim-treesitter",
-	"nvim-treesitter/nvim-treesitter-context",
 	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		keys = { "v", "d", "y" },
+		"nvim-treesitter/nvim-treesitter",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-context",
+			"nvim-treesitter/nvim-treesitter-textobjects",
+		},
+		event = "BufReadPost",
+		config = function()
+			require("base.treesitter")
+		end,
 	},
 	-- Git
 	{
@@ -148,11 +186,10 @@ return {
 		config = function()
 			require("arne.gitsigns")
 		end,
-		lazy = false,
+		event = "BufReadPost",
 	},
 	{
 		"tpope/vim-fugitive",
-		lazy = false,
 	},
 	{
 		"TimUntersberger/neogit",
@@ -226,10 +263,10 @@ return {
 	{
 		"AckslD/nvim-neoclip.lua",
 		dependencies = { { "kkharji/sqlite.lua" } },
-		lazy = false,
 		config = function()
 			require("arne.neoclip")
 		end,
+		lazy = false,
 	},
 	{
 		"danymat/neogen",
@@ -278,7 +315,7 @@ return {
 	{
 		"folke/todo-comments.nvim",
 		cmd = { "TodoTrouble", "TodoTelescope" },
-		event = "BufReadPost",
+		event = "BufReadPre",
 		opts = {
 			keywords = {
 				AAA = { icon = "A ", color = "warning" },

@@ -63,6 +63,16 @@ lualine.setup({
 	options = {
 		icons_enabled = false,
 		theme = "auto",
+		globalstatus = true,
+		ignore_focus = {
+			"dirbuf",
+			"netrw",
+			"dapui_scopes",
+			"dapui_breakpoints",
+			"dap-repl",
+			"dapui_watches",
+			"dapui_console",
+		},
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
 		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },

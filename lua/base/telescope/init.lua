@@ -6,12 +6,6 @@ end
 require("base.telescope.custom")
 
 local actions = require("telescope.actions")
-telescope.load_extension("file_browser")
-telescope.load_extension("dap")
--- telescope.load_extension("harpoon")
-telescope.load_extension("fzf")
-telescope.load_extension("live_grep_args")
-local lga_actions = require("telescope-live-grep-args.actions")
 -- local h_actions = require "telescope".extensions.harpoon.actions
 telescope.setup({
 	defaults = {
@@ -155,3 +149,27 @@ telescope.setup({
 -- load refactoring Telescope extension
 telescope.load_extension("refactoring")
 telescope.load_extension("neoclip")
+telescope.load_extension("fzf")
+telescope.load_extension("file_browser")
+telescope.load_extension("dap")
+telescope.load_extension("live_grep_args")
+-- telescope.load_extension("harpoon")
+
+local previewers = require("telescope.previewers")
+local builtin = require("telescope.builtin")
+
+local delta = previewers.new_termopen_previewer({
+	get_command = function(entry)
+		return { "git", "-c", "core.pager=delta", "-c", "delta.side-by-side=false", "diff", entry.value .. "^!" }
+	end,
+})
+
+vim.api.nvim_create_user_command("TelescopeDelta", function()
+	local options = {}
+	options.previewer = {
+		delta,
+		require("telescope.previewers").git_commit_message.new(options),
+		previewers.git_commit_diff_as_was.new(options),
+	}
+	builtin.git_commits(options)
+end, {})

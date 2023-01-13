@@ -1,22 +1,3 @@
-local previewers = require("telescope.previewers")
-local builtin = require("telescope.builtin")
-
-local delta = previewers.new_termopen_previewer({
-	get_command = function(entry)
-		return { "git", "-c", "core.pager=delta", "-c", "delta.side-by-side=false", "diff", entry.value .. "^!" }
-	end,
-})
-
-function Delta_git_commits(options)
-	options = options or {}
-	options.previewer = {
-		delta,
-		previewers.git_commit_message.new(options),
-		previewers.git_commit_diff_as_was.new(options),
-	}
-	builtin.git_commits(options)
-end
-
 function Go_to_url(cmd)
 	local url = vim.fn.expand("<cfile>", nil, nil)
 	if not url:match("http") then
