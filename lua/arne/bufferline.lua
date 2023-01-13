@@ -54,6 +54,7 @@ bufferline.setup({
 		buffer_selected = { fg = "#dddddd", bg = "#575757", bold = false, italic = false },
 		modified_selected = { bg = "#575757" },
 		duplicate_selected = { fg = "#7c7c7c", bg = "#575757" },
+		duplicate = { fg = "#7c7c7c" },
 		tab_selected = { bg = "#575757" },
 		close_button_selected = { bg = "#575757" },
 		diagnostic_selected = { bg = "#575757" },
