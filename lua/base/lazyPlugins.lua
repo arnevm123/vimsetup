@@ -190,6 +190,7 @@ return {
 	},
 	{
 		"tpope/vim-fugitive",
+		cmd = { "Git", "Gclog", "Gvdiff", "Gvdiffsplit", "Gdiffsplit" },
 	},
 	{
 		"TimUntersberger/neogit",
