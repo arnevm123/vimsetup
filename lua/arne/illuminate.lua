@@ -29,6 +29,9 @@ require("illuminate").configure({
 })
 require("illuminate").toggle()
 
+-- vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#4B4B4B" })
+-- vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#4B4B4B" })
+-- vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#4B4B4B" })
 -- keymap("n", "yor", '<cmd>lua require("illuminate").toggle()<cr>', opts)
 -- keymap("n", "]r", '<cmd>lua require("illuminate").goto_next_reference(wrap)<cr>', opts)
 -- keymap("n", "[r", '<cmd>lua require("illuminate").goto_prev_reference(wrap)<cr>', opts)

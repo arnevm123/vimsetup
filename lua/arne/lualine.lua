@@ -27,12 +27,6 @@ return {
 			cond = hide_in_width,
 		}
 
-		local filetype = {
-			"filetype",
-			icons_enabled = false,
-			icon = nil,
-		}
-
 		local endOfFileName = {
 			"filename",
 			path = 3,
@@ -48,10 +42,19 @@ return {
 			end,
 		}
 
+		local progress = function()
+			-- local current_line = tostring(vim.fn.line("."))
+			-- current_line = (" "):rep(3 - #current_line) .. current_line
+			local total_lines = tostring(vim.fn.line("$"))
+			-- total_lines = total_lines .. (" "):rep(3 - #total_lines)
+			-- return current_line .. " / " .. total_lines
+			return total_lines .. " lines"
+		end
+
 		local branch = {
 			"branch",
 			icons_enabled = true,
-			-- icon = "",
+			icon = "",
 			fmt = function(str)
 				if #str > 33 then
 					str = string.sub(str, 1, 30) .. "..."
@@ -84,9 +87,9 @@ return {
 			sections = {
 				lualine_a = {},
 				lualine_b = { endOfFileName },
-				lualine_c = { { navic.get_location, cond = navic.is_available } },
+				lualine_c = { { navic.get_location, cond = navic.is_available and hide_in_width } },
 				-- lualine_x = { "encoding", "fileformat", "filetype" },
-				lualine_x = { diff, branch, diagnostics },
+				lualine_x = { diff, branch, progress, diagnostics },
 				lualine_y = {},
 				lualine_z = {},
 			},

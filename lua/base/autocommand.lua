@@ -13,7 +13,7 @@ autocmd("TextYankPost", {
 	callback = function()
 		vim.highlight.on_yank({
 			higroup = "IncSearch",
-			timeout = 50,
+			timeout = 75,
 		})
 	end,
 })
@@ -34,11 +34,11 @@ autocmd("BufReadPost", {
 -- 	command = [[lua vim.lsp.buf.formatting_sync() ]],
 -- })
 
--- -- remove eol spaces
--- autocmd({ "BufWritePre" }, {
--- 	pattern = { "*" },
--- 	command = [[%s/\s\+$//e]],
--- })
+-- remove eol spaces
+autocmd({ "BufWritePre" }, {
+	pattern = { "*" },
+	command = [[%s/\s\+$//e]],
+})
 
 autocmd({ "FileType" }, {
 	pattern = { "gitcommit", "markdown" },
@@ -47,15 +47,6 @@ autocmd({ "FileType" }, {
 		vim.opt_local.spell = true
 	end,
 })
-
--- autocmd({ "BufWinEnter" }, {
--- 	callback = function()
--- 		local line_count = vim.api.nvim_buf_line_count(0)
--- 		if line_count >= 5000 then
--- 			vim.cmd("IlluminatePauseBuf")
--- 		end
--- 	end,
--- })
 
 -- Set indentation to 2 spaces for some file types
 augroup("setIndent", { clear = true })
@@ -66,17 +57,6 @@ autocmd("Filetype", {
 })
 
 vim.api.nvim_create_user_command("PrettyJson", ":%!jq '.'", {})
-vim.api.nvim_create_user_command(
-	"CursorHighlightOn",
-	":lua require('illuminate').configure { under_cursor = true }",
-	{}
-)
-vim.api.nvim_create_user_command(
-	"CursorHighlightOff",
-	":lua require('illuminate').configure { under_cursor = false }",
-	{}
-)
-
 vim.api.nvim_create_user_command("Chmod", ":!chmod +x %", {})
 vim.api.nvim_create_user_command("Cdlf", ":cd ~/Documents/moaprplatform/platform/scripts/local-full", {})
 vim.api.nvim_create_user_command("Cdbase", ":cd ~/Documents/moaprplatform/", {})
