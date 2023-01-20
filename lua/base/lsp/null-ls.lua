@@ -25,6 +25,6 @@ null_ls.setup({
 		formatting.goimports,
 		formatting.gofumpt,
 		code_actions.eslint_d,
-		formatting.prettier,
+		formatting.prettierd,
 	},
 })

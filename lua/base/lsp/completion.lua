@@ -23,6 +23,7 @@ cmp.setup({
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-e>"] = cmp.mapping.abort(),
+		["<C-j>"] = cmp.mapping.close(),
 		["<c-y>"] = cmp.mapping(
 			cmp.mapping.confirm({
 				behavior = cmp.ConfirmBehavior.Insert,
@@ -54,7 +55,6 @@ cmp.setup({
 
 		-- ["<tab>"] = false,
 		["<tab>"] = cmp.config.disable,
-
 		-- ["<tab>"] = cmp.mapping {
 		--   i = cmp.config.disable,
 		--   c = function(fallback)
@@ -92,6 +92,7 @@ cmp.setup({
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,
 	},
+	entries = { name = "custom", selection_order = "near_cursor" },
 	window = {
 		-- completion = cmp.config.window.bordered(),
 		-- documentation = cmp.config.window.bordered(),
@@ -99,4 +100,10 @@ cmp.setup({
 	experimental = {
 		ghost_text = false,
 	},
+})
+
+cmp.setup.cmdline({ "/", "?" }, {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = { { name = "buffer" } },
+	view = { entries = { name = "wildmenu", separator = "|" } },
 })
