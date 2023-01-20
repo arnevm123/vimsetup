@@ -5,6 +5,7 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"nvim-tree/nvim-web-devicons",
+		"nvim-lua/plenary.nvim",
 	},
 	cmd = { "Telescope", "TelescopeDiffMaster", "TelescopeDelta" },
 	-- stylua: ignore

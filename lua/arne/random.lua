@@ -135,16 +135,15 @@ return {
 			},
 		},
 	},
-
-	-- {
-	-- 	"Exafunction/codeium.vim",
-	-- 	config = function()
-	-- 		vim.keymap.set("i", "<C-k>", function()
-	-- 			return vim.fn["codeium#Accept"]()
-	-- 		end, { expr = true })
-	-- 	end,
-	-- 	event = "BufReadPost",
-	-- },
+	{
+		"Exafunction/codeium.vim",
+		config = function()
+			vim.keymap.set("i", "<C-k>", function()
+				return vim.fn["codeium#Accept"]()
+			end, { expr = true })
+		end,
+		event = "BufReadPost",
+	},
 	{
 		-- TODO: use this when stable
 		-- "toppair/peek.nvim",

@@ -1,4 +1,4 @@
-function ColorMyPencils(color, fix_search, fix_diagnostics)
+function SetupColorscheme(color, fix_search, fix_diagnostics)
 	color = color or "seoulbones"
 	fix_search = fix_search or true
 	fix_diagnostics = fix_diagnostics or true
