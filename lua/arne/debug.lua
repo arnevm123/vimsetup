@@ -1,10 +1,11 @@
 return {
-	"rcarriga/nvim-dap-ui",
+	"mfussenegger/nvim-dap",
 	dependencies = {
-		"mfussenegger/nvim-dap",
+		"rcarriga/nvim-dap-ui",
 		"theHamsta/nvim-dap-virtual-text",
 		"nvim-telescope/telescope-dap.nvim",
 	},
+	ft = "go",
 	cmd = { "GoDebug", "GoTest" },
 	--stylua: ignore
 	keys = {
@@ -26,6 +27,7 @@ return {
 		if not ok then
 			return
 		end
+		-- require("telescope").load_extension("dap")
 		--
 		require("dapui").setup({
 			icons = { expanded = "v", collapsed = ">", current_frame = "-" },

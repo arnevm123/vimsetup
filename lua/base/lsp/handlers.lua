@@ -67,8 +67,6 @@ local function lsp_keymaps(bufnr)
 	keymap(bufnr, "n", "]d", "<cmd>lua vim.diagnostic.goto_next({ border = 'rounded' })<CR>", opts)
 end
 
-local navic = require("nvim-navic")
-
 M.on_attach = function(client, bufnr)
 	-- this should be improved...
 	if client.name == "tsserver" then
@@ -95,46 +93,7 @@ M.on_attach = function(client, bufnr)
 		client.server_capabilities.documentFormattingProvider = false
 	end
 
-	if client.name ~= "angularls" and client.name ~= "eslint" then
-		navic.attach(client, bufnr)
-	end
-
 	lsp_keymaps(bufnr)
 end
 
-navic.setup({
-	icons = {
-		File = " ",
-		Module = "m ",
-		Namespace = " ",
-		Package = "󰏖 ",
-		Class = "𝒞 ",
-		Method = "𝓶 ",
-		Property = "Prprty ",
-		Field = "󰠴 ",
-		Constructor = " ",
-		Enum = "𝓔 ",
-		Interface = "𝓘 ",
-		Function = "𝒇 ",
-		Variable = "var: ",
-		Constant = "const: ",
-		String = "str: ",
-		Number = "int: ",
-		Boolean = "bool: ",
-		Array = "[] ",
-		Object = " ",
-		Key = "  ",
-		Null = "ﳠ ",
-		EnumMember = " ",
-		Struct = "𝒮 ",
-		Event = " ",
-		Operator = " ",
-		TypeParameter = " ",
-	},
-	highlight = false,
-	separator = " > ",
-	depth_limit = 0,
-	depth_limit_indicator = "..",
-	safe_output = true,
-})
 return M

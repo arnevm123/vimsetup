@@ -2,8 +2,8 @@ return {
 	"lewis6991/gitsigns.nvim",
 	event = "BufReadPre",
 	keys = {
-		{ "]g", "Gitsigns next_hunk<cr>", desc = "Gitsigns next hunk" },
-		{ "[g", "Gitsigns prev_hunk<cr>", desc = "Gitsigns prev hunk" },
+		{ "]g", ":Gitsigns next_hunk<cr>", desc = "Gitsigns next hunk" },
+		{ "[g", ":Gitsigns prev_hunk<cr>", desc = "Gitsigns prev hunk" },
 		{ "<leader>gp", ":Gitsigns preview_hunk_inline<cr>", desc = "Gitsigns preview hunk" },
 		{ "<leader>gr", ":Gitsigns reset_hunk<cr>", desc = "Gitsigns reset hunk" },
 		{ "<leader>gR", ":Gitsigns reset_buffer<cr>", desc = "Gitsigns reset buffer" },

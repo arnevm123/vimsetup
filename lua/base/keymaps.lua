@@ -20,6 +20,9 @@ keymap("n", "<left>", "<C-w>h", opts)
 keymap("n", "<down>", "<C-w>j", opts)
 keymap("n", "<up>", "<C-w>k", opts)
 keymap("n", "<right>", "<C-w>l", opts)
+keymap("n", "<C-w>S", "<C-w>s<C-w>T", opts)
+keymap("c", "<tab>", "<C-z>", nosilent)
+keymap("n", "<leader><tab>", "<C-^>", nosilent)
 
 -- Move text up and down
 keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
@@ -48,7 +51,7 @@ keymap(
 	"n",
 	"<Leader>xn",
 	":call setreg('+', expand('%:.'))<CR>",
-	{ noremap = true, silent = true, desc = "Copy Buffer name and path" }
+	{ noremap = true, desc = "Copy Buffer name and path" }
 )
 -- Visual --
 -- Stay in indent mode
@@ -83,13 +86,17 @@ keymap("n", "<C-d>", "<C-d>zztv", opts)
 keymap("n", "<C-u>", "<C-u>zztv", opts)
 
 keymap("n", "Q", "@a", nosilent)
-keymap("v", "<leader>re", '"hy:%s/<C-r>h/<C-r>h/c <left><left><left>', nosilent)
-keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
 keymap("n", "<Leader>xc", ":g/console.lo/d<cr>", { noremap = true, silent = true, desc = "Remove console.log" })
+
+-- search and replace stuff
+keymap("x", "<leader>rr", ':s/\\<<C-j>"\\>/<C-r>"', nosilent)
+keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1", nosilent)
+keymap("v", "<leader>re", '"hy:%s/\\<<C-r>h\\>/<C-r>h/c<left><left>', nosilent)
+keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
 
 -- keymap("n", "<leader>w", ":w!<CR>", opts)
 keymap("n", "<leader>w", function()
-	vim.lsp.buf.formatting_sync()
+	vim.lsp.buf.format({ async = true })
 	vim.cmd.w()
 	print(
 		'"'

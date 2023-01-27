@@ -2,8 +2,11 @@ return {
 	"ray-x/go.nvim",
 	dependencies = {
 		"ray-x/guihua.lua",
+		"mfussenegger/nvim-dap",
+		"rcarriga/nvim-dap-ui",
 	},
 	ft = "go",
+	cmd = { "GoIfErr", "GoDebug", "GoAlt" },
 	keys = {
 		{ "<leader>ee", ":GoIfErr<cr>" },
 		{ "<leader>eb", ":GoDebug -a<cr>" },

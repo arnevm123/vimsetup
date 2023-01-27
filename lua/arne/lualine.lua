@@ -63,8 +63,6 @@ return {
 			end,
 		}
 
-		local navic = require("nvim-navic")
-
 		lualine.setup({
 			options = {
 				icons_enabled = false,
@@ -87,10 +85,10 @@ return {
 			sections = {
 				lualine_a = {},
 				lualine_b = { endOfFileName },
-				lualine_c = { { navic.get_location, cond = navic.is_available and hide_in_width } },
+				lualine_c = {},
 				-- lualine_x = { "encoding", "fileformat", "filetype" },
-				lualine_x = { diff, branch, progress, diagnostics },
-				lualine_y = {},
+				lualine_x = { diff, progress, diagnostics },
+				lualine_y = { branch },
 				lualine_z = {},
 			},
 			inactive_sections = {

@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-context",
 		"nvim-treesitter/nvim-treesitter-textobjects",
+		"nvim-lua/plenary.nvim",
 	},
 	event = "BufReadPre",
 	config = function()

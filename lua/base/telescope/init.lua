@@ -1,6 +1,7 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
+		"nvim-telescope/telescope-dap.nvim",
 		"nvim-telescope/telescope-file-browser.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-telescope/telescope-live-grep-args.nvim",
@@ -8,6 +9,7 @@ return {
 		"nvim-lua/plenary.nvim",
 	},
 	cmd = { "Telescope", "TelescopeDiffMaster", "TelescopeDelta" },
+	ft = "go",
 	-- stylua: ignore
 	keys = {
 		{ "<C-p>", ":Telescope find_files<cr>", desc = "Telescope find files" },
@@ -42,10 +44,18 @@ return {
 
 		require("base.telescope.custom")
 
+		-- local border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
+		local border_chars_both = { "─", " ", "─", " ", " ", " ", " ", " " }
+		local border_chars = { "─", " ", " ", " ", " ", " ", " ", " " }
 		local actions = require("telescope.actions")
 		-- local h_actions = require "telescope".extensions.harpoon.actions
 		telescope.setup({
 			defaults = {
+				borderchars = {
+					prompt = border_chars_both,
+					results = border_chars,
+					preview = border_chars,
+				},
 				layout_config = {
 					vertical = { width = 0.8, height = 0.9 },
 					horizontal = { width = 0.9 },

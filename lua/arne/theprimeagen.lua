@@ -1,7 +1,18 @@
 return {
 	{
 		"ThePrimeagen/refactoring.nvim",
-		config = true,
+		opts = {
+			-- overriding printf statement for cpp
+			print_var_statements = {
+				-- add a custom print var statement for cpp
+				ts = {
+					"console.log(%s)",
+				},
+				js = {
+					"console.log(%s)",
+				},
+			},
+		},
 		--stylua: ignore
 		keys = {
 			{ "<leader>ek", function() require('refactoring').debug.printf({below = true})end, desc="Refactoring printf" },
@@ -21,6 +32,7 @@ return {
 			excluded_filetypes = { "harpoon" },
 			mark_branch = true,
 		},
+		lazy = false,
 		--stylua: ignore
 		keys = {
 			{ "<leader>a", function() require("harpoon.mark").add_file() end, desc = "harpoon add file" },

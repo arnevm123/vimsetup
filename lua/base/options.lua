@@ -33,8 +33,8 @@ local options = {
 	sidescrolloff = 8,
 	colorcolumn = "80,120",
 	foldlevel = 20,
-	foldmethod = "expr",
-	foldexpr = "nvim_treesitter#foldexpr()",
+	-- foldmethod = "expr",
+	-- foldexpr = "nvim_treesitter#foldexpr()",
 	gdefault = true,
 	spelllang = "en_gb",
 }
