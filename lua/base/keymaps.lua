@@ -93,10 +93,12 @@ keymap("x", "<leader>rr", ':s/\\<<C-j>"\\>/<C-r>"', nosilent)
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1", nosilent)
 keymap("v", "<leader>re", '"hy:%s/\\<<C-r>h\\>/<C-r>h/c<left><left>', nosilent)
 keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
+keymap("n", "<leader>tt", ":let $VIM_DIR=expand('%:p:h')<CR>:vsp<CR>:terminal<CR>Acd $VIM_DIR<CR>", nosilent)
+keymap("n", "<leader>tm", "::let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 
 -- keymap("n", "<leader>w", ":w!<CR>", opts)
 keymap("n", "<leader>w", function()
-	vim.lsp.buf.format({ async = true })
+	vim.lsp.buf.format()
 	vim.cmd.w()
 	print(
 		'"'
