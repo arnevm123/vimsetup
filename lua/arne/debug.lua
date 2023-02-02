@@ -6,21 +6,21 @@ return {
 		"nvim-telescope/telescope-dap.nvim",
 	},
 	ft = "go",
-	cmd = { "GoDebug", "GoTest" },
+	-- cmd = { "GoDebug", "GoTest" },
 	--stylua: ignore
 	keys = {
 		{ "yod", function() require("dapui").toggle() end, { noremap = true, silent = true, desc = "Toggle dapui" } },
-		{ "<F5>", ":lua require'dap'.continue()<CR>", desc = "Debug continue" },
-		{ "<F9>", ":lua require'dap'.run_to_cursor()<CR>", desc = "Debug run to cursor" },
-		{ "<F10>", ":lua require'dap'.step_over()<CR>", desc = "Debug step ove" },
-		{ "<F11>", ":lua require'dap'.step_into()<CR>", desc = "Debug step into" },
-		{ "<F12>", ":lua require'dap'.step_out()<CR>", desc = "Debug  step out" },
-		{ "<F7>", ":lua require'go.dap'.run()<CR>", desc = "Debug run" },
-		{ "<F6>", ":lua require'go.dap'.stop()<CR>", desc = "Debug stop" },
+		{ "<leader>sc", ":lua require'dap'.continue()<CR>", desc = "Debug continue" },
+		{ "<leader>sl", ":lua require'dap'.run_to_cursor()<CR>", desc = "Debug run to cursor" },
+		{ "<leader>so", ":lua require'dap'.step_over()<CR>", desc = "Debug step ove" },
+		{ "<leader>si", ":lua require'dap'.step_into()<CR>", desc = "Debug step into" },
+		{ "<leader>sO", ":lua require'dap'.step_out()<CR>", desc = "Debug  step out" },
+		{ "<leader>sr", ":lua require'go.dap'.run()<CR>", desc = "Debug run" },
+		{ "<leader>st", ":lua require'go.dap'.stop()<CR>", desc = "Debug stop" },
 		{ "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
 		{ "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
-		{ "<leader>dr", ":lua require'dap'.repl.open()<CR>", desc = "Debug open repl" },
-		{ "<leader>df", ":lua require('dapui').float_element('breakpoints')<CR>", desc = "Debug float element" },
+		{ "<leader>sr", ":lua require'dap'.repl.open()<CR>", desc = "Debug open repl" },
+		{ "<leader>sf", ":lua require('dapui').float_element('breakpoints')<CR>", desc = "Debug float element" },
 	},
 	config = function()
 		local ok, dap = pcall(require, "dap")
@@ -149,35 +149,44 @@ return {
 			virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
 			-- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
 		})
-		-- dap.adapters.go = function(callback, config)
-		--     local stdout = vim.loop.new_pipe(false)
-		--     local handle
-		--     local pid_or_err
-		--     local port = 38697
-		--     local opts = {
-		--         stdio = { nil, stdout },
-		--         args = { "dap", "-l", "127.0.0.1:" .. port },
-		--         detached = true,
-		--     }
-		--     handle, pid_or_err = vim.loop.spawn("dlv", opts, function(code)
-		--         stdout:close()
-		--         handle:close()
-		--         if code ~= 0 then
-		--             print("dlv exited with code", code)
-		--         end
-		--     end)
-		--     assert(handle, "Error running dlv: " .. tostring(pid_or_err))
-		--     stdout:read_start(function(err, chunk)
-		--         assert(not err, err)
-		--         if chunk then
-		--             vim.schedule(function()
-		--                 require("dap.repl").append(chunk)
-		--             end)
-		--         end
-		--     end)
-		--     vim.defer_fn(function()
-		--         callback({ type = "server", host = "127.0.0.1", port = port })
-		--         end, 100)
-		-- end
+		dap.configurations = {
+			go = {
+				-- {
+				-- 	type = "go",
+				-- 	name = "Debug",
+				-- 	request = "launch",
+				-- 	program = "${file}",
+				-- },
+				{
+					type = "go",
+					name = "Debug test (go.mod)",
+					request = "launch",
+					mode = "test",
+					program = "./${relativeFileDirname}",
+				},
+				{
+					type = "go",
+					name = "Attach (Pick Process)",
+					mode = "local",
+					request = "attach",
+					processId = require("dap.utils").pick_process,
+				},
+				-- {
+				-- 	type = "go",
+				-- 	name = "Attach (127.0.0.1:9080)",
+				-- 	mode = "remote",
+				-- 	request = "attach",
+				-- 	port = "9080",
+				-- },
+			},
+		}
+		dap.adapters.go = {
+			type = "server",
+			port = "${port}",
+			executable = {
+				command = vim.fn.stdpath("data") .. "/mason/bin/dlv",
+				args = { "dap", "-l", "127.0.0.1:${port}" },
+			},
+		}
 	end,
 }

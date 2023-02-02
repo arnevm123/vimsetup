@@ -61,8 +61,54 @@ vim.api.nvim_create_user_command("Chmod", ":!chmod +x %", {})
 vim.api.nvim_create_user_command("Cdlf", ":cd ~/Documents/moaprplatform/platform/scripts/local-full", {})
 vim.api.nvim_create_user_command("Cdbase", ":cd ~/Documents/moaprplatform/", {})
 vim.api.nvim_create_user_command("Cdtest", ":cd %:h", {})
-vim.api.nvim_create_user_command("PeekOpen", ":lua require('peek').open()", {})
-vim.api.nvim_create_user_command("PeekClose", ":lua require('peek').close()", {})
+vim.api.nvim_create_user_command("IfErr", function()
+  local byte_offset = vim.fn.wordcount().cursor_bytes
+
+  local cmd = string.format('iferr -pos %d', byte_offset)
+
+  local data = vim.fn.systemlist(cmd, vim.fn.bufnr('%'))
+
+  if not data then
+    return nil
+  end
+  -- Because the nvim.stdout's data will have an extra empty line at end on some OS (e.g. maxOS), we should remove it.
+  for _ = 1, 3, 1 do
+    if data[#data] == "" then
+      table.remove(data, #data)
+    end
+  end
+  if #data < 1 then
+    return nil
+  end
+  local pos = vim.fn.getcurpos()[2]
+  vim.fn.append(pos, data)
+
+  vim.cmd('silent normal! j=2j')
+  vim.fn.setpos('.', pos)
+  vim.cmd('silent normal! 4j')
+end	, {})
+
+vim.api.nvim_create_user_command("GoAlt", function()
+  local file = vim.fn.expand('%')
+  local is_test  = string.find(file, "_test%.go$")
+  local is_source = string.find(file, "%.go$")
+  local alt_file = file
+  if is_test then
+    alt_file = string.gsub(file, "_test.go", ".go")
+  elseif is_source then
+    alt_file = vim.fn.expand('%:r') .. "_test.go"
+  else
+    vim.notify('not a go file', vim.lsp.log_levels.ERROR)
+  end
+  if not vim.fn.filereadable(alt_file) and not vim.fn.bufexists(alt_file) then
+    vim.notify("couldn't find " .. alt_file, vim.lsp.log_levels.ERROR)
+    return
+  else
+    local ocmd = "e " .. alt_file
+    vim.cmd(ocmd)
+  end
+end, {})
+
 
 -- vim commands
 vim.cmd([[

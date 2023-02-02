@@ -73,6 +73,7 @@ cmp.setup({
 		format = function(entry, vim_item)
 			vim_item.menu = ({
 				nvim_lsp = "LSP",
+				codeium = "AI",
 				nvim_lua = "Nvim",
 				luasnip = "Snip",
 				buffer = "Buf",
@@ -83,6 +84,7 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
+		{ name = "codeium" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "buffer" },

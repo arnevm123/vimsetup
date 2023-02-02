@@ -96,18 +96,19 @@ keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/cI<Left><Left><Left>"
 keymap("n", "<leader>tt", ":let $VIM_DIR=expand('%:p:h')<CR>:vsp<CR>:terminal<CR>Acd $VIM_DIR<CR>", nosilent)
 keymap("n", "<leader>tm", "::let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 
--- keymap("n", "<leader>w", ":w!<CR>", opts)
-keymap("n", "<leader>w", function()
-	vim.lsp.buf.format()
-	vim.cmd.w()
-	print(
-		'"'
-			.. vim.fn.expand("%"):gsub(vim.fn.expand("~"), "~")
-			.. '" '
-			.. vim.fn.line("$")
-			.. "L, "
-			.. vim.fn.getfsize(vim.fn.expand("%"))
-			.. "B "
-			.. "written & formatted"
-	)
-end, opts)
+keymap("n", "<leader>ot", ":GoAlt<CR>", opts)
+keymap("n", "<leader>w", ":w!<CR>", opts)
+-- keymap("n", "<leader>w", function()
+-- 	vim.lsp.buf.format()
+-- 	vim.cmd.w()
+-- 	print(
+-- 		'"'
+-- 			.. vim.fn.expand("%"):gsub(vim.fn.expand("~"), "~")
+-- 			.. '" '
+-- 			.. vim.fn.line("$")
+-- 			.. "L, "
+-- 			.. vim.fn.getfsize(vim.fn.expand("%"))
+-- 			.. "B "
+-- 			.. "written & formatted"
+-- 	)
+-- end, opts)

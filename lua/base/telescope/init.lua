@@ -12,13 +12,16 @@ return {
 	ft = "go",
 	-- stylua: ignore
 	keys = {
-		{ "<C-p>", ":Telescope find_files<cr>", desc = "Telescope find files" },
+		{ "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":TelescopeDiffMaster<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
 		{ "<leader>ff", ":Telescope live_grep<cr>", desc = "Telescope live grep" },
+		{ "<leader>fz", function()
+			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
+		end , desc = "Telescope live grep" },
 		{ "<leader>fu", ":Telescope live_grep default_text=<C-r><C-w><cr>", desc = "Telescope live grep cursor word" },
-		{ "<leader>fp", ':lua require("telescope.builtin").live_grep({ default_text = "<C-r>"" },)<cr>', desc = "Telescope live grep paste" },
+		{ "<leader>fp", ':Telescope live_grep({ default_text = <C-r>" },)<cr>', desc = "Telescope live grep paste" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },

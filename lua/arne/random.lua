@@ -135,16 +135,26 @@ return {
 			},
 		},
 	},
+	-- {
+	-- 	"Exafunction/codeium.vim",
+	-- 	--stylua: ignore
+	-- 	config = function()
+	-- 		vim.keymap.set('i', '<C-k>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+	-- 		vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+	-- 		vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+	-- 		vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+	-- 	end,
+	-- 	event = "BufReadPost",
+	-- },
 	{
-		"Exafunction/codeium.vim",
-		--stylua: ignore
-		config = function()
-			vim.keymap.set('i', '<C-k>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-			vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-			vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-			vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
-		end,
-		event = "BufReadPost",
+		"buoto/gotests-vim",
+		cmd = { "Gotests", "GoaTestsAll" },
+	},
+	{
+		"nvim-pack/nvim-spectre",
+		keys = {
+			{ "<leader>S", ":lua require('spectre').open()<CR>", desc = "Search and replace accros multiple files" },
+		},
 	},
 	{
 		-- TODO: use this when stable
@@ -152,18 +162,19 @@ return {
 		"hulufei/peek.nvim",
 		branch = "use-browser",
 		build = "deno task --quiet build:fast",
-		opts = {
-			auto_load = true, -- whether to automatically load preview when
-			-- entering another markdown buffer
-			close_on_bdelete = true, -- close preview window on buffer delete
-			syntax = true, -- enable syntax highlighting, affects performance
-			theme = "dark", -- 'dark' or 'light'
-			update_on_change = true,
-			-- relevant if update_on_change is true
-			throttle_at = 200000, -- start throttling when file exceeds this
-			-- amount of bytes in size
-			throttle_time = "auto", -- minimum amount of time in milliseconds
-			-- that has to pass before starting new render
-		},
+		cmd = { "PeekOpen", "PeekClose" },
+		config = function()
+			require("peek").setup({
+				auto_load = true,
+				close_on_bdelete = true,
+				syntax = true,
+				theme = "dark",
+				update_on_change = true,
+				throttle_at = 200000,
+				throttle_time = "auto",
+			})
+			vim.api.nvim_create_user_command("PeekOpen", require("peek").open(), {})
+			vim.api.nvim_create_user_command("PeekClose", require("peek").close(), {})
+		end,
 	},
 }

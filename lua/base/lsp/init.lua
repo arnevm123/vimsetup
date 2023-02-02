@@ -27,6 +27,15 @@ return {
 				},
 			},
 		},
+		{
+			"jcdickinson/codeium.nvim",
+			dependencies = {
+				"MunifTanjim/nui.nvim",
+			},
+			config = function()
+				require("codeium").setup({})
+			end,
+		},
 	},
 	keys = {
 		{ "<leader>la", ":lua vim.lsp.buf.code_action()<CR>", desc = "lsp code action" },

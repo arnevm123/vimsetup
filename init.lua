@@ -8,7 +8,7 @@ require("base.lazy").setup({
 	require("base.treesitter"),
 	require("arne.bufferline"),
 	require("arne.lualine"),
-	require("arne.go"),
+	-- require("arne.go"),
 	require("arne.debug"),
 	require("arne.chatgpt"),
 	require("arne.gitsigns"),
@@ -18,6 +18,7 @@ require("base.lazy").setup({
 	require("arne.tpope"),
 	require("arne.folke"),
 	require("arne.theprimeagen"),
+	require("arne.testing"),
 	require("arne.random"),
 }, {
 	defaults = { lazy = true },
