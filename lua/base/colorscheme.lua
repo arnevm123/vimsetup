@@ -7,8 +7,8 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 	vim.cmd.colorscheme(color)
 
 	-- Remove background and add better colorcolumn & cursorline matching
-	vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#3B3B3B" })
-	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#3B3B3B" })
+	vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#2B2B2B" })
+	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2B2B2B" })
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 	vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })

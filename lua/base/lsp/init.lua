@@ -17,17 +17,6 @@ return {
 		"jose-elias-alvarez/null-ls.nvim",
 		"SmiteshP/nvim-navic",
 		{
-			"j-hui/fidget.nvim",
-			opts = {
-				text = {
-					spinner = "dots",
-				},
-				window = {
-					blend = 0,
-				},
-			},
-		},
-		{
 			"jcdickinson/codeium.nvim",
 			dependencies = {
 				"MunifTanjim/nui.nvim",
@@ -82,5 +71,5 @@ return {
 
 		lspconfig.golangci_lint_ls.setup({ filetypes = { "go", "gomod" } })
 	end,
-	event = "BufReadPre",
+	event = "VeryLazy",
 }

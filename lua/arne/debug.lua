@@ -4,6 +4,7 @@ return {
 		"rcarriga/nvim-dap-ui",
 		"theHamsta/nvim-dap-virtual-text",
 		"nvim-telescope/telescope-dap.nvim",
+		"leoluz/nvim-dap-go",
 	},
 	ft = "go",
 	-- cmd = { "GoDebug", "GoTest" },
@@ -15,12 +16,12 @@ return {
 		{ "<leader>so", ":lua require'dap'.step_over()<CR>", desc = "Debug step ove" },
 		{ "<leader>si", ":lua require'dap'.step_into()<CR>", desc = "Debug step into" },
 		{ "<leader>sO", ":lua require'dap'.step_out()<CR>", desc = "Debug  step out" },
-		{ "<leader>sr", ":lua require'go.dap'.run()<CR>", desc = "Debug run" },
-		{ "<leader>st", ":lua require'go.dap'.stop()<CR>", desc = "Debug stop" },
 		{ "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
 		{ "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
-		{ "<leader>sr", ":lua require'dap'.repl.open()<CR>", desc = "Debug open repl" },
+		{ "<leader>sR", ":lua require'dap'.repl.open()<CR>", desc = "Debug open repl" },
 		{ "<leader>sf", ":lua require('dapui').float_element('breakpoints')<CR>", desc = "Debug float element" },
+		{ "<leader>st", " :lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
+		{ "<leader>sr", ":lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
 	},
 	config = function()
 		local ok, dap = pcall(require, "dap")
@@ -157,20 +158,20 @@ return {
 				-- 	request = "launch",
 				-- 	program = "${file}",
 				-- },
-				{
-					type = "go",
-					name = "Debug test (go.mod)",
-					request = "launch",
-					mode = "test",
-					program = "./${relativeFileDirname}",
-				},
-				{
-					type = "go",
-					name = "Attach (Pick Process)",
-					mode = "local",
-					request = "attach",
-					processId = require("dap.utils").pick_process,
-				},
+				-- {
+				-- 	type = "go",
+				-- 	name = "Debug test (go.mod)",
+				-- 	request = "launch",
+				-- 	mode = "test",
+				-- 	program = "./${relativeFileDirname}",
+				-- },
+				-- {
+				-- 	type = "go",
+				-- 	name = "Attach (Pick Process)",
+				-- 	mode = "local",
+				-- 	request = "attach",
+				-- 	processId = require("dap.utils").pick_process,
+				-- },
 				-- {
 				-- 	type = "go",
 				-- 	name = "Attach (127.0.0.1:9080)",
@@ -180,13 +181,38 @@ return {
 				-- },
 			},
 		}
-		dap.adapters.go = {
-			type = "server",
-			port = "${port}",
-			executable = {
-				command = vim.fn.stdpath("data") .. "/mason/bin/dlv",
-				args = { "dap", "-l", "127.0.0.1:${port}" },
+		-- dap.adapters.go = {
+		-- 	type = "server",
+		-- 	port = "${port}",
+		-- 	executable = {
+		-- 		command = vim.fn.stdpath("data") .. "/mason/bin/dlv",
+		-- 		args = { "dap", "-l", "127.0.0.1:${port}" },
+		-- 	},
+		-- }
+		require("dap-go").setup({
+			-- Additional dap configurations can be added.
+			-- dap_configurations accepts a list of tables where each entry
+			-- represents a dap configuration. For more details do:
+			-- :help dap-configuration
+			dap_configurations = {
+				{
+					-- Must be "go" or it will be ignored by the plugin
+					type = "go",
+					name = "Attach remote",
+					mode = "remote",
+					request = "attach",
+				},
 			},
-		}
+			-- delve configurations
+			delve = {
+				-- time to wait for delve to initialize the debug session.
+				-- default to 20 seconds
+				initialize_timeout_sec = 20,
+				-- a string that defines the port to start delve debugger.
+				-- default to string "${port}" which instructs nvim-dap
+				-- to start the process in a random available port
+				port = "${port}",
+			},
+		})
 	end,
 }

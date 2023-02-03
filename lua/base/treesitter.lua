@@ -5,7 +5,7 @@ return {
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		"nvim-lua/plenary.nvim",
 	},
-	event = "BufReadPre",
+	event = "VeryLazy",
 	config = function()
 		local status_ok, configs = pcall(require, "nvim-treesitter.configs")
 		if not status_ok then

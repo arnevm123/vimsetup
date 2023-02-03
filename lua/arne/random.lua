@@ -177,4 +177,16 @@ return {
 			vim.api.nvim_create_user_command("PeekClose", require("peek").close(), {})
 		end,
 	},
+	{
+		"j-hui/fidget.nvim",
+		event = "VeryLazy",
+		opts = {
+			text = {
+				spinner = "dots",
+			},
+			window = {
+				blend = 0,
+			},
+		},
+	},
 }
