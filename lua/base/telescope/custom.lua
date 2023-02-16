@@ -41,10 +41,14 @@ local branch_diff = function(opts)
 	})
 end
 
-vim.api.nvim_create_user_command("TelescopeDiffMaster", function()
-	local command = "git diff --name-only --relative $(git merge-base master HEAD)"
+vim.api.nvim_create_user_command("TelescopeDiff", function(opts)
+	local branchName = "master"
+	if opts.args ~= nil and opts.args ~= "" then
+		branchName = opts.args
+	end
+	local command = "git diff --name-only --relative $(git merge-base ".. branchName .." HEAD)"
 
-	local previewer = branch_diff({ base_branch = "master" })
+	local previewer = branch_diff({ base_branch = branchName })
 	local entry_maker = function(entry)
 		return {
 			value = entry,
@@ -69,8 +73,8 @@ vim.api.nvim_create_user_command("TelescopeDiffMaster", function()
 	for token in string.gmatch(result, "[^%c]+") do
 		table.insert(files, token)
 	end
-	local opts = {
-		prompt_title = "changes from master_files",
+	local options = {
+		prompt_title = "changes from ".. branchName .." files",
 		finder = finders.new_table({
 			results = files,
 			entry_maker = entry_maker,
@@ -78,5 +82,13 @@ vim.api.nvim_create_user_command("TelescopeDiffMaster", function()
 		previewer = previewer,
 	}
 
-	telescope_pickers.new(opts):find()
-end, {})
+	telescope_pickers.new(options):find()
+end, { nargs = "?" })
+
+vim.api.nvim_create_user_command("TEST123", function(opts)
+	local branchName = "master"
+	if opts.args ~= nil and opts.args ~= "" then
+		branchName = opts.args
+	end
+	print(branchName)
+end, { nargs = "?" })

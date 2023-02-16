@@ -53,7 +53,7 @@ augroup("setIndent", { clear = true })
 autocmd("Filetype", {
 	group = "setIndent",
 	pattern = { "xml", "html", "xhtml", "css", "scss", "javascript", "typescript", "yaml" },
-	command = "setlocal shiftwidth=2 tabstop=2",
+	command = "setlocal shiftwidth=2 tabstop=2 expandtab",
 })
 
 vim.api.nvim_create_user_command("PrettyJson", ":%!jq '.'", {})

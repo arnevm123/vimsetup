@@ -7,8 +7,8 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 	vim.cmd.colorscheme(color)
 
 	-- Remove background and add better colorcolumn & cursorline matching
-	vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#2B2B2B" })
-	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2B2B2B" })
+	vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#222222" })
+	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#222222" })
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 	vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
@@ -17,10 +17,10 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 
 	if fix_search then
-		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#5B5B5B" })
-		vim.api.nvim_set_hl(0, "Search", { bg = "#4B4B4B" })
+		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#3B3B3B" })
+		vim.api.nvim_set_hl(0, "Search", { bg = "#2B2B2B" })
 		-- fix match parenthesis
-		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
+		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#2B2B2B" })
 	end
 	if fix_search then
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e388a3", bg = "none" })
@@ -32,21 +32,21 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 
 	if fix_telescope then
 		vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#97bdde" })
-		vim.api.nvim_set_hl(0, "TelescopePreviewMatch", { fg = "#97bdde", bg = "#4B4B4B" })
-		vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = "#97bdde", bg = "#4B4B4B" })
-		vim.api.nvim_set_hl(0, "TelescopeSelection", { fg = "#97bdde", bg = "#4B4B4B" })
+		vim.api.nvim_set_hl(0, "TelescopePreviewMatch", { fg = "#97bdde", bg = "#3B3B3B" })
+		vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = "#97bdde", bg = "#3B3B3B" })
+		vim.api.nvim_set_hl(0, "TelescopeSelection", { fg = "#97bdde", bg = "#3B3B3B" })
 
-		vim.api.nvim_set_hl(0, "TelescopePreviewLine", { bg = "#4B4B4B" })
+		vim.api.nvim_set_hl(0, "TelescopePreviewLine", { bg = "#3B3B3B" })
 
-		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "#3B3B3B" })
-		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#4B4B4B", bg = "#3B3B3B" })
-		vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#4B4B4B", bg = "#3B3B3B" })
+		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "#2B2B2B" })
+		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#3B3B3B", bg = "#2B2B2B" })
+		vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#3B3B3B", bg = "#2B2B2B" })
 
-		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "#3B3B3B" })
+		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "#2B2B2B" })
 
-		vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#3B3B3B", bg = "#97bdde" })
-		vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#3B3B3B", bg = "#97bdde" })
-		vim.api.nvim_set_hl(0, "TelescopeTitle", { fg = "#3B3B3B", bg = "#97bdde" })
+		vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#2B2B2B", bg = "#97bdde" })
+		vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#2B2B2B", bg = "#97bdde" })
+		vim.api.nvim_set_hl(0, "TelescopeTitle", { fg = "#2B2B2B", bg = "#97bdde" })
 	end
 end
 

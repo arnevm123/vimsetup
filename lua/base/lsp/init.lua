@@ -71,5 +71,5 @@ return {
 
 		lspconfig.golangci_lint_ls.setup({ filetypes = { "go", "gomod" } })
 	end,
-	event = "VeryLazy",
+	event = "BufReadPre",
 }

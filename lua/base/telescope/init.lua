@@ -1,5 +1,6 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	event = "VeryLazy",
 	dependencies = {
 		"nvim-telescope/telescope-dap.nvim",
 		"nvim-telescope/telescope-file-browser.nvim",
@@ -8,13 +9,13 @@ return {
 		"nvim-tree/nvim-web-devicons",
 		"nvim-lua/plenary.nvim",
 	},
-	cmd = { "Telescope", "TelescopeDiffMaster", "TelescopeDelta" },
+	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta", "Easypick" },
 	ft = "go",
 	-- stylua: ignore
 	keys = {
 		{ "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
-		{ "<leader>fc", ":TelescopeDiffMaster<CR>", desc = "Telescope diff master" },
+		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
 		{ "<leader>ff", ":Telescope live_grep<cr>", desc = "Telescope live grep" },
 		{ "<leader>fz", function()

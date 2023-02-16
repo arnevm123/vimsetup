@@ -37,6 +37,7 @@ return {
 		keys = {
 			{ "<leader>a", function() require("harpoon.mark").add_file() end, desc = "harpoon add file" },
 			{ "<leader>-", function() require("harpoon.ui").toggle_quick_menu() end, desc = "harpoon quick menu" },
+			{ "<leader>_", function() require('telescope').extensions.harpoon.marks() end, desc = "harpoon quick menu" },
 			{ "<C-h>", function() require("harpoon.ui").nav_file(1) end, desc = "harpoon file 1" },
 			{ "<C-j>", function() require("harpoon.ui").nav_file(2) end, desc = "harpoon file 2" },
 			{ "<C-k>", function() require("harpoon.ui").nav_file(3) end, desc = "harpoon file 3" },

@@ -96,42 +96,42 @@ return {
 				function()
 					require("nvim-quick-switcher").find(".service.ts")
 				end,
-				{ noremap = true, silent = true, desc = "Go to service" },
+				desc = "Go to service",
 			},
 			{
 				"<leader>ou",
 				function()
 					require("nvim-quick-switcher").find(".component.ts")
 				end,
-				{ noremap = true, silent = true, desc = "Go to TS" },
+				desc = "Go to TS",
 			},
 			{
 				"<leader>oo",
 				function()
 					require("nvim-quick-switcher").find(".component.html")
 				end,
-				{ noremap = true, silent = true, desc = "Go to html" },
+				desc = "Go to html",
 			},
 			{
 				"<leader>op",
 				function()
 					require("nvim-quick-switcher").find(".module.ts")
 				end,
-				{ noremap = true, silent = true, desc = "Go to module" },
+				desc = "Go to module",
 			},
 			{
 				"<leader>ol",
 				function()
 					require("nvim-quick-switcher").find("*util.*")
 				end,
-				{ noremap = true, silent = true, desc = "Go to util" },
+				desc = "Go to util",
 			},
 			{
 				"<leader>oi",
 				function()
 					require("nvim-quick-switcher").find(".+css|.+scss|.+sass", { regex = true, prefix = "full" })
 				end,
-				{ noremap = true, silent = true, desc = "Go to stylesheet" },
+				desc = "Go to stylesheet",
 			},
 		},
 	},

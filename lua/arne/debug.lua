@@ -195,13 +195,13 @@ return {
 			-- represents a dap configuration. For more details do:
 			-- :help dap-configuration
 			dap_configurations = {
-				{
-					-- Must be "go" or it will be ignored by the plugin
-					type = "go",
-					name = "Attach remote",
-					mode = "remote",
-					request = "attach",
-				},
+				-- {
+				-- 	-- Must be "go" or it will be ignored by the plugin
+				-- 	type = "go",
+				-- 	name = "Attach remote",
+				-- 	mode = "remote",
+				-- 	request = "attach",
+				-- },
 			},
 			-- delve configurations
 			delve = {
