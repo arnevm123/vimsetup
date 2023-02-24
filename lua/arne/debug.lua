@@ -6,8 +6,6 @@ return {
 		"nvim-telescope/telescope-dap.nvim",
 		"leoluz/nvim-dap-go",
 	},
-	ft = "go",
-	-- cmd = { "GoDebug", "GoTest" },
 	--stylua: ignore
 	keys = {
 		{ "yod", function() require("dapui").toggle() end, { noremap = true, silent = true, desc = "Toggle dapui" } },

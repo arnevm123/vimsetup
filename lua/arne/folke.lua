@@ -70,8 +70,8 @@ return {
 			},
 		},
 		keys = {
-			{ "]t", "<cmd> require('todo-comments').jump_next()<CR>", desc = "Next todo comment" },
-			{ "[t", "<cmd> require('todo-comments').jump_prev()<CR>", desc = "Previous todo comment" },
+			{ "]t", "<cmd>lua require('todo-comments').jump_next()<CR>", desc = "Next todo comment" },
+			{ "[t", "<cmd>lua require('todo-comments').jump_prev()<CR>", desc = "Previous todo comment" },
 			-- { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
 			{ "<leader>xa", "<cmd>TodoQuickFix keywords=AAA<cr>", desc = "Todo Trouble Arne" },
 			{ "<leader>xA", "<cmd>TodoTelescope keywords=AAA<cr>", desc = "Todo Telescope Arne" },

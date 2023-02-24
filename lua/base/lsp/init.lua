@@ -25,6 +25,10 @@ return {
 				require("codeium").setup({})
 			end,
 		},
+		{
+			"j-hui/fidget.nvim",
+			opts = { text = { spinner = "dots" }, window = { blend = 0 } },
+		},
 	},
 	keys = {
 		{ "<leader>la", ":lua vim.lsp.buf.code_action()<CR>", desc = "lsp code action" },
@@ -71,5 +75,5 @@ return {
 
 		lspconfig.golangci_lint_ls.setup({ filetypes = { "go", "gomod" } })
 	end,
-	event = "BufReadPre",
+	event = { "BufReadPre", "BufNewFile" },
 }

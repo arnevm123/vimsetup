@@ -14,7 +14,7 @@ keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
-keymap("n", "z{", "zfi{", opts)
+keymap("n", "z{", "zfa{", opts)
 
 -- move to windows with arrow keys
 keymap("n", "<left>", "<C-w>h", opts)
@@ -92,7 +92,7 @@ keymap("n", "<Leader>xc", ":g/console.lo/d<cr>", { noremap = true, silent = true
 -- search and replace stuff
 keymap("x", "<leader>rr", ':s/\\<<C-j>"\\>/<C-r>"', nosilent)
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1", nosilent)
-keymap("v", "<leader>re", '"hy:%s/\\<<C-r>h\\>/<C-r>h/c<left><left>', nosilent)
+keymap("v", "<leader>re", '"hy:%s/<C-r>h/<C-r>h/c<left><left>', nosilent)
 keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
 keymap("n", "<leader>tt", ":let $VIM_DIR=expand('%:p:h')<CR>:vsp<CR>:terminal<CR>Acd $VIM_DIR<CR>", nosilent)
 keymap("n", "<leader>tm", "::let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)

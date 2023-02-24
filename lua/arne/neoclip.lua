@@ -1,7 +1,7 @@
 return {
 	"AckslD/nvim-neoclip.lua",
 	dependencies = { { "kkharji/sqlite.lua" } },
-	lazy = false,
+	event = "BufEnter",
 	opts = {
 		enable_persistent_history = true,
 		continuous_sync = true,

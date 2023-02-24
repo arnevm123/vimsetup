@@ -18,9 +18,9 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 
 	if fix_search then
 		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#3B3B3B" })
-		vim.api.nvim_set_hl(0, "Search", { bg = "#2B2B2B" })
+		vim.api.nvim_set_hl(0, "Search", { bg = "#303030" })
 		-- fix match parenthesis
-		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#2B2B2B" })
+		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#303030" })
 	end
 	if fix_search then
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e388a3", bg = "none" })
@@ -31,7 +31,7 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 	end
 
 	if fix_telescope then
-		vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#97bdde" })
+		vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#97bdde", bg = "#3B3B3B" })
 		vim.api.nvim_set_hl(0, "TelescopePreviewMatch", { fg = "#97bdde", bg = "#3B3B3B" })
 		vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = "#97bdde", bg = "#3B3B3B" })
 		vim.api.nvim_set_hl(0, "TelescopeSelection", { fg = "#97bdde", bg = "#3B3B3B" })

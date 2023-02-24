@@ -32,7 +32,7 @@ return {
 			excluded_filetypes = { "harpoon" },
 			mark_branch = true,
 		},
-		lazy = false,
+		event = "BufEnter",
 		--stylua: ignore
 		keys = {
 			{ "<leader>a", function() require("harpoon.mark").add_file() end, desc = "harpoon add file" },

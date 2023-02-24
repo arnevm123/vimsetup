@@ -1,6 +1,5 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	event = "VeryLazy",
 	dependencies = {
 		"nvim-telescope/telescope-dap.nvim",
 		"nvim-telescope/telescope-file-browser.nvim",
@@ -9,8 +8,8 @@ return {
 		"nvim-tree/nvim-web-devicons",
 		"nvim-lua/plenary.nvim",
 	},
-	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta", "Easypick" },
-	ft = "go",
+	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
+	event = "BufEnter",
 	-- stylua: ignore
 	keys = {
 		{ "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
@@ -38,7 +37,8 @@ return {
 		{ "<leader>fdc", ":Telescope dap commands<CR>", desc = "Telescope dap commands" },
 		{ "<leader>fdb", ":Telescope dap list_breakpoints<CR>", desc = "Telescope dap breakpoints" },
 		{ "<leader>fdv", ":Telescope dap variables<CR>", desc = "Telescope dap variables" },
-		{ "<leader>go", ":Telescope git_status<cr>", desc = "Telescope git status" },
+		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
+		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
 	},
 	config = function()
 		local status_ok, telescope = pcall(require, "telescope")
@@ -48,7 +48,6 @@ return {
 
 		require("base.telescope.custom")
 
-		-- local border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
 		local border_chars_both = { "─", " ", "─", " ", " ", " ", " ", " " }
 		local border_chars = { "─", " ", " ", " ", " ", " ", " ", " " }
 		local actions = require("telescope.actions")
@@ -133,27 +132,6 @@ return {
 					},
 				},
 			},
-			pickers = {
-				-- find_files = {
-				-- 	disable_devicons = true,
-				-- },
-				-- live_grep = {
-				-- 	disable_devicons = true,
-				-- },
-				-- buffers = {
-				-- 	disable_devicons = true,
-				-- },
-				-- oldfiles = {
-				-- 	disable_devicons = true,
-				-- },
-				-- Default configuration for builtin pickers goes here:
-				-- picker_name = {
-				--   picker_config_key = value,
-				--   ...
-				-- }
-				-- Now the picker_config_key will be applied every time you call this
-				-- builtin picker
-			},
 			extensions = {
 				-- You don't need to set any of these options.
 				-- IMPORTANT!: this is only a showcase of how you can set default options!
@@ -175,47 +153,21 @@ return {
 					override_generic_sorter = true, -- override the generic sorter
 					override_file_sorter = true, -- override the file sorter
 					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-					-- the default case_mode is "smart_case"
 				},
 				live_grep_args = {
-					auto_quoting = true, -- enable/disable auto-quoting
-					-- define mappings, e.g.
-					-- ... also accepts theme settings, for example:
-					-- theme = "dropdown", -- use dropdown theme
-					-- theme = { }, -- use own theme spec
-					-- layout_config = { mirror=true }, -- mirror preview pane
+					auto_quoting = false, -- enable/disable auto-quoting
 				},
-				-- harpoon = {
-				-- 	mappings = {
-				-- 		i = {
-				-- 			["<C-n>"] = actions.move_selection_next,
-				-- 			["<C-p>"] = actions.move_selection_previous,
-				-- 			["<C-j>"] = h_actions.move_mark_down,
-				-- 			["<C-k>"] = h_actions.move_mark_up,
-				-- 			["<C-x>"] = h_actions.delete_harpoon_mark,
-				-- 		},
-				-- 		n = {
-				-- 			["dd"] = h_actions.delete_harpoon_mark,
-				-- 			["<C-n>"] = actions.move_selection_next,
-				-- 			["<C-p>"] = actions.move_selection_previous,
-				-- 			["<C-j>"] = h_actions.move_mark_down,
-				-- 			["<C-k>"] = h_actions.move_mark_up,
-				-- 		},
-				-- 	},
-				-- },
 			},
 			-- To get telescope-file-browser loaded and working with telescope,
 			-- you need to call load_extension, somewhere after setup function:
 		})
 
-		-- load refactoring Telescope extension
 		telescope.load_extension("refactoring")
 		telescope.load_extension("neoclip")
 		telescope.load_extension("fzf")
 		telescope.load_extension("file_browser")
 		telescope.load_extension("dap")
 		telescope.load_extension("live_grep_args")
-		-- telescope.load_extension("harpoon")
 
 		local previewers = require("telescope.previewers")
 		local builtin = require("telescope.builtin")
