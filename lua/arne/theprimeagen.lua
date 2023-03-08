@@ -22,6 +22,22 @@ return {
 			{ "<leader>lg", ":lua require('telescope').extensions.refactoring.refactors()<CR>", desc = "lsp refactoring" },
 		},
 	},
+	-- {
+	-- 	"cbochs/grapple.nvim",
+	-- 	dependencies = { "nvim-lua/plenary.nvim" },
+	-- 	--stylua: ignore
+	-- 	keys = {
+	-- 		{ "<leader>a", function() require("grapple").tag() end, desc = "grapple add file" },
+	-- 		{ "<leader>A", function() require("grapple").tag() end, desc = "grapple add file" },
+	-- 		{ "<leader>-", function() require("grapple").popup_tags() end, desc = "grapple quick menu" },
+	-- 		{ "<leader>_", function() require("grapple").popup_tags() end, desc = "grapple quick menu" },
+	-- 		{ "<C-h>", function() require("grapple").select({ key = "1" }) end, desc = "grapple file 1" },
+	-- 		{ "<C-j>", function() require("grapple").select({ key = "2" }) end, desc = "grapple file 1" },
+	-- 		{ "<C-k>", function() require("grapple").select({ key = "3" }) end, desc = "grapple file 1" },
+	-- 		{ "<C-l>", function() require("grapple").select({ key = "4" }) end, desc = "grapple file 1" },
+	-- 		{ "<C-;>", function() require("grapple").select({ key = "5" }) end, desc = "grapple file 1" },
+	-- 	},
+	-- },
 	{
 		"ThePrimeagen/harpoon",
 		config = {

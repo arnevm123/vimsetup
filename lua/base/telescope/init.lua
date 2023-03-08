@@ -4,15 +4,18 @@ return {
 		"nvim-telescope/telescope-dap.nvim",
 		"nvim-telescope/telescope-file-browser.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		"aaronhallaert/ts-advanced-git-search.nvim",
+		"tpope/vim-fugitive",
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"nvim-tree/nvim-web-devicons",
 		"nvim-lua/plenary.nvim",
 	},
 	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
-	event = "BufEnter",
+	event = "VeryLazy",
 	-- stylua: ignore
 	keys = {
 		{ "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
+		{ "<leader>fp", ":Telescope find_files<cr>", desc = "Telescope find files" },
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
@@ -21,7 +24,7 @@ return {
 			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
 		end , desc = "Telescope live grep" },
 		{ "<leader>fu", ":Telescope live_grep default_text=<C-r><C-w><cr>", desc = "Telescope live grep cursor word" },
-		{ "<leader>fp", ':Telescope live_grep({ default_text = <C-r>" },)<cr>', desc = "Telescope live grep paste" },
+		{ "<leader>fu", 'y:Telescope live_grep default_text=<C-r>"<cr>', desc = "Telescope live grep paste", mode = "v" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
@@ -38,6 +41,7 @@ return {
 		{ "<leader>fdb", ":Telescope dap list_breakpoints<CR>", desc = "Telescope dap breakpoints" },
 		{ "<leader>fdv", ":Telescope dap variables<CR>", desc = "Telescope dap variables" },
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
+		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
 	},
 	config = function()
@@ -132,6 +136,11 @@ return {
 					},
 				},
 			},
+			pickers = {
+				oldfiles = {
+					cwd_only = true,
+				},
+			},
 			extensions = {
 				-- You don't need to set any of these options.
 				-- IMPORTANT!: this is only a showcase of how you can set default options!
@@ -168,6 +177,7 @@ return {
 		telescope.load_extension("file_browser")
 		telescope.load_extension("dap")
 		telescope.load_extension("live_grep_args")
+		telescope.load_extension("advanced_git_search")
 
 		local previewers = require("telescope.previewers")
 		local builtin = require("telescope.builtin")

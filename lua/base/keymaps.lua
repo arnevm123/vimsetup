@@ -10,8 +10,8 @@ local keymap = vim.keymap.set
 keymap("", "<Space>", "<Nop>", opts)
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
+keymap("n", "<C-Up>", ":resize +2<CR>", opts)
+keymap("n", "<C-Down>", ":resize -2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 keymap("n", "z{", "zfa{", opts)
@@ -86,7 +86,7 @@ keymap("n", "N", "Nzz", opts)
 keymap("n", "<C-d>", "<C-d>zztv", opts)
 keymap("n", "<C-u>", "<C-u>zztv", opts)
 
-keymap("n", "Q", "@a", nosilent)
+keymap("n", "Q", "@q", nosilent)
 keymap("n", "<Leader>xc", ":g/console.lo/d<cr>", { noremap = true, silent = true, desc = "Remove console.log" })
 
 -- search and replace stuff
