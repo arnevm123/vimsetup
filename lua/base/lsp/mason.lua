@@ -10,6 +10,7 @@ local servers = {
 	"pyright",
 	"lua_ls",
 	"tsserver",
+	"sqls",
 }
 
 local settings = {

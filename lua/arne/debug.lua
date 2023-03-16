@@ -1,10 +1,10 @@
 return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
+		"leoluz/nvim-dap-go",
 		"rcarriga/nvim-dap-ui",
 		"theHamsta/nvim-dap-virtual-text",
 		"nvim-telescope/telescope-dap.nvim",
-		"leoluz/nvim-dap-go",
 	},
 	--stylua: ignore
 	keys = {
@@ -20,13 +20,17 @@ return {
 		{ "<leader>sf", ":lua require('dapui').float_element('breakpoints')<CR>", desc = "Debug float element" },
 		{ "<leader>st", " :lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
 		{ "<leader>sr", ":lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
+		{ "<leader>fdf", ":Telescope dap frames<CR>", desc = "Telescope dap frames" },
+		{ "<leader>fdc", ":Telescope dap commands<CR>", desc = "Telescope dap commands" },
+		{ "<leader>fdb", ":Telescope dap list_breakpoints<CR>", desc = "Telescope dap breakpoints" },
+		{ "<leader>fdv", ":Telescope dap variables<CR>", desc = "Telescope dap variables" },
 	},
 	config = function()
 		local ok, dap = pcall(require, "dap")
 		if not ok then
 			return
 		end
-		-- require("telescope").load_extension("dap")
+		require("telescope").load_extension("dap")
 		--
 		require("dapui").setup({
 			icons = { expanded = "v", collapsed = ">", current_frame = "-" },

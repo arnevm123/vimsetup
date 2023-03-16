@@ -1,7 +1,6 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
-		"nvim-telescope/telescope-dap.nvim",
 		"nvim-telescope/telescope-file-browser.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"aaronhallaert/ts-advanced-git-search.nvim",
@@ -20,6 +19,7 @@ return {
 		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
 		{ "<leader>ff", ":Telescope live_grep<cr>", desc = "Telescope live grep" },
+		{ "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
 		{ "<leader>fz", function()
 			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
 		end , desc = "Telescope live grep" },
@@ -31,18 +31,14 @@ return {
 		{ "<leader>ft", ":Telescope file_browser<cr>", desc = "Telescope file browser" },
 		{ "<leader>fo", ":Telescope file_browser path=%:p:h<cr>", desc = "Telescope file browser file path" },
 		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
-		{ '<leader>f"', ":Telescope registers<cr>", desc = "Telescope registers" },
+		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
 		{ "<leader>f;", ":Telescope neoclip<cr>", desc = "Telescope clipboard manager" },
-		{ "<leader>fa", ':lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', desc = "Telescope live grep open files" },
-		{ "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
+		-- { "<leader>fa", :lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', desc = "Telescope live grep open files" },
 		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
-		{ "<leader>fdf", ":Telescope dap frames<CR>", desc = "Telescope dap frames" },
-		{ "<leader>fdc", ":Telescope dap commands<CR>", desc = "Telescope dap commands" },
-		{ "<leader>fdb", ":Telescope dap list_breakpoints<CR>", desc = "Telescope dap breakpoints" },
-		{ "<leader>fdv", ":Telescope dap variables<CR>", desc = "Telescope dap variables" },
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
+
 	},
 	config = function()
 		local status_ok, telescope = pcall(require, "telescope")
@@ -55,7 +51,6 @@ return {
 		local border_chars_both = { "─", " ", "─", " ", " ", " ", " ", " " }
 		local border_chars = { "─", " ", " ", " ", " ", " ", " ", " " }
 		local actions = require("telescope.actions")
-		-- local h_actions = require "telescope".extensions.harpoon.actions
 		telescope.setup({
 			defaults = {
 				borderchars = {
@@ -175,7 +170,6 @@ return {
 		telescope.load_extension("neoclip")
 		telescope.load_extension("fzf")
 		telescope.load_extension("file_browser")
-		telescope.load_extension("dap")
 		telescope.load_extension("live_grep_args")
 		telescope.load_extension("advanced_git_search")
 

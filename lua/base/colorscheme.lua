@@ -17,10 +17,10 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 
 	if fix_search then
-		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#3B3B3B" })
-		vim.api.nvim_set_hl(0, "Search", { bg = "#303030" })
+		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#5B5B5B" })
+		vim.api.nvim_set_hl(0, "Search", { bg = "#3B3B3B" })
 		-- fix match parenthesis
-		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#303030" })
+		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#2B2B2B" })
 	end
 	if fix_search then
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e388a3", bg = "none" })

@@ -1,6 +1,4 @@
 require("base.options")
-require("base.keymaps")
-require("base.autocommand")
 require("base.lazy").setup({
 	require("base.lsp"),
 	require("base.telescope"),
@@ -23,5 +21,13 @@ require("base.lazy").setup({
 }, {
 	defaults = { lazy = true },
 	performance = { rtp = { disabled_plugins = { "gzip", "matchit", "tarPlugin", "tohtml", "tutor", "zipPlugin" } } },
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "VeryLazy",
+	callback = function()
+		require("base.keymaps")
+		require("base.autocommand")
+	end,
 })
 SetupColorscheme()

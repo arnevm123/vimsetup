@@ -7,10 +7,6 @@ return {
 			return
 		end
 
-		local hide_in_width = function()
-			return vim.fn.winwidth(0) > 80
-		end
-
 		local diagnostics = {
 			"diagnostics",
 			sources = { "nvim_diagnostic" },
@@ -24,7 +20,7 @@ return {
 		local diff = {
 			"diff",
 			colored = false,
-			cond = hide_in_width,
+			-- cond = hide_in_width,
 		}
 
 		local endOfFileName = {
@@ -41,6 +37,36 @@ return {
 				return t[#t - 2] .. "/" .. t[#t - 1] .. "/" .. t[#t]
 			end,
 		}
+
+		local harpoon = function()
+			if vim.fn.winwidth(0) < 160 then
+				return ""
+			end
+			local marks = require("harpoon").get_mark_config().marks
+			local keymaps = { " 𝗛 ", " 𝗝 ", " 𝗞 ", " 𝗟 " }
+			local str = ""
+			local filename = ""
+
+			for idx = 1, #marks do
+				local t = {}
+				for s in string.gmatch(marks[idx].filename, "([^" .. "/" .. "]+)") do
+					table.insert(t, s)
+				end
+				if #t < 2 then
+					filename = marks[idx].filename
+				else
+					-- filename = t[#t - 2] .. "/" .. t[#t - 1] .. "/" .. t[#t]
+					filename = t[#t - 1] .. "/" .. t[#t]
+				end
+				if idx > 4 then
+					-- str = str .. " " .. filename
+				else
+					str = str .. " ".. keymaps[idx] .. filename
+				end
+			end
+
+			return str
+		end
 
 		local progress = function()
 			-- local current_line = tostring(vim.fn.line("."))
@@ -85,10 +111,10 @@ return {
 			sections = {
 				lualine_a = {},
 				lualine_b = { endOfFileName },
-				lualine_c = {},
+				lualine_c = { harpoon },
 				-- lualine_x = { "encoding", "fileformat", "filetype" },
 				lualine_x = { diff, progress, diagnostics },
-				lualine_y = { branch },
+				lualine_y = { branch  },
 				lualine_z = {},
 			},
 			inactive_sections = {

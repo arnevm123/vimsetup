@@ -58,7 +58,6 @@ return {
 			{ "<C-j>", function() require("harpoon.ui").nav_file(2) end, desc = "harpoon file 2" },
 			{ "<C-k>", function() require("harpoon.ui").nav_file(3) end, desc = "harpoon file 3" },
 			{ "<C-l>", function() require("harpoon.ui").nav_file(4) end, desc = "harpoon file 4" },
-			{ "<C-;>", function() require("harpoon.ui").nav_file(5) end, desc = "harpoon file 5" },
 		},
 	},
 }

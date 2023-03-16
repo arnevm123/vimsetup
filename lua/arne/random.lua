@@ -19,6 +19,20 @@ return {
 		},
 	},
 	{
+		"nanotee/sqls.nvim",
+		ft = "ddl",
+	},
+	{
+		-- UI IMPROVEMENTS
+		"stevearc/dressing.nvim",
+		config = {
+			input = {
+				insert_only = false,
+			},
+		},
+		event = "VeryLazy",
+	},
+	{
 		"andymass/vim-matchup",
 		config = function()
 			vim.g.matchup_matchparen_offscreen = {}
