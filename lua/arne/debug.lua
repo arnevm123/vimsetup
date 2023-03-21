@@ -30,6 +30,7 @@ return {
 		if not ok then
 			return
 		end
+
 		require("telescope").load_extension("dap")
 		--
 		require("dapui").setup({
@@ -128,12 +129,12 @@ return {
 		end
 
 		local types_enabled = true
-		toggle_types = function()
+		Toggle_types = function()
 			types_enabled = not types_enabled
 			dapui.update_render({ max_type_length = types_enabled and -1 or 0 })
 		end
 
-		vim.keymap.set("n", "yot", ":lua toggle_types()<CR>", {})
+		vim.keymap.set("n", "yot", ":lua Toggle_types()<CR>", {})
 
 		require("nvim-dap-virtual-text").setup({
 			enabled = true, -- enable this plugin (the default)

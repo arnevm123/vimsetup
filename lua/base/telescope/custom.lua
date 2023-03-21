@@ -84,11 +84,3 @@ vim.api.nvim_create_user_command("TelescopeDiff", function(opts)
 
 	telescope_pickers.new(options):find()
 end, { nargs = "?" })
-
-vim.api.nvim_create_user_command("TEST123", function(opts)
-	local branchName = "master"
-	if opts.args ~= nil and opts.args ~= "" then
-		branchName = opts.args
-	end
-	print(branchName)
-end, { nargs = "?" })

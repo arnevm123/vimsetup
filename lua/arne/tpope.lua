@@ -9,6 +9,11 @@ return {
 			{ "<leader>gb", ":0Gclog<cr>", desc = "Git history" },
 		},
 	},
+	-- not useful in our project :/
+	-- {
+	-- 	"tpope/vim-dispatch",
+	-- 	cmd = { "Dispatch", "Make" },
+	-- },
 	{
 		"tpope/vim-unimpaired",
 		keys = { "[", "]", "yo" },
