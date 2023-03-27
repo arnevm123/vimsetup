@@ -8,11 +8,14 @@ return {
 	},
 	--stylua: ignore
 	keys = {
+		{ "<leader>ea", "'Z:Cdlf<CR>:lua require'dap'.continue()<CR>", desc = "Debug start" },
 		{ "yod", function() require("dapui").toggle() end, { noremap = true, silent = true, desc = "Toggle dapui" } },
 		{ "<leader>sc", ":lua require'dap'.continue()<CR>", desc = "Debug continue" },
 		{ "<leader>sl", ":lua require'dap'.run_to_cursor()<CR>", desc = "Debug run to cursor" },
 		{ "<leader>so", ":lua require'dap'.step_over()<CR>", desc = "Debug step ove" },
 		{ "<leader>si", ":lua require'dap'.step_into()<CR>", desc = "Debug step into" },
+		{ "<leader>su", ":lua require'dap'.up()<CR>", desc = "Debug step up callstack" },
+		{ "<leader>sd", ":lua require'dap'.down()<CR>", desc = "Debug step down callstack" },
 		{ "<leader>sO", ":lua require'dap'.step_out()<CR>", desc = "Debug  step out" },
 		{ "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
 		{ "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
@@ -34,7 +37,7 @@ return {
 		require("telescope").load_extension("dap")
 		--
 		require("dapui").setup({
-			icons = { expanded = "v", collapsed = ">", current_frame = "-" },
+			icons = { expanded = "v", collapsed = ">" },
 			mappings = {
 				-- Use a table to apply multiple mappings
 				expand = { "<tab>", "<CR>", "<2-LeftMouse>" },
@@ -64,7 +67,7 @@ return {
 			-- Layouts are opened in order so that earlier layouts take priority in window sizing.
 			layouts = {
 				{
-					elements = { { id = "breakpoints", size = 0.2 }, "watches", "repl", "console" },
+					elements = { { id = "breakpoints", size = 0.2 }, "stacks", "repl", "watches" },
 					size = 80, -- 80 columns
 					position = "right",
 				},
@@ -79,16 +82,15 @@ return {
 				enabled = true,
 				-- Display controls in this element
 				element = "repl",
-				icons = {
-					pause = "⏸︎",
-					play = "⏵︎",
-					step_into = "⏩︎",
-					step_over = "⏭︎ ",
-					step_out = "⏬︎",
-					step_back = " ⏪︎",
-					run_last = " ⏱︎",
-					terminate = "⏹︎",
-				},
+				-- icons = { pause = "⏸︎",
+				-- 	play = "⏵︎",
+				-- 	step_into = "⏩︎",
+				-- 	step_over = "⏭︎ ",
+				-- 	step_out = "⏬︎",
+				-- 	step_back = "⏪︎",
+				-- 	run_last = "⏱︎",
+				-- 	terminate = "⏹︎",
+				-- },
 			},
 			floating = {
 				max_height = nil, -- These can be integers or a float between 0 and 1.

@@ -1,10 +1,10 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- -- Don't auto commenting new lines
+-- Don't auto comment new lines
 autocmd("BufEnter", {
 	pattern = "",
-	command = "set fo-=c fo-=r fo-=o",
+	command = "set fo-=c fo-=o",
 })
 
 autocmd("TextYankPost", {
@@ -57,22 +57,16 @@ autocmd("Filetype", {
 	command = "setlocal shiftwidth=2 tabstop=2 expandtab",
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+vim.api.nvim_create_autocmd("FileType", {
 	desc = "Easy quit help with 'q'",
-	group = vim.api.nvim_create_augroup('Helpful', { clear = true }),
-	pattern = 'help',
-	callback = function() vim.keymap.set('n', 'q', '<cmd>q<cr>', { silent = true, buffer = true }) end,
+	group = vim.api.nvim_create_augroup("Helpful", { clear = true }),
+	pattern = "help",
+	callback = function()
+		vim.keymap.set("n", "q", "<cmd>q<cr>", { silent = true, buffer = true })
+	end,
 })
 
-vim.api.nvim_create_user_command("TstImpl", function()
-	local lsp = vim.lsp
-	local bufnr = vim.api.nvim_get_current_buf()
-	local params = { textDocument = lsp.util.make_text_document_params() }
-	local method = "textDocument/documentSymbol"
-	lsp.buf_request_all(bufnr, method, params, function(document_symbols)
-		vim.print(lsp.buf_request_sync(0, "textDocument/implementation", document_symbols, 1000))
-	end)
-end, {})
+require("base.implSymbol")
 
 vim.api.nvim_create_user_command("PrettyJson", ":%!jq '.'", {})
 vim.api.nvim_create_user_command("Chmod", ":!chmod +x %", {})

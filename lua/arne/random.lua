@@ -84,12 +84,27 @@ return {
 		"danymat/neogen",
 		config = true,
 		dependencies = "nvim-treesitter/nvim-treesitter",
-		-- stylua: ignore
 		keys = {
-			{ "<Leader>ng",  function() require('neogen').generate() end },
-			{ "<Leader>nc",  function() require('neogen').generate({ type = 'class' }) end },
-			{ "<Leader>nf",  function() require('neogen').generate({ type = 'func' }) end },
-			{ "<Leader>nt",  function() require('neogen').generate({ type = 'type' }) end },
+			{
+				"<Leader>ng",
+				function() require("neogen").generate() end,
+				desc = "Generate comment",
+			},
+			{
+				"<Leader>nc",
+				function() require("neogen").generate({ type = "class" }) end,
+				desc = "Generate class comment",
+			},
+			{
+				"<Leader>nf",
+				function() require("neogen").generate({ type = "func" }) end,
+				desc = "Generate function comment",
+			},
+			{
+				"<Leader>nt",
+				function() require("neogen").generate({ type = "type" }) end,
+				desc = "Generate type comment",
+			},
 		},
 	},
 	{
@@ -209,5 +224,9 @@ return {
 	{
 		"vibovenkat123/rgpt.nvim",
 		cmd = { "ReviewGPT" },
+		keys = {
+			{ "<leader>er", ":ReviewGPT review<CR>", desc = "review" },
+		},
+		config = true,
 	},
 }

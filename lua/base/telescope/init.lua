@@ -18,13 +18,20 @@ return {
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
-		{ "<leader>ff", ":Telescope live_grep<cr>", desc = "Telescope live grep" },
+		{ "<leader>ff", function ()
+			local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
+			git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
+			local opts = {
+				cwd = git_dir,
+			}
+			require('telescope.builtin').live_grep(opts)
+			end, desc = "Telescope live grep" },
 		{ "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
 		{ "<leader>fz", function()
 			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
 		end , desc = "Telescope live grep" },
 		{ "<leader>fu", ":Telescope live_grep default_text=<C-r><C-w><cr>", desc = "Telescope live grep cursor word" },
-		{ "<leader>fu", 'y:Telescope live_grep default_text=<C-r>"<cr>', desc = "Telescope live grep paste", mode = "v" },
+		{ "<leader>fu", '"hy:Telescope live_grep default_text=<C-r>h<cr>', desc = "Telescope live grep paste", mode = "v" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
@@ -33,7 +40,11 @@ return {
 		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
 		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
 		{ "<leader>f;", ":Telescope neoclip<cr>", desc = "Telescope clipboard manager" },
-		-- { "<leader>fa", :lua require("telescope.builtin").live_grep({grep_open_files=true})<CR>', desc = "Telescope live grep open files" },
+		{ "<leader>fa", function ()
+			require('telescope.builtin').live_grep({
+				prompt_title = 'find string in open buffers...',
+				grep_open_files = true })
+			end, desc = "Telescope live grep open files" },
 		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
@@ -63,7 +74,6 @@ return {
 					horizontal = { width = 0.9 },
 					-- other layout configuration here
 				},
-
 				path_display = { "smart" },
 
 				mappings = {
@@ -134,6 +144,10 @@ return {
 			pickers = {
 				oldfiles = {
 					cwd_only = true,
+				},
+				buffers = {
+					sort_lastused = true,
+					sort_mru = true,
 				},
 			},
 			extensions = {

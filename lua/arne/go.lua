@@ -22,6 +22,9 @@ return {
 			luasnip = true, -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
 			-- test_runner = "richgo", -- one of {`go`, `richgo`, `dlv`, `ginkgo`, `gotestsum`}
 			-- run_in_floaterm = true, -- set to true to run in float window. :GoTermClose closes the floatterm
+			lsp_inlay_hints = {
+				enable = true,
+			},
 		})
 	end,
 	-- event = { "CmdlineEnter" },

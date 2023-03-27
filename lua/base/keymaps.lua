@@ -46,7 +46,7 @@ keymap("n", "[c", ":diffget //2<CR>", opts)
 keymap("n", "]c", ":diffget //3<CR>", opts)
 keymap("n", "<leader>ex", ":Sexplore!<cr>", opts)
 keymap("n", "yoe", ":Lexplore!<cr>", opts)
-keymap("n", "yow", "<C-w>w", opts)
+-- keymap("n", "yow", "<C-w>w", opts)
 keymap("n", "yoq", ":lua CToggle()<CR>", opts)
 keymap(
 	"n",
@@ -90,10 +90,9 @@ keymap("n", "Q", "@q", nosilent)
 keymap("n", "<Leader>xc", ":g/console.lo/d<cr>", { noremap = true, silent = true, desc = "Remove console.log" })
 
 -- search and replace stuff
-keymap("x", "<leader>rr", ':s/\\<<C-j>"\\>/<C-r>"', nosilent)
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1", nosilent)
-keymap("v", "<leader>re", '"hy:%s/<C-r>h/<C-r>h/c<left><left>', nosilent)
-keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
+keymap("v", "<leader>re", '"hy:%s#<C-r>h#<C-r>h#c<left><left>', nosilent)
+keymap("n", "<leader>re", ":%s/<C-r><C-w>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
 keymap("n", "<leader>tt", ":let $VIM_DIR=expand('%:p:h')<CR>:vsp<CR>:terminal<CR>Acd $VIM_DIR<CR>", nosilent)
 keymap("n", "<leader>tm", "::let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 

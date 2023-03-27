@@ -1,8 +1,10 @@
 return {
 	"akinsho/bufferline.nvim",
 	event = "BufReadPost",
+	-- cmd = { "BufferLineCyclePrev" },
 	opts = {
 		options = {
+			mode = "tabs",
 			numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
 			left_trunc_marker = "<",
 			right_trunc_marker = ">",

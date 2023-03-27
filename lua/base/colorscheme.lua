@@ -7,8 +7,8 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 	vim.cmd.colorscheme(color)
 
 	-- Remove background and add better colorcolumn & cursorline matching
-	vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#222222" })
-	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#222222" })
+	vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#242424" })
+	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#242424" })
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 	vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
@@ -17,7 +17,7 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 
 	if fix_search then
-		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#5B5B5B" })
+		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })
 		vim.api.nvim_set_hl(0, "Search", { bg = "#3B3B3B" })
 		-- fix match parenthesis
 		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#2B2B2B" })

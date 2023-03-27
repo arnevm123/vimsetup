@@ -43,11 +43,21 @@ return {
 				return ""
 			end
 			local marks = require("harpoon").get_mark_config().marks
-			local keymaps = { " 𝗛 ", " 𝗝 ", " 𝗞 ", " 𝗟 " }
+			local keymaps = { " 󰰀 ", " 󰰆 ", " 󰰉 ", " 󰰌 " }
 			local str = ""
 			local filename = ""
+			local amount_displayed = 4
+			if vim.fn.winwidth(0) < 260 then
+				amount_displayed = 3
+				if vim.fn.winwidth(0) < 200 then
+					amount_displayed = 2
+				end
+			end
+			if #marks < amount_displayed then
+				amount_displayed = #marks
+			end
 
-			for idx = 1, #marks do
+			for idx = 1, amount_displayed do
 				local t = {}
 				for s in string.gmatch(marks[idx].filename, "([^" .. "/" .. "]+)") do
 					table.insert(t, s)
@@ -61,7 +71,7 @@ return {
 				if idx > 4 then
 					-- str = str .. " " .. filename
 				else
-					str = str .. " ".. keymaps[idx] .. filename
+					str = str .. " " .. keymaps[idx] .. filename
 				end
 			end
 
@@ -114,7 +124,7 @@ return {
 				lualine_c = { harpoon },
 				-- lualine_x = { "encoding", "fileformat", "filetype" },
 				lualine_x = { diff, progress, diagnostics },
-				lualine_y = { branch  },
+				lualine_y = { branch },
 				lualine_z = {},
 			},
 			inactive_sections = {

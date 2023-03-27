@@ -15,7 +15,17 @@ return {
 		"rafamadriz/friendly-snippets",
 		-- for formatters and linters
 		"jose-elias-alvarez/null-ls.nvim",
-		"SmiteshP/nvim-navic",
+		{
+			"SmiteshP/nvim-navbuddy",
+			dependencies = {
+				"SmiteshP/nvim-navic",
+			},
+
+			cmd = { "Navbuddy" },
+			keys = {
+				{ "<leader>es", ":Navbuddy<CR>", desc = "Toggle symbol outline" },
+			},
+		},
 		{
 			"jcdickinson/codeium.nvim",
 			dependencies = {
@@ -27,7 +37,7 @@ return {
 		},
 		{
 			"j-hui/fidget.nvim",
-			opts = { text = { spinner = "dots" }, window = { blend = 0 } },
+			opts = { text = { spinner = "dots", done = "" }, window = { blend = 0 } },
 		},
 	},
 	keys = {
