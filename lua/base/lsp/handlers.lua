@@ -63,19 +63,19 @@ local function lsp_keymaps(bufnr)
 	keymap(bufnr, "n", "<leader>cI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 	keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 	keymap(bufnr, "n", "<leader>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	keymap(bufnr, "n", "[w", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-	keymap(bufnr, "n", "]w", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+	keymap(bufnr, "n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+	keymap(bufnr, "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 	keymap(
 		bufnr,
 		"n",
-		"[d",
+		"[w",
 		"<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>",
 		opts
 	)
 	keymap(
 		bufnr,
 		"n",
-		"]d",
+		"]w",
 		"<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>",
 		opts
 	)
@@ -85,30 +85,21 @@ local navbuddy = require("nvim-navbuddy")
 
 M.on_attach = function(client, bufnr)
 	-- this should be improved...
-	if client.name == "tsserver" then
+	if
+		client.name == "tsserver"
+		or client.name == "angularls"
+		or client.name == "html"
+		or client.name == "jsonls"
+		or client.name == "gopls"
+		or client.name == "lua_ls"
+	then
 		client.server_capabilities.documentFormattingProvider = false
 	end
 
-	if client.name == "angularls" then
-		client.server_capabilities.documentFormattingProvider = false
+	if client.name ~= "angularls" and client.name ~= "eslint" then
+		navbuddy.attach(client, bufnr)
 	end
 
-	if client.name == "html" then
-		client.server_capabilities.documentFormattingProvider = false
-	end
-
-	if client.name == "jsonls" then
-		client.server_capabilities.documentFormattingProvider = false
-	end
-
-	if client.name == "gopls" then
-		client.server_capabilities.documentFormattingProvider = false
-	end
-
-	if client.name == "lua_ls" then
-		client.server_capabilities.documentFormattingProvider = false
-	end
-	navbuddy.attach(client, bufnr)
 	client.server_capabilities.semanticTokensProvider = nil
 	lsp_keymaps(bufnr)
 end

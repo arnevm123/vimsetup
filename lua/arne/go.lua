@@ -7,6 +7,8 @@ return {
 	},
 	config = function()
 		require("go").setup({
+			-- maybe set all to false
+			disable_defaults = false, -- true|false when true set false to all boolean settings and replace all table
 			dap_debug_keymap = false, -- true: use keymap for debugger defined in go/dap.lua
 			-- false: do not use keymap in go/dap.lua.  you must define your own.
 			-- windows: use visual studio keymap

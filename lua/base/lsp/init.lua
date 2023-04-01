@@ -30,6 +30,7 @@ return {
 			"jcdickinson/codeium.nvim",
 			dependencies = {
 				"MunifTanjim/nui.nvim",
+				{ "jcdickinson/http.nvim", build = "cargo build --workspace --release" },
 			},
 			config = function()
 				require("codeium").setup({})
@@ -72,13 +73,22 @@ return {
 					command = {
 						"golangci-lint",
 						"run",
-						"--enable-all",
-						"--disable",
-						"lll",
+						"--config=~/.golangci.yaml",
+						"--fast",
 						"--out-format",
 						"json",
 						"--issues-exit-code=1",
 					},
+					-- command = {
+					-- 	"golangci-lint",
+					-- 	"run",
+					-- 	"--enable-all",
+					-- 	"--disable",
+					-- 	"lll",
+					-- 	"--out-format",
+					-- 	"json",
+					-- 	"--issues-exit-code=1",
+					-- },
 				},
 			},
 		}

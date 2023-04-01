@@ -113,22 +113,6 @@ return {
 		keys = { "ds", "cs", "ys", { "S", mode = "v" }, { "gS", mode = "v" } },
 	},
 	{
-		"lukas-reineke/headlines.nvim",
-		dependencies = "nvim-treesitter/nvim-treesitter",
-		config = function()
-			vim.api.nvim_set_hl(0, "Headline1", { bg = "#1e2718" })
-			vim.api.nvim_set_hl(0, "Headline2", { bg = "#21262d" })
-			vim.api.nvim_set_hl(0, "CodeBlock", { bg = "#1c1c1c" })
-			vim.api.nvim_set_hl(0, "Dash", { bg = "#D19A66" })
-			require("headlines").setup({
-				markdown = {
-					headline_highlights = { "Headline1", "Headline2" },
-				},
-			})
-		end, -- or `opts = {}`
-		ft = "markdown",
-	},
-	{
 		"chrisbra/csv.vim",
 		ft = "csv",
 	},
@@ -228,5 +212,9 @@ return {
 			{ "<leader>er", ":ReviewGPT review<CR>", desc = "review" },
 		},
 		config = true,
+	},
+	{
+		"wsdjeg/vim-fetch",
+		lazy = false,
 	},
 }

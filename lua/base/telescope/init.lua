@@ -6,7 +6,6 @@ return {
 		"aaronhallaert/ts-advanced-git-search.nvim",
 		"tpope/vim-fugitive",
 		"nvim-telescope/telescope-live-grep-args.nvim",
-		"nvim-tree/nvim-web-devicons",
 		"nvim-lua/plenary.nvim",
 	},
 	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
@@ -69,11 +68,11 @@ return {
 					results = border_chars,
 					preview = border_chars,
 				},
-				layout_config = {
-					vertical = { width = 0.8, height = 0.9 },
-					horizontal = { width = 0.9 },
-					-- other layout configuration here
-				},
+				-- layout_config = {
+				-- 	vertical = { width = 0.8, height = 0.9 },
+				-- 	horizontal = { width = 0.9 },
+				-- 	-- other layout configuration here
+				-- },
 				path_display = { "smart" },
 
 				mappings = {

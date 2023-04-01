@@ -51,7 +51,7 @@ keymap("n", "yoq", ":lua CToggle()<CR>", opts)
 keymap(
 	"n",
 	"<Leader>xn",
-	":call setreg('+', expand('%:.'))<CR>",
+	":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>",
 	{ noremap = true, desc = "Copy Buffer name and path" }
 )
 -- Visual --
