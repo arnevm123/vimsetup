@@ -30,7 +30,7 @@ return {
 			"jcdickinson/codeium.nvim",
 			dependencies = {
 				"MunifTanjim/nui.nvim",
-				{ "jcdickinson/http.nvim", build = "cargo build --workspace --release" },
+				-- { "jcdickinson/http.nvim", build = "cargo build --workspace --release" },
 			},
 			config = function()
 				require("codeium").setup({})

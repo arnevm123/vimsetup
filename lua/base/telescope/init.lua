@@ -38,7 +38,6 @@ return {
 		{ "<leader>fo", ":Telescope file_browser path=%:p:h<cr>", desc = "Telescope file browser file path" },
 		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
 		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
-		{ "<leader>f;", ":Telescope neoclip<cr>", desc = "Telescope clipboard manager" },
 		{ "<leader>fa", function ()
 			require('telescope.builtin').live_grep({
 				prompt_title = 'find string in open buffers...',
@@ -179,8 +178,10 @@ return {
 			-- you need to call load_extension, somewhere after setup function:
 		})
 
+		if vim.fn.has "macunix" == 1 then
+			telescope.load_extension("neoclip")
+		end
 		telescope.load_extension("refactoring")
-		telescope.load_extension("neoclip")
 		telescope.load_extension("fzf")
 		telescope.load_extension("file_browser")
 		telescope.load_extension("live_grep_args")
