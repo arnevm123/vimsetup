@@ -1,5 +1,6 @@
 local servers = {
 	"angularls",
+	"ansiblels",
 	"rust_analyzer",
 	"bashls",
 	"cssls",

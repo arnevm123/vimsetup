@@ -1,15 +1,16 @@
-if vim.fn.has "macunix" ~= 1 then
+-- Does not work on linux.
+if vim.fn.has("macunix") ~= 1 then
 	return {}
 end
 return {
 	"AckslD/nvim-neoclip.lua",
-	dependencies = { { "kkharji/sqlite.lua" , module = 'sqlite'} },
+	dependencies = { { "kkharji/sqlite.lua", module = "sqlite" } },
 	event = "BufEnter",
 	keys = {
 		{ "<leader>f;", ":Telescope neoclip<cr>", desc = "Telescope clipboard manager" },
 	},
 	opts = {
-		default_register = '+',
+		default_register = "+",
 		db_path = vim.fn.stdpath("data") .. "/neoclip.sqlite3",
 		enable_persistent_history = true,
 		continuous_sync = true,

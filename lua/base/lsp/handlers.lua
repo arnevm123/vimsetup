@@ -96,7 +96,7 @@ M.on_attach = function(client, bufnr)
 		client.server_capabilities.documentFormattingProvider = false
 	end
 
-	if client.name ~= "angularls" and client.name ~= "eslint" then
+	if client.name ~= "angularls" and client.name ~= "ansiblels" and client.name ~= "eslint" then
 		navbuddy.attach(client, bufnr)
 	end
 

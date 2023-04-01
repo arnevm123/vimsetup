@@ -178,7 +178,8 @@ return {
 			-- you need to call load_extension, somewhere after setup function:
 		})
 
-		if vim.fn.has "macunix" == 1 then
+		-- Does not work on linux.
+		if vim.fn.has("macunix") == 1 then
 			telescope.load_extension("neoclip")
 		end
 		telescope.load_extension("refactoring")

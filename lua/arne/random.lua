@@ -117,6 +117,10 @@ return {
 		ft = "csv",
 	},
 	{
+		"pearofducks/ansible-vim",
+		ft = "yaml",
+	},
+	{
 		"Everduin94/nvim-quick-switcher",
 		keys = {
 			{
