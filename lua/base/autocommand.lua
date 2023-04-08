@@ -73,6 +73,10 @@ vim.api.nvim_create_user_command("Chmod", ":!chmod +x %", {})
 vim.api.nvim_create_user_command("Cdlf", ":cd ~/Documents/moaprplatform/platform/scripts/local-full", {})
 vim.api.nvim_create_user_command("Cdbase", ":cd ~/Documents/moaprplatform/", {})
 vim.api.nvim_create_user_command("Cdtest", ":cd %:h", {})
+vim.api.nvim_create_user_command("GetInfoUnderCursor", function()
+	local result = vim.treesitter.get_captures_at_cursor(0)
+	print(vim.inspect(result))
+end, {})
 vim.api.nvim_create_user_command("IfErr", function()
 	local byte_offset = vim.fn.wordcount().cursor_bytes
 
