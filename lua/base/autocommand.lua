@@ -1,10 +1,11 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- Don't auto comment new lines
 autocmd("BufEnter", {
-	pattern = "",
-	command = "set fo-=c fo-=o",
+  callback = function()
+    vim.opt.formatoptions:remove { "c", "o" }
+  end,
+  desc = "Disable New Line Comment",
 })
 
 autocmd("TextYankPost", {

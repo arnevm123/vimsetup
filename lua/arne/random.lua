@@ -87,22 +87,30 @@ return {
 		keys = {
 			{
 				"<Leader>ng",
-				function() require("neogen").generate() end,
+				function()
+					require("neogen").generate()
+				end,
 				desc = "Generate comment",
 			},
 			{
 				"<Leader>nc",
-				function() require("neogen").generate({ type = "class" }) end,
+				function()
+					require("neogen").generate({ type = "class" })
+				end,
 				desc = "Generate class comment",
 			},
 			{
 				"<Leader>nf",
-				function() require("neogen").generate({ type = "func" }) end,
+				function()
+					require("neogen").generate({ type = "func" })
+				end,
 				desc = "Generate function comment",
 			},
 			{
 				"<Leader>nt",
-				function() require("neogen").generate({ type = "type" }) end,
+				function()
+					require("neogen").generate({ type = "type" })
+				end,
 				desc = "Generate type comment",
 			},
 		},
@@ -189,24 +197,24 @@ return {
 		},
 	},
 	{
-		-- TODO: use this when stable
-		-- "toppair/peek.nvim",
-		"hulufei/peek.nvim",
-		branch = "use-browser",
+		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
 		cmd = { "PeekOpen", "PeekClose" },
 		config = function()
+			-- default config:
 			require("peek").setup({
-				auto_load = true,
-				close_on_bdelete = true,
-				syntax = true,
-				theme = "dark",
+				auto_load = true, -- whether to automatically load preview when entering another markdown buffer
+				close_on_bdelete = true, -- close preview window on buffer delete
+				syntax = true, -- enable syntax highlighting, affects performance
+				theme = "dark", -- 'dark' or 'light'
 				update_on_change = true,
-				throttle_at = 200000,
-				throttle_time = "auto",
+				app = "webview", -- 'webview', 'browser', string or a table of strings
+				filetype = { "markdown" }, -- list of filetypes to recognize as markdown
+				throttle_at = 200000, -- start throttling when file exceeds this
+				throttle_time = "auto", -- minimum amount of time in milliseconds
 			})
-			vim.api.nvim_create_user_command("PeekOpen", require("peek").open(), {})
-			vim.api.nvim_create_user_command("PeekClose", require("peek").close(), {})
+			vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+			vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
 		end,
 	},
 	{

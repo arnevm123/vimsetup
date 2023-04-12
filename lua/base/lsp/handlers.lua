@@ -100,7 +100,10 @@ M.on_attach = function(client, bufnr)
 		navbuddy.attach(client, bufnr)
 	end
 
-	client.server_capabilities.semanticTokensProvider = nil
+	if client.name == "lua_ls" then
+		client.server_capabilities.semanticTokensProvider = nil
+	end
+
 	lsp_keymaps(bufnr)
 end
 
