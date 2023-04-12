@@ -179,9 +179,7 @@ return {
 		})
 
 		-- Does not work on linux.
-		if vim.fn.has("macunix") == 1 then
-			telescope.load_extension("neoclip")
-		end
+		telescope.load_extension("neoclip")
 		telescope.load_extension("refactoring")
 		telescope.load_extension("fzf")
 		telescope.load_extension("file_browser")

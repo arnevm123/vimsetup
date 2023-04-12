@@ -1,7 +1,3 @@
--- Does not work on linux.
-if vim.fn.has("macunix") ~= 1 then
-	return {}
-end
 return {
 	"AckslD/nvim-neoclip.lua",
 	dependencies = { { "kkharji/sqlite.lua", module = "sqlite" } },
