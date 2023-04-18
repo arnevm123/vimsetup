@@ -213,8 +213,8 @@ return {
 				throttle_at = 200000, -- start throttling when file exceeds this
 				throttle_time = "auto", -- minimum amount of time in milliseconds
 			})
-			vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
-			vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+			vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+			vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
 		end,
 	},
 	{
@@ -226,7 +226,37 @@ return {
 		config = true,
 	},
 	{
+		-- makes :e /path:101 work
 		"wsdjeg/vim-fetch",
 		lazy = false,
+	},
+	{
+		"JellyApple102/easyread.nvim",
+		config = true,
+		cmd = {
+			"EasyreadToggle",
+			"EasyreadSaccadeInterval",
+			"EasyreadSaccadeReset",
+			"EasyreadUpdateWhileInsert",
+		},
+	},
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = {
+			"lua",
+			"css",
+			DEFAULT_OPTIONS = {
+				RGB = true, -- #RGB hex codes
+				RRGGBB = true, -- #RRGGBB hex codes
+				names = true, -- "Name" codes like Blue
+				RRGGBBAA = true, -- #RRGGBBAA hex codes
+				css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+				css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+				rgb_fn = false, -- CSS rgb() and rgba() functions
+				hsl_fn = false, -- CSS hsl() and hsla() functions
+				mode = "background", -- Set the display mode.
+			},
+		},
+		event = "BufReadPost",
 	},
 }
