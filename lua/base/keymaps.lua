@@ -26,8 +26,8 @@ keymap("c", "<tab>", "<C-z>", nosilent)
 keymap("n", "<leader><tab>", "<C-^>", nosilent)
 
 -- Move text up and down
-keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
-keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
+keymap("v", "J", ":m '>+1<CR>gv=gv", opts)
+keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 
 keymap("v", "*", '"ry/\\V<C-r>r<CR>', opts)
 keymap("v", "#", '"ry?\\V<C-r>r<CR>', opts)

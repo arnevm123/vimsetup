@@ -57,18 +57,19 @@ return {
 
 		require("base.telescope.custom")
 
-		local border_chars_both = { "─", " ", "─", " ", " ", " ", " ", " " }
 		local border_chars = { "─", " ", " ", " ", " ", " ", " ", " " }
 		local actions = require("telescope.actions")
 		telescope.setup({
 			defaults = {
 				borderchars = {
-					prompt = border_chars_both,
+					prompt = border_chars,
 					results = border_chars,
 					preview = border_chars,
 				},
-				-- layout_config = {
-				-- 	vertical = { width = 0.8, height = 0.9 },
+				layout_strategy = "vertical",
+				layout_config = {
+					vertical = { mirror = true },
+				},
 				-- 	horizontal = { width = 0.9 },
 				-- 	-- other layout configuration here
 				-- },

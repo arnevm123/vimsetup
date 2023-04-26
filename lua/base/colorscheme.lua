@@ -42,13 +42,14 @@ function SetupColorscheme(color, fix_search, fix_diagnostics, fix_telescope)
 		vim.api.nvim_set_hl(0, "TelescopePreviewLine", { bg = "#3B3B3B" })
 
 		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "#2B2B2B" })
-		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#3B3B3B", bg = "#2B2B2B" })
-		vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#3B3B3B", bg = "#2B2B2B" })
+		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#DDDDDD", bg = "#2B2B2B" })
+		vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#DDDDDD", bg = "#2B2B2B" })
 
 		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "#2B2B2B" })
 
 		vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#2B2B2B", bold = true, bg = "#97BDDE" })
-		vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#2B2B2B", bold = true, bg = "#97BDDE" })
+		vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#3B3B3B", bold = true, bg = "#97BDDE" })
+		vim.api.nvim_set_hl(0, "TelescopeResults", { bg = "#97BDDE" })
 		vim.api.nvim_set_hl(0, "TelescopeTitle", { fg = "#2B2B2B", bold = true, bg = "#97BDDE" })
 	end
 end
@@ -58,5 +59,11 @@ return {
 		"mcchrish/zenbones.nvim",
 		priority = 1000,
 		dependencies = { "rktjmp/lush.nvim" },
+	},
+	{
+		"rose-pine/neovim",
+		priority = 1000,
+		name = "rose-pine",
+		opts = {disable_background = true,},
 	},
 }
