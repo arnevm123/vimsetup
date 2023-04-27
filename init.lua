@@ -8,7 +8,6 @@ require("base.lazy").setup({
 	require("arne.lualine"),
 	require("arne.go"),
 	require("arne.debug"),
-	require("arne.chatgpt"),
 	require("arne.gitsigns"),
 	require("arne.neogit"),
 	require("arne.dial"),

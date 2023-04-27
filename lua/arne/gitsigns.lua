@@ -12,7 +12,10 @@ return {
 		{ "<leader>gu", ":Gitsigns undo_stage_hunk<cr>", desc = "Gitsigns undo stage hunk" },
 		{ "<leader>gU", ":Gitsigns undo_stage_buffer<cr>", desc = "Gitsigns undo stage buffer" },
 		{ "<leader>gd", ":Gitsigns diffthis HEAD<cr>", desc = "Gitsigns diff with HEAD" },
+		{ "<leader>gD", function() require("gitsigns").diffthis('~') end, desc = "" },
 		{ "<leader>gm", ":Gitsigns diffthis master<cr>", desc = "Gitsigns diff with master" },
+		{ "<leader>gl", ":Gitsigns blame_line<cr>", desc = "Gitsigns blame current line" },
+		{ "<leader>gL", function() require("gitsigns").blame_line{full=true} end, desc = "Gitsigns blame full current line" },
 		{ "yob", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
 	},
 	opts = {

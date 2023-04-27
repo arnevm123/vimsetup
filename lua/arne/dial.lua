@@ -1,6 +1,6 @@
 return {
 	"monaqa/dial.nvim",
-	keys = { "<C-b>", "<C-a>", "<C-x>" },
+	keys = { "<C-a>", "<C-x>" },
 	config = function()
 		local augend = require("dial.augend")
 		require("dial.config").augends:register_group({
@@ -32,7 +32,6 @@ return {
 			},
 		})
 		-- vim dial
-		vim.api.nvim_set_keymap("n", "<C-b>", require("dial.map").inc_normal(), { noremap = true, silent = true })
 		vim.api.nvim_set_keymap("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true, silent = true })
 		vim.api.nvim_set_keymap("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true, silent = true })
 		-- vim.api.nvim_set_keymap("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })

@@ -50,38 +50,27 @@ M.setup = function()
 	})
 end
 
+-- stylua: ignore
 local function lsp_keymaps(bufnr)
 	local opts = { noremap = true, silent = true }
 	local keymap = vim.api.nvim_buf_set_keymap
-	keymap(bufnr, "n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-	keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-	keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-	keymap(bufnr, "n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
 	keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	keymap(bufnr, "n", "<leader>cd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	keymap(bufnr, "n", "<leader>cD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 	keymap(bufnr, "n", "<leader>cr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 	keymap(bufnr, "n", "<leader>cI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 	keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 	keymap(bufnr, "n", "<leader>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 	keymap(bufnr, "n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 	keymap(bufnr, "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-	keymap(
-		bufnr,
-		"n",
-		"[w",
-		"<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>",
-		opts
-	)
-	keymap(
-		bufnr,
-		"n",
-		"]w",
-		"<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>",
-		opts
-	)
+	keymap(bufnr, "n", "[w", "<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
+	keymap(bufnr, "n", "]w", "<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
+	keymap(bufnr, "n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+	keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+	keymap(bufnr, "n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
+	keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
 end
 
-local navbuddy = require("nvim-navbuddy")
 
 M.on_attach = function(client, bufnr)
 	-- this should be improved...
@@ -94,10 +83,6 @@ M.on_attach = function(client, bufnr)
 		or client.name == "lua_ls"
 	then
 		client.server_capabilities.documentFormattingProvider = false
-	end
-
-	if client.name ~= "angularls" and client.name ~= "ansiblels" and client.name ~= "eslint" then
-		navbuddy.attach(client, bufnr)
 	end
 
 	if client.name == "lua_ls" then

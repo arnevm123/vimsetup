@@ -2,11 +2,12 @@ return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
 		"nvim-telescope/telescope-file-browser.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable "make" == 1, build = "make" },
 		"aaronhallaert/ts-advanced-git-search.nvim",
 		"tpope/vim-fugitive",
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"nvim-lua/plenary.nvim",
+		"stevearc/dressing.nvim",
 	},
 	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
 	event = "VeryLazy",
@@ -17,18 +18,21 @@ return {
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
-		{ "<leader>ff", function ()
-			local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
-			git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
-			local opts = {
-				cwd = git_dir,
-			}
-			require('telescope.builtin').live_grep(opts)
-			end, desc = "Telescope live grep" },
+		-- { "<leader>ff", function ()
+		-- 	local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
+		-- 	git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
+		-- 	local opts = {
+		-- 		cwd = git_dir,
+		-- 	}
+		-- 	require('telescope.builtin').live_grep(opts)
+		-- 	end, desc = "Telescope live grep" },
+		{ "<leader>ff", ":Telescope live_grep<cr>", desc = "Telescope live grep" },
 		{ "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
 		{ "<leader>fz", function()
 			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
 		end , desc = "Telescope live grep" },
+		{ "<leader>fy", 'vi""hy:lua require("telescope.builtin").grep_string({ search = \'FullMethod: \\"<C-r>h\\",\'})<CR>', desc = "Telescope grpc string" },
+		{ "<leader>fY", 'vi""hy:lua require("telescope.builtin").grep_string({ search = \'(ctx, \\"<C-r>h\\", in, out,\'})<CR>', desc = "Telescope grpc string back" },
 		{ "<leader>fu", ":Telescope live_grep default_text=<C-r><C-w><cr>", desc = "Telescope live grep cursor word" },
 		{ "<leader>fu", '"hy:Telescope live_grep default_text=<C-r>h<cr>', desc = "Telescope live grep paste", mode = "v" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
@@ -47,6 +51,8 @@ return {
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
+		{ "<leader>ml", ":lua require('telescope').extensions.monorepo.monorepo()<CR>", desc = "monorepo" },
+		{ "<leader>mt", ":lua require('monorepo').toggle_project()<CR>", desc = "toggle monorepo" },
 
 	},
 	config = function()
@@ -68,7 +74,15 @@ return {
 				},
 				layout_strategy = "vertical",
 				layout_config = {
-					vertical = { mirror = true },
+					vertical = {
+						mirror = true,
+						prompt_position = "top",
+						preview_cutoff = 10,
+					},
+					center = {
+						preview_cutoff = 1000000,
+						prompt_position = "bottom",
+					},
 				},
 				-- 	horizontal = { width = 0.9 },
 				-- 	-- other layout configuration here
@@ -179,7 +193,6 @@ return {
 			-- you need to call load_extension, somewhere after setup function:
 		})
 
-		-- Does not work on linux.
 		telescope.load_extension("neoclip")
 		telescope.load_extension("refactoring")
 		telescope.load_extension("fzf")
@@ -205,5 +218,14 @@ return {
 			}
 			builtin.git_commits(options)
 		end, {})
+
+		require("dressing").setup({
+			select = {
+				telescope = require("telescope.themes").get_ivy({}),
+			},
+			input = {
+				insert_only = false,
+			},
+		})
 	end,
 }

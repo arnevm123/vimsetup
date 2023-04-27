@@ -38,6 +38,10 @@ return {
 			end,
 		}
 
+		local codeium = function()
+			return vim.fn["codeium#GetStatusString"]()
+		end
+
 		local harpoon = function()
 			if vim.fn.winwidth(0) < 160 then
 				return ""
@@ -125,7 +129,7 @@ return {
 				-- lualine_x = { "encoding", "fileformat", "filetype" },
 				lualine_x = { diff, progress, diagnostics },
 				lualine_y = { branch },
-				lualine_z = {},
+				lualine_z = { codeium },
 			},
 			inactive_sections = {
 				lualine_a = {},

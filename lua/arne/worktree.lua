@@ -16,7 +16,7 @@ Worktree.on_tree_change(function(op, metadata)
 		os.execute(copy_all_cmd)
 		local tmux_mvn = "tmux neww -d -n mvn 'cd "
 			.. worktree_path
-			.. "/platform && mvn package && git reset --hard; exec zsh'"
+			.. "/platform && mvn package && git add . && git reset --hard; exec zsh'"
 		os.execute(tmux_mvn)
 	end
 end)

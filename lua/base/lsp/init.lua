@@ -16,26 +16,19 @@ return {
 		-- for formatters and linters
 		"jose-elias-alvarez/null-ls.nvim",
 		{
-			"SmiteshP/nvim-navbuddy",
-			dependencies = {
-				"SmiteshP/nvim-navic",
-			},
-
-			cmd = { "Navbuddy" },
-			keys = {
-				{ "<leader>es", ":Navbuddy<CR>", desc = "Toggle symbol outline" },
-			},
+			"folke/neodev.nvim",
+			config = true,
 		},
-		{
-			"jcdickinson/codeium.nvim",
-			dependencies = {
-				"MunifTanjim/nui.nvim",
-				-- { "jcdickinson/http.nvim", build = "cargo build --workspace --release" },
-			},
-			config = function()
-				require("codeium").setup({})
-			end,
-		},
+		-- {
+		-- 	"jcdickinson/codeium.nvim",
+		-- 	dependencies = {
+		-- 		"MunifTanjim/nui.nvim",
+		-- 		-- { "jcdickinson/http.nvim", build = "cargo build --workspace --release" },
+		-- 	},
+		-- 	config = function()
+		-- 		require("codeium").setup({})
+		-- 	end,
+		-- },
 		{
 			"j-hui/fidget.nvim",
 			opts = { text = { spinner = "dots", done = "" }, window = { blend = 0 } },
@@ -86,16 +79,6 @@ return {
 						"json",
 						"--issues-exit-code=1",
 					},
-					-- command = {
-					-- 	"golangci-lint",
-					-- 	"run",
-					-- 	"--enable-all",
-					-- 	"--disable",
-					-- 	"lll",
-					-- 	"--out-format",
-					-- 	"json",
-					-- 	"--issues-exit-code=1",
-					-- },
 				},
 			},
 		}
@@ -104,3 +87,13 @@ return {
 	end,
 	event = { "BufReadPre", "BufNewFile" },
 }
+-- command = {
+-- 	"golangci-lint",
+-- 	"run",
+-- 	"--enable-all",
+-- 	"--disable",
+-- 	"lll",
+-- 	"--out-format",
+-- 	"json",
+-- 	"--issues-exit-code=1",
+-- },

@@ -35,7 +35,6 @@ return {
 		end
 
 		require("telescope").load_extension("dap")
-		--
 		require("dapui").setup({
 			icons = { expanded = "v", collapsed = ">" },
 			mappings = {

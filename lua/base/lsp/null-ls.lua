@@ -21,6 +21,7 @@ null_ls.setup({
 		formatting.stylua,
 		diagnostics.flake8,
 		diagnostics.eslint_d,
+		-- does not work with monorepo
 		-- diagnostics.golangci_lint,
 		formatting.goimports,
 		formatting.gofumpt,
