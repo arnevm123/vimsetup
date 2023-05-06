@@ -51,9 +51,6 @@ return {
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
-		{ "<leader>ml", ":lua require('telescope').extensions.monorepo.monorepo()<CR>", desc = "monorepo" },
-		{ "<leader>mt", ":lua require('monorepo').toggle_project()<CR>", desc = "toggle monorepo" },
-
 	},
 	config = function()
 		local status_ok, telescope = pcall(require, "telescope")
