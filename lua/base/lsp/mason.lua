@@ -1,17 +1,18 @@
 local servers = {
 	"angularls",
 	"ansiblels",
-	"rust_analyzer",
 	"bashls",
 	"cssls",
 	"eslint",
+	"golangci_lint_ls",
 	"gopls",
 	"html",
 	"jsonls",
-	"pyright",
 	"lua_ls",
-	"tsserver",
+	"pyright",
+	"rust_analyzer",
 	"sqlls",
+	"tsserver",
 }
 
 local settings = {
@@ -55,3 +56,23 @@ for _, server in pairs(servers) do
 
 	lspconfig[server].setup(opts)
 end
+
+local lspconfigs = require("lspconfig/configs")
+
+lspconfigs.golangcilsp = {
+	default_config = {
+		cmd = { "golangci-lint-langserver" },
+		root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+		init_options = {
+			command = {
+				"golangci-lint",
+				"run",
+				"--config=~/.golangci.yaml",
+				"--fast",
+				"--out-format",
+				"json",
+				"--issues-exit-code=1",
+			},
+		},
+	},
+}

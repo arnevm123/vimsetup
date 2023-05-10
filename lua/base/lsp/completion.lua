@@ -9,7 +9,6 @@ if not snip_status_ok then
 end
 
 require("luasnip/loaders/from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./my-cool-snippets" } })
 
 cmp.setup({
 	snippet = {

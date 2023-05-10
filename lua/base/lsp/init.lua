@@ -53,47 +53,10 @@ return {
 		{ "<leader>li", ":LspInfo<cr>", desc = "lsp info" },
 	},
 	config = function()
-		local status_ok, lspconfig = pcall(require, "lspconfig")
-		if not status_ok then
-			return
-		end
-
 		require("base.lsp.mason")
 		require("base.lsp.handlers").setup()
 		require("base.lsp.null-ls")
 		require("base.lsp.completion")
-
-		local lspconfigs = require("lspconfig/configs")
-
-		lspconfigs.golangcilsp = {
-			default_config = {
-				cmd = { "golangci-lint-langserver" },
-				root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
-				init_options = {
-					command = {
-						"golangci-lint",
-						"run",
-						"--config=~/.golangci.yaml",
-						"--fast",
-						"--out-format",
-						"json",
-						"--issues-exit-code=1",
-					},
-				},
-			},
-		}
-
-		lspconfig.golangci_lint_ls.setup({ filetypes = { "go", "gomod" } })
 	end,
 	event = { "BufReadPre", "BufNewFile" },
 }
--- command = {
--- 	"golangci-lint",
--- 	"run",
--- 	"--enable-all",
--- 	"--disable",
--- 	"lll",
--- 	"--out-format",
--- 	"json",
--- 	"--issues-exit-code=1",
--- },
