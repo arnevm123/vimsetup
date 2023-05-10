@@ -66,7 +66,7 @@ return {
 			{
 				"<Leader>ng",
 				function()
-					require("neogen").generate()
+					require("neogen").generate({})
 				end,
 				desc = "Generate comment",
 			},
@@ -210,27 +210,9 @@ return {
 		end,
 	},
 	{
-		"vibovenkat123/rgpt.nvim",
-		cmd = { "ReviewGPT" },
-		keys = {
-			{ "<leader>er", ":ReviewGPT review<CR>", desc = "review" },
-		},
-		config = true,
-	},
-	{
 		-- makes :e /path:101 work
 		"wsdjeg/vim-fetch",
 		lazy = false,
-	},
-	{
-		"JellyApple102/easyread.nvim",
-		config = true,
-		cmd = {
-			"EasyreadToggle",
-			"EasyreadSaccadeInterval",
-			"EasyreadSaccadeReset",
-			"EasyreadUpdateWhileInsert",
-		},
 	},
 	{
 		"norcalli/nvim-colorizer.lua",

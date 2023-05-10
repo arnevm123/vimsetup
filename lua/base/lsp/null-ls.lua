@@ -21,11 +21,30 @@ null_ls.setup({
 		formatting.stylua,
 		diagnostics.flake8,
 		diagnostics.eslint_d,
-		-- does not work with monorepo
-		-- diagnostics.golangci_lint,
+		-- diagnostics.golangci_lint.with({
+		-- 	extra_args = {"--config=~/.golangci.yaml"},
+		-- }),
 		formatting.goimports,
 		formatting.gofumpt,
 		code_actions.eslint_d,
 		formatting.prettierd,
 	},
 })
+
+-- lspconfigs.golangcilsp = {
+-- 	default_config = {
+-- 		cmd = { "golangci-lint-langserver" },
+-- 		root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+-- 		init_options = {
+-- 			command = {
+-- 				"golangci-lint",
+-- 				"run",
+-- 				"--config=~/.golangci.yaml",
+-- 				"--fast",
+-- 				"--out-format",
+-- 				"json",
+-- 				"--issues-exit-code=1",
+-- 			},
+-- 		},
+-- 	},
+-- }

@@ -52,6 +52,7 @@ keymap(
 	":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>",
 	{ noremap = true, desc = "Copy Buffer name and path" }
 )
+keymap( "n", "<Leader>xN", ":e <C-r>+<CR>", { noremap = true, desc = "Go to location in clipboard" })
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
