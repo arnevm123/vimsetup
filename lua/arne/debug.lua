@@ -81,15 +81,6 @@ return {
 				enabled = true,
 				-- Display controls in this element
 				element = "repl",
-				-- icons = { pause = "⏸︎",
-				-- 	play = "⏵︎",
-				-- 	step_into = "⏩︎",
-				-- 	step_over = "⏭︎ ",
-				-- 	step_out = "⏬︎",
-				-- 	step_back = "⏪︎",
-				-- 	run_last = "⏱︎",
-				-- 	terminate = "⏹︎",
-				-- },
 			},
 			floating = {
 				max_height = nil, -- These can be integers or a float between 0 and 1.

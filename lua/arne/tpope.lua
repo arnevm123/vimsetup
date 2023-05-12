@@ -19,4 +19,8 @@ return {
 		"tpope/vim-unimpaired",
 		keys = { "[", "]", "yo" },
 	},
+	{
+		"tpope/vim-abolish",
+		event = "CmdlineEnter",
+	},
 }
