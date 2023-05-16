@@ -15,10 +15,8 @@ return {
 		"rafamadriz/friendly-snippets",
 		-- for formatters and linters
 		"jose-elias-alvarez/null-ls.nvim",
-		{
-			"folke/neodev.nvim",
-			config = true,
-		},
+		{ "folke/neodev.nvim", config = true },
+		{ "j-hui/fidget.nvim", opts = { text = { spinner = "dots", done = "" }, window = { blend = 0 } } },
 		-- {
 		-- 	"jcdickinson/codeium.nvim",
 		-- 	dependencies = {
@@ -29,20 +27,9 @@ return {
 		-- 		require("codeium").setup({})
 		-- 	end,
 		-- },
-		{
-			"j-hui/fidget.nvim",
-			opts = { text = { spinner = "dots", done = "" }, window = { blend = 0 } },
-		},
 	},
 	keys = {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
-		{
-			"<leader>lA",
-			function()
-				vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } })
-			end,
-			desc = "lsp Source Action",
-		},
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<cr>", desc = "lsp workspace diagnostics" },
 		{ "<leader>lf", ":lua vim.lsp.buf.format()<cr>", desc = "lsp format buffer" },

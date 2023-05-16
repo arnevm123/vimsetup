@@ -1,4 +1,6 @@
 return {
+	{ "tpope/vim-unimpaired", keys = { "[", "]", "yo" } },
+	{ "tpope/vim-abolish", event = "CmdlineEnter" },
 	{
 		"tpope/vim-fugitive",
 		cmd = { "Git", "Gclog", "Gvdiff", "Gvdiffsplit", "Gdiffsplit" },
@@ -11,16 +13,8 @@ return {
 		},
 	},
 	-- not useful in our project :/
-	-- {
-	-- 	"tpope/vim-dispatch",
-	-- 	cmd = { "Dispatch", "Make" },
-	-- },
 	{
-		"tpope/vim-unimpaired",
-		keys = { "[", "]", "yo" },
-	},
-	{
-		"tpope/vim-abolish",
-		event = "CmdlineEnter",
+		"tpope/vim-dispatch",
+		cmd = { "Dispatch", "Make" },
 	},
 }

@@ -16,6 +16,9 @@ require("base.lazy").setup({
 	require("arne.folke"),
 	require("arne.theprimeagen"),
 	require("arne.testing"),
+	require("arne.dbee"),
+	require("arne.oil"),
+	require("arne.illuminate"),
 	require("arne.random"),
 }, {
 	defaults = { lazy = true },
@@ -29,4 +32,5 @@ vim.api.nvim_create_autocmd("User", {
 		require("base.autocommand")
 	end,
 })
-SetupColorscheme()
+
+require("base.setupColorscheme").Setup()

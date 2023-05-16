@@ -1,20 +1,17 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
-		"nvim-telescope/telescope-file-browser.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable "make" == 1, build = "make" },
+		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
 		"aaronhallaert/ts-advanced-git-search.nvim",
 		"tpope/vim-fugitive",
 		"nvim-telescope/telescope-live-grep-args.nvim",
+		"nvim-telescope/telescope-ui-select.nvim",
 		"nvim-lua/plenary.nvim",
-		"stevearc/dressing.nvim",
 	},
 	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
 	event = "VeryLazy",
 	-- stylua: ignore
 	keys = {
-		{ "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
-		{ "<leader>fp", ":Telescope find_files<cr>", desc = "Telescope find files" },
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
@@ -26,11 +23,56 @@ return {
 		-- 	}
 		-- 	require('telescope.builtin').live_grep(opts)
 		-- 	end, desc = "Telescope live grep" },
-		{ "<leader>ff", ":Telescope live_grep<cr>", desc = "Telescope live grep" },
-		{ "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
+		{ "<C-p>", function()
+			local root = require('telescope.utils').get_os_command_output({ "git", "rev-parse", "--show-toplevel" }, vim.fn.getcwd())
+			print(root)
+			if vim.v.shell_error == 0 then
+				require('telescope.builtin').find_files({cwd = root[1] })
+			else
+				require('telescope.builtin').find_files()
+			end
+			end,
+			desc = "Telescope live grep"
+		},
+		-- { "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
+		-- { "<leader>fp", ":Telescope find_files<cr>", desc = "Telescope find files" },
+		{ "<leader>ff", function()
+			local root = require('telescope.utils').get_os_command_output({ "git", "rev-parse", "--show-toplevel" }, vim.fn.getcwd())
+			print(root)
+			if vim.v.shell_error == 0 then
+				require('telescope.builtin').live_grep({cwd = root[1] })
+			else
+				require('telescope.builtin').live_grep()
+			end
+			end,
+			desc = "Telescope live grep"
+		},
+		{ "<leader>fg", function()
+			local root = require('telescope.utils').get_os_command_output({ "git", "rev-parse", "--show-toplevel" }, vim.fn.getcwd())
+			print(root)
+			if vim.v.shell_error == 0 then
+				require('telescope').extensions.live_grep_args.live_grep_args({search_dirs = root})
+			else
+				require('telescope').extensions.live_grep_args.live_grep_args()
+			end
+			end,
+			desc = "Telescope live grep"
+		},
 		{ "<leader>fz", function()
+			local root = require('telescope.utils').get_os_command_output({ "git", "rev-parse", "--show-toplevel" }, vim.fn.getcwd())
+			print(root)
+			if vim.v.shell_error == 0 then
+			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > "), cwd =root[1] })
+			else
 			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
-		end , desc = "Telescope live grep" },
+			end
+			end,
+			desc = "Telescope live grep"
+		},
+		-- { "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
+		-- { "<leader>fz", function()
+		-- 	require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
+		-- end , desc = "Telescope live grep" },
 		{ "<leader>fy", 'vi""hy:lua require("telescope.builtin").grep_string({ search = \'FullMethod: \\"<C-r>h\\",\'})<CR>', desc = "Telescope grpc string" },
 		{ "<leader>fY", 'vi""hy:lua require("telescope.builtin").grep_string({ search = \'(ctx, \\"<C-r>h\\", in, out,\'})<CR>', desc = "Telescope grpc string back" },
 		{ "<leader>fu", ":Telescope live_grep default_text=<C-r><C-w><cr>", desc = "Telescope live grep cursor word" },
@@ -38,8 +80,6 @@ return {
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
-		{ "<leader>ft", ":Telescope file_browser<cr>", desc = "Telescope file browser" },
-		{ "<leader>fo", ":Telescope file_browser path=%:p:h<cr>", desc = "Telescope file browser file path" },
 		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
 		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
 		{ "<leader>fa", function ()
@@ -161,21 +201,6 @@ return {
 				},
 			},
 			extensions = {
-				-- You don't need to set any of these options.
-				-- IMPORTANT!: this is only a showcase of how you can set default options!
-				file_browser = {
-					theme = "ivy",
-					-- disables netrw and use telescope-file-browser in its place
-					hijack_netrw = false,
-					mappings = {
-						["i"] = {
-							-- your custom insert mode mappings
-						},
-						["n"] = {
-							-- your custom normal mode mappings
-						},
-					},
-				},
 				fzf = {
 					fuzzy = true, -- false will only do exact matching
 					override_generic_sorter = true, -- override the generic sorter
@@ -193,7 +218,6 @@ return {
 		telescope.load_extension("neoclip")
 		telescope.load_extension("refactoring")
 		telescope.load_extension("fzf")
-		telescope.load_extension("file_browser")
 		telescope.load_extension("live_grep_args")
 		telescope.load_extension("advanced_git_search")
 
@@ -215,14 +239,5 @@ return {
 			}
 			builtin.git_commits(options)
 		end, {})
-
-		require("dressing").setup({
-			select = {
-				telescope = require("telescope.themes").get_ivy({}),
-			},
-			input = {
-				insert_only = false,
-			},
-		})
 	end,
 }

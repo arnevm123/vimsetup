@@ -4,7 +4,7 @@ local servers = {
 	"bashls",
 	"cssls",
 	"eslint",
-	"golangci_lint_ls",
+	-- "golangci_lint_ls",
 	"gopls",
 	"html",
 	"jsonls",
@@ -57,22 +57,22 @@ for _, server in pairs(servers) do
 	lspconfig[server].setup(opts)
 end
 
-local lspconfigs = require("lspconfig/configs")
+-- local lspconfigs = require("lspconfig/configs")
 
-lspconfigs.golangcilsp = {
-	default_config = {
-		cmd = { "golangci-lint-langserver" },
-		root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
-		init_options = {
-			command = {
-				"golangci-lint",
-				"run",
-				"--config=~/.golangci.yaml",
-				"--fast",
-				"--out-format",
-				"json",
-				"--issues-exit-code=1",
-			},
-		},
-	},
-}
+-- lspconfigs.golangcilsp = {
+-- 	default_config = {
+-- 		cmd = { "golangci-lint-langserver" },
+-- 		root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+-- 		init_options = {
+-- 			command = {
+-- 				"golangci-lint",
+-- 				"run",
+-- 				"--config=~/.golangci.yaml",
+-- 				"--fast",
+-- 				"--out-format",
+-- 				"json",
+-- 				"--issues-exit-code=1",
+-- 			},
+-- 		},
+-- 	},
+-- }
