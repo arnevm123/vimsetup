@@ -2,10 +2,10 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd("BufEnter", {
-  callback = function()
-    vim.opt.formatoptions:remove { "c", "o" }
-  end,
-  desc = "Disable New Line Comment",
+	callback = function()
+		vim.opt.formatoptions:remove({ "c", "o" })
+	end,
+	desc = "Disable New Line Comment",
 })
 
 autocmd("TextYankPost", {
@@ -61,7 +61,7 @@ autocmd("Filetype", {
 vim.api.nvim_create_autocmd("FileType", {
 	desc = "Easy quit help with 'q'",
 	group = vim.api.nvim_create_augroup("Helpful", { clear = true }),
-	pattern = {"help", "qf"},
+	pattern = { "help", "qf" },
 	callback = function()
 		vim.keymap.set("n", "q", "<cmd>q<cr>", { silent = true, buffer = true })
 	end,

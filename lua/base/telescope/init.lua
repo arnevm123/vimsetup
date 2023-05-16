@@ -10,7 +10,6 @@ return {
 	},
 	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
 	event = "VeryLazy",
-	-- stylua: ignore
 	keys = {
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
@@ -23,70 +22,92 @@ return {
 		-- 	}
 		-- 	require('telescope.builtin').live_grep(opts)
 		-- 	end, desc = "Telescope live grep" },
-		{ "<C-p>", function()
-			local root = require('telescope.utils').get_os_command_output({ "git", "rev-parse", "--show-toplevel" }, vim.fn.getcwd())
-			print(root)
-			if vim.v.shell_error == 0 then
-				require('telescope.builtin').find_files({cwd = root[1] })
-			else
-				require('telescope.builtin').find_files()
-			end
+		{
+			"<C-p>",
+			function()
+				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+				if vim.v.shell_error == 0 then
+					require("telescope.builtin").find_files({ cwd = root })
+				else
+					require("telescope.builtin").find_files()
+				end
 			end,
-			desc = "Telescope live grep"
+			desc = "Telescope live grep",
 		},
 		-- { "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
 		-- { "<leader>fp", ":Telescope find_files<cr>", desc = "Telescope find files" },
-		{ "<leader>ff", function()
-			local root = require('telescope.utils').get_os_command_output({ "git", "rev-parse", "--show-toplevel" }, vim.fn.getcwd())
-			print(root)
-			if vim.v.shell_error == 0 then
-				require('telescope.builtin').live_grep({cwd = root[1] })
-			else
-				require('telescope.builtin').live_grep()
-			end
+		{
+			"<leader>ff",
+			function()
+				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+				if vim.v.shell_error == 0 then
+					require("telescope.builtin").live_grep({ cwd = root })
+				else
+					require("telescope.builtin").live_grep()
+				end
 			end,
-			desc = "Telescope live grep"
+			desc = "Telescope live grep",
 		},
-		{ "<leader>fg", function()
-			local root = require('telescope.utils').get_os_command_output({ "git", "rev-parse", "--show-toplevel" }, vim.fn.getcwd())
-			print(root)
-			if vim.v.shell_error == 0 then
-				require('telescope').extensions.live_grep_args.live_grep_args({search_dirs = root})
-			else
-				require('telescope').extensions.live_grep_args.live_grep_args()
-			end
+		{
+			"<leader>fg",
+			function()
+				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+				if vim.v.shell_error == 0 then
+					require("telescope").extensions.live_grep_args.live_grep_args({ search_dirs = { root } })
+				else
+					require("telescope").extensions.live_grep_args.live_grep_args()
+				end
 			end,
-			desc = "Telescope live grep"
+			desc = "Telescope live grep",
 		},
-		{ "<leader>fz", function()
-			local root = require('telescope.utils').get_os_command_output({ "git", "rev-parse", "--show-toplevel" }, vim.fn.getcwd())
-			print(root)
-			if vim.v.shell_error == 0 then
-			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > "), cwd =root[1] })
-			else
-			require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
-			end
+		{
+			"<leader>fz",
+			function()
+				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+				if vim.v.shell_error == 0 then
+					require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > "), cwd = root })
+				else
+					require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
+				end
 			end,
-			desc = "Telescope live grep"
+			desc = "Telescope live grep",
 		},
 		-- { "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
 		-- { "<leader>fz", function()
 		-- 	require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
 		-- end , desc = "Telescope live grep" },
-		{ "<leader>fy", 'vi""hy:lua require("telescope.builtin").grep_string({ search = \'FullMethod: \\"<C-r>h\\",\'})<CR>', desc = "Telescope grpc string" },
-		{ "<leader>fY", 'vi""hy:lua require("telescope.builtin").grep_string({ search = \'(ctx, \\"<C-r>h\\", in, out,\'})<CR>', desc = "Telescope grpc string back" },
+		{
+			"<leader>fy",
+			'vi""hy:lua require("telescope.builtin").grep_string({ search = \'FullMethod: \\"<C-r>h\\",\'})<CR>',
+			desc = "Telescope grpc string",
+		},
+		{
+			"<leader>fY",
+			'vi""hy:lua require("telescope.builtin").grep_string({ search = \'(ctx, \\"<C-r>h\\", in, out,\'})<CR>',
+			desc = "Telescope grpc string back",
+		},
 		{ "<leader>fu", ":Telescope live_grep default_text=<C-r><C-w><cr>", desc = "Telescope live grep cursor word" },
-		{ "<leader>fu", '"hy:Telescope live_grep default_text=<C-r>h<cr>', desc = "Telescope live grep paste", mode = "v" },
+		{
+			"<leader>fu",
+			'"hy:Telescope live_grep default_text=<C-r>h<cr>',
+			desc = "Telescope live grep paste",
+			mode = "v",
+		},
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
 		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
 		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
-		{ "<leader>fa", function ()
-			require('telescope.builtin').live_grep({
-				prompt_title = 'find string in open buffers...',
-				grep_open_files = true })
-			end, desc = "Telescope live grep open files" },
+		{
+			"<leader>fa",
+			function()
+				require("telescope.builtin").live_grep({
+					prompt_title = "find string in open buffers...",
+					grep_open_files = true,
+				})
+			end,
+			desc = "Telescope live grep open files",
+		},
 		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
