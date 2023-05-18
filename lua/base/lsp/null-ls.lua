@@ -14,23 +14,16 @@ local diagnostics = null_ls.builtins.diagnostics
 null_ls.setup({
 	debug = false,
 	sources = {
+		diagnostics.golangci_lint.with({
+			extra_args = { "--config=~/.golangci.yaml" },
+		}),
 		formatting.stylua,
 		diagnostics.selene,
 		diagnostics.flake8,
 		diagnostics.eslint_d,
 		code_actions.eslint_d,
-		-- formatting.goimports.with({ { extra_args = "-local", "go.nexuzhealth.com" } }),
-		formatting.goimports.with({
-			generator_opts = {
-				command = "goimports",
-				args = { "-local", "go.nexuzhealth.com", "-srcdir", "$DIRNAME" },
-				to_stdin = true,
-			},
-		}),
-		formatting.gfmt,
+		formatting.goimports.with({ { extra_args = "-local", "go.nexuzhealth.com" } }),
+		formatting.gofmt,
 		formatting.prettierd,
-		diagnostics.golangci_lint.with({
-			extra_args = { "--config=~/.golangci.yaml" },
-		}),
 	},
 })
