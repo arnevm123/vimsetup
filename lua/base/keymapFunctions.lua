@@ -1,4 +1,5 @@
-function Go_to_url(cmd)
+local M = {}
+function M:Go_to_url(cmd)
 	local url = vim.fn.expand("<cfile>", nil, nil)
 	if not url:match("http") then
 		url = "https://github.com/" .. url
@@ -9,7 +10,7 @@ function Go_to_url(cmd)
 end
 
 -- make dd not remove last yank if empty
-function Smart_dd()
+function M:Smart_dd()
 	if vim.api.nvim_get_current_line():match("^%s*$") then
 		return '"_dd'
 	else
@@ -17,7 +18,7 @@ function Smart_dd()
 	end
 end
 
-function CToggle()
+function M:CToggle()
 	local qf_exists = false
 	for _, win in pairs(vim.fn.getwininfo()) do
 		if win["quickfix"] == 1 then
@@ -33,18 +34,4 @@ function CToggle()
 	end
 end
 
-function CToggle()
-	local qf_exists = false
-	for _, win in pairs(vim.fn.getwininfo()) do
-		if win["quickfix"] == 1 then
-			qf_exists = true
-		end
-	end
-	if qf_exists == true then
-		vim.cmd("cclose")
-		return
-	end
-	if not vim.tbl_isempty(vim.fn.getqflist()) then
-		vim.cmd("copen")
-	end
-end
+return M

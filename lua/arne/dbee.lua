@@ -1,5 +1,6 @@
 return {
-	"kndndrj/nvim-dbee",
+	"arnevm123/nvim-dbee",
+	branch = "feature/Add_gcloud_spanner_driver",
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 	},
@@ -10,7 +11,15 @@ return {
 		require("dbee").install()
 	end,
 	config = function()
-		require("dbee").setup(--[[optional config]])
+		require("dbee").setup({
+			connections = {
+				{
+				  name = "dbee_spanner",
+				  type = "spanner",
+				  url = "projects/dbee/instances/test-instance/databases/example-db",
+				},
+			},
+		})
 	end,
 	keys = {
 		{ "<leader>Db", ":lua require('dbee').open()<cr>", desc = "DBee open" },

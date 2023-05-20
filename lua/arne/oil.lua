@@ -8,7 +8,7 @@ return {
 				-- "mtime",
 				"permissions",
 				"size",
-				"icon",
+				-- "icon",
 			},
 			-- Buffer-local options to use for oil buffers
 			buf_options = {
@@ -116,7 +116,7 @@ return {
 			},
 		},
 		-- Optional dependencies
-		dependencies = { "nvim-tree/nvim-web-devicons" },
+		-- dependencies = { "nvim-tree/nvim-web-devicons" },
 		cmd = { "Oil" },
 	},
 }

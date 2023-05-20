@@ -1,4 +1,4 @@
-require("base.keymapFunctions")
+local fn = require("base.keymapFunctions")
 local nosilent = { noremap = true }
 local opts = { noremap = true, silent = true }
 local silent = { silent = true }
@@ -26,15 +26,15 @@ keymap("c", "<tab>", "<C-z>", nosilent)
 keymap("n", "<leader><tab>", "<C-^>", nosilent)
 
 -- Move text up and down
-keymap("v", "J", ":m '>+1<CR>gv=gv", opts)
-keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
+keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
+keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
 keymap("v", "*", '"ry/\\V<C-r>r<CR>', opts)
 keymap("v", "#", '"ry?\\V<C-r>r<CR>', opts)
 keymap("v", "u", "<Esc>u", opts)
 keymap("v", "<C-r>", "<Esc><C-r>gv", opts)
 
-keymap("n", "dd", Smart_dd, { noremap = true, expr = true })
+keymap("n", "dd", fn.Smart_dd, { noremap = true, expr = true })
 keymap("n", "gx", ":lua Go_to_url()<CR>", opts)
 
 -- Clear highlights with esc
@@ -45,14 +45,17 @@ keymap("n", "]c", ":diffget //3<CR>", opts)
 keymap("n", "<leader>ex", ":Sexplore!<cr>", opts)
 keymap("n", "yoe", ":Lexplore!<cr>", opts)
 -- keymap("n", "yow", "<C-w>w", opts)
-keymap("n", "yoq", ":lua CToggle()<CR>", opts)
+keymap("n", "yoq", function()
+	fn.CToggle()
+end, opts)
+keymap("n", "<Leader>xp", ":call setreg('+', '<C-r>\"')<CR>", opts)
 keymap(
 	"n",
 	"<Leader>xn",
 	":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>",
 	{ noremap = true, desc = "Copy Buffer name and path" }
 )
-keymap( "n", "<Leader>xt", ":e <C-r>+<CR>", { noremap = true, desc = "Go to location in clipboard" })
+keymap("n", "<Leader>xo", ":e <C-r>+<CR>", { noremap = true, desc = "Go to location in clipboard" })
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
