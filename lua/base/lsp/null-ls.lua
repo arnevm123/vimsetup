@@ -22,17 +22,9 @@ null_ls.setup({
 		diagnostics.flake8,
 		diagnostics.eslint_d,
 		code_actions.eslint_d,
-		formatting.gofmt,
-		-- formatting.goimports.with({ { extra_args = "-local", "go.nexuzhealth.com" } }),
-
-		formatting.goimports.with({
-			generator_opts = {
-				command = "goimports",
-				args = { "-local", "go.nexuzhealth.com", "-srcdir", "$DIRNAME" },
-				to_stdin = true,
-			},
-		}),
-
+		formatting.gofumpt,
+		-- formatting.goimports.with({ extra_args = { "-local", "go.nexuzhealth.com" } }),
+		formatting.goimports_reviser.with({ extra_args = { "-project-name", "go.nexuzhealth.com" } }),
 		formatting.prettierd,
 	},
 })

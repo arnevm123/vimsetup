@@ -72,12 +72,13 @@ require("base.implSymbol")
 vim.api.nvim_create_user_command("PrettyJson", ":%!jq '.'", {})
 vim.api.nvim_create_user_command("Chmod", ":!chmod +x %", {})
 vim.api.nvim_create_user_command("Cdlf", ":cd ~/Documents/moaprplatform/platform/scripts/local-full", {})
-vim.api.nvim_create_user_command("Cdbase", ":cd ~/Documents/moaprplatform/", {})
-vim.api.nvim_create_user_command("Cdtest", ":cd %:h", {})
-vim.api.nvim_create_user_command("GetInfoUnderCursor", function()
-	local result = vim.treesitter.get_captures_at_cursor(0)
-	print(vim.inspect(result))
+vim.api.nvim_create_user_command("Cdbase", function()
+	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+	if vim.v.shell_error == 0 then
+		vim.api.nvim_set_current_dir(root)
+	end
 end, {})
+vim.api.nvim_create_user_command("Cdtest", ":cd %:h", {})
 vim.api.nvim_create_user_command("IfErr", function()
 	local byte_offset = vim.fn.wordcount().cursor_bytes
 
@@ -150,3 +151,17 @@ augroup end
 ]])
 
 vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
+
+vim.cmd("cabbrev Q q")
+vim.cmd("cabbrev W w")
+
+vim.cmd("cabbrev Q! q!")
+vim.cmd("cabbrev W! w!")
+
+vim.cmd("cabbrev Qa qa")
+vim.cmd("cabbrev Wq wq")
+vim.cmd("cabbrev Wqa wqa")
+
+vim.cmd("cabbrev Qa! qa!")
+vim.cmd("cabbrev Wq! wq!")
+vim.cmd("cabbrev Wqa! wqa!")

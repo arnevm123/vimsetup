@@ -1,5 +1,5 @@
 return {
-	{ "tpope/vim-unimpaired", keys = { "[", "]", "yo" } },
+	{ "arnevm123/unimpaired.nvim",config = true, keys = { "[", "]", "yo" } },
 	{ "tpope/vim-abolish", event = "CmdlineEnter" },
 	{
 		"tpope/vim-fugitive",

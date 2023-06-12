@@ -101,9 +101,9 @@ return {
 				local text = '(ctx, "' .. vim.fn.getreg("v") .. '", in, out,'
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
-					require("telescope.builtin").grep_string({ search = text, cwd = root })
+					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ search_dirs = { root } })
 				else
-					require("telescope.builtin").grep_string({ search = text })
+					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
 				end
 			end,
 			desc = "Telescope grpc string back",
@@ -113,9 +113,9 @@ return {
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
-					require("telescope.builtin").live_grep({ default_text = vim.fn.expand("<cword>"), cwd = root })
+					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ search_dirs = { root } })
 				else
-					require("telescope.builtin").live_grep({ default_text = vim.fn.expand("<cword>") })
+					require("telescope.builtin").grep_word_under_cursor()
 				end
 			end,
 			desc = "Telescope live grep cursor word",
@@ -123,16 +123,14 @@ return {
 		{
 			"<leader>fu",
 			function()
-				vim.cmd('noau normal! "vy"')
-				local text = vim.fn.getreg("v")
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
-					require("telescope.builtin").live_grep({ default_text = text, cwd = root })
+					require("telescope-live-grep-args.shortcuts").grep_visual_selection({ search_dirs = { root } })
 				else
-					require("telescope.builtin").live_grep({ default_text = text })
+					require("telescope.builtin").grep_visual_selection()
 				end
 			end,
-			desc = "Telescope live grep paste",
+			desc = "Telescope live grep visual selection",
 			mode = "v",
 		},
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },

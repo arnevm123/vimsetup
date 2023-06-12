@@ -37,6 +37,13 @@ return {
 		{ "<leader>lr", ":lua vim.lsp.buf.rename()<cr>", desc = "lsp rename variable" },
 		{ "<leader>ls", ":Telescope lsp_document_symbols<cr>", desc = "lsp document symbols" },
 		{ "<leader>lS", ":Telescope lsp_dynamic_workspace_symbols<cr>", desc = "lsp workspace symbols" },
+		{ "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", desc = "add workspace" },
+		{ "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", desc = "remove workspace" },
+		{
+			"<space>wl",
+			"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+			desc = "list workspaces",
+		},
 		{ "<leader>li", ":LspInfo<cr>", desc = "lsp info" },
 	},
 	config = function()

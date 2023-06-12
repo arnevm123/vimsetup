@@ -3,7 +3,7 @@ return {
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "wsdjeg/vim-fetch", lazy = false },
-	{ "kevinhwang91/nvim-bqf", ft = "qf", config = true },
+	{ "kevinhwang91/nvim-bqf", ft = "qf", config = { preview = { auto_preview = false } } },
 	{ "tommcdo/vim-exchange", keys = { { "X", mode = "v" }, "cx" } },
 	{ "numToStr/Comment.nvim", config = true, keys = { "gc", "gb", { "gc", mode = "x" }, { "gb", mode = "x" } } },
 	{ "kylechui/nvim-surround", config = true, keys = { "ds", "cs", "ys", { "S", mode = "v" }, { "gS", mode = "v" } } },

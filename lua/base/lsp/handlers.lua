@@ -71,7 +71,6 @@ local function lsp_keymaps(bufnr)
 	keymap(bufnr, "n", "<leader>cr", "<cmd>Telescope lsp_references<CR>", opts)
 end
 
-
 M.on_attach = function(client, bufnr)
 	-- this should be improved...
 	if
