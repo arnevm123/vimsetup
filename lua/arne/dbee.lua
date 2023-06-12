@@ -18,6 +18,11 @@ return {
 				  type = "spanner",
 				  url = "projects/dbee/instances/test-instance/databases/example-db",
 				},
+				{
+				  name = "mysql",
+				  type = "mysql",
+				  url = "root:haha@tcp(localhost:3306)/example",
+				},
 			},
 		})
 	end,

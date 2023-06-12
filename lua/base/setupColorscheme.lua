@@ -19,7 +19,7 @@ function M.Setup(color, fix_search, fix_diagnostics, fix_telescope)
 	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 	vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bold = true })
 	vim.api.nvim_set_hl(0, "LineNr", { fg = "#8B8B8B", italic = true })
-	vim.api.nvim_set_hl(0, "comment", { fg = "#8B8B8B", italic = true })
+	vim.api.nvim_set_hl(0, "comment", { fg = "#FFDF9B", italic = true })
 
 	if fix_search then
 		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })
