@@ -14,16 +14,18 @@ return {
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
-		-- { "<leader>ff", function ()
-		-- 	local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
-		-- 	git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
-		-- 	local opts = {
-		-- 		cwd = git_dir,
-		-- 	}
-		-- 	require('telescope.builtin').live_grep(opts)
-		-- 	end, desc = "Telescope live grep" },
+		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
+		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
+		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
+		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
+		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
+		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
+		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
+		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
+		{ "<leader>tr", ":Telescope resume<CR>", desc = "Telescope git stuff" },
+		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
 		{
-			"<C-p>",
+			"<leader>FP",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -34,22 +36,8 @@ return {
 			end,
 			desc = "Telescope live grep",
 		},
-		-- { "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
-		-- { "<leader>fp", ":Telescope find_files<cr>", desc = "Telescope find files" },
 		{
-			"<leader>ff",
-			function()
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope.builtin").live_grep({ cwd = root })
-				else
-					require("telescope.builtin").live_grep()
-				end
-			end,
-			desc = "Telescope live grep",
-		},
-		{
-			"<leader>fg",
+			"<leader>FF",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -61,55 +49,7 @@ return {
 			desc = "Telescope live grep",
 		},
 		{
-			"<leader>fz",
-			function()
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > "), cwd = root })
-				else
-					require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
-				end
-			end,
-			desc = "Telescope live grep",
-		},
-		-- { "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
-		-- { "<leader>fz", function()
-		-- 	require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
-		-- end , desc = "Telescope live grep" },
-		-- {
-		-- 	"<leader>fy",
-		-- 	'vi""hy:lua require("telescope.builtin").grep_string({ search = \'FullMethod: \\"<C-r>h\\",\'})<CR>',
-		-- },
-		{
-			"<leader>fy",
-			function()
-				vim.cmd('noau normal! vi""vy')
-				local text = 'FullMethod: "' .. vim.fn.getreg("v") .. '"'
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope.builtin").grep_string({ search = text, cwd = root })
-				else
-					require("telescope.builtin").grep_string({ search = text })
-				end
-			end,
-			desc = "Telescope grpc string",
-		},
-		{
-			"<leader>fY",
-			function()
-				vim.cmd('noau normal! vi""vy')
-				local text = '(ctx, "' .. vim.fn.getreg("v") .. '", in, out,'
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ search_dirs = { root } })
-				else
-					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
-				end
-			end,
-			desc = "Telescope grpc string back",
-		},
-		{
-			"<leader>fu",
+			"<leader>FU",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -121,7 +61,7 @@ return {
 			desc = "Telescope live grep cursor word",
 		},
 		{
-			"<leader>fu",
+			"<leader>FU",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -133,11 +73,6 @@ return {
 			desc = "Telescope live grep visual selection",
 			mode = "v",
 		},
-		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
-		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
-		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
-		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
-		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
 		{
 			"<leader>fa",
 			function()
@@ -148,10 +83,6 @@ return {
 			end,
 			desc = "Telescope live grep open files",
 		},
-		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
-		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
-		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
-		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
 	},
 	config = function()
 		local status_ok, telescope = pcall(require, "telescope")
@@ -165,11 +96,6 @@ return {
 		local actions = require("telescope.actions")
 		telescope.setup({
 			defaults = {
-				borderchars = {
-					prompt = border_chars,
-					results = border_chars,
-					preview = border_chars,
-				},
 				layout_strategy = "vertical",
 				layout_config = {
 					vertical = {
@@ -182,11 +108,7 @@ return {
 						prompt_position = "bottom",
 					},
 				},
-				-- 	horizontal = { width = 0.9 },
-				-- 	-- other layout configuration here
-				-- },
 				path_display = { "smart" },
-
 				mappings = {
 					i = {
 						["<C-Down>"] = actions.cycle_history_next,
@@ -302,3 +224,59 @@ return {
 		end, {})
 	end,
 }
+-- {
+-- 	"<leader>fy",
+-- 	function()
+-- 		vim.cmd('noau normal! vi""vy')
+-- 		local text = 'FullMethod: "' .. vim.fn.getreg("v") .. '"'
+-- 		local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+-- 		if vim.v.shell_error == 0 then
+-- 			require("telescope.builtin").grep_string({ search = text, cwd = root })
+-- 		else
+-- 			require("telescope.builtin").grep_string({ search = text })
+-- 		end
+-- 	end,
+-- 	desc = "Telescope grpc string",
+-- },
+-- {
+-- 	"<leader>fY",
+-- 	function()
+-- 		vim.cmd('noau normal! vi""vy')
+-- 		local text = '(ctx, "' .. vim.fn.getreg("v") .. '", in, out,'
+-- 		local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+-- 		if vim.v.shell_error == 0 then
+-- 			require("telescope.builtin").grep_string({ search = text, cwd = root })
+-- 		else
+-- 			require("telescope.builtin").grep_string({ search = text })
+-- 		end
+-- 	end,
+-- 	desc = "Telescope grpc string back",
+-- },
+-- 	git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
+-- 	local opts = {
+-- 		cwd = git_dir,
+-- 	}
+-- 	require('telescope.builtin').live_grep(opts)
+-- 	end, desc = "Telescope live grep" },
+-- { "<C-p>", ":Telescope git_files<cr>", desc = "Telescope find files" },
+-- { "<leader>fp", ":Telescope find_files<cr>", desc = "Telescope find files" },
+-- {
+-- 	"<leader>ff",
+-- 	function()
+-- 		local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+-- 		if vim.v.shell_error == 0 then
+-- 			require("telescope.builtin").live_grep({ cwd = root })
+-- 		else
+-- 			require("telescope.builtin").live_grep()
+-- 		end
+-- 	end,
+-- 	desc = "Telescope live grep",
+-- },
+-- { "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Telescope live grep args" },
+-- { "<leader>fz", function()
+-- 	require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
+-- end , desc = "Telescope live grep" },
+-- {
+-- 	"<leader>fy",
+-- 	'vi""hy:lua require("telescope.builtin").grep_string({ search = \'FullMethod: \\"<C-r>h\\",\'})<CR>',
+-- },

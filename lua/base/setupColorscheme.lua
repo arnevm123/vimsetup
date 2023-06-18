@@ -1,58 +1,51 @@
 local M = {}
 
-function M.Setup(color, fix_search, fix_diagnostics, fix_telescope)
+function M.Setup(color, remove_bg, fix_diagnostics)
 	color = color or "seoulbones"
-	fix_search = fix_search or true
+	remove_bg = remove_bg or true
 	fix_diagnostics = fix_diagnostics or true
-	fix_telescope = fix_telescope or true
 
 	vim.cmd.colorscheme(color)
 
-	-- Remove background and add better colorcolumn & cursorline matching
-	vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#2B2B2B" })
-	vim.api.nvim_set_hl(0, "CursorLine", { bg = "none" })
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#2B2B2B" })
-	vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#2B2B2B" })
-	vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
-	vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
-	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
-	vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bold = true })
-	vim.api.nvim_set_hl(0, "LineNr", { fg = "#8B8B8B", italic = true })
-	vim.api.nvim_set_hl(0, "comment", { fg = "#FFDF9B", italic = true })
+	if remove_bg then
+		-- Remove background
+		vim.cmd([[
+		hi Normal guibg=NONE
+		hi NormalFloat guibg=NONE
+		hi FloatBorder guibg=NONE
+		hi EndOfBuffer guibg=NONE
+		hi cursorline guibg=NONE
+		hi DiffAdd guibg=NONE
+		hi DiffChange guibg=NONE
+		hi DiffDelete guibg=NONE
+		hi ColorColumn guibg=NONE
+		hi CursorLineNr guibg=NONE
+		hi LineNr guibg=NONE
+		hi DiagnosticVirtualTextError guibg=NONE
+		hi DiagnosticVirtualTextHint guibg=NONE
+		hi DiagnosticVirtualTextInfo guibg=NONE
+		hi DiagnosticVirtualTextWarn guibg=NONE
+		]])
 
-	if fix_search then
-		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })
-		vim.api.nvim_set_hl(0, "Search", { bg = "#3B3B3B" })
-		-- fix match parenthesis
-		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#2B2B2B" })
+		-- better colorcolumn & cursorline matching
 	end
-	if fix_search then
+
+	if fix_diagnostics then
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#E388A3", italic = true, bg = "none" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#A5A6C5", italic = true, bg = "none" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#97BDDE", italic = true, bg = "none" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#FFDF9B", italic = true, bg = "none" })
-		vim.api.nvim_set_hl(0, "netrwDir", { fg = "#97bdde" })
+		vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#628562", bold = true })
+		vim.api.nvim_set_hl(0, "DiffChange", { fg = "#FFDF9B", bold = true })
+		vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#E388A3", bold = true })
 	end
 
-	if fix_telescope then
-		vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#97BDDE", bg = "#3B3B3B" })
-		vim.api.nvim_set_hl(0, "TelescopePreviewMatch", { fg = "#97BDDE", bg = "#3B3B3B" })
-		vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = "#97BDDE", bg = "#3B3B3B" })
-		vim.api.nvim_set_hl(0, "TelescopeSelection", { fg = "#97BDDE", bg = "#3B3B3B" })
-
-		vim.api.nvim_set_hl(0, "TelescopePreviewLine", { bg = "#3B3B3B" })
-
-		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "#2B2B2B" })
-		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#DDDDDD", bg = "#2B2B2B" })
-		vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#DDDDDD", bg = "#2B2B2B" })
-
-		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "#2B2B2B" })
-
-		vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#2B2B2B", bold = true, bg = "#97BDDE" })
-		vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#3B3B3B", bold = true, bg = "#97BDDE" })
-		vim.api.nvim_set_hl(0, "TelescopeResults", { bg = "#97BDDE" })
-		vim.api.nvim_set_hl(0, "TelescopeTitle", { fg = "#2B2B2B", bold = true, bg = "#97BDDE" })
+	if color == "seoulbones" then
+		vim.cmd("highlight link netrwDir DiagnosticVirtualTextInfo")
+		vim.api.nvim_set_hl(0, "comment", { fg = "#7B7B7B", italic = true })
+		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })
+		vim.api.nvim_set_hl(0, "Search", { bg = "#4B4B4B" })
+		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
 	end
 end
 return M

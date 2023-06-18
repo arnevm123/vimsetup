@@ -12,20 +12,32 @@ return {
 		{ "<leader>gu", ":Gitsigns undo_stage_hunk<cr>", desc = "Gitsigns undo stage hunk" },
 		{ "<leader>gU", ":Gitsigns undo_stage_buffer<cr>", desc = "Gitsigns undo stage buffer" },
 		{ "<leader>gd", ":Gitsigns diffthis HEAD<cr>", desc = "Gitsigns diff with HEAD" },
-		{ "<leader>gD", function() require("gitsigns").diffthis('~') end, desc = "" },
 		{ "<leader>gm", ":Gitsigns diffthis master<cr>", desc = "Gitsigns diff with master" },
 		{ "<leader>gl", ":Gitsigns blame_line<cr>", desc = "Gitsigns blame current line" },
-		{ "<leader>gL", function() require("gitsigns").blame_line{full=true} end, desc = "Gitsigns blame full current line" },
 		{ "yob", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
+		{
+			"<leader>gL",
+			function()
+				require("gitsigns").blame_line({ full = true })
+			end,
+			desc = "Gitsigns blame full current line",
+		},
+		{
+			"<leader>gD",
+			function()
+				require("gitsigns").diffthis("~")
+			end,
+			desc = "",
+		},
 	},
 	opts = {
 		signs = {
-			add = { hl = "gitsignsadd", text = "│", numhl = "gitsignsaddnr" },
-			change = { hl = "gitsignschange", text = "│", numhl = "gitsignschangenr" },
-			delete = { hl = "gitsignsdelete", text = "_", numhl = "gitsignsdeletenr" },
-			topdelete = { hl = "gitsignsdelete", text = "‾", numhl = "gitsignsdeletenr" },
-			changedelete = { hl = "gitsignsdelete", text = "~", numhl = "gitsignschangenr" },
-			untracked = { hl = "gitsignsadd", text = "║", numhl = "gitsignsaddnr" },
+			add = { hl = "DiffAdd", text = "│", numhl = "DiffAdd" },
+			change = { hl = "DiffChange", text = "│", numhl = "DiffChange" },
+			delete = { hl = "DiffDelete", text = "_", numhl = "DiffDelete" },
+			topdelete = { hl = "DiffDelete", text = "‾", numhl = "DiffDelete" },
+			changedelete = { hl = "DiffDelete", text = "~", numhl = "DiffChange" },
+			untracked = { hl = "DiffAdd", text = "║", numhl = "DiffAdd" },
 		},
 		signcolumn = true, -- toggle with `:gitsigns toggle_signs`
 		numhl = false, -- toggle with `:gitsigns toggle_numhl`

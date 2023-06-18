@@ -15,6 +15,7 @@ return {
 		"rafamadriz/friendly-snippets",
 		-- for formatters and linters
 		"jose-elias-alvarez/null-ls.nvim",
+		{ "jose-elias-alvarez/typescript.nvim" },
 		{ "folke/neodev.nvim", config = true },
 		{ "j-hui/fidget.nvim", opts = { text = { spinner = "dots", done = "" }, window = { blend = 0 } } },
 		-- {

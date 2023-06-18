@@ -2,6 +2,7 @@ require("base.options")
 require("base.lazy").setup({
 	require("base.lsp"),
 	require("base.telescope"),
+	require("base.fzf"),
 	require("base.colorscheme"),
 	require("base.treesitter"),
 	-- require("arne.bufferline"),

@@ -90,5 +90,8 @@ M.on_attach = function(client, bufnr)
 
 	lsp_keymaps(bufnr)
 end
+require("typescript").setup({
+	server = { on_attach = M.on_attach },
+})
 
 return M
