@@ -4,10 +4,30 @@ if not vim.loop.fs_stat(lazypath) then
 		"git",
 		"clone",
 		"--filter=blob:none",
-		"--single-branch",
 		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable",
 		lazypath,
 	})
 end
-vim.opt.runtimepath:prepend(lazypath)
-return require("lazy")
+vim.opt.rtp:prepend(lazypath)
+return require("lazy").setup({
+	{ import = "plugins" },
+}, {
+	defaults = { lazy = true },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"matchit",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
+	ui = {
+		border = "rounded",
+		title = "Lazy",
+	},
+})

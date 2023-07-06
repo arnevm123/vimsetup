@@ -101,7 +101,7 @@ return {
 			keys = { telescope = { i = { paste = "<c-y>" } } },
 		})
 
-		require("base.telescope.custom")
+		require("plugins.telescope.custom")
 		local actions = require("telescope.actions")
 		telescope.setup({
 			defaults = {

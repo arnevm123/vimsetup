@@ -38,10 +38,10 @@ return {
 		{ "<leader>li", ":LspInfo<cr>", desc = "lsp info" },
 	},
 	config = function()
-		require("base.lsp.mason")
-		require("base.lsp.handlers").setup()
-		require("base.lsp.null-ls")
-		require("base.lsp.completion")
+		require("plugins.lsp.mason")
+		require("plugins.lsp.handlers").setup()
+		require("plugins.lsp.null-ls")
+		require("plugins.lsp.completion")
 	end,
 	event = { "BufReadPre", "BufNewFile" },
 }
