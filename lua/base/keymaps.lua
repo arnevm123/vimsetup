@@ -10,11 +10,10 @@ local keymap = vim.keymap.set
 keymap("", "<Space>", "<Nop>", opts)
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize +2<CR>", opts)
-keymap("n", "<C-Down>", ":resize -2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
-keymap("n", "z{", "zfa{", opts)
+-- keymap("n", "<M-J>", ":resize +2<CR>", opts)
+-- keymap("n", "<M-K>", ":resize -2<CR>", opts)
+-- keymap("n", "<M-H>", ":vertical resize -2<CR>", opts)
+-- keymap("n", "<M-L>", ":vertical resize +2<CR>", opts)
 
 keymap("n", "<C-w>S", "<C-w>s<C-w>T", opts)
 keymap("c", "<tab>", "<C-z>", nosilent)
@@ -29,7 +28,7 @@ keymap("v", "u", "<Esc>u", opts)
 keymap("v", "<C-r>", "<Esc><C-r>gv", opts)
 
 keymap("n", "dd", utils.Smart_dd, { noremap = true, expr = true })
-keymap("n", "gx", ":lua Go_to_url()<CR>", opts)
+keymap("n", "gx", utils.Go_to_url, opts)
 
 -- Clear highlights with esc
 keymap("n", "<esc>", ":noh<CR><esc>", opts)

@@ -31,13 +31,6 @@ cmp.setup({
 			}),
 			{ "i", "c" }
 		),
-		-- ["<M-y>"] = cmp.mapping(
-		--   cmp.mapping.confirm {
-		--     behavior = cmp.ConfirmBehavior.Replace,
-		--     select = false,
-		--   },
-		--   { "i", "c" }
-		-- ),
 		["<c-space>"] = cmp.mapping({
 			i = cmp.mapping.complete(),
 			c = function(
@@ -55,18 +48,6 @@ cmp.setup({
 
 		-- ["<tab>"] = false,
 		["<tab>"] = cmp.config.disable,
-		-- ["<tab>"] = cmp.mapping {
-		--   i = cmp.config.disable,
-		--   c = function(fallback)
-		--     fallback()
-		--   end,
-		-- },
-
-		-- Testing
-		["<c-q>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = false,
-		}),
 	}),
 	formatting = {
 		fields = { "abbr", "menu", "kind" },
@@ -96,8 +77,7 @@ cmp.setup({
 	},
 	entries = { name = "custom", selection_order = "near_cursor" },
 	window = {
-		-- completion = cmp.config.window.bordered(),
-		-- documentation = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
 	},
 	experimental = {
 		ghost_text = false,

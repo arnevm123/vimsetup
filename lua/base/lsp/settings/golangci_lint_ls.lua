@@ -1,1 +1,0 @@
-return { filetypes = { "go", "gomod" } }

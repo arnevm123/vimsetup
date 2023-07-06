@@ -1,16 +1,27 @@
 return {
-	{ "nanotee/sqls.nvim", ft = "ddl" },
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "wsdjeg/vim-fetch", lazy = false },
-	{ "kevinhwang91/nvim-bqf", ft = "qf", config = { preview = { auto_preview = false } } },
 	{ "tommcdo/vim-exchange", keys = { { "X", mode = "v" }, "cx" } },
 	{ "numToStr/Comment.nvim", config = true, keys = { "gc", "gb", { "gc", mode = "x" }, { "gb", mode = "x" } } },
 	{ "kylechui/nvim-surround", config = true, keys = { "ds", "cs", "ys", { "S", mode = "v" }, { "gS", mode = "v" } } },
+	{ "moll/vim-bbye", keys = { { "<leader>qq", ":Bdelete!<CR>", desc = "delete current buffer" } } },
+	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
+	{ "nvim-pack/nvim-spectre", keys = { { "<leader>S", ":lua require('spectre').open()<CR>" } } },
+	{ "arnevm123/unimpaired.nvim", config = true, keys = { "[", "]", "yo" } },
 	{
-		"moll/vim-bbye",
-		cmd = { "Bdelete", "Bwipeout" },
-		keys = { { "<leader>qq", ":Bdelete!<CR>", desc = "delete current buffer" } },
+		"kevinhwang91/nvim-bqf",
+		dependencies = { "junegunn/fzf" },
+		ft = "qf",
+		opts = {
+			preview = { auto_preview = false },
+			filter = {
+				fzf = {
+					action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
+					extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+				},
+			},
+		},
 	},
 	{
 		"andymass/vim-matchup",
@@ -22,29 +33,13 @@ return {
 		event = "BufReadPre",
 	},
 	{
-		"mbbill/undotree",
-		cmd = "UndotreeToggle",
-		keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } },
-	},
-	{
 		"Wansmer/treesj",
 		dependencies = "nvim-treesitter/nvim-treesitter",
-		cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
-		config = function()
-			require("treesj").setup({ use_default_keymaps = false })
-		end,
+		config = { use_default_keymaps = false },
 		keys = {
 			{ "gj", ":TSJJoin<CR>", desc = "Join lines" },
 			{ "gs", ":TSJSplit<CR>", desc = "Split lines" },
 		},
-	},
-	{
-		"arnevm123/vim-dadbod",
-		dependencies = {
-			"kristijanhusak/vim-dadbod-ui",
-			"kristijanhusak/vim-dadbod-completion",
-		},
-		cmd = { "DBUIToggle", "DBUI", "DBUIAddConnection", "DBUIFindBuffer", "DBUIRenameBuffer", "DBUILastQueryInfo" },
 	},
 	{
 		"Everduin94/nvim-quick-switcher",
@@ -78,12 +73,6 @@ return {
 		event = "BufReadPost",
 	},
 	{
-		"nvim-pack/nvim-spectre",
-		keys = {
-			{ "<leader>S", ":lua require('spectre').open()<CR>", desc = "Search and replace accros multiple files" },
-		},
-	},
-	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
 		cmd = { "PeekOpen", "PeekClose" },
@@ -105,71 +94,153 @@ return {
 		end,
 	},
 	{
-		"LunarVim/bigfile.nvim",
-		config = {
-			filesize = 2, -- size of the file in MiB, the plugin round file sizes to the closest MiB
-			pattern = { "*" }, -- autocmd pattern
-			features = { "illuminate", "lsp", "treesitter", "syntax", "vimopts", "filetype" },
+		"harrisoncramer/gitlab.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"nvim-lua/plenary.nvim",
 		},
-		event = "VeryLazy",
+		build = function()
+			require("gitlab").build()
+		end, -- Builds the Go binary
+		config = function()
+			require("gitlab").setup()
+		end,
+	},
+	{
+		"tpope/vim-fugitive",
+		cmd = { "Git", "Gclog", "Gvdiff", "Gvdiffsplit", "Gdiffsplit" },
+		keys = {
+
+			{ "<leader>gc", ":Gvdiffsplit!<CR>", desc = "merge conflict vertical" },
+			{ "<leader>gC", ":Gdiffsplit!<CR>", desc = "merge conflict horizontal" },
+			{ "<leader>gb", ":0Gclog<cr>", desc = "Git history" },
+			{ "<leader>gb", ":Gclog<cr>", desc = "Git history", mode = "x" },
+		},
+	},
+	{
+		"ThePrimeagen/harpoon",
+		opts = {
+			save_on_toggle = false,
+			save_on_change = true,
+			enter_on_sendcmd = true,
+			tmux_autoclose_windows = false,
+			excluded_filetypes = { "harpoon" },
+			mark_branch = true,
+		},
+		event = "BufEnter",
+		--stylua: ignore
+		keys = {
+			{ "<leader>a", function() require("harpoon.mark").add_file() end, desc = "harpoon add file" },
+			{ "<leader>-", function() require("harpoon.ui").toggle_quick_menu() end, desc = "harpoon quick menu" },
+			{ "<C-h>", function() require("harpoon.ui").nav_file(1) end, desc = "harpoon file 1" },
+			{ "<C-j>", function() require("harpoon.ui").nav_file(2) end, desc = "harpoon file 2" },
+			{ "<C-k>", function() require("harpoon.ui").nav_file(3) end, desc = "harpoon file 3" },
+			{ "<C-l>", function() require("harpoon.ui").nav_file(4) end, desc = "harpoon file 4" },
+		},
+	},
+	{
+		"folke/todo-comments.nvim",
+		cmd = { "TodoTrouble", "TodoTelescope" },
+		event = "BufReadPre",
+		opts = {
+			keywords = {
+				FIX = {
+					icon = "? ", -- icon used for the sign, and in search results
+					color = "error", -- can be a hex color, or a named color (see below)
+					alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+					-- signs = false, -- configure signs for some keywords individually
+				},
+				TODO = { icon = "✓ ", color = "info" },
+				NOTE = { icon = "󰲶 ", color = "hint", alt = { "INFO" } },
+				HACK = { icon = " ", color = "error" },
+				TEST = { icon = "󱈲 ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+				PERF = { icon = "󰅒 ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+				WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+				AAA = { icon = " ", color = "test" },
+			},
+			highlight = {
+				before = "fg", -- "fg" or "bg" or empty
+				keyword = "bg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+			},
+		},
+		keys = {
+			{ "]t", "<cmd>lua require('todo-comments').jump_next()<CR>", desc = "Next todo comment" },
+			{ "[t", "<cmd>lua require('todo-comments').jump_prev()<CR>", desc = "Previous todo comment" },
+			-- { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
+			{ "<leader>xa", "<cmd>TodoQuickFix keywords=AAA<cr>", desc = "Todo Trouble Arne" },
+			{ "<leader>xA", "<cmd>TodoTelescope keywords=AAA<cr>", desc = "Todo Telescope Arne" },
+			{ "<leader>xt", "<cmd>TodoQuickFix<cr>", desc = "Todo Trouble" },
+			{ "<leader>xT", "<cmd>TodoTelescope<cr>", desc = "Todo Telescope" },
+		},
+	},
+	{
+		-- Show help for keycombos
+		"folke/which-key.nvim",
+		event = "BufReadPost",
+		opts = {
+			plugins = {
+				marks = true, -- shows a list of your marks on ' and `
+				registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+				spelling = {
+					enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+					suggestions = 20, -- how many suggestions should be shown in the list?
+				},
+				-- the presets plugin, adds help for a bunch of default keybindings in Neovim
+				-- No actual key bindings are created
+				presets = {
+					operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+					motions = false, -- adds help for motions
+					text_objects = false, -- help for text objects triggered after entering an operator
+					windows = true, -- default bindings on <c-w>
+					nav = true, -- misc bindings to work with windows
+					z = true, -- bindings for folds, spelling and others prefixed with z
+					g = true, -- bindings for prefixed with g
+				},
+			},
+			-- add operators that will trigger motion and text object completion
+			-- to enable all native operators, set the preset / operators plugin above
+			-- operators = { gc = "Comments" },
+			key_labels = {
+				-- override the label used to display some keys. It doesn't effect WK in any other way.
+				-- For example:
+				-- ["<space>"] = "SPC",
+				-- ["<cr>"] = "RET",
+				-- ["<tab>"] = "TAB",
+			},
+			icons = {
+				breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+				separator = "➜", -- symbol used between a key and it's label
+				group = "+", -- symbol prepended to a group
+			},
+			popup_mappings = {
+				scroll_down = "<c-d>", -- binding to scroll down inside the popup
+				scroll_up = "<c-u>", -- binding to scroll up inside the popup
+			},
+			window = {
+				border = "none", -- none, single, double, shadow
+				position = "bottom", -- bottom, top
+				margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+				padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
+				winblend = 0,
+			},
+			layout = {
+				height = { min = 4, max = 25 }, -- min and max height of the columns
+				width = { min = 20, max = 50 }, -- min and max width of the columns
+				spacing = 3, -- spacing between columns
+				align = "left", -- align columns left, center or right
+			},
+			ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
+			hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
+			show_help = true, -- show help message on the command line when the popup is visible
+			triggers = "auto", -- automatically setup triggers
+			-- triggers = {"<leader>"} -- or specify a list manually
+			triggers_blacklist = {
+				-- list of mode / prefixes that should never be hooked by WhichKey
+				-- this is mostly relevant for key maps that start with a native binding
+				-- most people should not need to change this
+				i = { "j", "k" },
+				v = { "j", "k" },
+			},
+		},
 	},
 }
-
--- some stuff that I don't use
-
--- {
--- 	"danymat/neogen",
--- 	config = true,
--- 	dependencies = "nvim-treesitter/nvim-treesitter",
--- 	keys = {
--- 		{
--- 			"<Leader>ng",
--- 			function()
--- 				require("neogen").generate({})
--- 			end,
--- 			desc = "Generate comment",
--- 		},
--- 		{
--- 			"<Leader>nc",
--- 			function()
--- 				require("neogen").generate({ type = "class" })
--- 			end,
--- 			desc = "Generate class comment",
--- 		},
--- 		{
--- 			"<Leader>nf",
--- 			function()
--- 				require("neogen").generate({ type = "func" })
--- 			end,
--- 			desc = "Generate function comment",
--- 		},
--- 		{
--- 			"<Leader>nt",
--- 			function()
--- 				require("neogen").generate({ type = "type" })
--- 			end,
--- 			desc = "Generate type comment",
--- 		},
--- 	},
--- },
-
--- {
--- 	"norcalli/nvim-colorizer.lua",
--- 	config = {
--- 		"lua",
--- 		"css",
--- 		DEFAULT_OPTIONS = {
--- 			RGB = true, -- #RGB hex codes
--- 			RRGGBB = true, -- #RRGGBB hex codes
--- 			RRGGBBAA = true, -- #RRGGBBAA hex codes
--- 			names = false, -- "Name" codes like Blue
--- 			css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
--- 			css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
--- 			rgb_fn = false, -- CSS rgb() and rgba() functions
--- 			hsl_fn = false, -- CSS hsl() and hsla() functions
--- 			mode = "background", -- Set the display mode.
--- 		},
--- 	},
--- 	event = "BufReadPost",
--- },
--- { "buoto/gotests-vim", cmd = { "Gotests", "GoaTestsAll" } },

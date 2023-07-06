@@ -23,20 +23,9 @@ return {
 					cyclic = true,
 				}),
 			},
-
-			-- augends used when group with name `mygroup` is specified
-			mygroup = {
-				-- augend.integer.alias.decimal,
-				-- augend.constant.alias.bool,    -- boolean value (true <-> false)
-				-- augend.date.alias["%m/%d/%Y"], -- date (02/19/2022, etc.)
-			},
 		})
 		-- vim dial
 		vim.api.nvim_set_keymap("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true, silent = true })
 		vim.api.nvim_set_keymap("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true, silent = true })
-		-- vim.api.nvim_set_keymap("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
-		-- vim.api.nvim_set_keymap("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
-		-- vim.api.nvim_set_keymap("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
-		-- vim.api.nvim_set_keymap("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
 	end,
 }

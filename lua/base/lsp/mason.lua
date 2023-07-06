@@ -9,15 +9,17 @@ local servers = {
 	"html",
 	"jsonls",
 	"lua_ls",
+	"marksman",
 	"pyright",
 	"rust_analyzer",
 	-- "sqlls",
 	"tsserver",
 }
 
+
 local settings = {
 	ui = {
-		border = "none",
+		border = "rounded",
 		icons = {
 			package_installed = "◍",
 			package_pending = "◍",
@@ -39,6 +41,8 @@ if not lspconfig_status_ok then
 	return
 end
 
+require("lspconfig.ui.windows").default_options.border = "rounded"
+
 local opts = {}
 
 for _, server in pairs(servers) do
@@ -56,23 +60,3 @@ for _, server in pairs(servers) do
 
 	lspconfig[server].setup(opts)
 end
-
--- local lspconfigs = require("lspconfig/configs")
-
--- lspconfigs.golangcilsp = {
--- 	default_config = {
--- 		cmd = { "golangci-lint-langserver" },
--- 		root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
--- 		init_options = {
--- 			command = {
--- 				"golangci-lint",
--- 				"run",
--- 				"--config=~/.golangci.yaml",
--- 				"--fast",
--- 				"--out-format",
--- 				"json",
--- 				"--issues-exit-code=1",
--- 			},
--- 		},
--- 	},
--- }

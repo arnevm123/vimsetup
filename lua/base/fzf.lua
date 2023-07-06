@@ -1,6 +1,6 @@
 return {
 	"ibhagwan/fzf-lua",
-	config = {
+	opts = {
 		"fzf-native",
 		keymap = {
 			builtin = {
@@ -84,6 +84,18 @@ return {
 					require("fzf-lua").live_grep_native({ cwd = root })
 				else
 					require("fzf-lua").live_grep_native()
+				end
+			end,
+			desc = "fzf native grep",
+		},
+		{
+			"<leader>fi",
+			function()
+				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+				if vim.v.shell_error == 0 then
+					require("fzf-lua").live_grep_glob({ cwd = root })
+				else
+					require("fzf-lua").live_grep_glob()
 				end
 			end,
 			desc = "fzf native grep",

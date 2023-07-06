@@ -7,7 +7,7 @@ return {
 	{
 		"ramojus/mellifluous.nvim",
 		priority = 1000,
-		config = {
+		opts = {
 			dim_inactive = true,
 			color_set = "mellifluous",
 			styles = { -- see :h attr-list for options. set {} for NONE, { option = true } for option

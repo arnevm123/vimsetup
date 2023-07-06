@@ -5,7 +5,6 @@ require("base.lazy").setup({
 	require("base.fzf"),
 	require("base.colorscheme"),
 	require("base.treesitter"),
-	-- require("arne.bufferline"),
 	require("arne.lualine"),
 	require("arne.go"),
 	require("arne.debug"),
@@ -13,9 +12,6 @@ require("base.lazy").setup({
 	require("arne.neogit"),
 	require("arne.dial"),
 	require("arne.neoclip"),
-	require("arne.tpope"),
-	require("arne.folke"),
-	require("arne.theprimeagen"),
 	require("arne.testing"),
 	require("arne.dbee"),
 	require("arne.oil"),
@@ -24,6 +20,7 @@ require("base.lazy").setup({
 }, {
 	defaults = { lazy = true },
 	performance = { rtp = { disabled_plugins = { "gzip", "matchit", "tarPlugin", "tohtml", "tutor", "zipPlugin" } } },
+	ui = { border = "rounded", title = "Lazy" },
 })
 
 vim.api.nvim_create_autocmd("User", {
