@@ -1,5 +1,8 @@
+
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
+
+vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
 
 autocmd("BufEnter", {
 	callback = function()
@@ -36,15 +39,6 @@ autocmd({ "BufWritePre" }, {
 	command = [[%s/\s\+$//e]],
 })
 
-autocmd({ "FileType" }, {
-	pattern = { "gitcommit", "markdown" },
-	callback = function()
-		vim.opt_local.wrap = true
-		vim.opt_local.spell = true
-		vim.opt_local.colorcolumn = "0"
-	end,
-})
-
 -- Set indentation to 2 spaces for some file types
 augroup("setIndent", { clear = true })
 autocmd("Filetype", {
@@ -72,9 +66,8 @@ vim.api.nvim_create_user_command("Cdbase", function()
 		vim.api.nvim_set_current_dir(root)
 	end
 end, {})
-vim.api.nvim_create_user_command("Cdtest", ":cd %:h", {})
 
--- vim commands
+-- folding
 vim.cmd([[
 function FoldText()
 let foldtextstart = repeat(' ', indent(nextnonblank(v:foldstart)))
@@ -90,18 +83,3 @@ set foldtext=FoldText()
 set fillchars=fold:\  " removes trailing dots. Mind that there is a whitespace after the \!
 ]])
 
-vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
-
-vim.cmd("cabbrev Q q")
-vim.cmd("cabbrev W w")
-
-vim.cmd("cabbrev Q! q!")
-vim.cmd("cabbrev W! w!")
-
-vim.cmd("cabbrev Qa qa")
-vim.cmd("cabbrev Wq wq")
-vim.cmd("cabbrev Wqa wqa")
-
-vim.cmd("cabbrev Qa! qa!")
-vim.cmd("cabbrev Wq! wq!")
-vim.cmd("cabbrev Wqa! wqa!")

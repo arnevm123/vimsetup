@@ -1,7 +1,7 @@
 return {
 	"ibhagwan/fzf-lua",
 	opts = {
-		"fzf-native",
+		"default",
 		keymap = {
 			builtin = {
 				["<F1>"] = "toggle-help",
