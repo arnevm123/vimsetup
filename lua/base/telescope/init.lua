@@ -1,12 +1,12 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
-		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
 		"aaronhallaert/ts-advanced-git-search.nvim",
-		"tpope/vim-fugitive",
 		"nvim-telescope/telescope-live-grep-args.nvim",
-		"nvim-telescope/telescope-ui-select.nvim",
+		"AckslD/nvim-neoclip.lua",
 		"nvim-lua/plenary.nvim",
+		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
+		{ "kkharji/sqlite.lua", module = "sqlite" },
 	},
 	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
 	event = "VeryLazy",
@@ -16,6 +16,7 @@ return {
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
+		{ "<leader>f;", ":Telescope neoclip<CR>", desc = "Neoclip" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
 		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
 		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
@@ -90,9 +91,17 @@ return {
 			return
 		end
 
-		require("base.telescope.custom")
+		require("neoclip").setup({
+			enable_persistent_history = true,
+			continuous_sync = true,
+			db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+			preview = false,
+			on_select = { move_to_front = true, close_telescope = true },
+			on_paste = { set_reg = true, move_to_front = true, close_telescope = true },
+			keys = { telescope = { i = { paste = "<c-y>" } } },
+		})
 
-		local border_chars = { "─", " ", " ", " ", " ", " ", " ", " " }
+		require("base.telescope.custom")
 		local actions = require("telescope.actions")
 		telescope.setup({
 			defaults = {
@@ -198,8 +207,8 @@ return {
 			-- you need to call load_extension, somewhere after setup function:
 		})
 
-		telescope.load_extension("neoclip")
 		telescope.load_extension("fzf")
+		telescope.load_extension("neoclip")
 		telescope.load_extension("live_grep_args")
 		telescope.load_extension("advanced_git_search")
 

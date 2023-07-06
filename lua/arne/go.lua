@@ -34,6 +34,7 @@ return {
 	ft = { "go", "gomod" },
 	keys = {
 		{ "<leader>eb", ":GoDebug -t<cr>" },
+		{ "<leader>ot", ":GoAlt<CR>" },
 	},
 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 }

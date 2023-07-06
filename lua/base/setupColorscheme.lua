@@ -1,23 +1,23 @@
 local M = {}
 
-function M.Setup(color, remove_bg, fix_diagnostics)
+function M.Setup(color)
 	color = color or "seoulbones"
-	remove_bg = remove_bg or true
-	fix_diagnostics = fix_diagnostics or true
-
 	vim.cmd.colorscheme(color)
 
-	if remove_bg then
-		-- Remove background
+	if color == "mellifluous" then
+		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
+		vim.cmd([[
+		hi Visual guibg=#4D4D4D
+		]])
+	end
+
+	if color == "seoulbones" then
 		vim.cmd([[
 		hi Normal guibg=NONE
 		hi NormalFloat guibg=NONE
 		hi FloatBorder guibg=NONE
 		hi EndOfBuffer guibg=NONE
 		hi cursorline guibg=NONE
-		" hi DiffAdd guibg=NONE
-		" hi DiffChange guibg=NONE
-		" hi DiffDelete guibg=NONE
 		hi CursorLineNr guibg=NONE
 		hi LineNr guibg=NONE
 		hi DiagnosticVirtualTextError guibg=NONE
@@ -27,19 +27,10 @@ function M.Setup(color, remove_bg, fix_diagnostics)
 		]])
 		vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
 		-- better colorcolumn & cursorline matching
-	end
-
-	if fix_diagnostics then
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#E388A3", italic = true, bg = "none" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#A5A6C5", italic = true, bg = "none" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#97BDDE", italic = true, bg = "none" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#FFDF9B", italic = true, bg = "none" })
-		-- vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#628562", bold = true })
-		-- vim.api.nvim_set_hl(0, "DiffChange", { fg = "#FFDF9B", bold = true })
-		-- vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#E388A3", bold = true })
-	end
-
-	if color == "seoulbones" then
 		vim.cmd("highlight link netrwDir DiagnosticVirtualTextInfo")
 		vim.api.nvim_set_hl(0, "comment", { fg = "#8B8B8B", italic = true })
 		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })

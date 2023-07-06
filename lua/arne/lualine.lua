@@ -7,16 +7,6 @@ return {
 			return
 		end
 
-		local diagnostics = {
-			"diagnostics",
-			sources = { "nvim_diagnostic" },
-			sections = { "error", "warn" },
-			symbols = { error = "E ", warn = "W " },
-			colored = false,
-			update_in_insert = false,
-			always_visible = true,
-		}
-
 		local diff = {
 			"diff",
 			colored = false,
@@ -127,7 +117,7 @@ return {
 				lualine_b = { endOfFileName },
 				lualine_c = { harpoon },
 				-- lualine_x = { "encoding", "fileformat", "filetype" },
-				lualine_x = { diff, progress, diagnostics },
+				lualine_x = { diff, progress },
 				lualine_y = { branch },
 				lualine_z = { codeium },
 			},

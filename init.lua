@@ -1,22 +1,18 @@
 require("base.options")
 require("base.lazy").setup({
+	require("base.treesitter"),
 	require("base.lsp"),
 	require("base.telescope"),
 	require("base.fzf"),
 	require("base.colorscheme"),
-	require("base.treesitter"),
-	require("arne.lualine"),
-	require("arne.go"),
-	require("arne.debug"),
-	require("arne.gitsigns"),
-	require("arne.neogit"),
-	require("arne.dial"),
-	require("arne.neoclip"),
-	require("arne.testing"),
 	require("arne.dbee"),
+	require("arne.debug"),
+	require("arne.dial"),
+	require("arne.git"),
+	require("arne.go"),
+	require("arne.lualine"),
 	require("arne.oil"),
-	require("arne.illuminate"),
-	require("arne.random"),
+	require("arne.plugins"),
 }, {
 	defaults = { lazy = true },
 	performance = { rtp = { disabled_plugins = { "gzip", "matchit", "tarPlugin", "tohtml", "tutor", "zipPlugin" } } },
@@ -31,4 +27,4 @@ vim.api.nvim_create_autocmd("User", {
 	end,
 })
 
-require("base.setupColorscheme").Setup()
+require("base.setupColorscheme").Setup("mellifluous")

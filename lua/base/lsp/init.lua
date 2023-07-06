@@ -7,16 +7,19 @@ return {
 		"hrsh7th/nvim-cmp",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
-		"saadparwaiz1/cmp_luasnip",
 		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-nvim-lua",
 		-- Snippets
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
 		-- for formatters and linters
 		"jose-elias-alvarez/null-ls.nvim",
-		{ "jose-elias-alvarez/typescript.nvim" },
 		{ "folke/neodev.nvim", config = true },
+		{
+			"pmizio/typescript-tools.nvim",
+			config = function()
+				require("typescript-tools").setup({})
+			end,
+		},
 		{
 			"j-hui/fidget.nvim",
 			tag = "legacy",

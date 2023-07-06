@@ -1,37 +1,9 @@
 return {
-	{ "chrisbra/csv.vim", ft = "csv" },
-	{ "pearofducks/ansible-vim", ft = "yaml" },
-	{ "wsdjeg/vim-fetch", lazy = false },
+	-- text manipulation
 	{ "tommcdo/vim-exchange", keys = { { "X", mode = "v" }, "cx" } },
 	{ "numToStr/Comment.nvim", config = true, keys = { "gc", "gb", { "gc", mode = "x" }, { "gb", mode = "x" } } },
 	{ "kylechui/nvim-surround", config = true, keys = { "ds", "cs", "ys", { "S", mode = "v" }, { "gS", mode = "v" } } },
-	{ "moll/vim-bbye", keys = { { "<leader>qq", ":Bdelete!<CR>", desc = "delete current buffer" } } },
-	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
 	{ "nvim-pack/nvim-spectre", keys = { { "<leader>S", ":lua require('spectre').open()<CR>" } } },
-	{ "arnevm123/unimpaired.nvim", config = true, keys = { "[", "]", "yo" } },
-	{
-		"kevinhwang91/nvim-bqf",
-		dependencies = { "junegunn/fzf" },
-		ft = "qf",
-		opts = {
-			preview = { auto_preview = false },
-			filter = {
-				fzf = {
-					action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
-					extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-				},
-			},
-		},
-	},
-	{
-		"andymass/vim-matchup",
-		config = function()
-			vim.g.matchup_matchparen_offscreen = {}
-			vim.g.matchup_text_obj_enabled = 0
-			vim.g.matchup_surround_enabled = 1
-		end,
-		event = "BufReadPre",
-	},
 	{
 		"Wansmer/treesj",
 		dependencies = "nvim-treesitter/nvim-treesitter",
@@ -41,37 +13,9 @@ return {
 			{ "gs", ":TSJSplit<CR>", desc = "Split lines" },
 		},
 	},
-	{
-		"Everduin94/nvim-quick-switcher",
-		--stylua: ignore
-		keys = {
-			{ "<leader>os", function() require("nvim-quick-switcher").find(".service.ts") end, desc = "Go to service" },
-			{ "<leader>ou", function() require("nvim-quick-switcher").find(".component.ts") end, desc = "Go to TS" },
-			{ "<leader>oo", function() require("nvim-quick-switcher").find(".component.html") end, desc = "Go to html" },
-			{ "<leader>op", function() require("nvim-quick-switcher").find(".module.ts") end, desc = "Go to module" },
-			{ "<leader>ol", function() require("nvim-quick-switcher").find("*util.*") end, desc = "Go to util" },
-			{
-				"<leader>oi",
-				function() require("nvim-quick-switcher").find(".+css|.+scss|.+sass", { regex = true, prefix = "full" }) end,
-				desc = "Go to stylesheet",
-			},
-		},
-	},
-	{
-		"Exafunction/codeium.vim",
-		--stylua: ignore
-		--selene: allow(multiple_statements)
-		config = function()
-			vim.keymap.set("i", "<tab>", function() return vim.fn["codeium#Accept"]() end, { expr = true })
-			vim.keymap.set("i", "<C-h>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
-			vim.keymap.set("i", "<C-k>", function() return vim.fn["codeium#CycleCompletions"](1) end, { expr = true })
-			vim.keymap.set("i", "<C-j>", function() return vim.fn["codeium#CycleCompletions"](-1) end, { expr = true })
-			vim.keymap.set("i", "<c-x>", function() return vim.fn["codeium#Clear"]() end, { expr = true })
-			vim.g.codeium_filetypes = { telescope = false }
-			vim.g.codeium_manual = true
-		end,
-		event = "BufReadPost",
-	},
+	-- file types
+	{ "chrisbra/csv.vim", ft = "csv" },
+	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
@@ -93,28 +37,39 @@ return {
 			vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
 		end,
 	},
+	-- navigation
+	{ "wsdjeg/vim-fetch", lazy = false },
+	{ "moll/vim-bbye", keys = { { "<leader>qq", ":Bdelete!<CR>", desc = "delete current buffer" } } },
+	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
+	{ "arnevm123/unimpaired.nvim", config = true, keys = { "[", "]", "yo" } },
 	{
-		"harrisoncramer/gitlab.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
+		"kevinhwang91/nvim-bqf",
+		dependencies = { "junegunn/fzf" },
+		ft = "qf",
+		opts = {
+			preview = { auto_preview = false },
+			filter = {
+				fzf = {
+					action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
+					extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+				},
+			},
 		},
-		build = function()
-			require("gitlab").build()
-		end, -- Builds the Go binary
-		config = function()
-			require("gitlab").setup()
-		end,
 	},
 	{
-		"tpope/vim-fugitive",
-		cmd = { "Git", "Gclog", "Gvdiff", "Gvdiffsplit", "Gdiffsplit" },
+		"Everduin94/nvim-quick-switcher",
+		--stylua: ignore
 		keys = {
-
-			{ "<leader>gc", ":Gvdiffsplit!<CR>", desc = "merge conflict vertical" },
-			{ "<leader>gC", ":Gdiffsplit!<CR>", desc = "merge conflict horizontal" },
-			{ "<leader>gb", ":0Gclog<cr>", desc = "Git history" },
-			{ "<leader>gb", ":Gclog<cr>", desc = "Git history", mode = "x" },
+			{ "<leader>os", function() require("nvim-quick-switcher").find(".service.ts") end, desc = "Go to service" },
+			{ "<leader>ou", function() require("nvim-quick-switcher").find(".component.ts") end, desc = "Go to TS" },
+			{ "<leader>oo", function() require("nvim-quick-switcher").find(".component.html") end, desc = "Go to html" },
+			{ "<leader>op", function() require("nvim-quick-switcher").find(".module.ts") end, desc = "Go to module" },
+			{ "<leader>ol", function() require("nvim-quick-switcher").find("*util.*") end, desc = "Go to util" },
+			{
+				"<leader>oi",
+				function() require("nvim-quick-switcher").find(".+css|.+scss|.+sass", { regex = true, prefix = "full" }) end,
+				desc = "Go to stylesheet",
+			},
 		},
 	},
 	{
@@ -137,6 +92,45 @@ return {
 			{ "<C-k>", function() require("harpoon.ui").nav_file(3) end, desc = "harpoon file 3" },
 			{ "<C-l>", function() require("harpoon.ui").nav_file(4) end, desc = "harpoon file 4" },
 		},
+	},
+
+	-- AI
+	{
+		"Exafunction/codeium.vim",
+		--stylua: ignore
+		--selene: allow(multiple_statements)
+		config = function()
+			vim.keymap.set("i", "<tab>", function() return vim.fn["codeium#Accept"]() end, { expr = true })
+			vim.keymap.set("i", "<C-h>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
+			vim.keymap.set("i", "<C-k>", function() return vim.fn["codeium#CycleCompletions"](1) end, { expr = true })
+			vim.keymap.set("i", "<C-j>", function() return vim.fn["codeium#CycleCompletions"](-1) end, { expr = true })
+			vim.keymap.set("i", "<c-x>", function() return vim.fn["codeium#Clear"]() end, { expr = true })
+			vim.g.codeium_filetypes = { telescope = false }
+			vim.g.codeium_manual = true
+		end,
+		event = "BufReadPost",
+	},
+	{
+		"andymass/vim-matchup",
+		config = function()
+			vim.g.matchup_matchparen_offscreen = {}
+			vim.g.matchup_text_obj_enabled = 0
+			vim.g.matchup_surround_enabled = 1
+		end,
+		event = "BufReadPre",
+	},
+	{
+		"harrisoncramer/gitlab.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"nvim-lua/plenary.nvim",
+		},
+		build = function()
+			require("gitlab").build()
+		end,
+		config = function()
+			require("gitlab").setup()
+		end,
 	},
 	{
 		"folke/todo-comments.nvim",
@@ -185,8 +179,6 @@ return {
 					enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
 					suggestions = 20, -- how many suggestions should be shown in the list?
 				},
-				-- the presets plugin, adds help for a bunch of default keybindings in Neovim
-				-- No actual key bindings are created
 				presets = {
 					operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
 					motions = false, -- adds help for motions
@@ -197,16 +189,7 @@ return {
 					g = true, -- bindings for prefixed with g
 				},
 			},
-			-- add operators that will trigger motion and text object completion
-			-- to enable all native operators, set the preset / operators plugin above
-			-- operators = { gc = "Comments" },
-			key_labels = {
-				-- override the label used to display some keys. It doesn't effect WK in any other way.
-				-- For example:
-				-- ["<space>"] = "SPC",
-				-- ["<cr>"] = "RET",
-				-- ["<tab>"] = "TAB",
-			},
+			key_labels = {},
 			icons = {
 				breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
 				separator = "➜", -- symbol used between a key and it's label
@@ -235,12 +218,28 @@ return {
 			triggers = "auto", -- automatically setup triggers
 			-- triggers = {"<leader>"} -- or specify a list manually
 			triggers_blacklist = {
-				-- list of mode / prefixes that should never be hooked by WhichKey
-				-- this is mostly relevant for key maps that start with a native binding
-				-- most people should not need to change this
 				i = { "j", "k" },
 				v = { "j", "k" },
 			},
+		},
+	},
+	{
+		"RRethy/vim-illuminate",
+		config = function()
+			require("illuminate").configure({
+				delay = 0,
+				under_cursor = false,
+				large_file_cutoff = 3000,
+			})
+			require("illuminate").toggle()
+			vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#4B4B4B" })
+			vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#4B4B4B" })
+			vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#4B4B4B" })
+		end,
+		keys = {
+			{ "yor", '<cmd>lua require("illuminate").toggle()<cr>' },
+			{ "]r", '<cmd>lua require("illuminate").goto_next_reference(wrap)<cr>' },
+			{ "[r", '<cmd>lua require("illuminate").goto_prev_reference(wrap)<cr>' },
 		},
 	},
 }

@@ -4,7 +4,6 @@ local servers = {
 	"bashls",
 	"cssls",
 	"eslint",
-	-- "golangci_lint_ls",
 	"gopls",
 	"html",
 	"jsonls",
@@ -12,10 +11,8 @@ local servers = {
 	"marksman",
 	"pyright",
 	"rust_analyzer",
-	-- "sqlls",
 	"tsserver",
 }
-
 
 local settings = {
 	ui = {
