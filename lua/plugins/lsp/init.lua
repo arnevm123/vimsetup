@@ -12,7 +12,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
 		-- for formatters and linters
-		"jose-elias-alvarez/null-ls.nvim",
+		-- "jose-elias-alvarez/null-ls.nvim",
 		{ "folke/neodev.nvim", config = true },
 		{
 			"pmizio/typescript-tools.nvim",
@@ -30,17 +30,17 @@ return {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<cr>", desc = "lsp workspace diagnostics" },
-		{ "<leader>lf", ":lua vim.lsp.buf.format({ timeout_ms = 2000 })<cr>", desc = "lsp format buffer" },
+		{ "<leader>lif", ":lua vim.lsp.buf.format({ timeout_ms = 2000 })<cr>", desc = "lsp format buffer" },
 		{ "<leader>ll", ":lua vim.lsp.codelens.run()<cr>", desc = "lsp codelens" },
 		{ "<leader>lr", ":lua vim.lsp.buf.rename()<cr>", desc = "lsp rename variable" },
 		{ "<leader>ls", ":Telescope lsp_document_symbols<cr>", desc = "lsp document symbols" },
 		{ "<leader>lS", ":Telescope lsp_dynamic_workspace_symbols<cr>", desc = "lsp workspace symbols" },
-		{ "<leader>li", ":LspInfo<cr>", desc = "lsp info" },
+		{ "<leader>lii", ":LspInfo<cr>", desc = "lsp info" },
 	},
 	config = function()
 		require("plugins.lsp.mason")
 		require("plugins.lsp.handlers").setup()
-		require("plugins.lsp.null-ls")
+		-- require("plugins.lsp.null-ls")
 		require("plugins.lsp.completion")
 	end,
 	event = { "BufReadPre", "BufNewFile" },

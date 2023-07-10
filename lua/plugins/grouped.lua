@@ -7,13 +7,13 @@ return {
 	{
 		"Wansmer/treesj",
 		dependencies = "nvim-treesitter/nvim-treesitter",
-		config = { use_default_keymaps = false },
+		opts = { use_default_keymaps = false },
 		keys = {
 			{ "gj", ":TSJJoin<CR>", desc = "Join lines" },
 			{ "gs", ":TSJSplit<CR>", desc = "Split lines" },
 		},
 	},
-	-- file types
+    -- file types
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{

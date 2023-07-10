@@ -22,6 +22,9 @@ keymap("c", "<tab>", "<C-z>", nosilent)
 keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
+keymap("x", ".", ":norm .<CR>", nosilent)
+keymap("x", "Q", ":norm @q<CR>", nosilent)
+
 keymap("v", "*", '"ry/\\V<C-r>r<CR>', opts)
 keymap("v", "#", '"ry?\\V<C-r>r<CR>', opts)
 
@@ -81,4 +84,4 @@ keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-
 
 keymap("n", "<leader><leader>c", ":<up>", nosilent)
 keymap("x", "<leader><leader>c", ":<up>", nosilent)
-keymap("n", "<leader><leader>b", ":Cdlf<CR>:make build<CR>", nosilent)
+keymap("n", "<leader><leader>b", ":Cdlf | make build<CR>", nosilent)
