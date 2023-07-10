@@ -13,7 +13,7 @@ return {
 		"rafamadriz/friendly-snippets",
 		-- for formatters and linters
 		-- "jose-elias-alvarez/null-ls.nvim",
-		{ "folke/neodev.nvim", config = true },
+		-- { "folke/neodev.nvim", config = true },
 		{
 			"pmizio/typescript-tools.nvim",
 			config = function()
