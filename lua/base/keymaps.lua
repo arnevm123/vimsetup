@@ -9,11 +9,11 @@ local keymap = vim.keymap.set
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 
--- Resize with arrows
-keymap("n", "<C-down>", ":resize +2<CR>", opts)
-keymap("n", "<C-up>", ":resize -2<CR>", opts)
-keymap("n", "<C-left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-right>", ":vertical resize +2<CR>", opts)
+-- Resize with Shift-HJKL
+keymap("n", "<C-S-j>", ":resize +2<CR>", opts)
+keymap("n", "<C-S-k>", ":resize -2<CR>", opts)
+keymap("n", "<C-S-h>", ":vertical resize -2<CR>", opts)
+keymap("n", "<C-S-l>", ":vertical resize +2<CR>", opts)
 
 keymap("n", "<C-w>S", "<C-w>s<C-w>T", opts)
 keymap("c", "<tab>", "<C-z>", nosilent)
@@ -29,8 +29,8 @@ keymap("v", "*", '"ry/\\V<C-r>r<CR>', opts)
 keymap("v", "#", '"ry?\\V<C-r>r<CR>', opts)
 
 keymap("n", "dd", utils.Smart_dd, expr)
-keymap("n", "gx", utils.Go_to_url, expr)
-keymap("n", "yoq", utils.CToggle, expr)
+keymap("n", "gx", utils.Go_to_url, opts)
+keymap("n", "yoq", utils.CToggle, opts)
 
 -- Visual --
 -- Stay in indent mode

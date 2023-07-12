@@ -84,6 +84,8 @@ M.on_attach = function(client, bufnr)
 		client.server_capabilities.documentFormattingProvider = false
 	end
 
+    client.server_capabilities.semanticTokensProvider = nil
+
 	lsp_keymaps(bufnr)
 end
 return M

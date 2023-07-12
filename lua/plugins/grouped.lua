@@ -13,7 +13,7 @@ return {
 			{ "gs", ":TSJSplit<CR>", desc = "Split lines" },
 		},
 	},
-    -- file types
+	-- file types
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{
@@ -101,10 +101,10 @@ return {
 		--selene: allow(multiple_statements)
 		config = function()
 			vim.keymap.set("i", "<tab>", function() return vim.fn["codeium#Accept"]() end, { expr = true })
-			vim.keymap.set("i", "<C-h>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
+			vim.keymap.set("i", "<C-l>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
 			vim.keymap.set("i", "<C-k>", function() return vim.fn["codeium#CycleCompletions"](1) end, { expr = true })
 			vim.keymap.set("i", "<C-j>", function() return vim.fn["codeium#CycleCompletions"](-1) end, { expr = true })
-			vim.keymap.set("i", "<c-x>", function() return vim.fn["codeium#Clear"]() end, { expr = true })
+			vim.keymap.set("i", "<c-h>", function() return vim.fn["codeium#Clear"]() end, { expr = true })
 			vim.g.codeium_filetypes = { telescope = false }
 			vim.g.codeium_manual = true
 		end,
