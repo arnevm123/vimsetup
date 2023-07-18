@@ -27,5 +27,5 @@ return {
 		})
 	end,
 	cmd = { "Format" },
-	keys = { { "<leader>lf", "<CMD>Format<CR>" }, { "<leader>wf", ":FormatWrite<CR>" } },
+	keys = { { "<leader>ef", "<CMD>Format<CR>" }, { "<leader>wf", ":FormatWrite<CR>" } },
 }

@@ -84,13 +84,12 @@ keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-
 
 keymap("n", "<leader><leader>c", ":<up>", nosilent)
 keymap("x", "<leader><leader>c", ":<up>", nosilent)
-keymap("n", "<leader><leader>b", ":Cdlf | make build<CR>", nosilent)
+keymap("n", "<leader><leader>b", ":Cdlf | make<CR>", nosilent)
 
 keymap("n", "<leader>fY", function()
 	vim.cmd('noau normal! vi""vy')
 	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 	if vim.v.shell_error == 0 then
-        print(root)
 		vim.cmd("cd" .. root)
 	end
 	vim.cmd('vimgrep /(ctx, "' .. vim.fn.escape(vim.fn.getreg("v"), "/") .. '", in, out,/ **')
