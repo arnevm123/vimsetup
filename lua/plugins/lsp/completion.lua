@@ -31,7 +31,7 @@ cmp.setup({
 			}),
 			{ "i", "c" }
 		),
-		["<c-space>"] = cmp.mapping({
+		["<c-x>"] = cmp.mapping({
 			i = cmp.mapping.complete(),
 			c = function(
 				_ --[[fallback]]
@@ -72,7 +72,7 @@ cmp.setup({
 		{ name = "path" },
 	},
 	confirm_opts = {
-		behavior = cmp.ConfirmBehavior.Replace,
+		behavior = cmp.ConfirmBehavior.Insert,
 		select = false,
 	},
 	entries = { name = "custom", selection_order = "near_cursor" },

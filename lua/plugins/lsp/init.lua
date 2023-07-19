@@ -35,7 +35,7 @@ return {
 		{ "<leader>lr", ":lua vim.lsp.buf.rename()<cr>", desc = "lsp rename variable" },
 		{ "<leader>ls", ":Telescope lsp_document_symbols<cr>", desc = "lsp document symbols" },
 		{ "<leader>lS", ":Telescope lsp_dynamic_workspace_symbols<cr>", desc = "lsp workspace symbols" },
-		{ "<leader>li", ":LspInfo<cr>", desc = "lsp info" },
+		{ "<leader><leader>l", ":LspInfo<cr>", desc = "lsp info" },
 	},
 	config = function()
 		require("plugins.lsp.mason")

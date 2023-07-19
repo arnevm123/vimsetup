@@ -9,7 +9,7 @@ local keymap = vim.keymap.set
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 
--- Resize with arrows
+-- Resize with Shift-HJKL
 keymap("n", "<C-down>", ":resize +2<CR>", opts)
 keymap("n", "<C-up>", ":resize -2<CR>", opts)
 keymap("n", "<C-left>", ":vertical resize -2<CR>", opts)
@@ -22,12 +22,15 @@ keymap("c", "<tab>", "<C-z>", nosilent)
 keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
+keymap("x", ".", ":norm .<CR>", nosilent)
+keymap("x", "Q", ":norm @q<CR>", nosilent)
+
 keymap("v", "*", '"ry/\\V<C-r>r<CR>', opts)
 keymap("v", "#", '"ry?\\V<C-r>r<CR>', opts)
 
 keymap("n", "dd", utils.Smart_dd, expr)
-keymap("n", "gx", utils.Go_to_url, expr)
-keymap("n", "yoq", utils.CToggle, expr)
+keymap("n", "gx", utils.Go_to_url, opts)
+keymap("n", "yoq", utils.CToggle, opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -81,4 +84,22 @@ keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-
 
 keymap("n", "<leader><leader>c", ":<up>", nosilent)
 keymap("x", "<leader><leader>c", ":<up>", nosilent)
-keymap("n", "<leader><leader>b", ":Cdlf<CR>:make build<CR>", nosilent)
+keymap("n", "<leader><leader>b", ":Cdlf | make<CR>", nosilent)
+
+keymap("n", "<leader>fY", function()
+	vim.cmd('noau normal! vi""vy')
+	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+	if vim.v.shell_error == 0 then
+		vim.cmd("cd" .. root)
+	end
+	vim.cmd('vimgrep /(ctx, "' .. vim.fn.escape(vim.fn.getreg("v"), "/") .. '", in, out,/ **')
+end, opts)
+
+keymap("n", "<leader>fy", function()
+	vim.cmd('noau normal! vi""vy')
+	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+	if vim.v.shell_error == 0 then
+		vim.cmd("cd" .. root)
+	end
+	vim.cmd('vimgrep /FullMethod: "' .. vim.fn.escape(vim.fn.getreg("v"), "/") .. '"/ **')
+end, opts)
