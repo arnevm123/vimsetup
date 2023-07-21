@@ -39,13 +39,13 @@ autocmd({ "BufWritePre" }, {
 	command = [[%s/\s\+$//e]],
 })
 
--- Set indentation to 2 spaces for some file types
-augroup("setIndent", { clear = true })
-autocmd("Filetype", {
-	group = "setIndent",
-	pattern = { "xml", "html", "xhtml", "css", "scss", "javascript", "typescript", "yaml", "proto" },
-	command = "setlocal shiftwidth=2 tabstop=2 expandtab",
-})
+-- -- Set indentation to 2 spaces for some file types
+-- augroup("setIndent", { clear = true })
+-- autocmd("Filetype", {
+-- 	group = "setIndent",
+-- 	pattern = { "xml", "html", "xhtml", "css", "scss", "javascript", "typescript", "yaml", "proto" },
+-- 	command = "setlocal shiftwidth=2 tabstop=2 expandtab",
+-- })
 
 vim.api.nvim_create_autocmd("FileType", {
 	desc = "Easy quit help with 'q'",

@@ -16,9 +16,6 @@ vim.opt.hlsearch = true
 vim.opt.cursorline = true
 vim.opt.termguicolors = true
 
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
