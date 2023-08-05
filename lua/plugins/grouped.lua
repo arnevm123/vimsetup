@@ -9,7 +9,7 @@ return {
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		opts = { use_default_keymaps = false },
 		keys = {
-			{ "gj", ":TSJJoin<CR>", desc = "Join lines" },
+			{ "ga", ":TSJJoin<CR>", desc = "Join lines" },
 			{ "gs", ":TSJSplit<CR>", desc = "Split lines" },
 		},
 	},

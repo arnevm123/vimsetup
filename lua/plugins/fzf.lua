@@ -2,6 +2,11 @@ return {
 	"ibhagwan/fzf-lua",
 	opts = {
 		"default",
+		grep = {
+			rg_glob = true,
+			glob_flag = "--iglob",
+			glob_separator = "%s%-%-",
+		},
 		keymap = {
 			builtin = {
 				["<F1>"] = "toggle-help",
