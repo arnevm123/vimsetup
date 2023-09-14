@@ -39,7 +39,7 @@ return {
 	},
 	-- navigation
 	{ "wsdjeg/vim-fetch", lazy = false },
-	{ "moll/vim-bbye", keys = { { "<leader>qq", ":Bdelete!<CR>", desc = "delete current buffer" } } },
+	{ "moll/vim-bbye", keys = { { "<leader>bq", ":Bdelete!<CR>", desc = "delete current buffer" } } },
 	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
 	{ "arnevm123/unimpaired.nvim", config = true, keys = { "[", "]", "yo" } },
 	{
@@ -239,5 +239,16 @@ return {
 			{ "]r", '<cmd>lua require("illuminate").goto_next_reference(wrap)<cr>' },
 			{ "[r", '<cmd>lua require("illuminate").goto_prev_reference(wrap)<cr>' },
 		},
+	},
+	{
+		"tzachar/highlight-undo.nvim",
+		opts = {
+			duration = 75,
+		},
+		event = "BufEnter",
+	},
+	{
+		"lambdalisue/suda.vim",
+		cmd = { "SudaRead", "SudaWrite" },
 	},
 }

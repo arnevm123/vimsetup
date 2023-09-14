@@ -12,7 +12,25 @@ return {
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
 		-- for formatters and linters
-		"jose-elias-alvarez/null-ls.nvim",
+		-- "jose-elias-alvarez/null-ls.nvim",
+		{
+			"stevearc/conform.nvim",
+			opts = {
+				formatters = {
+					goimports_reviser = {
+						command = "goimports-reviser",
+						args = { "-project-name", "go.nexuzhealth.com", "$FILENAME" },
+						stdin = false,
+					},
+				},
+				formatters_by_ft = {
+					lua = { "stylua" },
+					-- python = { "isort", "black" },
+					javascript = { { "prettierd", "prettier" } },
+					go = { "gofumpt", "goimports_reviser" },
+				},
+			},
+		},
 		-- { "folke/neodev.nvim", config = true },
 		{
 			"pmizio/typescript-tools.nvim",
@@ -30,7 +48,11 @@ return {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<cr>", desc = "lsp workspace diagnostics" },
-		{ "<leader>lf", ":lua vim.lsp.buf.format({ timeout_ms = 2000 })<cr>", desc = "lsp format buffer" },
+		{
+			"<leader>lf",
+			":lua require('conform').format({ timeout_ms = 2000, lsp_fallback = true })<cr>",
+			desc = "lsp format buffer",
+		},
 		{ "<leader>ll", ":lua vim.lsp.codelens.run()<cr>", desc = "lsp codelens" },
 		{ "<leader>lr", ":lua vim.lsp.buf.rename()<cr>", desc = "lsp rename variable" },
 		{ "<leader>ls", ":Telescope lsp_document_symbols<cr>", desc = "lsp document symbols" },
@@ -40,7 +62,7 @@ return {
 	config = function()
 		require("plugins.lsp.mason")
 		require("plugins.lsp.handlers").setup()
-		require("plugins.lsp.null-ls")
+		-- require("plugins.lsp.null-ls")
 		require("plugins.lsp.completion")
 	end,
 	event = { "BufReadPre", "BufNewFile" },

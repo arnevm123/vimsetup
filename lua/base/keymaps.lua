@@ -84,7 +84,10 @@ keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-
 
 keymap("n", "<leader><leader>c", ":<up>", nosilent)
 keymap("x", "<leader><leader>c", ":<up>", nosilent)
-keymap("n", "<leader><leader>b", ":Cdlf | make<CR>", nosilent)
+keymap("n", "<leader><leader>b", function()
+	vim.cmd("Cdlf")
+	vim.cmd("make")
+end, nosilent)
 
 keymap("n", "<leader>fY", function()
 	vim.cmd('noau normal! vi""vy')
@@ -92,7 +95,7 @@ keymap("n", "<leader>fY", function()
 	if vim.v.shell_error == 0 then
 		vim.cmd("cd" .. root)
 	end
-	vim.cmd('vimgrep /(ctx, "' .. vim.fn.escape(vim.fn.getreg("v"), "/") .. '", in, out,/ **')
+	vim.cmd("silent lgrep 'ctx, \"" .. vim.fn.getreg("v") .. "\", in, out,.' | lclose ")
 end, opts)
 
 keymap("n", "<leader>fy", function()
@@ -101,5 +104,5 @@ keymap("n", "<leader>fy", function()
 	if vim.v.shell_error == 0 then
 		vim.cmd("cd" .. root)
 	end
-	vim.cmd('vimgrep /FullMethod: "' .. vim.fn.escape(vim.fn.getreg("v"), "/") .. '"/ **')
+	vim.cmd("silent lgrep 'FullMethod: \"" .. vim.fn.getreg("v") .. "\"' | lclose")
 end, opts)
