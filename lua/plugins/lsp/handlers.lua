@@ -57,7 +57,7 @@ local function lsp_keymaps(bufnr)
 	keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 	keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-	keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+	keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references({includeDeclaration = false})<CR>", opts)
 	keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 	keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 	keymap(bufnr, "n", "<leader>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
@@ -73,16 +73,16 @@ end
 
 M.on_attach = function(client, bufnr)
 	-- this should be improved...
-	if
-		client.name == "tsserver"
-		or client.name == "angularls"
-		or client.name == "html"
-		or client.name == "jsonls"
-		or client.name == "gopls"
-		or client.name == "lua_ls"
-	then
-		client.server_capabilities.documentFormattingProvider = false
-	end
+	-- if
+	-- 	client.name == "tsserver"
+	-- 	or client.name == "angularls"
+	-- 	or client.name == "html"
+	-- 	or client.name == "jsonls"
+	-- 	or client.name == "gopls"
+	-- 	or client.name == "lua_ls"
+	-- then
+	-- 	client.server_capabilities.documentFormattingProvider = false
+	-- end
 
 	client.server_capabilities.semanticTokensProvider = nil
 

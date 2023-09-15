@@ -19,7 +19,7 @@ vim.opt.termguicolors = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
-vim.opt.expandtab = true
+vim.opt.expandtab = false
 vim.opt.smartindent = true
 
 vim.opt.wrap = false
@@ -33,3 +33,15 @@ vim.opt.spelllang = "en_gb"
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
+
+if vim.fn.executable('rg') == 1 then
+    vim.opt.grepprg = 'rg --vimgrep --hidden --glob !.git'
+end
+
+-- list
+-- vim.opt.listchars:remove({ 'trail' })
+-- vim.opt.listchars:append({ lead = '·' })
+-- vim.opt.listchars:append({ tab = '   ' })
+-- vim.opt.listchars:append({ eol = '↵' })
+
+-- vim.opt.list = true
