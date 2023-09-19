@@ -13,6 +13,20 @@ return {
 			{ "gs", ":TSJSplit<CR>", desc = "Split lines" },
 		},
 	},
+	{
+		"akinsho/git-conflict.nvim",
+		version = "*",
+		config = {
+			default_mappings = {
+				ours = "<leader>zo",
+				theirs = "<leader>zt",
+				none = "<leader>z0",
+				both = "<leader>zb",
+				next = "]x",
+				prev = "[x",
+			},
+		},
+	},
 	-- file types
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
