@@ -14,6 +14,20 @@ local servers = {
 	"tsserver",
 }
 
+local linters_and_formatters = {
+	"ansible-lint",
+	"delve",
+	"flake8",
+	"goimports-reviser",
+	"golangci-lint",
+	"prettier",
+	"prettierd",
+	"selene",
+	"shellcheck",
+	"shfmt",
+	"stylua",
+}
+
 local settings = {
 	ui = { border = "rounded" },
 	log_level = vim.log.levels.INFO,
@@ -22,7 +36,7 @@ local settings = {
 
 require("mason").setup(settings)
 require("mason-lspconfig").setup({
-	ensure_installed = servers,
+	ensure_installed = servers, linters_and_formatters,
 	automatic_installation = true,
 })
 

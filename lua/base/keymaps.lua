@@ -9,7 +9,7 @@ local keymap = vim.keymap.set
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 
--- Resize with Shift-HJKL
+-- Resize with Shift-arrows
 keymap("n", "<C-down>", ":resize +2<CR>", opts)
 keymap("n", "<C-up>", ":resize -2<CR>", opts)
 keymap("n", "<C-left>", ":vertical resize -2<CR>", opts)
@@ -24,6 +24,7 @@ keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
 keymap("x", ".", ":norm .<CR>", nosilent)
 keymap("x", "Q", ":norm @q<CR>", nosilent)
+keymap("n", "Q", "@q", nosilent)
 
 keymap("v", "*", '"ry/\\V<C-r>r<CR>', opts)
 keymap("v", "#", '"ry?\\V<C-r>r<CR>', opts)
@@ -41,10 +42,8 @@ keymap("v", ">", ">gv", opts)
 keymap("n", "<esc>", ":noh<CR><esc>", opts)
 keymap("n", "[c", ":diffget //2<CR>", opts)
 keymap("n", "]c", ":diffget //3<CR>", opts)
-keymap("n", "<leader>ex", ":Explore!<cr>", opts)
-keymap("n", "yoe", ":Lexplore!<cr>", opts)
 keymap("n", "<Leader>xp", ":call setreg('+', getreg('@'))<CR>", opts)
-keymap("n", "<Leader>xn", ":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>", opts)
+keymap("n", "<Leader>xc", ":call setreg('+', expand('%:.') .. ':' .. line('.'))<CR>", opts)
 keymap("n", "<Leader>xo", ":e <C-r>+<CR>", { noremap = true, desc = "Go to location in clipboard" })
 
 -- next greatest remap ever : asbjornHaland
@@ -74,17 +73,13 @@ keymap("n", "J", "mzJ`z", opts)
 keymap("n", "<C-d>", "<C-d>zz", opts)
 keymap("n", "<C-u>", "<C-u>zz", opts)
 
-keymap("n", "Q", "@q", nosilent)
-
 -- search and replace stuff
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1", nosilent)
 keymap("v", "<leader>re", '"hy:%s#<C-r>h#<C-r>h#c<left><left>', nosilent)
 keymap("n", "<leader>re", ":%s/<C-r><C-w>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
 keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 
-keymap("n", "<leader><leader>c", ":<up>", nosilent)
-keymap("x", "<leader><leader>c", ":<up>", nosilent)
-keymap("n", "<leader><leader>b", function()
+keymap("n", "<leader>bu", function()
 	vim.cmd("Cdlf")
 	vim.cmd("make")
 end, nosilent)
