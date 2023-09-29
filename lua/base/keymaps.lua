@@ -66,10 +66,9 @@ keymap("n", "<leader>c", '"_c', opts)
 keymap("v", "<leader>C", '"_C', opts)
 keymap("n", "<leader>C", '"_C', opts)
 
+keymap("n", "J", "mzJ`z", opts)
 keymap("n", "n", "nzz", opts)
 keymap("n", "N", "Nzz", opts)
-keymap("n", "J", "mzJ`z", opts)
-
 keymap("n", "<C-d>", "<C-d>zz", opts)
 keymap("n", "<C-u>", "<C-u>zz", opts)
 
@@ -81,7 +80,8 @@ keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-
 
 keymap("n", "<leader>bu", function()
 	vim.cmd("Cdlf")
-	vim.cmd("make")
+	vim.cmd("Make")
+	vim.cmd("Cdbase")
 end, nosilent)
 
 keymap("n", "<leader>fY", function()

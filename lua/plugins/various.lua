@@ -29,6 +29,7 @@ return {
 	},
 	-- file types
 	{ "chrisbra/csv.vim", ft = "csv" },
+	{ "tpope/vim-dispatch", cmd = { "Make" } },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{
 		"toppair/peek.nvim",
@@ -100,7 +101,14 @@ return {
 		--stylua: ignore
 		keys = {
 			{ "<leader>a", function() require("harpoon.mark").add_file() end, desc = "harpoon add file" },
-			{ "<leader>-", function() require("harpoon.ui").toggle_quick_menu() end, desc = "harpoon quick menu" },
+			{
+				"<leader>A",
+				function()
+					require("harpoon.ui").toggle_quick_menu()
+					vim.cmd.norm("$ze")
+				end,
+				desc = "harpoon quick menu",
+			},
 			{ "<C-h>", function() require("harpoon.ui").nav_file(1) end, desc = "harpoon file 1" },
 			{ "<C-j>", function() require("harpoon.ui").nav_file(2) end, desc = "harpoon file 2" },
 			{ "<C-k>", function() require("harpoon.ui").nav_file(3) end, desc = "harpoon file 3" },
@@ -264,5 +272,17 @@ return {
 	{
 		"lambdalisue/suda.vim",
 		cmd = { "SudaRead", "SudaWrite" },
+	},
+	{
+		"kevinhwang91/nvim-fundo",
+		dependencies = "kevinhwang91/promise-async",
+		run = function()
+			require("fundo").install()
+		end,
+		config = function()
+			vim.o.undofile = true
+			require("fundo").setup()
+		end,
+		lazy = false,
 	},
 }

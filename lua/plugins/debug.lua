@@ -18,7 +18,7 @@ return {
 		{ "<leader>su", ":lua require'dap'.up()<CR>", desc = "Debug step up callstack" },
 		{ "<leader>sd", ":lua require'dap'.down()<CR>", desc = "Debug step down callstack" },
 		{ "<leader>sO", ":lua require'dap'.step_out()<CR>", desc = "Debug  step out" },
-		{ "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
+		{ "<leader>bb", ":lua require'dap'.toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
 		{ "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
 		{ "<leader>sR", ":lua require'dap'.repl.open()<CR>", desc = "Debug open repl" },
 		{ "<leader>sf", ":lua require('dapui').float_element('breakpoints')<CR>", desc = "Debug float element" },
