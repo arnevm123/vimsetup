@@ -27,6 +27,7 @@ return {
 					lua = { "stylua" },
 					-- python = { "isort", "black" },
 					javascript = { { "prettierd", "prettier" } },
+					typescript = { { "prettierd", "prettier" } },
 					go = { "gofumpt", "goimports_reviser" },
 				},
 			},

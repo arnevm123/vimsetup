@@ -1,4 +1,3 @@
-
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
@@ -47,9 +46,9 @@ autocmd({ "BufWritePre" }, {
 -- 	command = "setlocal shiftwidth=2 tabstop=2 expandtab",
 -- })
 
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
 	desc = "Easy quit help with 'q'",
-	group = vim.api.nvim_create_augroup("Helpful", { clear = true }),
+	group = augroup("Helpful", { clear = true }),
 	pattern = { "help", "qf" },
 	callback = function()
 		vim.keymap.set("n", "q", "<cmd>q<cr>", { silent = true, buffer = true })
@@ -67,6 +66,17 @@ vim.api.nvim_create_user_command("Cdbase", function()
 	end
 end, {})
 
+autocmd("User", {
+	pattern = "GitConflictDetected",
+	callback = function()
+		vim.notify("Conflict detected in " .. vim.fn.expand("<afile>"))
+		vim.keymap.set("n", "cww", function()
+			engage.conflict_buster()
+			create_buffer_local_mappings()
+		end)
+	end,
+})
+
 -- folding
 vim.cmd([[
 function FoldText()
@@ -82,4 +92,3 @@ endfunction
 set foldtext=FoldText()
 set fillchars=fold:\  " removes trailing dots. Mind that there is a whitespace after the \!
 ]])
-

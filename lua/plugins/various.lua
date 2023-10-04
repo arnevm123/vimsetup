@@ -26,6 +26,7 @@ return {
 				prev = "[x",
 			},
 		},
+		lazy = false,
 	},
 	-- file types
 	{ "chrisbra/csv.vim", ft = "csv" },
