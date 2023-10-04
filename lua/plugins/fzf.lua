@@ -81,20 +81,20 @@ return {
 			end,
 			desc = "fzf grep",
 		},
+		-- {
+		-- 	"<leader>ff",
+		-- 	function()
+		-- 		local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+		-- 		if vim.v.shell_error == 0 then
+		-- 			require("fzf-lua").live_grep_native({ cwd = root })
+		-- 		else
+		-- 			require("fzf-lua").live_grep_native()
+		-- 		end
+		-- 	end,
+		-- 	desc = "fzf native grep",
+		-- },
 		{
 			"<leader>ff",
-			function()
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("fzf-lua").live_grep_native({ cwd = root })
-				else
-					require("fzf-lua").live_grep_native()
-				end
-			end,
-			desc = "fzf native grep",
-		},
-		{
-			"<leader>fi",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
