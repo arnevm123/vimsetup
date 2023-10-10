@@ -28,6 +28,10 @@ local linters_and_formatters = {
 	"stylua",
 }
 
+require("mason-tool-installer").setup({
+	ensure_installed = linters_and_formatters,
+})
+
 local settings = {
 	ui = { border = "rounded" },
 	log_level = vim.log.levels.INFO,
@@ -36,7 +40,7 @@ local settings = {
 
 require("mason").setup(settings)
 require("mason-lspconfig").setup({
-	ensure_installed = servers, linters_and_formatters,
+	ensure_installed = servers,
 	automatic_installation = true,
 })
 
