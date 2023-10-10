@@ -10,10 +10,10 @@ local keymap = vim.keymap.set
 keymap("", "<Space>", "<Nop>", opts)
 
 -- Resize with Shift-arrows
-keymap("n", "<C-down>", ":resize +2<CR>", opts)
-keymap("n", "<C-up>", ":resize -2<CR>", opts)
-keymap("n", "<C-left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-right>", ":vertical resize +2<CR>", opts)
+keymap("n", "<S-down>", ":resize +2<CR>", opts)
+keymap("n", "<S-up>", ":resize -2<CR>", opts)
+keymap("n", "<S-left>", ":vertical resize -2<CR>", opts)
+keymap("n", "<S-right>", ":vertical resize +2<CR>", opts)
 
 keymap("n", "<C-w>S", "<C-w>s<C-w>T", opts)
 keymap("c", "<tab>", "<C-z>", nosilent)
@@ -26,8 +26,9 @@ keymap("x", ".", ":norm .<CR>", nosilent)
 keymap("x", "Q", ":norm @q<CR>", nosilent)
 keymap("n", "Q", "@q", nosilent)
 
-keymap("v", "*", '"ry/\\V<C-r>r<CR>', opts)
-keymap("v", "#", '"ry?\\V<C-r>r<CR>', opts)
+keymap("x", "*", '"ry/\\V<C-r>r<CR>', nosilent)
+keymap("x", "#", '"ry?\\V<C-r>r<CR>', nosilent)
+keymap("x", "<leader>/", "<Esc>/\\%V", nosilent)
 
 keymap("n", "dd", utils.Smart_dd, expr)
 keymap("n", "gx", utils.Go_to_url, opts)
@@ -86,18 +87,37 @@ end, nosilent)
 
 keymap("n", "<leader>fY", function()
 	vim.cmd('noau normal! vi""vy')
-	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-	if vim.v.shell_error == 0 then
-		vim.cmd("cd" .. root)
-	end
-	vim.cmd("silent lgrep 'ctx, \"" .. vim.fn.getreg("v") .. "\", in, out,.' | lclose ")
+	local searchStr = vim.fn.escape(vim.fn.getreg("v"), "/")
+	vim.fn.feedkeys('/ctx, "' .. searchStr .. '", in, out,.\r')
+	vim.fn.feedkeys("?func \r")
+	local fnName = string.match(vim.fn.getreg("v"), ".*/(.*)")
+	vim.fn.feedkeys("/" .. fnName .. "\r")
+	vim.fn.feedkeys(":nohlsearch\r")
 end, opts)
 
 keymap("n", "<leader>fy", function()
 	vim.cmd('noau normal! vi""vy')
-	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-	if vim.v.shell_error == 0 then
-		vim.cmd("cd" .. root)
-	end
-	vim.cmd("silent lgrep 'FullMethod: \"" .. vim.fn.getreg("v") .. "\"' | lclose")
+	local searchStr = vim.fn.escape(vim.fn.getreg("v"), "/")
+	vim.fn.feedkeys('/FullMethod: "' .. searchStr .. '"\r')
+	local fnName = string.match(vim.fn.getreg("v"), ".*/(.*)")
+	vim.fn.feedkeys("/" .. fnName .. "\rn")
+	vim.fn.feedkeys(":nohlsearch\r")
 end, opts)
+
+-- keymap("n", "<leader>fY", function()
+-- 	vim.cmd('noau normal! vi""vy')
+-- 	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+-- 	if vim.v.shell_error == 0 then
+-- 		vim.cmd("cd" .. root)
+-- 	end
+-- 	vim.cmd("silent lgrep 'ctx, \"" .. vim.fn.getreg("v") .. "\", in, out,.' | lclose ")
+-- end, opts)
+--
+-- keymap("n", "<leader>fy", function()
+-- 	vim.cmd('noau normal! vi""vy')
+-- 	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+-- 	if vim.v.shell_error == 0 then
+-- 		vim.cmd("cd" .. root)
+-- 	end
+-- 	vim.cmd("silent lgrep 'FullMethod: \"" .. vim.fn.getreg("v") .. "\"' | lclose")
+-- end, opts)

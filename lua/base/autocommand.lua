@@ -59,12 +59,14 @@ vim.api.nvim_create_user_command("PrettyJson", ":%!jq '.'", {})
 vim.api.nvim_create_user_command("Day", ":pu=strftime('%d/%m/%Y %H:%M')", {})
 vim.api.nvim_create_user_command("Chmod", ":!chmod +x %", {})
 vim.api.nvim_create_user_command("Cdlf", ":cd ~/Documents/moaprplatform/platform/scripts/local-full", {})
+vim.api.nvim_create_user_command("Cdfile", ":cd %:p:h", {})
 vim.api.nvim_create_user_command("Cdbase", function()
 	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 	if vim.v.shell_error == 0 then
 		vim.api.nvim_set_current_dir(root)
 	end
 end, {})
+
 
 autocmd("User", {
 	pattern = "GitConflictDetected",

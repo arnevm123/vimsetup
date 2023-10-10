@@ -30,7 +30,7 @@ return {
 	},
 	-- file types
 	{ "chrisbra/csv.vim", ft = "csv" },
-	{ "tpope/vim-dispatch", cmd = { "Make" } },
+	{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{
 		"toppair/peek.nvim",

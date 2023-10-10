@@ -17,8 +17,6 @@ function M.Setup(color)
 		hi NormalFloat guibg=NONE
 		hi FloatBorder guibg=NONE
 		hi EndOfBuffer guibg=NONE
-		hi cursorline guibg=NONE
-		hi CursorLineNr guibg=NONE
 		hi LineNr guibg=NONE
 		hi DiagnosticVirtualTextError guibg=NONE
 		hi DiagnosticVirtualTextHint guibg=NONE
@@ -26,7 +24,6 @@ function M.Setup(color)
 		hi DiagnosticVirtualTextWarn guibg=NONE
 		]])
 		vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
-		-- better colorcolumn & cursorline matching
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#E388A3", italic = true, bg = "none" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#A5A6C5", italic = true, bg = "none" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#97BDDE", italic = true, bg = "none" })
