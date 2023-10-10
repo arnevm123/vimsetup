@@ -5,6 +5,7 @@ vim.opt.guicursor = ""
 vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.cursorlineopt="number"
 
 vim.opt.backup = false
 vim.opt.undofile = true
