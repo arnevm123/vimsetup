@@ -15,70 +15,46 @@ return {
 
 		local endOfFileName = {
 			"filename",
-			path = 3,
-			fmt = function(str)
+			fmt = function()
 				local t = {}
+				local str = vim.fn.expand("%")
 				for s in string.gmatch(str, "([^" .. "/" .. "]+)") do
 					table.insert(t, s)
 				end
-				if #t < 3 then
-					return str
+				if #t <= 4 then
+					return " " .. str
 				end
-				return t[#t - 2] .. "/" .. t[#t - 1] .. "/" .. t[#t]
+				return " .../" .. t[#t - 3] .. "/" .. t[#t - 2] .. "/" .. t[#t - 1] .. "/" .. t[#t]
+			end,
+		}
+		local rootFile = {
+			"rootFile",
+			fmt = function()
+				local c = {}
+				local cwd = ""
+				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+				if vim.v.shell_error == 0 then
+					cwd = root
+				else
+					cwd = vim.loop.cwd()
+				end
+				for s in string.gmatch(cwd, "([^" .. "/" .. "]+)") do
+					table.insert(c, s)
+				end
+				return " " .. c[#c]
 			end,
 		}
 
-		local codeium = function()
-			return vim.fn["codeium#GetStatusString"]()
-		end
-
-		local harpoon = function()
-			if vim.fn.winwidth(0) < 160 then
-				return ""
+		local lint_progress = function()
+			local procs = require("lint").get_running_procs()
+			if #procs == 0 then
+				return "󰦕"
 			end
-			local marks = require("harpoon").get_mark_config().marks
-			local keymaps = { " 󰰀 ", " 󰰆 ", " 󰰉 ", " 󰰌 " }
-			local str = ""
-			local filename = ""
-			local amount_displayed = 4
-			if vim.fn.winwidth(0) < 260 then
-				amount_displayed = 3
-				if vim.fn.winwidth(0) < 200 then
-					amount_displayed = 2
-				end
+			local string = ""
+			for _, proc in ipairs(procs) do
+				string = string .. proc .. " ,"
 			end
-			if #marks < amount_displayed then
-				amount_displayed = #marks
-			end
-
-			for idx = 1, amount_displayed do
-				local t = {}
-				for s in string.gmatch(marks[idx].filename, "([^" .. "/" .. "]+)") do
-					table.insert(t, s)
-				end
-				if #t < 2 then
-					filename = marks[idx].filename
-				else
-					-- filename = t[#t - 2] .. "/" .. t[#t - 1] .. "/" .. t[#t]
-					filename = t[#t - 1] .. "/" .. t[#t]
-				end
-				if idx > 4 then
-					-- str = str .. " " .. filename
-				else
-					str = str .. " " .. keymaps[idx] .. filename
-				end
-			end
-
-			return str
-		end
-
-		local progress = function()
-			-- local current_line = tostring(vim.fn.line("."))
-			-- current_line = (" "):rep(3 - #current_line) .. current_line
-			local total_lines = tostring(vim.fn.line("$"))
-			-- total_lines = total_lines .. (" "):rep(3 - #total_lines)
-			-- return current_line .. " / " .. total_lines
-			return total_lines .. " lines"
+			return "󱉶 " .. string.sub(string, 1, -2)
 		end
 
 		local branch = {
@@ -114,12 +90,12 @@ return {
 			},
 			sections = {
 				lualine_a = {},
-				lualine_b = { endOfFileName },
-				lualine_c = { harpoon },
+				lualine_b = { rootFile },
+				lualine_c = { endOfFileName },
 				-- lualine_x = { "encoding", "fileformat", "filetype" },
-				lualine_x = { diff, progress },
-				lualine_y = { branch },
-				lualine_z = { codeium },
+				lualine_x = { lint_progress },
+				lualine_y = { branch, diff },
+				lualine_z = { },
 			},
 			inactive_sections = {
 				lualine_a = {},
