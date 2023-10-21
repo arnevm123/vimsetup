@@ -10,6 +10,7 @@ vim.opt.cursorlineopt="number"
 vim.opt.backup = false
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/databases/undodir"
+vim.opt.cpoptions:append(">") -- when you yank multiple times into a register, this puts each on a new line
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
