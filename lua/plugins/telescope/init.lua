@@ -26,7 +26,7 @@ return {
 		{ "<leader>tr", ":Telescope resume<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
 		{
-			"<leader>FP",
+			"<leader>fp",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -38,7 +38,7 @@ return {
 			desc = "Telescope live grep",
 		},
 		{
-			"<leader>FF",
+			"<leader>ff",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -50,7 +50,7 @@ return {
 			desc = "Telescope live grep",
 		},
 		{
-			"<leader>FU",
+			"<leader>fu",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -62,7 +62,7 @@ return {
 			desc = "Telescope live grep cursor word",
 		},
 		{
-			"<leader>FU",
+			"<leader>fu",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -102,7 +102,12 @@ return {
 		})
 
 		require("plugins.telescope.custom")
+		telescope.load_extension("fzf")
+		telescope.load_extension("neoclip")
+		telescope.load_extension("live_grep_args")
+		telescope.load_extension("advanced_git_search")
 		local actions = require("telescope.actions")
+		local lga_actions = require("telescope-live-grep-args.actions")
 		telescope.setup({
 			defaults = {
 				layout_strategy = "vertical",
@@ -200,17 +205,25 @@ return {
 					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 				},
 				live_grep_args = {
-					auto_quoting = false, -- enable/disable auto-quoting
+					auto_quoting = true, -- enable/disable auto-quoting
+					-- define mappings, e.g.
+					mappings = { -- extend mappings
+						i = {
+							["<C-k>"] = lga_actions.quote_prompt(),
+							["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+							["<C-t>"] = lga_actions.quote_prompt({ postfix = " -t" }),
+						},
+						n = {
+							["<C-k>"] = lga_actions.quote_prompt(),
+							["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+							["<C-t>"] = lga_actions.quote_prompt({ postfix = " -t" }),
+						},
+					},
 				},
 			},
 			-- To get telescope-file-browser loaded and working with telescope,
 			-- you need to call load_extension, somewhere after setup function:
 		})
-
-		telescope.load_extension("fzf")
-		telescope.load_extension("neoclip")
-		telescope.load_extension("live_grep_args")
-		telescope.load_extension("advanced_git_search")
 
 		local previewers = require("telescope.previewers")
 		local builtin = require("telescope.builtin")

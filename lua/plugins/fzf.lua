@@ -43,9 +43,9 @@ return {
 		},
 	},
 	keys = {
-		{ "<leader>fl", ":FzfLua resume<CR>", desc = "fzf resume grep" },
+		{ "<leader>FL", ":FzfLua resume<CR>", desc = "fzf resume grep" },
 		{
-			"<leader>fp",
+			"<leader>FP",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -58,7 +58,7 @@ return {
 		},
 
 		{
-			"<leader>fg",
+			"<leader>FG",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -70,7 +70,7 @@ return {
 			desc = "fzf files",
 		},
 		{
-			"<leader>fg",
+			"<leader>FG",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -81,20 +81,8 @@ return {
 			end,
 			desc = "fzf grep",
 		},
-		-- {
-		-- 	"<leader>ff",
-		-- 	function()
-		-- 		local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-		-- 		if vim.v.shell_error == 0 then
-		-- 			require("fzf-lua").live_grep_native({ cwd = root })
-		-- 		else
-		-- 			require("fzf-lua").live_grep_native()
-		-- 		end
-		-- 	end,
-		-- 	desc = "fzf native grep",
-		-- },
 		{
-			"<leader>ff",
+			"<leader>FF",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -106,7 +94,7 @@ return {
 			desc = "fzf native grep",
 		},
 		{
-			"<leader>fu",
+			"<leader>FU",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -118,7 +106,7 @@ return {
 			desc = "fzf word under cursor",
 		},
 		{
-			"<leader>fu",
+			"<leader>FU",
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
@@ -130,34 +118,6 @@ return {
 			desc = "fzf visual selection",
 			mode = "v",
 		},
-		-- {
-		-- 	"<leader>fY",
-		-- 	function()
-		-- 		vim.cmd('noau normal! vi""vy')
-		-- 		local text = '(ctx, "' .. vim.fn.getreg("v") .. '", in, out,'
-		-- 		local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-		-- 		if vim.v.shell_error == 0 then
-		-- 			require("fzf-lua").grep({ search = text, cwd = root })
-		-- 		else
-		-- 			require("fzf-lua").grep({ search = text })
-		-- 		end
-		-- 	end,
-		-- 	desc = "Telescope grpc string back",
-		-- },
-		-- {
-		-- 	"<leader>fy",
-		-- 	function()
-		-- 		vim.cmd('noau normal! vi""vy')
-		-- 		local text = 'FullMethod: "' .. vim.fn.getreg("v") .. '"'
-		-- 		local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-		-- 		if vim.v.shell_error == 0 then
-		-- 			require("fzf-lua").grep({ search = text, cwd = root })
-		-- 		else
-		-- 			require("fzf-lua").grep({ search = text })
-		-- 		end
-		-- 	end,
-		-- 	desc = "Telescope grpc string",
-		-- },
 	},
 	cmd = { "FzfLua" },
 }
