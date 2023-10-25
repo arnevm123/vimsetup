@@ -9,6 +9,8 @@ local servers = {
 	"jsonls",
 	"lua_ls",
 	"marksman",
+	-- "omnisharp_mono",
+	"csharp_ls",
 	"pyright",
 	"rust_analyzer",
 	"tsserver",
@@ -58,6 +60,15 @@ for _, server in pairs(servers) do
 		on_attach = require("plugins.lsp.handlers").on_attach,
 		capabilities = require("plugins.lsp.handlers").capabilities,
 	}
+
+	-- if server == "csharp_ls" then
+	-- 	opts.root_dir = function(startpath)
+	-- 		return lspconfig.util.root_pattern("*.sln")(startpath)
+	-- 			or lspconfig.util.root_pattern("*.csproj")(startpath)
+	-- 			or lspconfig.util.root_pattern("*.fsproj")(startpath)
+	-- 			or lspconfig.util.root_pattern(".git")(startpath)
+	-- 	end
+	-- end
 
 	server = vim.split(server, "@")[1]
 

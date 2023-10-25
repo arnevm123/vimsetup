@@ -1,5 +1,5 @@
 return {
-	"mfussenegger/nvim-lint",
+	"arnevm123/nvim-lint",
 	config = function()
 		local lint = require("lint")
 		lint.linters.golangcilint.args = {

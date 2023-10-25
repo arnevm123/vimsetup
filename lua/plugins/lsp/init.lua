@@ -20,7 +20,7 @@ return {
 				formatters = {
 					goimports_reviser = {
 						command = "goimports-reviser",
-						args = { "-project-name", "go.nexuzhealth.com", "$FILENAME" },
+						args = { "-project-name", "unmatched.eu", "$FILENAME" },
 						stdin = false,
 					},
 				},
@@ -29,7 +29,8 @@ return {
 					-- python = { "isort", "black" },
 					javascript = { { "prettierd", "prettier" } },
 					typescript = { { "prettierd", "prettier" } },
-					go = { "gofumpt", "goimports_reviser" },
+					go = { "gofmt", "goimports_reviser" },
+					["*"] = { "trim_whitespace" },
 				},
 			},
 		},
@@ -57,6 +58,7 @@ return {
 		},
 		{ "<leader>ll", ":lua vim.lsp.codelens.run()<cr>", desc = "lsp codelens" },
 		{ "<leader>lr", ":lua vim.lsp.buf.rename()<cr>", desc = "lsp rename variable" },
+		{ "<leader>le", ":LspRestart<cr>", desc = "Restart lsp" },
 		{ "<leader>ls", ":Telescope lsp_document_symbols<cr>", desc = "lsp document symbols" },
 		{ "<leader>lS", ":Telescope lsp_dynamic_workspace_symbols<cr>", desc = "lsp workspace symbols" },
 		{ "<leader><leader>l", ":LspInfo<cr>", desc = "lsp info" },

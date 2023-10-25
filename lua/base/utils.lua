@@ -1,18 +1,20 @@
 local M = {}
 function M:Go_to_url(cmd)
-    local sysname = vim.loop.os_uname().sysname
+	local sysname = vim.loop.os_uname().sysname
 	local url = vim.fn.expand("<cfile>", nil, nil)
+	if url:match("github.com") or url:match("gopkg.in") then
+		url = "https://" .. url
+	end
 	if not url:match("http") then
 		url = "https://github.com/" .. url
 	end
 
 	vim.notify("Going to " .. url, "info", { title = "Opening browser..." })
-    if sysname == "Darwin" then
-        vim.fn.jobstart({ cmd or "open", url }, { on_exit = function() end })
-    else
-        vim.fn.jobstart({ cmd or "xdg-open", url }, { on_exit = function() end })
-    end
-
+	if sysname == "Darwin" then
+		vim.fn.jobstart({ cmd or "open", url }, { on_exit = function() end })
+	else
+		vim.fn.jobstart({ cmd or "xdg-open", url }, { on_exit = function() end })
+	end
 end
 
 -- make dd not remove last yank if empty

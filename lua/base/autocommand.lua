@@ -32,11 +32,11 @@ autocmd("BufReadPost", {
 	end,
 })
 
--- remove eol spaces
-autocmd({ "BufWritePre" }, {
-	pattern = { "*" },
-	command = [[%s/\s\+$//e]],
-})
+-- -- remove eol spaces
+-- autocmd({ "BufWritePre" }, {
+-- 	pattern = { "*" },
+-- 	command = [[%s/\s\+$//e]],
+-- })
 
 -- -- Set indentation to 2 spaces for some file types
 -- augroup("setIndent", { clear = true })

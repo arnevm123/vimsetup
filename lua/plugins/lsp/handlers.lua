@@ -73,18 +73,6 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-	-- this should be improved...
-	-- if
-	-- 	client.name == "tsserver"
-	-- 	or client.name == "angularls"
-	-- 	or client.name == "html"
-	-- 	or client.name == "jsonls"
-	-- 	or client.name == "gopls"
-	-- 	or client.name == "lua_ls"
-	-- then
-	-- 	client.server_capabilities.documentFormattingProvider = false
-	-- end
-
 	client.server_capabilities.semanticTokensProvider = nil
 
 	lsp_keymaps(bufnr)

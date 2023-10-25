@@ -142,19 +142,19 @@ return {
 		end,
 		event = "BufReadPre",
 	},
-	{
-		"harrisoncramer/gitlab.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-		},
-		build = function()
-			require("gitlab").build()
-		end,
-		config = function()
-			require("gitlab").setup()
-		end,
-	},
+	-- {
+	-- 	"harrisoncramer/gitlab.nvim",
+	-- 	dependencies = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- 	build = function()
+	-- 		require("gitlab").build()
+	-- 	end,
+	-- 	config = function()
+	-- 		require("gitlab").setup()
+	-- 	end,
+	-- },
 	{
 		"folke/todo-comments.nvim",
 		cmd = { "TodoTrouble", "TodoTelescope" },

@@ -85,8 +85,8 @@ keymap("n", "<leader>bu", function()
 	vim.cmd("Cdbase")
 end, nosilent)
 
-keymap("n", "<leader>lv", ":lua vim.lsp.diagnostics({virtual_text = false})")
-keymap("n", "<leader>LV", ":lua vim.lsp.diagnostics({virtual_text = true})")
+keymap("n", "<leader>lv", ":lua vim.diagnostic.config({virtual_text = false})<CR>")
+keymap("n", "<leader>LV", ":lua vim.diagnostic.config({virtual_text = true})<CR>")
 
 keymap("n", "<leader>fY", function()
 	vim.cmd('noau normal! vi""vy')
