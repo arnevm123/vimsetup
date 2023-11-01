@@ -35,7 +35,7 @@ return {
 				-- local branch = branchname(metadata.path)
 				local worktree_path = path .. "/" .. metadata.path .. "/"
 				local gitignored_path = path .. "/gitignored"
-				local link_gitignored = "ln -s " .. gitignored_path .. "/* " .. worktree_path
+				local link_gitignored = "ln -s " .. gitignored_path .. "/{*,.*} " .. worktree_path
 				os.execute(link_gitignored)
                 -- for future reference if I need to execute something on every create
 				-- local tmux_mvn = "tmux neww -d -n mvn 'cd "
@@ -44,16 +44,16 @@ return {
 				-- os.execute(tmux_mvn)
 			end
 
-			if op == Worktree.Operations.Switch then
-				local folder = branchname(metadata.path)
-				local tmux_new = "tmux neww -dn " .. metadata.path .. " -n " .. folder .. " -t 2"
-				if tmuxWindowExists() then
-					os.execute("tmux movew -d -s 2")
-				end
-				os.execute(tmux_new)
-				print("Switched from " .. metadata.prev_path .. " to " .. metadata.path)
-			end
-		end)
+    if op == Worktree.Operations.Switch then
+        local folder = branchname(metadata.path)
+        local tmux_new = "tmux neww -dn " .. metadata.path .. " -n " .. folder .. " -t 2"
+        if tmuxWindowExists() then
+            os.execute("tmux movew -d -s 2")
+        end
+        os.execute(tmux_new)
+        print("Switched from " .. metadata.prev_path .. " to " .. metadata.path)
+    end
+end)
 
 		require("telescope").load_extension("git_worktree")
 	end,

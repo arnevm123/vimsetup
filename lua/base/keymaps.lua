@@ -67,7 +67,6 @@ keymap("n", "<leader>c", '"_c', opts)
 keymap("v", "<leader>C", '"_C', opts)
 keymap("n", "<leader>C", '"_C', opts)
 
-keymap("n", "J", "mzJ`z", opts)
 keymap("n", "n", "nzz", opts)
 keymap("n", "N", "Nzz", opts)
 keymap("n", "<C-d>", "<C-d>zz", opts)

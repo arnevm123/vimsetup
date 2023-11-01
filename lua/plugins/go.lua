@@ -10,7 +10,7 @@ return {
 			-- maybe set all to false
 			disable_defaults = false, -- true|false when true set false to all boolean settings and replace all table
 			dap_debug_keymap = false, -- true: use keymap for debugger defined in go/dap.lua
-			gotests_template_dir = "/Users/arnevm/FOSS/goteststemplates/templates",
+			-- gotests_template_dir = "/Users/arnevm/FOSS/goteststemplates/templates",
 			-- false: do not use keymap in go/dap.lua.  you must define your own.
 			-- windows: use visual studio keymap
 			dap_debug_gui = false, -- set to true to enable dap gui, highly recommend
@@ -35,6 +35,7 @@ return {
 	keys = {
 		{ "<leader>eb", ":GoDebug -t<cr>" },
 		{ "<leader>ee", ":GoIfErr<cr>" },
+		{ "<leader>er", ":GoGenReturn<cr>" },
 		{ "<leader>ot", ":GoAlt<CR>" },
 	},
 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
