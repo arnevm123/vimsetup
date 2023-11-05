@@ -56,7 +56,7 @@ return {
 				if vim.v.shell_error == 0 then
 					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ search_dirs = { root } })
 				else
-					require("telescope.builtin").grep_word_under_cursor()
+					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
 				end
 			end,
 			desc = "Telescope live grep cursor word",
@@ -68,7 +68,7 @@ return {
 				if vim.v.shell_error == 0 then
 					require("telescope-live-grep-args.shortcuts").grep_visual_selection({ search_dirs = { root } })
 				else
-					require("telescope.builtin").grep_visual_selection()
+					require("telescope-live-grep-args.shortcuts").grep_visual_selection()
 				end
 			end,
 			desc = "Telescope live grep visual selection",

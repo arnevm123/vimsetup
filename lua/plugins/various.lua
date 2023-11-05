@@ -1,6 +1,7 @@
 return {
 	-- text manipulation
 	{ "tommcdo/vim-exchange", keys = { { "X", mode = "v" }, "cx" } },
+	{ "wellle/targets.vim", event = "BufEnter" },
 	{ "numToStr/Comment.nvim", config = true, keys = { "gc", "gb", { "gc", mode = "x" }, { "gb", mode = "x" } } },
 	{ "kylechui/nvim-surround", config = true, keys = { "ds", "cs", "ys", { "S", mode = "v" }, { "gS", mode = "v" } } },
 	{ "nvim-pack/nvim-spectre", keys = { { "<leader>S", ":lua require('spectre').open()<CR>" } } },
