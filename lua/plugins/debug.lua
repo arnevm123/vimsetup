@@ -6,7 +6,7 @@ return {
 			"rcarriga/nvim-dap-ui",
 			"theHamsta/nvim-dap-virtual-text",
 			"nvim-telescope/telescope-dap.nvim",
-			{ "daic0r/dap-helper.nvim", config = true },
+			-- { "daic0r/dap-helper.nvim", config = true },
 		},
 	--stylua: ignore
 	keys = {
