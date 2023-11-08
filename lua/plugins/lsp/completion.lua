@@ -54,6 +54,7 @@ cmp.setup({
 		format = function(entry, vim_item)
 			vim_item.menu = ({
 				nvim_lsp = "LSP",
+				["vim-dadbod-completion"] = "[DB]",
 				codeium = "AI",
 				nvim_lua = "Nvim",
 				luasnip = "Snip",
@@ -65,6 +66,7 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
+		{ name = "vim-dadbod-completion" },
 		{ name = "codeium" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
