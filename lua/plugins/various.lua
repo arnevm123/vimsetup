@@ -6,6 +6,13 @@ return {
 	{ "kylechui/nvim-surround", config = true, keys = { "ds", "cs", "ys", { "S", mode = "v" }, { "gS", mode = "v" } } },
 	{ "nvim-pack/nvim-spectre", keys = { { "<leader>S", ":lua require('spectre').open()<CR>" } } },
 	{
+		"tpope/vim-rsi",
+		event = "BufEnter",
+		config = function()
+			vim.g.rsi_no_meta = 1
+		end,
+	},
+	{
 		"Wansmer/treesj",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		opts = { use_default_keymaps = false },

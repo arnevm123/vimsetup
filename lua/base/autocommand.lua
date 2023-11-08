@@ -49,9 +49,10 @@ autocmd("BufReadPost", {
 autocmd("FileType", {
 	desc = "Easy quit help with 'q'",
 	group = augroup("Helpful", { clear = true }),
-	pattern = { "help", "qf" },
+	pattern = { "help" },
 	callback = function()
 		vim.keymap.set("n", "q", "<cmd>q<cr>", { silent = true, buffer = true })
+		vim.keymap.set("n", "gd", "<C-]>", { silent = true, buffer = true })
 	end,
 })
 
@@ -66,7 +67,6 @@ vim.api.nvim_create_user_command("Cdbase", function()
 		vim.api.nvim_set_current_dir(root)
 	end
 end, {})
-
 
 autocmd("User", {
 	pattern = "GitConflictDetected",
