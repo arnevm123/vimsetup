@@ -1,6 +1,8 @@
 m# Compiled Lua sources
 luac.out
 lua/.luarc.json
+.db_connections/
+.queries/
 
 # luarocks build files
 *.src.rock

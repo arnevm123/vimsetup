@@ -76,50 +76,8 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1", nosilent)
 keymap("v", "<leader>re", '"hy:%s#<C-r>h#<C-r>h#c<left><left>', nosilent)
 keymap("n", "<leader>re", ":%s/<C-r><C-w>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
-keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 
-keymap("n", "<leader>bu", function()
-	vim.cmd("Cdlf")
-	vim.cmd("Make")
-	vim.cmd("Cdbase")
-end, nosilent)
+keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 
 keymap("n", "<leader>lv", ":lua vim.diagnostic.config({virtual_text = false})<CR>")
 keymap("n", "<leader>LV", ":lua vim.diagnostic.config({virtual_text = true})<CR>")
-
-keymap("n", "<leader>fY", function()
-	vim.cmd('noau normal! vi""vy')
-	local searchStr = vim.fn.escape(vim.fn.getreg("v"), "/")
-	vim.fn.feedkeys('/ctx, "' .. searchStr .. '", in, out,.\r')
-	vim.fn.feedkeys("?func \r")
-	local fnName = string.match(vim.fn.getreg("v"), ".*/(.*)")
-	vim.fn.feedkeys("/" .. fnName .. "\r")
-	vim.fn.feedkeys(":nohlsearch\r")
-end, opts)
-
-keymap("n", "<leader>fy", function()
-	vim.cmd('noau normal! vi""vy')
-	local searchStr = vim.fn.escape(vim.fn.getreg("v"), "/")
-	vim.fn.feedkeys('/FullMethod: "' .. searchStr .. '"\r')
-	local fnName = string.match(vim.fn.getreg("v"), ".*/(.*)")
-	vim.fn.feedkeys("/" .. fnName .. "\rn")
-	vim.fn.feedkeys(":nohlsearch\r")
-end, opts)
-
--- keymap("n", "<leader>fY", function()
--- 	vim.cmd('noau normal! vi""vy')
--- 	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
--- 	if vim.v.shell_error == 0 then
--- 		vim.cmd("cd" .. root)
--- 	end
--- 	vim.cmd("silent lgrep 'ctx, \"" .. vim.fn.getreg("v") .. "\", in, out,.' | lclose ")
--- end, opts)
---
--- keymap("n", "<leader>fy", function()
--- 	vim.cmd('noau normal! vi""vy')
--- 	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
--- 	if vim.v.shell_error == 0 then
--- 		vim.cmd("cd" .. root)
--- 	end
--- 	vim.cmd("silent lgrep 'FullMethod: \"" .. vim.fn.getreg("v") .. "\"' | lclose")
--- end, opts)

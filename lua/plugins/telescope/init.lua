@@ -30,7 +30,7 @@ return {
 			function()
 				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 				if vim.v.shell_error == 0 then
-					require("telescope.builtin").find_files({ cwd = root })
+					require("telescope.builtin").find_files({ cwd = root, no_ignore = true })
 				else
 					require("telescope.builtin").find_files()
 				end

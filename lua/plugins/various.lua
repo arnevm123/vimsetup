@@ -41,6 +41,14 @@ return {
 	{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+	{
 		"toppair/peek.nvim",
 		build = "deno task --quiet build:fast",
 		cmd = { "PeekOpen", "PeekClose" },
@@ -270,13 +278,6 @@ return {
 			{ "]r", '<cmd>lua require("illuminate").goto_next_reference(wrap)<cr>' },
 			{ "[r", '<cmd>lua require("illuminate").goto_prev_reference(wrap)<cr>' },
 		},
-	},
-	{
-		"tzachar/highlight-undo.nvim",
-		opts = {
-			duration = 75,
-		},
-		event = "BufEnter",
 	},
 	{
 		"lambdalisue/suda.vim",

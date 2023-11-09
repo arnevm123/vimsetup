@@ -10,7 +10,6 @@ return {
 		},
 	--stylua: ignore
 	keys = {
-		{ "<leader>ea", "'Z:Cdlf<CR>:lua require'dap'.continue()<CR>", desc = "Debug start" },
 		{ "yod", function() require("dapui").toggle() end, { noremap = true, silent = true, desc = "Toggle dapui" } },
 		{ "<leader>sc", ":lua require'dap'.continue()<CR>", desc = "Debug continue" },
 		{ "<leader>sl", ":lua require'dap'.run_to_cursor()<CR>", desc = "Debug run to cursor" },

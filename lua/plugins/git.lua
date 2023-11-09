@@ -57,7 +57,7 @@ return {
 			{ "<leader>gu", ":Gitsigns undo_stage_hunk<cr>", desc = "Gitsigns undo stage hunk" },
 			{ "<leader>gU", ":Gitsigns undo_stage_buffer<cr>", desc = "Gitsigns undo stage buffer" },
 			{ "<leader>gd", ":Gitsigns diffthis HEAD<cr>", desc = "Gitsigns diff with HEAD" },
-			{ "<leader>gm", ":Gitsigns diffthis master<cr>", desc = "Gitsigns diff with master" },
+			{ "<leader>gm", ":Gitsigns diffthis main<cr>", desc = "Gitsigns diff with master" },
 			{ "<leader>gl", ":Gitsigns blame_line<cr>", desc = "Gitsigns blame current line" },
 			{ "yob", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
 			{
