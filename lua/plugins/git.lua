@@ -40,7 +40,7 @@ return {
 				recent = { folded = true },
 			},
 			-- override/add mappings
-			mappings = { status = { ["B"] = "BranchPopup" } },
+			-- mappings = { status = { ["B"] = "BranchPopup" } },
 		},
 	},
 	{
