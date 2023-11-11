@@ -41,31 +41,19 @@ return {
 	{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{
-		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		ft = { "markdown" },
-		build = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-	},
-	{
 		"toppair/peek.nvim",
+		cmd = { "Peek" },
 		build = "deno task --quiet build:fast",
-		cmd = { "PeekOpen", "PeekClose" },
 		config = function()
-			-- default config:
-			require("peek").setup({
-				auto_load = true, -- whether to automatically load preview when entering another markdown buffer
-				close_on_bdelete = true, -- close preview window on buffer delete
-				syntax = true, -- enable syntax highlighting, affects performance
-				theme = "dark", -- 'dark' or 'light'
-				update_on_change = true,
-				app = "webview", -- 'webview', 'browser', string or a table of strings
-				filetype = { "markdown" }, -- list of filetypes to recognize as markdown
-				throttle_at = 200000, -- start throttling when file exceeds this
-				throttle_time = "auto", -- minimum amount of time in milliseconds
-			})
-			vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+			require("peek").setup()
+			vim.api.nvim_create_user_command("Peek", function()
+				local peek = require("peek")
+				if peek.is_open() then
+					peek.close()
+				else
+					peek.open()
+				end
+			end, {})
 			vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
 		end,
 	},
