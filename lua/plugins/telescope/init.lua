@@ -14,6 +14,7 @@ return {
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
+		{ "<leader>fl", ":Telescope resume<cr>", desc = "Telescope resume" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
 		{ "<leader>f;", ":Telescope neoclip<CR>", desc = "Neoclip" },
@@ -23,7 +24,6 @@ return {
 		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
-		{ "<leader>tr", ":Telescope resume<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
 		{
 			"<leader>fp",
