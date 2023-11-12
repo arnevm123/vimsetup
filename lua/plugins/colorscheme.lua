@@ -5,6 +5,13 @@ return {
 		dependencies = { "rktjmp/lush.nvim" },
 	},
 	{
+		"yorickpeterse/nvim-grey",
+		priority = 1000,
+		config = function()
+			vim.g.gruvbox_baby_telescope_theme = 1
+		end,
+	},
+	{
 		"ramojus/mellifluous.nvim",
 		priority = 1000,
 		opts = {
@@ -12,20 +19,10 @@ return {
 			styles = {
 				comments = { italic = true },
 				conditionals = { italic = true },
-				folds = {},
 				loops = { italic = true },
 				functions = { italic = true },
 				keywords = { italic = true },
 				strings = { italic = true },
-				variables = {},
-				numbers = {},
-				booleans = {},
-				properties = {},
-				types = {},
-				operators = {},
-			},
-			transparent_background = {
-				enabled = true,
 			},
 			flat_background = {
 				line_numbers = true,

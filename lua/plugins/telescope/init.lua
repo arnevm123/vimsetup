@@ -106,12 +106,23 @@ return {
 		telescope.load_extension("neoclip")
 		telescope.load_extension("live_grep_args")
 		telescope.load_extension("advanced_git_search")
+		telescope.load_extension("grey")
 		local actions = require("telescope.actions")
 		local lga_actions = require("telescope-live-grep-args.actions")
 		telescope.setup({
 			defaults = {
-				layout_strategy = "vertical",
+				prompt_prefix = "",
+				entry_prefix = " ",
+				selection_caret = " ",
+				layout_strategy = "grey",
 				layout_config = {
+					-- The extension supports both "top" and "bottom" for the prompt.
+					prompt_position = "top",
+
+					-- You can adjust these settings to your liking.
+					width = 0.6,
+					height = 0.5,
+					preview_width = 0.6,
 					vertical = {
 						mirror = true,
 						prompt_position = "top",

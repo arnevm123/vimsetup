@@ -6,22 +6,13 @@ function M.Setup(color)
 
 	if color == "mellifluous" then
 		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
-		vim.cmd([[
-		hi Visual guibg=#4D4D4D
-		]])
+		-- vim.cmd([[
+		-- hi Visual guibg=#4D4D4D
+		-- ]])
 	end
 
 	if color == "seoulbones" then
 		vim.cmd([[
-		hi Normal guibg=NONE
-		hi NormalFloat guibg=NONE
-		hi FloatBorder guibg=NONE
-		hi EndOfBuffer guibg=NONE
-		hi LineNr guibg=NONE
-		hi DiagnosticVirtualTextError guibg=NONE
-		hi DiagnosticVirtualTextHint guibg=NONE
-		hi DiagnosticVirtualTextInfo guibg=NONE
-		hi DiagnosticVirtualTextWarn guibg=NONE
 		]])
 		vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#E388A3", italic = true, bg = "none" })
@@ -35,6 +26,32 @@ function M.Setup(color)
 		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })
 		vim.api.nvim_set_hl(0, "Search", { bg = "#4B4B4B" })
 		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
+	end
+end
+
+function M.Transparent(color)
+	if color then
+		M.Setup(color)
+	end
+	local highlights = {
+		"Normal",
+		"NormalFloat",
+		"FloatBorder",
+		"EndOfBuffer",
+		"DiagnosticVirtualTextError",
+		"DiagnosticVirtualTextHint",
+		"DiagnosticVirtualTextInfo",
+		"DiagnosticVirtualTextWarn",
+		"LineNr",
+		"Folded",
+		"NonText",
+		"SpecialKey",
+		"VertSplit",
+		"SignColumn",
+		"EndOfBuffer",
+	}
+	for _, highlight in pairs(highlights) do
+		vim.cmd.highlight(highlight .. " guibg=none ctermbg=none")
 	end
 end
 return M
