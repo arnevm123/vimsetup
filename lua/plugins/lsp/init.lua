@@ -47,7 +47,20 @@ return {
 				progress = {
 					suppress_on_insert = true,
 					ignore_done_already = true,
-					display = { done_icon = "" },
+					display = {
+						done_icon = "",
+						progress_style = "Constant",
+						format_message = function(msg)
+							local message = msg.message
+							if not message then
+								message = msg.done and "✔" or "..."
+							end
+							if msg.percentage ~= nil then
+								message = string.format("%.0f%%", msg.percentage)
+							end
+							return message
+						end,
+					},
 					ignore = {},
 				},
 				notification = { window = { winblend = 0 } },
