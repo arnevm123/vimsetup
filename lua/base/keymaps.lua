@@ -74,8 +74,8 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 
 -- search and replace stuff
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1", nosilent)
-keymap("v", "<leader>re", '"hy:%s#<C-r>h#<C-r>h#c<left><left>', nosilent)
-keymap("n", "<leader>re", ":%s/<C-r><C-w>/<C-r><C-w>/cI<Left><Left><Left>", nosilent)
+keymap("v", "<leader>re", '"hy:%s#<C-r>h#<C-r>h#gc<left><left><left>', nosilent)
+keymap("n", "<leader>re", ":%s/<C-r><C-w>/<C-r><C-w>/gcI<Left><Left><Left><Left>", nosilent)
 
 keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 

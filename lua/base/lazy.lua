@@ -24,8 +24,6 @@ return require("lazy").setup("plugins", {
 			},
 		},
 	},
-	ui = {
-		border = "rounded",
-		title = "Lazy",
-	},
+	ui = { border = "rounded", title = "Lazy" },
+	change_detection = { enabled = false },
 })
