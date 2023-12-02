@@ -12,6 +12,19 @@ return {
 		end,
 	},
 	{
+		"rose-pine/neovim",
+		priority = 1000,
+		config = function()
+			require("rose-pine").setup({ disable_background = true })
+		end,
+		as = "rose-pine",
+	},
+	{
+		"wansmer/serenity.nvim",
+		priority = 1000,
+		config = true,
+	},
+	{
 		"ramojus/mellifluous.nvim",
 		priority = 1000,
 		opts = {
@@ -32,9 +45,6 @@ return {
 			},
 			plugins = {
 				gitsigns = true,
-				telescope = {
-					enabled = false,
-				},
 			},
 		},
 	},

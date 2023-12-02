@@ -4,7 +4,7 @@ return {
 		local lint = require("lint")
 		lint.linters.golangcilint.args = {
 			"run",
-			"--config=~/.golangci.yaml",
+			-- "--config=~/.golangci.yaml",
 			"--out-format",
 			"json",
 			function()
@@ -16,6 +16,7 @@ return {
 			["yaml.ansible"] = { "ansible_lint" },
 			go = { "golangcilint" },
 			typescript = { "eslint_d" },
+			sh = { "shellcheck" },
 			-- gitcommit = { "codespell" },
 			-- markdown = { "vale" },
 			-- htmldjango = { "curlylint" },

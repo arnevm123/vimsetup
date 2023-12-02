@@ -1,12 +1,16 @@
 return {
 	-- text manipulation
 	{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
-	{ "tommcdo/vim-exchange", keys = { { "X", mode = "v" }, "cx" } },
-	{ "wellle/targets.vim", event = "BufEnter" },
+	{ "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
+	{ "wsdjeg/vim-fetch", lazy = false }, -- :e with line numpers
+	{ "wellle/targets.vim", event = "BufEnter" }, -- better cib
 	{ "numToStr/Comment.nvim", config = true, keys = { "gc", "gb", { "gc", mode = "x" }, { "gb", mode = "x" } } },
 	{ "kylechui/nvim-surround", config = true, keys = { "ds", "cs", "ys", { "S", mode = "v" }, { "gS", mode = "v" } } },
-	{ "nvim-pack/nvim-spectre", keys = { { "<leader>S", ":lua require('spectre').open()<CR>" } } },
 	{ "brenoprata10/nvim-highlight-colors", config = true, cmd = { "HighlightColorsOn" } },
+	{ "chrisbra/csv.vim", ft = "csv" },
+	{ "pearofducks/ansible-vim", ft = "yaml" },
+	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
+	{ "arnevm123/unimpaired.nvim", config = true, keys = { "[", "]", "yo" } },
 	{
 		"tpope/vim-rsi",
 		event = "BufEnter",
@@ -15,32 +19,20 @@ return {
 		end,
 	},
 	{
-		"Wansmer/treesj",
-		dependencies = "nvim-treesitter/nvim-treesitter",
-		opts = { use_default_keymaps = false },
-		keys = {
-			{ "ga", ":TSJJoin<CR>", desc = "Join lines" },
-			{ "gs", ":TSJSplit<CR>", desc = "Split lines" },
-		},
-	},
-	{
 		"akinsho/git-conflict.nvim",
 		version = "*",
 		config = {
 			default_mappings = {
 				ours = "<leader>zo",
 				theirs = "<leader>zt",
-				none = "<leader>z0",
+				none = "<leader>zn",
 				both = "<leader>zb",
-				next = "]x",
-				prev = "[x",
+				next = "]z",
+				prev = "[z",
 			},
 		},
 		lazy = false,
 	},
-	-- file types
-	{ "chrisbra/csv.vim", ft = "csv" },
-	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{
 		"toppair/peek.nvim",
 		cmd = { "Peek" },
@@ -57,10 +49,6 @@ return {
 			end, {})
 		end,
 	},
-	-- navigation
-	{ "wsdjeg/vim-fetch", lazy = false },
-	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
-	{ "arnevm123/unimpaired.nvim", config = true, keys = { "[", "]", "yo" } },
 	{
 		"kevinhwang91/nvim-bqf",
 		dependencies = { "junegunn/fzf" },
@@ -119,156 +107,32 @@ return {
 			{ "<C-l>", function() require("harpoon.ui").nav_file(4) end, desc = "harpoon file 4" },
 		},
 	},
-
-	-- AI
 	{
 		"Exafunction/codeium.vim",
 		--stylua: ignore
 		--selene: allow(multiple_statements)
 		config = function()
-			vim.keymap.set("i", "<tab>", function() return vim.fn["codeium#Accept"]() end, { expr = true })
-			vim.keymap.set("i", "<C-l>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
-			vim.keymap.set("i", "<C-k>", function() return vim.fn["codeium#CycleCompletions"](1) end, { expr = true })
-			vim.keymap.set("i", "<C-j>", function() return vim.fn["codeium#CycleCompletions"](-1) end, { expr = true })
-			vim.keymap.set("i", "<c-h>", function() return vim.fn["codeium#Clear"]() end, { expr = true })
+			vim.keymap.set("i", "<C-.>", function() return vim.fn["codeium#Accept"]() end, { expr = true })
+			vim.keymap.set("i", "<C-;>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
+            vim.keymap.set("i", "<C-,>", function() return vim.fn["codeium#CycleCompletions"](1) end, { expr = true })
 			vim.g.codeium_filetypes = { telescope = false }
-			vim.g.codeium_manual = true
+			-- vim.g.codeium_manual = true
 		end,
 		event = "BufReadPost",
 	},
 	{
-		"andymass/vim-matchup",
+		"harrisoncramer/gitlab.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			enabled = true,
+		},
+		build = function()
+			require("gitlab.server").build(true)
+		end, -- Builds the Go binary
 		config = function()
-			vim.g.matchup_matchparen_offscreen = {}
-			vim.g.matchup_text_obj_enabled = 0
-			vim.g.matchup_surround_enabled = 1
+			require("gitlab").setup()
 		end,
-		event = "BufReadPre",
-	},
-	-- {
-	-- 	"harrisoncramer/gitlab.nvim",
-	-- 	dependencies = {
-	-- 		"MunifTanjim/nui.nvim",
-	-- 		"nvim-lua/plenary.nvim",
-	-- 	},
-	-- 	build = function()
-	-- 		require("gitlab").build()
-	-- 	end,
-	-- 	config = function()
-	-- 		require("gitlab").setup()
-	-- 	end,
-	-- },
-	{
-		"folke/todo-comments.nvim",
-		cmd = { "TodoTrouble", "TodoTelescope" },
-		event = "BufReadPre",
-		opts = {
-			keywords = {
-				FIX = {
-					icon = "? ", -- icon used for the sign, and in search results
-					color = "error", -- can be a hex color, or a named color (see below)
-					alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
-					-- signs = false, -- configure signs for some keywords individually
-				},
-				TODO = { icon = "✓ ", color = "info" },
-				NOTE = { icon = "󰲶 ", color = "hint", alt = { "INFO" } },
-				HACK = { icon = " ", color = "error" },
-				TEST = { icon = "󱈲 ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-				PERF = { icon = "󰅒 ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-				WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-				AAA = { icon = " ", color = "test" },
-			},
-			highlight = {
-				before = "fg", -- "fg" or "bg" or empty
-				keyword = "bg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
-			},
-		},
-		keys = {
-			{ "]t", "<cmd>lua require('todo-comments').jump_next()<CR>", desc = "Next todo comment" },
-			{ "[t", "<cmd>lua require('todo-comments').jump_prev()<CR>", desc = "Previous todo comment" },
-			-- { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
-			{ "<leader>xa", "<cmd>TodoQuickFix keywords=AAA<cr>", desc = "Todo Trouble Arne" },
-			{ "<leader>xA", "<cmd>TodoTelescope keywords=AAA<cr>", desc = "Todo Telescope Arne" },
-			{ "<leader>xt", "<cmd>TodoQuickFix<cr>", desc = "Todo Trouble" },
-			{ "<leader>xT", "<cmd>TodoTelescope<cr>", desc = "Todo Telescope" },
-		},
-	},
-	-- {
-	-- 	-- Show help for keycombos
-	-- 	"folke/which-key.nvim",
-	-- 	event = "BufReadPost",
-	-- 	opts = {
-	-- 		plugins = {
-	-- 			marks = true, -- shows a list of your marks on ' and `
-	-- 			registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-	-- 			spelling = {
-	-- 				enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
-	-- 				suggestions = 20, -- how many suggestions should be shown in the list?
-	-- 			},
-	-- 			presets = {
-	-- 				operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-	-- 				motions = false, -- adds help for motions
-	-- 				text_objects = false, -- help for text objects triggered after entering an operator
-	-- 				windows = true, -- default bindings on <c-w>
-	-- 				nav = true, -- misc bindings to work with windows
-	-- 				z = true, -- bindings for folds, spelling and others prefixed with z
-	-- 				g = true, -- bindings for prefixed with g
-	-- 			},
-	-- 		},
-	-- 		key_labels = {},
-	-- 		icons = {
-	-- 			breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-	-- 			separator = "➜", -- symbol used between a key and it's label
-	-- 			group = "+", -- symbol prepended to a group
-	-- 		},
-	-- 		popup_mappings = {
-	-- 			scroll_down = "<c-d>", -- binding to scroll down inside the popup
-	-- 			scroll_up = "<c-u>", -- binding to scroll up inside the popup
-	-- 		},
-	-- 		window = {
-	-- 			border = "none", -- none, single, double, shadow
-	-- 			position = "bottom", -- bottom, top
-	-- 			margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-	-- 			padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-	-- 			winblend = 0,
-	-- 		},
-	-- 		layout = {
-	-- 			height = { min = 4, max = 25 }, -- min and max height of the columns
-	-- 			width = { min = 20, max = 50 }, -- min and max width of the columns
-	-- 			spacing = 3, -- spacing between columns
-	-- 			align = "left", -- align columns left, center or right
-	-- 		},
-	-- 		ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-	-- 		hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-	-- 		show_help = true, -- show help message on the command line when the popup is visible
-	-- 		triggers = "auto", -- automatically setup triggers
-	-- 		-- triggers = {"<leader>"} -- or specify a list manually
-	-- 		triggers_blacklist = {
-	-- 			i = { "j", "k" },
-	-- 			v = { "j", "k" },
-	-- 		},
-	-- 	},
-	-- },
-	-- {
-	-- 	"RRethy/vim-illuminate",
-	-- 	config = function()
-	-- 		require("illuminate").configure({
-	-- 			delay = 0,
-	-- 			under_cursor = false,
-	-- 			large_file_cutoff = 3000,
-	-- 		})
-	-- 		require("illuminate").toggle()
-	-- 		vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#4B4B4B" })
-	-- 	end,
-	-- 	keys = {
-	-- 		{ "yor", '<cmd>lua require("illuminate").toggle()<cr>' },
-	-- 		{ "]r", '<cmd>lua require("illuminate").goto_next_reference(wrap)<cr>' },
-	-- 		{ "[r", '<cmd>lua require("illuminate").goto_prev_reference(wrap)<cr>' },
-	-- 	},
-	-- },
-	{
-		"lambdalisue/suda.vim",
-		cmd = { "SudaRead", "SudaWrite" },
+		lazy = false,
 	},
 	{
 		"kevinhwang91/nvim-fundo",

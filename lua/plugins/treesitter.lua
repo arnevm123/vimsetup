@@ -1,6 +1,8 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	dependencies = {
+		"andymass/vim-matchup",
+		"windwp/nvim-ts-autotag",
 		"nvim-treesitter/nvim-treesitter-context",
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		"nvim-lua/plenary.nvim",
@@ -13,14 +15,30 @@ return {
 		end
 
 		configs.setup({
+			modules = {},
+			sync_install = false,
+			auto_install = true,
 			ensure_installed = "all", -- one of "all" or a list of languages
-			ignore_install = { }, -- List of parsers to ignore installing
+			ignore_install = {}, -- List of parsers to ignore installing
 			highlight = {
 				enable = true, -- false will disable the whole extension
-				disable = { "" }, -- list of language that will be disabled
+				disable = function(_, buf)
+					local max_filesize = 100 * 1024 -- 100 KB
+					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+					if ok and stats and stats.size > max_filesize then
+						return true
+					end
+				end,
 			},
 			autopairs = {
 				enable = true,
+			},
+			autotag = {
+				enable = true,
+			},
+			matchup = {
+				enable = true,
+				disable_virtual_text = true,
 			},
 			indent = { enable = true, disable = { "css" } },
 			incremental_selection = {

@@ -2,6 +2,7 @@ local servers = {
 	"angularls",
 	"ansiblels",
 	"bashls",
+	"csharp_ls",
 	"cssls",
 	"eslint",
 	"gopls",

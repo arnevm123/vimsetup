@@ -2,7 +2,7 @@ return {
 	{
 		"TimUntersberger/neogit",
 		cmd = { "Neogit", "DiffviewOpen" },
-		dependencies = "sindrets/diffview.nvim",
+		dependencies = { "sindrets/diffview.nvim", opts = { use_icons = false } },
 		keys = {
 			{ "<leader>gg", ":Neogit<CR>", desc = "open Neogit" },
 			{ "<leader>GG", ":DiffviewOpen master<CR>", desc = "open diff with master" },

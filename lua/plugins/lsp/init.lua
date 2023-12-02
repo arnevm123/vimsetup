@@ -9,20 +9,21 @@ return {
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-cmdline",
 		-- Snippets
+		"saadparwaiz1/cmp_luasnip",
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
-		-- for formatters and linters
-		-- "jose-elias-alvarez/null-ls.nvim",
 		{
 			"stevearc/conform.nvim",
 			opts = {
 				formatters = {
 					goimports_reviser = {
 						command = "goimports-reviser",
-						args = { "-project-name", "unmatched.eu", "$FILENAME" },
+						args = { "-rm-unused", "-project-name", "unmatched.eu", "$FILENAME" },
 						stdin = false,
 					},
+					gofumpt = { prepend_args = { "-extra" } },
 				},
 				formatters_by_ft = {
 					lua = { "stylua" },
@@ -30,11 +31,12 @@ return {
 					javascript = { { "prettierd", "prettier" } },
 					typescript = { { "prettierd", "prettier" } },
 					go = { "gofumpt", "goimports_reviser" },
+					sh = { "shfmt" },
 					["_"] = { "trim_whitespace" },
 				},
 			},
 		},
-		-- { "folke/neodev.nvim", config = true },
+		{ "folke/neodev.nvim", config = true },
 		{
 			"pmizio/typescript-tools.nvim",
 			config = function()
@@ -49,7 +51,8 @@ return {
 					ignore_done_already = true,
 					display = {
 						done_icon = "",
-						progress_style = "Constant",
+						done_style = "Comment",
+						progress_style = "Comment",
 						format_message = function(msg)
 							local message = msg.message
 							if not message then

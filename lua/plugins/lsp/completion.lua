@@ -3,17 +3,15 @@ if not cmp_status_ok then
 	return
 end
 
-local snip_status_ok, luasnip = pcall(require, "luasnip")
+local snip_status_ok, ls = pcall(require, "luasnip")
 if not snip_status_ok then
 	return
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
-
 cmp.setup({
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body) -- For `luasnip` users.
+			ls.lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
 
@@ -23,15 +21,21 @@ cmp.setup({
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-e>"] = cmp.mapping.abort(),
-		["<C-w>"] = cmp.mapping.close(),
-		["<c-y>"] = cmp.mapping(
+		["<C-q>"] = cmp.mapping(
 			cmp.mapping.confirm({
 				behavior = cmp.ConfirmBehavior.Insert,
 				select = true,
 			}),
 			{ "i", "c" }
 		),
-		["<c-x>"] = cmp.mapping({
+		["<c-y>"] = cmp.mapping(
+			cmp.mapping.confirm({
+				behavior = cmp.ConfirmBehavior.Replace,
+				select = true,
+			}),
+			{ "i", "c" }
+		),
+		["<c-space>"] = cmp.mapping({
 			i = cmp.mapping.complete(),
 			c = function(
 				_ --[[fallback]]
@@ -54,7 +58,6 @@ cmp.setup({
 		format = function(entry, vim_item)
 			vim_item.menu = ({
 				nvim_lsp = "LSP",
-				codeium = "AI",
 				nvim_lua = "Nvim",
 				luasnip = "Snip",
 				buffer = "Buf",
@@ -65,7 +68,6 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
-		{ name = "codeium" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "buffer" },
@@ -89,3 +91,50 @@ cmp.setup.cmdline({ "/", "?" }, {
 	sources = { { name = "buffer" } },
 	view = { entries = { name = "wildmenu", separator = "|" } },
 })
+
+-- snippets:
+ls.config.set_config({
+	-- This tells LuaSnip to remember to keep around the last snippet.
+	-- You can jump back into it even if you move outside of the selection
+	history = false,
+
+	-- This one is cool cause if you have dynamic snippets, it updates as you type!
+	updateevents = "TextChanged,TextChangedI",
+
+	-- Autosnippets:
+	enable_autosnippets = true,
+
+	-- Crazy highlights!!
+	-- #vid3
+	-- ext_opts = nil,
+})
+
+-- <c-k> is my expansion key
+-- this will expand the current item or jump to the next item within the snippet.
+vim.keymap.set({ "i", "s" }, "<c-k>", function()
+	if ls.expand_or_jumpable() then
+		ls.expand_or_jump()
+	end
+end, { silent = true })
+
+-- <c-j> is my jump backwards key.
+-- this always moves to the previous item within the snippet
+vim.keymap.set({ "i", "s" }, "<c-j>", function()
+	if ls.jumpable(-1) then
+		ls.jump(-1)
+	end
+end, { silent = true })
+
+-- <c-l> is selecting within a list of options.
+-- This is useful for choice nodes (introduced in the forthcoming episode 2)
+vim.keymap.set("i", "<c-l>", function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
+end)
+
+vim.keymap.set("i", "<c-u>", require("luasnip.extras.select_choice"))
+
+for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/plugins/snip/ft/*.lua", true)) do
+  loadfile(ft_path)()
+end

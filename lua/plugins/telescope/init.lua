@@ -5,6 +5,7 @@ return {
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"AckslD/nvim-neoclip.lua",
 		"nvim-lua/plenary.nvim",
+		"freestingo/telescope-changed-files",
 		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
 		{ "kkharji/sqlite.lua", module = "sqlite" },
 	},
@@ -12,7 +13,9 @@ return {
 	event = "VeryLazy",
 	keys = {
 		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
-		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
+		-- { "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
+		{ "<leader>fc", ":Telescope advanced_git_search changed_on_branch<CR>", desc = "Telescope diff branched" },
+		{ "<leader>fg", ":Telescope git_branches<CR>", desc = "Telescope branches" },
 		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
 		{ "<leader>fl", ":Telescope resume<cr>", desc = "Telescope resume" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
@@ -107,8 +110,11 @@ return {
 		telescope.load_extension("live_grep_args")
 		telescope.load_extension("advanced_git_search")
 		telescope.load_extension("grey")
+		telescope.load_extension("changed_files")
+
 		local actions = require("telescope.actions")
 		local lga_actions = require("telescope-live-grep-args.actions")
+		local cf_actions = telescope.extensions.changed_files.actions
 		telescope.setup({
 			defaults = {
 				prompt_prefix = "",
@@ -120,8 +126,8 @@ return {
 					prompt_position = "top",
 
 					-- You can adjust these settings to your liking.
-					width = 0.6,
-					height = 0.5,
+					width = 0.8,
+					height = 0.8,
 					preview_width = 0.6,
 					vertical = {
 						mirror = true,
@@ -200,6 +206,16 @@ return {
 				},
 			},
 			pickers = {
+				git_branches = {
+					mappings = {
+						i = {
+							["<C-f>"] = cf_actions.find_changed_files,
+						},
+						n = {
+							["<C-f>"] = cf_actions.find_changed_files,
+						},
+					},
+				},
 				oldfiles = {
 					cwd_only = true,
 				},

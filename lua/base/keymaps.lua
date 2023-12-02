@@ -24,7 +24,9 @@ keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
 keymap("x", ".", ":norm .<CR>", nosilent)
 keymap("x", "Q", ":norm @q<CR>", nosilent)
-keymap("n", "Q", "@q", nosilent)
+keymap("n", "Q", "q", nosilent)
+keymap("n", "q", "<nop>", nosilent)
+keymap("n", "<leader>q", "@q", nosilent)
 
 keymap("x", "*", '"ry/\\V<C-r>r<CR>', nosilent)
 keymap("x", "#", '"ry?\\V<C-r>r<CR>', nosilent)
@@ -78,6 +80,8 @@ keymap("v", "<leader>re", '"hy:%s#<C-r>h#<C-r>h#gc<left><left><left>', nosilent)
 keymap("n", "<leader>re", ":%s/<C-r><C-w>/<C-r><C-w>/gcI<Left><Left><Left><Left>", nosilent)
 
 keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
+keymap("n", "<leader>bu", ":wa<CR>:Make<CR>", nosilent)
+keymap("n", "<leader>bi", ":wa<CR>:Dispatch<CR>", nosilent)
 
 keymap("n", "<leader>lv", ":lua vim.diagnostic.config({virtual_text = false})<CR>")
 keymap("n", "<leader>LV", ":lua vim.diagnostic.config({virtual_text = true})<CR>")
