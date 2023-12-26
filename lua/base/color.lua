@@ -7,9 +7,9 @@ function M.Setup(color)
 	end
 	vim.cmd.colorscheme(color)
 
-	vim.api.nvim_set_hl(0, "@Keyword.sql", {})
-	vim.api.nvim_set_hl(0, "@Operator.sql", {})
-	vim.api.nvim_set_hl(0, "@Comment.sql", {})
+	-- vim.api.nvim_set_hl(0, "@Keyword.sql", {})
+	-- vim.api.nvim_set_hl(0, "@Operator.sql", {})
+	-- vim.api.nvim_set_hl(0, "@Comment.sql", {})
 
 	if color == "mellifluous" then
 		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })

@@ -229,4 +229,41 @@ return {
 			vim.fn["mkdp#util#install"]()
 		end,
 	},
+	{
+		"ThePrimeagen/refactoring.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		event = "BufEnter",
+		config = function()
+			require("refactoring").setup({})
+		end,
+		keys = {
+			{
+				"<leader>rr",
+				function()
+					require("telescope").extensions.refactoring.refactors()
+				end,
+				mode = { "n", "x" },
+                desc = "refactor",
+			},
+			{
+				"<leader>rp",
+				function()
+					require("refactoring").debug.print_var({})
+				end,
+				mode = { "x", "n" },
+                desc = "refactor print",
+			},
+			{
+				"<leader>rc",
+				function()
+					require("refactoring").debug.cleanup({})
+				end,
+				mode = { "x", "n" },
+                desc = "refactor cleanup",
+			},
+		},
+	},
 }
