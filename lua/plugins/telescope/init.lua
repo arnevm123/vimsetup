@@ -6,6 +6,7 @@ return {
 		"AckslD/nvim-neoclip.lua",
 		"nvim-lua/plenary.nvim",
 		"freestingo/telescope-changed-files",
+		"nvim-telescope/telescope-frecency.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
 		{ "kkharji/sqlite.lua", module = "sqlite" },
 	},
@@ -16,7 +17,7 @@ return {
 		-- { "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fc", ":Telescope advanced_git_search changed_on_branch<CR>", desc = "Telescope diff branched" },
 		{ "<leader>fg", ":Telescope git_branches<CR>", desc = "Telescope branches" },
-		{ "<leader>fr", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
+		{ "<leader>fo", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
 		{ "<leader>fl", ":Telescope resume<cr>", desc = "Telescope resume" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
@@ -28,6 +29,18 @@ return {
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
+		{
+			"<leader>fr",
+			function()
+				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+				if vim.v.shell_error == 0 then
+					require("telescope").extensions.frecency.frecency({ cwd = root, workspace = "CWD" })
+				else
+					require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
+				end
+			end,
+			desc = "Telescope live grep",
+		},
 		{
 			"<leader>fp",
 			function()

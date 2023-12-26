@@ -7,8 +7,9 @@ function M.Setup(color)
 	end
 	vim.cmd.colorscheme(color)
 
-	vim.cmd("highlight link @Keyword.sql variable")
-	vim.cmd("highlight link @operator.sql variable")
+	vim.api.nvim_set_hl(0, "@Keyword.sql", {})
+	vim.api.nvim_set_hl(0, "@Operator.sql", {})
+	vim.api.nvim_set_hl(0, "@Comment.sql", {})
 
 	if color == "mellifluous" then
 		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
@@ -19,6 +20,8 @@ function M.Setup(color)
 
 	if color == "rose-pine" then
 		vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
+		vim.api.nvim_set_hl(0, "@parameter", { link = "@variable" })
+		vim.api.nvim_set_hl(0, "String", { link = "@method" })
 		-- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
 	end
 
@@ -32,7 +35,7 @@ function M.Setup(color)
 		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })
 		vim.api.nvim_set_hl(0, "Search", { bg = "#4B4B4B" })
 		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
-		vim.cmd("highlight link netrwDir DiagnosticVirtualTextInfo")
+		vim.api.nvim_set_hl(0, "netrwDir", { link = "DiagnosticVirtualTextInfo" })
 	end
 end
 

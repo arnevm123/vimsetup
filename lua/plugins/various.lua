@@ -12,13 +12,6 @@ return {
 	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
 	{ "arnevm123/unimpaired.nvim", config = true, keys = { "[", "]", "yo" } },
 	{
-		"tpope/vim-rsi",
-		event = "BufEnter",
-		config = function()
-			vim.g.rsi_no_meta = 1
-		end,
-	},
-	{
 		"akinsho/git-conflict.nvim",
 		version = "*",
 		config = {
@@ -81,30 +74,82 @@ return {
 	},
 	{
 		"ThePrimeagen/harpoon",
-		opts = {
-			save_on_toggle = false,
-			save_on_change = true,
-			enter_on_sendcmd = true,
-			tmux_autoclose_windows = false,
-			excluded_filetypes = { "harpoon" },
-			mark_branch = true,
-		},
+		config = function()
+			require("harpoon"):setup({
+				settings = {
+					key = function()
+						local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+						local branch = string.gsub(vim.fn.system("git rev-parse --abbrev-ref HEAD"), "\n", "")
+						if vim.v.shell_error == 0 then
+							return branch .. "-" .. root
+						end
+						return vim.loop.cwd()
+					end,
+				},
+				default = {
+					get_root_dir = function()
+						local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+						if vim.v.shell_error == 0 then
+							return root
+						end
+						return vim.loop.cwd()
+					end,
+					create_list_item = function(config, short_path)
+						local root = config.get_root_dir()
+						local buf_path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+						if short_path then
+							buf_path = "."
+							local prefix = "..."
+							local isShortened = string.sub(short_path, 1, #prefix) == prefix
+							if not isShortened then
+								buf_path = root .. "/" .. short_path
+							else
+								local searchPath = string.gsub(short_path, "^" .. prefix, "*")
+								local command = "find " .. root .. " -path " .. searchPath
+								local handle = io.popen(command)
+								if handle ~= nil then
+									local result = handle:read("*l")
+									handle:close()
+									if result then
+										buf_path = result
+									end
+								end
+							end
+						end
+						short_path = require("plenary.path"):new(buf_path):normalize(root)
+						local bufnr = vim.fn.bufnr(short_path, false)
+						local pos = { 1, 0 }
+						if bufnr ~= -1 then
+							pos = vim.api.nvim_win_get_cursor(0)
+						end
+						return {
+							value = buf_path,
+							context = { row = pos[1], col = pos[2], name = short_path },
+						}
+					end,
+					display = function(item)
+						local t = {}
+						local str = item.context.name
+						for s in string.gmatch(str, "([^" .. "/" .. "]+)") do
+							table.insert(t, s)
+						end
+						if #t <= 5 then
+							return str
+						end
+						return ".../" .. t[#t - 3] .. "/" .. t[#t - 2] .. "/" .. t[#t - 1] .. "/" .. t[#t]
+					end,
+				},
+			})
+		end,
 		event = "BufEnter",
 		--stylua: ignore
 		keys = {
-			{ "<leader>a", function() require("harpoon.mark").add_file() end, desc = "harpoon add file" },
-			{
-				"<leader>A",
-				function()
-					require("harpoon.ui").toggle_quick_menu()
-					vim.cmd.norm("$ze")
-				end,
-				desc = "harpoon quick menu",
-			},
-			{ "<C-h>", function() require("harpoon.ui").nav_file(1) end, desc = "harpoon file 1" },
-			{ "<C-j>", function() require("harpoon.ui").nav_file(2) end, desc = "harpoon file 2" },
-			{ "<C-k>", function() require("harpoon.ui").nav_file(3) end, desc = "harpoon file 3" },
-			{ "<C-l>", function() require("harpoon.ui").nav_file(4) end, desc = "harpoon file 4" },
+            { "<leader>a", function() require("harpoon"):list():append() end, desc = "harpoon add file" },
+            { "<C-e>", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "harpoon quick menu" },
+            { "<C-h>", function() require("harpoon"):list():select(1) end, desc = "harpoon file 1" },
+            { "<C-t>", function() require("harpoon"):list():select(2) end, desc = "harpoon file 2" },
+            { "<C-n>", function() require("harpoon"):list():select(3) end, desc = "harpoon file 3" },
+            { "<C-s>", function() require("harpoon"):list():select(4) end, desc = "harpoon file 4" },
 		},
 	},
 	{
