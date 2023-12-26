@@ -58,9 +58,20 @@ return {
 	},
 	{
 		"Everduin94/nvim-quick-switcher",
-		--stylua: ignore
+        -- stylua: ignore
 		keys = {
 			{ "<leader>os", function() require("nvim-quick-switcher").find(".service.ts") end, desc = "Go to service" },
+			{ "<leader>ot", function()
+                local toggle_test = function (p)
+                    local path = p.path .. "/";
+                    local file_name = p.prefix;
+                    if string.find(file_name, "test") == nil then
+                        return  path .. file_name .. "*test.*"
+                    end
+                    return path .. string.gsub(file_name, "(_?)test", "") .. "*"
+                end
+                require('nvim-quick-switcher').find_by_fn(toggle_test)
+            end, desc = "Go to service" },
 			{ "<leader>ou", function() require("nvim-quick-switcher").find(".component.ts") end, desc = "Go to TS" },
 			{ "<leader>oo", function() require("nvim-quick-switcher").find(".component.html") end, desc = "Go to html" },
 			{ "<leader>op", function() require("nvim-quick-switcher").find(".module.ts") end, desc = "Go to module" },
@@ -236,17 +247,19 @@ return {
 			"nvim-treesitter/nvim-treesitter",
 		},
 		event = "BufEnter",
-		config = function()
-			require("refactoring").setup({})
-		end,
+		opts = {
+			print_var_statements = {
+				go = { 'fmt.Printf("%s %%v", %s)' },
+			},
+		},
 		keys = {
 			{
 				"<leader>rr",
 				function()
-					require("telescope").extensions.refactoring.refactors()
+					require("refactoring").select_refactor({})
 				end,
 				mode = { "n", "x" },
-                desc = "refactor",
+				desc = "refactor",
 			},
 			{
 				"<leader>rp",
@@ -254,7 +267,7 @@ return {
 					require("refactoring").debug.print_var({})
 				end,
 				mode = { "x", "n" },
-                desc = "refactor print",
+				desc = "refactor print",
 			},
 			{
 				"<leader>rc",
@@ -262,7 +275,7 @@ return {
 					require("refactoring").debug.cleanup({})
 				end,
 				mode = { "x", "n" },
-                desc = "refactor cleanup",
+				desc = "refactor cleanup",
 			},
 		},
 	},
