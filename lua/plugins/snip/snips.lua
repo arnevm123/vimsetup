@@ -99,7 +99,7 @@ local function transform(text, info)
 	return ls.t(text)
 end
 
-local get_node_text = require("go.utils").get_node_text
+local get_node_text = vim.treesitter.get_node_text
 
 local handlers = {
 	parameter_list = function(node, info)
@@ -172,7 +172,21 @@ local function return_value_nodes(info)
 	return ls.t({ "" })
 end
 
-local is_in_function = require("go.ts.go").in_func()
+local function is_in_function()
+  local current_node = ts_utils.get_node_at_cursor()
+  if not current_node then
+    return false
+  end
+  local expr = current_node
+
+  while expr do
+    if expr:type() == 'function_declaration' or expr:type() == 'method_declaration' then
+      return true
+    end
+    expr = expr:parent()
+  end
+  return false
+end
 
 ---Transforms the given arguments into nodes wrapped in a snippet node.
 M.make_return_nodes = function(args)
@@ -190,11 +204,6 @@ M.fill_return = function()
 	local info = { index = 0, err_name = "nil" }
 	return ls.sn(nil, return_value_nodes(info))
 end
-
----Runs the command in shell.
--- @param command string
--- @return table
-M.shell = require("go.utils").run_command
 
 M.last_lua_module_section = function(args)
 	local text = args[1][1] or ""

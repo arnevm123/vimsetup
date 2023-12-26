@@ -73,6 +73,20 @@ return {
 		},
 	},
 	{
+		"johmsalas/text-case.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+		config = function()
+			require("textcase").setup({
+				substitude_command_name = "S",
+			})
+			require("telescope").load_extension("textcase")
+		end,
+		keys = {
+			{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" } },
+			{ "gae", "<cmd>TextCaseStartReplacingCommand<CR>", mode = { "n", "v" } },
+		},
+	},
+	{
 		"ThePrimeagen/harpoon",
 		config = function()
 			require("harpoon"):setup({
@@ -99,13 +113,17 @@ return {
 						local buf_path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
 						if short_path then
 							buf_path = "."
-							local prefix = "..."
-							local isShortened = string.sub(short_path, 1, #prefix) == prefix
-							if not isShortened then
+							if vim.fn.filereadable(root .. "/" .. short_path) == 1 then
 								buf_path = root .. "/" .. short_path
 							else
-								local searchPath = string.gsub(short_path, "^" .. prefix, "*")
-								local command = "find " .. root .. " -path " .. searchPath
+								local prefix = "..."
+								local isShortened = string.sub(short_path, 1, #prefix) == prefix
+								if isShortened then
+									short_path = string.sub(short_path, #prefix + 1)
+								end
+								local search_path =
+									string.gsub(short_path, "^%.{3}", ""):gsub("/", ".*"):gsub(" ", ".*")
+								local command = "fd -p " .. search_path .. " " .. root
 								local handle = io.popen(command)
 								if handle ~= nil then
 									local result = handle:read("*l")
@@ -145,10 +163,10 @@ return {
 		--stylua: ignore
 		keys = {
             { "<leader>a", function() require("harpoon"):list():append() end, desc = "harpoon add file" },
-            { "<C-e>", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "harpoon quick menu" },
+            { "<leader>A", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "harpoon quick menu" },
             { "<C-h>", function() require("harpoon"):list():select(1) end, desc = "harpoon file 1" },
-            { "<C-t>", function() require("harpoon"):list():select(2) end, desc = "harpoon file 2" },
-            { "<C-n>", function() require("harpoon"):list():select(3) end, desc = "harpoon file 3" },
+            { "<C-j>", function() require("harpoon"):list():select(2) end, desc = "harpoon file 2" },
+            { "<C-k>", function() require("harpoon"):list():select(3) end, desc = "harpoon file 3" },
             { "<C-s>", function() require("harpoon"):list():select(4) end, desc = "harpoon file 4" },
 		},
 	},
@@ -190,5 +208,25 @@ return {
 			require("fundo").setup()
 		end,
 		lazy = false,
+	},
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		config = function()
+			vim.cmd([[
+              function OpenMarkdownPreview (url)
+                if system('pgrep firefox') > 0
+                  execute "silent ! firefox --new-window " . a:url
+                else
+                  execute "silent ! firefox & firefox " . a:url
+                endif
+              endfunction
+              let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+            ]])
+		end,
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
 	},
 }
