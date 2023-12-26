@@ -54,6 +54,7 @@ return {
 					suppress_on_insert = true,
 					ignore_done_already = true,
 					display = {
+						done_ttl = 1,
 						done_icon = "",
 						done_style = "Comment",
 						progress_style = "Comment",
