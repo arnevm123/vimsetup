@@ -15,6 +15,10 @@ return {
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
 		{
+			"aznhe21/actions-preview.nvim",
+			opts = { diff = { ctxlen = 5 }, backend = { "nui" } },
+		},
+		{
 			"stevearc/conform.nvim",
 			opts = {
 				formatters = {
@@ -71,7 +75,13 @@ return {
 		},
 	},
 	keys = {
-		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
+		{
+			"<leader>la",
+			":lua require('actions-preview').code_actions()<CR>",
+			desc = "lsp Code Action",
+			mode = { "v", "n" },
+		},
+		-- { "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<cr>", desc = "lsp workspace diagnostics" },
 		{

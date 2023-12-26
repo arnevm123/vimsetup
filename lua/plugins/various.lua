@@ -58,27 +58,45 @@ return {
 	},
 	{
 		"Everduin94/nvim-quick-switcher",
-        -- stylua: ignore
 		keys = {
+        -- stylua: ignore
 			{ "<leader>os", function() require("nvim-quick-switcher").find(".service.ts") end, desc = "Go to service" },
-			{ "<leader>ot", function()
-                local toggle_test = function (p)
-                    local path = p.path .. "/";
-                    local file_name = p.prefix;
-                    if string.find(file_name, "test") == nil then
-                        return  path .. file_name .. "*test.*"
-                    end
-                    return path .. string.gsub(file_name, "(_?)test", "") .. "*"
-                end
-                require('nvim-quick-switcher').find_by_fn(toggle_test)
-            end, desc = "Go to service" },
+        -- stylua: ignore
 			{ "<leader>ou", function() require("nvim-quick-switcher").find(".component.ts") end, desc = "Go to TS" },
+        -- stylua: ignore
 			{ "<leader>oo", function() require("nvim-quick-switcher").find(".component.html") end, desc = "Go to html" },
+        -- stylua: ignore
 			{ "<leader>op", function() require("nvim-quick-switcher").find(".module.ts") end, desc = "Go to module" },
+        -- stylua: ignore
 			{ "<leader>ol", function() require("nvim-quick-switcher").find("*util.*") end, desc = "Go to util" },
 			{
+				"<leader>ot",
+				function()
+					local toggle_test = function(p)
+						local extension = p.file_type
+						local path = p.path .. "/"
+						local file_name = p.full_prefix
+						if extension == "go" then
+							if string.find(file_name, "test") ~= nil then
+								return path .. string.gsub(file_name, "_test", "") .. "." .. extension
+							end
+							local test_path = path .. file_name .. "_test." .. extension
+							if not io.open(test_path, "r") then
+								io.open(test_path, "w"):close()
+							end
+							return test_path
+						end
+						return path .. file_name
+					end
+					require("nvim-quick-switcher").find_by_fn(toggle_test)
+				end,
+				desc = "Go to service",
+			},
+			{
 				"<leader>oi",
-				function() require("nvim-quick-switcher").find(".+css|.+scss|.+sass", { regex = true, prefix = "full" }) end,
+				function()
+					require("nvim-quick-switcher").find(".+css|.+scss|.+sass", { regex = true, prefix = "full" })
+				end,
 				desc = "Go to stylesheet",
 			},
 		},
@@ -93,12 +111,13 @@ return {
 			require("telescope").load_extension("textcase")
 		end,
 		keys = {
+			{ "ga" },
 			{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" } },
-			{ "gae", "<cmd>TextCaseStartReplacingCommand<CR>", mode = { "n", "v" } },
 		},
 	},
 	{
 		"ThePrimeagen/harpoon",
+        branch = "harpoon2",
 		config = function()
 			require("harpoon"):setup({
 				settings = {
@@ -173,8 +192,8 @@ return {
 		event = "BufEnter",
 		--stylua: ignore
 		keys = {
-            { "<leader>a", function() require("harpoon"):list():append() end, desc = "harpoon add file" },
-            { "<leader>A", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "harpoon quick menu" },
+            { "<leader>aa", function() require("harpoon"):list():append() end, desc = "harpoon add file" },
+            { "<leader>as", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "harpoon quick menu" },
             { "<C-h>", function() require("harpoon"):list():select(1) end, desc = "harpoon file 1" },
             { "<C-j>", function() require("harpoon"):list():select(2) end, desc = "harpoon file 2" },
             { "<C-k>", function() require("harpoon"):list():select(3) end, desc = "harpoon file 3" },
@@ -277,6 +296,55 @@ return {
 				mode = { "x", "n" },
 				desc = "refactor cleanup",
 			},
+		},
+	},
+	{
+		"dzfrias/arena.nvim",
+		event = "BufWinEnter",
+		opts = {
+			max_items = 5,
+			always_context = {
+				"mod.rs",
+				"init.lua",
+			},
+			ignore_current = false,
+			buf_opts = { ["relativenumber"] = false },
+			window = { height = 15 },
+			per_project = true,
+		},
+		keys = { { "<leader>af", ":lua require('arena').toggle()<CR>", desc = "Arena" } },
+	},
+	{
+		"Wansmer/treesj",
+		keys = {
+			{ "<space>ej", ":lua require('treesj').join()<CR>", desc = "Join lines" },
+			{ "<space>ek", ":lua require('treesj').split()<CR>", desc = "Split lines" },
+		},
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		opts = { use_default_keymaps = false },
+	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		opts = {
+			key_labels = { ["<space>"] = "SPC", ["<cr>"] = "RET", ["<tab>"] = "TAB" },
+			icons = { separator = ">" },
+			triggers = { "g", "'", '"', "z" },
+			triggers_nowait = { "'", "ga", "g`", "g'", '"', "z=" },
+		},
+	},
+	{
+		"piersolenski/wtf.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+		},
+		opts = {},
+		keys = {
+			{ "gw", ":lua require('wtf').search()<CR>", desc = "Search diagnostic with Google" },
 		},
 	},
 }
