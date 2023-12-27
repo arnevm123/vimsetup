@@ -17,6 +17,7 @@ return {
 			go = { "golangcilint" },
 			typescript = { "eslint_d" },
 			sh = { "shellcheck" },
+			python = { "ruff" },
 			-- gitcommit = { "codespell" },
 			-- markdown = { "vale" },
 			-- htmldjango = { "curlylint" },

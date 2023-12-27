@@ -1,11 +1,15 @@
 local M = {}
 
 function M:git_cwd()
+	local cwd =  vim.loop.cwd()
+	if vim.fn.filereadable(cwd .. "/.venv") == 1 then
+		return cwd
+	end
 	local root = vim.fn.system("git rev-parse --show-toplevel")
 	if vim.v.shell_error == 0 and root ~= nil then
 		return string.gsub(root, "\n", "")
 	end
-	return vim.loop.cwd()
+	return cwd
 end
 
 function M:Go_to_url(cmd)

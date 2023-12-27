@@ -76,6 +76,17 @@ return {
 						local extension = p.file_type
 						local path = p.path .. "/"
 						local file_name = p.full_prefix
+						if extension == "py" then
+							if string.find(file_name, "test") ~= nil then
+								return string.gsub(path, "tests/", "") .. string.gsub(file_name, "test_", "") .. "." .. extension
+							end
+							local test_path = string.gsub(path, "src/", "src/tests/") .. "test_" .. file_name .. "." .. extension
+							print(string.gsub(path, "src/", "src/tests/") .. "test_" .. file_name .. "." .. extension)
+							if not io.open(test_path, "r") then
+								io.open(test_path, "w"):close()
+							end
+							return test_path
+						end
 						if extension == "go" then
 							if string.find(file_name, "test") ~= nil then
 								return path .. string.gsub(file_name, "_test", "") .. "." .. extension
