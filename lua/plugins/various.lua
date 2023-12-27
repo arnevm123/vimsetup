@@ -1,7 +1,7 @@
 return {
 	-- text manipulation
 	{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
-	{ "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
+	{ "tpope/vim-eunuch", cmd = { "Remove", "Delete", "Move", "Chmod", "Mkdir", "Cfind", "SudoWrite", "SudoEdit" } },
 	{ "wsdjeg/vim-fetch", lazy = false }, -- :e with line numpers
 	{ "wellle/targets.vim", event = "BufEnter" }, -- better cib
 	{ "numToStr/Comment.nvim", config = true, keys = { "gc", "gb", { "gc", mode = "x" }, { "gb", mode = "x" } } },
@@ -117,30 +117,27 @@ return {
 	},
 	{
 		"ThePrimeagen/harpoon",
-        branch = "harpoon2",
+		branch = "harpoon2",
 		config = function()
 			require("harpoon"):setup({
 				settings = {
 					key = function()
-						local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-						local branch = string.gsub(vim.fn.system("git rev-parse --abbrev-ref HEAD"), "\n", "")
-						if vim.v.shell_error == 0 then
-							return branch .. "-" .. root
+						local root = require("base.utils").git_cwd({})
+						local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD")
+						if vim.v.shell_error == 0 and branch then
+							return string.gsub(branch, "\n", "") .. "-" .. root
 						end
-						return vim.loop.cwd()
+						return root
 					end,
 				},
 				default = {
-					get_root_dir = function()
-						local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-						if vim.v.shell_error == 0 then
-							return root
-						end
-						return vim.loop.cwd()
-					end,
+					get_root_dir = require("base.utils").git_cwd,
 					create_list_item = function(config, short_path)
 						local root = config.get_root_dir()
 						local buf_path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+						if buf_path == "" then
+							buf_path = root
+						end
 						if short_path then
 							buf_path = "."
 							if vim.fn.filereadable(root .. "/" .. short_path) == 1 then
@@ -268,7 +265,7 @@ return {
 		event = "BufEnter",
 		opts = {
 			print_var_statements = {
-				go = { 'fmt.Printf("%s %%v", %s)' },
+				go = { 'fmt.Printf("%s %%v \\n", %s)' },
 			},
 		},
 		keys = {

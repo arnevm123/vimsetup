@@ -21,7 +21,7 @@ return {
 		{ "<leader>fl", ":Telescope resume<cr>", desc = "Telescope resume" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
-		{ "<leader>f;", ":Telescope neoclip<CR>", desc = "Neoclip" },
+		{ "<leader>f;", ":Telescope neoclip<CR>", mode = { "n", "v", "x" }, desc = "Neoclip" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
 		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
 		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
@@ -30,7 +30,7 @@ return {
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
 		{
-			"<leader>fp",
+			"<leader>fo",
 			function()
 				require("telescope.builtin").oldfiles({ cwd = git_cwd })
 			end,
@@ -83,7 +83,7 @@ return {
 			enable_persistent_history = true,
 			continuous_sync = true,
 			db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-			preview = false,
+			preview = true,
 			on_select = { move_to_front = true, close_telescope = true },
 			on_paste = { set_reg = true, move_to_front = true, close_telescope = true },
 			keys = { telescope = { i = { paste = "<c-y>" } } },
@@ -124,7 +124,7 @@ return {
 						prompt_position = "bottom",
 					},
 				},
-				path_display = { shorten = { len = 2, exclude = { 1, -3, -2, -1 } } },
+				path_display = { shorten = { len = 8, exclude = { -2, -1 } } },
 				mappings = {
 					i = {
 						["<C-Down>"] = actions.cycle_history_next,

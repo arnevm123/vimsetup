@@ -18,7 +18,7 @@ return {
 		"pmizio/typescript-tools.nvim",
 		{
 			"aznhe21/actions-preview.nvim",
-			-- opts = { diff = { ctxlen = 5 }, backend = { "nui" } },
+			opts = { diff = { ctxlen = 5 }, backend = { "nui" } },
 		},
 		{
 			"stevearc/conform.nvim",
