@@ -14,9 +14,11 @@ return {
 		"saadparwaiz1/cmp_luasnip",
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
+		"folke/neodev.nvim",
+		"pmizio/typescript-tools.nvim",
 		{
 			"aznhe21/actions-preview.nvim",
-			opts = { diff = { ctxlen = 5 }, backend = { "nui" } },
+			-- opts = { diff = { ctxlen = 5 }, backend = { "nui" } },
 		},
 		{
 			"stevearc/conform.nvim",
@@ -39,13 +41,6 @@ return {
 					["_"] = { "trim_whitespace" },
 				},
 			},
-		},
-		{ "folke/neodev.nvim", config = true },
-		{
-			"pmizio/typescript-tools.nvim",
-			config = function()
-				require("typescript-tools").setup({})
-			end,
 		},
 		{
 			"j-hui/fidget.nvim",
@@ -95,7 +90,6 @@ return {
 		{ "<leader>le", ":LspRestart<cr>", desc = "Restart lsp" },
 		{ "<leader>ls", ":Telescope lsp_document_symbols<cr>", desc = "lsp document symbols" },
 		{ "<leader>lS", ":Telescope lsp_dynamic_workspace_symbols<cr>", desc = "lsp workspace symbols" },
-		{ "<leader><leader>l", ":LspInfo<cr>", desc = "lsp info" },
 	},
 	config = function()
 		require("plugins.lsp.mason")

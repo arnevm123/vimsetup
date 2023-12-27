@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.opt.compatible = false
 
 vim.opt.guicursor = ""
 vim.opt.mouse = "a"
@@ -38,3 +39,4 @@ vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
 
 vim.opt.grepprg="rg --vimgrep"
+vim.cmd('set path+=**')

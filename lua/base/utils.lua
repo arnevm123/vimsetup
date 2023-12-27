@@ -1,4 +1,13 @@
 local M = {}
+
+function M:git_cwd()
+	local root = vim.fn.system("git rev-parse --show-toplevel")
+	if vim.v.shell_error == 0 and root ~= nil then
+		return string.gsub(root, "\n", "")
+	end
+	return vim.loop.cwd()
+end
+
 function M:Go_to_url(cmd)
 	local sysname = vim.loop.os_uname().sysname
 	local url = vim.fn.expand("<cfile>", nil, nil)

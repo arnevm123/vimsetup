@@ -1,3 +1,4 @@
+local git_cwd = require("base.utils").git_cwd({})
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
@@ -17,7 +18,6 @@ return {
 		-- { "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>fc", ":Telescope advanced_git_search changed_on_branch<CR>", desc = "Telescope diff branched" },
 		{ "<leader>fg", ":Telescope git_branches<CR>", desc = "Telescope branches" },
-		{ "<leader>fo", ":Telescope oldfiles<cr>", desc = "Telescope old files" },
 		{ "<leader>fl", ":Telescope resume<cr>", desc = "Telescope resume" },
 		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
 		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
@@ -30,75 +30,47 @@ return {
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
 		{
+			"<leader>fp",
+			function()
+				require("telescope.builtin").oldfiles({ cwd = git_cwd })
+			end,
+			desc = "Telescope old files",
+		},
+		{
 			"<leader>fr",
 			function()
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope").extensions.frecency.frecency({ cwd = root, workspace = "CWD" })
-				else
-					require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
-				end
+				require("telescope").extensions.frecency.frecency({ cwd = git_cwd, workspace = "CWD" })
 			end,
 			desc = "Telescope live grep",
 		},
 		{
-			"<leader>fp",
+			"<leader>fd",
 			function()
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope.builtin").find_files({ cwd = root, no_ignore = true })
-				else
-					require("telescope.builtin").find_files()
-				end
+				require("telescope.builtin").fd({ cwd = git_cwd, no_ignore = true })
 			end,
 			desc = "Telescope live grep",
 		},
 		{
 			"<leader>ff",
 			function()
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope").extensions.live_grep_args.live_grep_args({ search_dirs = { root } })
-				else
-					require("telescope").extensions.live_grep_args.live_grep_args()
-				end
+				require("telescope").extensions.live_grep_args.live_grep_args({ search_dirs = { git_cwd } })
 			end,
 			desc = "Telescope live grep",
 		},
 		{
 			"<leader>fu",
 			function()
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ search_dirs = { root } })
-				else
-					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
-				end
+				require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ search_dirs = { git_cwd } })
 			end,
 			desc = "Telescope live grep cursor word",
 		},
 		{
 			"<leader>fu",
 			function()
-				local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-				if vim.v.shell_error == 0 then
-					require("telescope-live-grep-args.shortcuts").grep_visual_selection({ search_dirs = { root } })
-				else
-					require("telescope-live-grep-args.shortcuts").grep_visual_selection()
-				end
+				require("telescope-live-grep-args.shortcuts").grep_visual_selection({ search_dirs = { git_cwd } })
 			end,
 			desc = "Telescope live grep visual selection",
 			mode = "v",
-		},
-		{
-			"<leader>fa",
-			function()
-				require("telescope.builtin").live_grep({
-					prompt_title = "find string in open buffers...",
-					grep_open_files = true,
-				})
-			end,
-			desc = "Telescope live grep open files",
 		},
 	},
 	config = function()
@@ -132,7 +104,7 @@ return {
 			defaults = {
 				prompt_prefix = "",
 				entry_prefix = " ",
-				selection_caret = " ",
+				selection_caret = "> ",
 				layout_strategy = "grey",
 				layout_config = {
 					-- The extension supports both "top" and "bottom" for the prompt.
@@ -152,7 +124,7 @@ return {
 						prompt_position = "bottom",
 					},
 				},
-				path_display = { "smart" },
+				path_display = { shorten = { len = 2, exclude = { 1, -3, -2, -1 } } },
 				mappings = {
 					i = {
 						["<C-Down>"] = actions.cycle_history_next,
