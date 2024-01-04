@@ -17,8 +17,23 @@ return {
 		"folke/neodev.nvim",
 		"pmizio/typescript-tools.nvim",
 		{
-			"aznhe21/actions-preview.nvim",
-			opts = { diff = { ctxlen = 5 }, backend = { "nui" } },
+			"folke/trouble.nvim",
+			opts = {
+				icons = false,
+				fold_open = "v",
+				fold_closed = ">",
+				indent_lines = false,
+				use_diagnostic_signs = true,
+				vim.keymap.set("n", "<leader>tt", function()
+					require("trouble").toggle("document_diagnostics")
+				end),
+				vim.keymap.set("n", "<leader>tq", function()
+					vim.diagnostic.setqflist()
+				end),
+				vim.keymap.set("n", "<leader>tw", function()
+					require("trouble").toggle("workspace_diagnostics")
+				end),
+			},
 		},
 		{
 			"stevearc/conform.nvim",
@@ -38,7 +53,8 @@ return {
 					typescript = { { "prettierd", "prettier" } },
 					go = { "gofumpt", "goimports_reviser" },
 					sh = { "shfmt" },
-					["_"] = { "trim_whitespace" },
+					yaml = { "yamlfmt" },
+					-- python = { "isort", "black" },
 				},
 			},
 		},
@@ -71,13 +87,13 @@ return {
 		},
 	},
 	keys = {
-		{
-			"<leader>la",
-			":lua require('actions-preview').code_actions()<CR>",
-			desc = "lsp Code Action",
-			mode = { "v", "n" },
-		},
-		-- { "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
+		-- {
+		-- 	"<leader>la",
+		-- 	":lua require('actions-preview').code_actions()<CR>",
+		-- 	desc = "lsp Code Action",
+		-- 	mode = { "v", "n" },
+		-- },
+		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<cr>", desc = "lsp workspace diagnostics" },
 		{
@@ -88,8 +104,6 @@ return {
 		{ "<leader>ll", ":lua vim.lsp.codelens.run()<cr>", desc = "lsp codelens" },
 		{ "<leader>lr", ":lua vim.lsp.buf.rename()<cr>", desc = "lsp rename variable" },
 		{ "<leader>le", ":LspRestart<cr>", desc = "Restart lsp" },
-		{ "<leader>ls", ":Telescope lsp_document_symbols<cr>", desc = "lsp document symbols" },
-		{ "<leader>lS", ":Telescope lsp_dynamic_workspace_symbols<cr>", desc = "lsp workspace symbols" },
 	},
 	config = function()
 		require("plugins.lsp.mason")

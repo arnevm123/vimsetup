@@ -14,6 +14,7 @@ local servers = {
 	"pyright",
 	"rust_analyzer",
 	"tsserver",
+	"yamlls"
 }
 
 local linters_and_formatters = {
@@ -28,6 +29,8 @@ local linters_and_formatters = {
 	"shellcheck",
 	"shfmt",
 	"stylua",
+	"yamlfmt",
+	"yamllint",
 }
 
 require("mason-tool-installer").setup({

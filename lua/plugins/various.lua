@@ -10,11 +10,11 @@ return {
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
-	{ "arnevm123/unimpaired.nvim", config = true, keys = { "[", "]", "yo" } },
+	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
 	{
 		"akinsho/git-conflict.nvim",
 		version = "*",
-		config = {
+		opts = {
 			default_mappings = {
 				ours = "<leader>zo",
 				theirs = "<leader>zt",
@@ -24,24 +24,24 @@ return {
 				prev = "[z",
 			},
 		},
-		lazy = false,
+		event = "VeryLazy",
 	},
-	{
-		"toppair/peek.nvim",
-		cmd = { "Peek" },
-		build = "deno task --quiet build:fast",
-		config = function()
-			require("peek").setup()
-			vim.api.nvim_create_user_command("Peek", function()
-				local peek = require("peek")
-				if peek.is_open() then
-					peek.close()
-				else
-					peek.open()
-				end
-			end, {})
-		end,
-	},
+	-- {
+	-- 	"toppair/peek.nvim",
+	-- 	cmd = { "Peek" },
+	-- 	build = "deno task --quiet build:fast",
+	-- 	config = function()
+	-- 		require("peek").setup()
+	-- 		vim.api.nvim_create_user_command("Peek", function()
+	-- 			local peek = require("peek")
+	-- 			if peek.is_open() then
+	-- 				peek.close()
+	-- 			else
+	-- 				peek.open()
+	-- 			end
+	-- 		end, {})
+	-- 	end,
+	-- },
 	{
 		"kevinhwang91/nvim-bqf",
 		dependencies = { "junegunn/fzf" },
@@ -78,9 +78,16 @@ return {
 						local file_name = p.full_prefix
 						if extension == "py" then
 							if string.find(file_name, "test") ~= nil then
-								return string.gsub(path, "tests/", "") .. string.gsub(file_name, "test_", "") .. "." .. extension
+								return string.gsub(path, "tests/", "")
+									.. string.gsub(file_name, "test_", "")
+									.. "."
+									.. extension
 							end
-							local test_path = string.gsub(path, "src/", "src/tests/") .. "test_" .. file_name .. "." .. extension
+							local test_path = string.gsub(path, "src/", "src/tests/")
+								.. "test_"
+								.. file_name
+								.. "."
+								.. extension
 							print(string.gsub(path, "src/", "src/tests/") .. "test_" .. file_name .. "." .. extension)
 							if not io.open(test_path, "r") then
 								io.open(test_path, "w"):close()
@@ -121,28 +128,27 @@ return {
 			})
 			require("telescope").load_extension("textcase")
 		end,
+		event = "VeryLazy",
 		keys = {
-			{ "ga" },
 			{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" } },
 		},
 	},
 	{
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
+		event = "VeryLazy",
 		config = function()
 			require("harpoon"):setup({
 				settings = {
 					key = function()
-						local root = require("base.utils").git_cwd({})
 						local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD")
 						if vim.v.shell_error == 0 and branch then
-							return string.gsub(branch, "\n", "") .. "-" .. root
+							return string.gsub(branch, "\n", "") .. "-" .. vim.loop.cwd()
 						end
-						return root
+						return vim.loop.cwd()
 					end,
 				},
 				default = {
-					get_root_dir = require("base.utils").git_cwd,
 					create_list_item = function(config, short_path)
 						local root = config.get_root_dir()
 						local buf_path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
@@ -183,6 +189,23 @@ return {
 							context = { row = pos[1], col = pos[2], name = short_path },
 						}
 					end,
+					BufLeave = function(arg, list)
+						local bufnr = arg.buf
+						local bufname = vim.api.nvim_buf_get_name(bufnr)
+						local item = nil
+						for _, it in ipairs(list.items) do
+							local value = it.value
+							if value == bufname then
+								item = it
+								break
+							end
+						end
+						if item then
+							local pos = vim.api.nvim_win_get_cursor(0)
+							item.context.row = pos[1]
+							item.context.col = pos[2]
+						end
+					end,
 					display = function(item)
 						local t = {}
 						local str = item.context.name
@@ -197,7 +220,6 @@ return {
 				},
 			})
 		end,
-		event = "BufEnter",
 		--stylua: ignore
 		keys = {
             { "<leader>aa", function() require("harpoon"):list():append() end, desc = "harpoon add file" },
@@ -222,23 +244,9 @@ return {
 		event = "BufReadPost",
 	},
 	{
-		"harrisoncramer/gitlab.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			enabled = true,
-		},
-		build = function()
-			require("gitlab.server").build(true)
-		end, -- Builds the Go binary
-		config = function()
-			require("gitlab").setup()
-		end,
-		lazy = false,
-	},
-	{
 		"kevinhwang91/nvim-fundo",
 		dependencies = "kevinhwang91/promise-async",
-		run = function()
+		build = function()
 			require("fundo").install()
 		end,
 		config = function()
@@ -254,11 +262,7 @@ return {
 		config = function()
 			vim.cmd([[
               function OpenMarkdownPreview (url)
-                if system('pgrep firefox') > 0
                   execute "silent ! firefox --new-window " . a:url
-                else
-                  execute "silent ! firefox & firefox " . a:url
-                endif
               endfunction
               let g:mkdp_browserfunc = 'OpenMarkdownPreview'
             ]])
@@ -316,7 +320,6 @@ return {
 				"init.lua",
 			},
 			ignore_current = false,
-			buf_opts = { ["relativenumber"] = false },
 			window = { height = 15 },
 			per_project = true,
 		},
@@ -343,16 +346,6 @@ return {
 			icons = { separator = ">" },
 			triggers = { "g", "'", '"', "z" },
 			triggers_nowait = { "'", "ga", "g`", "g'", '"', "z=" },
-		},
-	},
-	{
-		"piersolenski/wtf.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-		},
-		opts = {},
-		keys = {
-			{ "gw", ":lua require('wtf').search()<CR>", desc = "Search diagnostic with Google" },
 		},
 	},
 }

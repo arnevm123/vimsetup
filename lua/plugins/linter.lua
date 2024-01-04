@@ -2,30 +2,14 @@ return {
 	"mfussenegger/nvim-lint",
 	config = function()
 		local lint = require("lint")
-		lint.linters.golangcilint.args = {
-			"run",
-			-- "--config=~/.golangci.yaml",
-			"--out-format",
-			"json",
-			function()
-				return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
-			end,
-		}
 		lint.linters_by_ft = {
-			lua = { "selene" },
-			["yaml.ansible"] = { "ansible_lint" },
 			go = { "golangcilint" },
-			typescript = { "eslint_d" },
-			sh = { "shellcheck" },
+			lua = { "selene" },
 			python = { "ruff" },
-			-- gitcommit = { "codespell" },
-			-- markdown = { "vale" },
-			-- htmldjango = { "curlylint" },
-			-- rst = { "vale" },
-			-- java = { "codespell" },
-			-- yaml = { "yamllint" },
-			-- dockerfile = { "hadolint" },
-			-- ghaction = { "actionlint" },
+			sh = { "shellcheck" },
+			typescript = { "eslint_d" },
+			yaml = { "yamllint" },
+			["yaml.ansible"] = { "ansible_lint" },
 		}
 		local function fidget_linters(h)
 			local handlers = h or {}

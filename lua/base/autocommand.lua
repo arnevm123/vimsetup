@@ -1,11 +1,19 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
-
+vim.api.nvim_create_autocmd("User", {
+	pattern = "TelescopePreviewerLoaded",
+	callback = function(args)
+		if args.data.filetype ~= "help" then
+			vim.wo.number = true
+		end
+	end,
+})
 autocmd("BufEnter", {
 	callback = function()
 		vim.opt.formatoptions:remove({ "c", "o" })
+		vim.opt.number = true
+		vim.opt.relativenumber = true
 	end,
 	desc = "Disable New Line Comment",
 })
@@ -55,18 +63,6 @@ autocmd("FileType", {
 		vim.keymap.set("n", "gd", "<C-]>", { silent = true, buffer = true })
 	end,
 })
-
-vim.api.nvim_create_user_command("PrettyJson", ":%!jq '.'", {})
-vim.api.nvim_create_user_command("Day", ":pu=strftime('%d/%m/%Y %H:%M')", {})
-vim.api.nvim_create_user_command("Chmod", ":!chmod +x %", {})
-vim.api.nvim_create_user_command("Cdlf", ":cd ~/Documents/moaprplatform/platform/scripts/local-full", {})
-vim.api.nvim_create_user_command("Cdfile", ":cd %:p:h", {})
-vim.api.nvim_create_user_command("Cdbase", function()
-	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-	if vim.v.shell_error == 0 then
-		vim.api.nvim_set_current_dir(root)
-	end
-end, {})
 
 autocmd("User", {
 	pattern = "GitConflictDetected",

@@ -163,8 +163,7 @@ local function return_value_nodes(info)
 		return
 	end
 
-	local query = (vim.fn.has("nvim-0.9") == 1) and vim.treesitter.query.get("go", "LuaSnip_Result")
-	for _, node in query:iter_captures(function_node, 0) do
+	for _, node in vim.treesitter.query.get("go", "LuaSnip_Result"):iter_captures(function_node, 0) do
 		if handlers[node:type()] then
 			return handlers[node:type()](node, info)
 		end
@@ -173,19 +172,19 @@ local function return_value_nodes(info)
 end
 
 local function is_in_function()
-  local current_node = ts_utils.get_node_at_cursor()
-  if not current_node then
-    return false
-  end
-  local expr = current_node
+	local current_node = ts_utils.get_node_at_cursor()
+	if not current_node then
+		return false
+	end
+	local expr = current_node
 
-  while expr do
-    if expr:type() == 'function_declaration' or expr:type() == 'method_declaration' then
-      return true
-    end
-    expr = expr:parent()
-  end
-  return false
+	while expr do
+		if expr:type() == "function_declaration" or expr:type() == "method_declaration" then
+			return true
+		end
+		expr = expr:parent()
+	end
+	return false
 end
 
 ---Transforms the given arguments into nodes wrapped in a snippet node.

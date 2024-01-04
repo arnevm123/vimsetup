@@ -455,6 +455,17 @@ if !reflect.DeepEqual({}, {}) {{
       partial(vim.fn.expand, "%:t:r"),
     })
   ),
+
+  ls.s(
+    { trig = "ctx", name = "context", dscr = "ctx context.Context" },
+	fmt("context.Context", {})
+  ),
+
+  ls.s(
+    { trig = "ctb", name = "context", dscr = "ctx := context.Background()" },
+	fmt("ctx := context.Background()", {})
+  ),
+
 }
 
 ls.add_snippets("go", snippets)

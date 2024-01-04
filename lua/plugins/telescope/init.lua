@@ -1,4 +1,3 @@
-local git_cwd = require("base.utils").git_cwd({})
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
@@ -29,45 +28,46 @@ return {
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
 		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
-		{
-			"<leader>fo",
-			function()
-				require("telescope.builtin").oldfiles({ cwd = git_cwd })
-			end,
-			desc = "Telescope old files",
-		},
+		{ "<leader>fo", ":Telescope oldfiles<CR>", desc = "Telescope old files" },
 		{
 			"<leader>fr",
 			function()
-				require("telescope").extensions.frecency.frecency({ cwd = git_cwd, workspace = "CWD" })
+				require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
 			end,
 			desc = "Telescope live grep",
 		},
 		{
 			"<leader>fd",
 			function()
-				require("telescope.builtin").fd({ cwd = git_cwd, no_ignore = true })
+				require("telescope.builtin").fd({ no_ignore = true })
 			end,
 			desc = "Telescope live grep",
 		},
 		{
+			"<leader>FF",
+			function()
+				require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
+			end,
+			desc = "Telescope grep",
+		},
+		{
 			"<leader>ff",
 			function()
-				require("telescope").extensions.live_grep_args.live_grep_args({ search_dirs = { git_cwd } })
+				require("telescope").extensions.live_grep_args.live_grep_args({})
 			end,
 			desc = "Telescope live grep",
 		},
 		{
 			"<leader>fu",
 			function()
-				require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ search_dirs = { git_cwd } })
+				require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({})
 			end,
 			desc = "Telescope live grep cursor word",
 		},
 		{
 			"<leader>fu",
 			function()
-				require("telescope-live-grep-args.shortcuts").grep_visual_selection({ search_dirs = { git_cwd } })
+				require("telescope-live-grep-args.shortcuts").grep_visual_selection({})
 			end,
 			desc = "Telescope live grep visual selection",
 			mode = "v",
@@ -124,7 +124,7 @@ return {
 						prompt_position = "bottom",
 					},
 				},
-				path_display = { shorten = { len = 8, exclude = { -2, -1 } } },
+				path_display = { shorten = { len = 5, exclude = { 1, -3, -2, -1 } } },
 				mappings = {
 					i = {
 						["<C-Down>"] = actions.cycle_history_next,

@@ -6,10 +6,15 @@ return {
 		"nvim-treesitter/nvim-treesitter-context",
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		"nvim-lua/plenary.nvim",
+		"danymat/neogen",
 	},
 	event = "VeryLazy",
+	keymaps = {},
 	config = function()
+		require("neogen").setup({ snippet_engine = "luasnip" })
 		local status_ok, configs = pcall(require, "nvim-treesitter.configs")
+		vim.keymap.set("n", "<Leader>nf", ':lua require("neogen").generate({ type = "func"})<CR>')
+		vim.keymap.set("n", "<Leader>nt", ':lua require("neogen").generate({ type = "type"})<CR>')
 		if not status_ok then
 			return
 		end

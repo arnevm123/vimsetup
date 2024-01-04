@@ -1,7 +1,7 @@
 return {
 	"olexsmir/gopher.nvim",
 	ft = { "go", "gomod" },
-	develop = true,
+	dev = true,
 	opts = {
 		gotests = {
 			template = "testify",

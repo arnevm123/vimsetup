@@ -24,9 +24,7 @@ keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
 keymap("x", ".", ":norm .<CR>", nosilent)
 keymap("x", "Q", ":norm @q<CR>", nosilent)
-keymap("n", "Q", "q", nosilent)
-keymap("n", "q", "<nop>", nosilent)
-keymap("n", "<leader>q", "@q", nosilent)
+keymap("n", "Q", "@q", nosilent)
 
 keymap("x", "*", '"ry/\\V<C-r>r<CR>', nosilent)
 keymap("x", "#", '"ry?\\V<C-r>r<CR>', nosilent)
@@ -35,6 +33,9 @@ keymap("x", "<leader>/", "<Esc>/\\%V", nosilent)
 keymap("n", "dd", utils.Smart_dd, expr)
 keymap("n", "gx", utils.Go_to_url, opts)
 keymap("n", "yoq", utils.CToggle, opts)
+keymap("n", "gw", utils.search_diagnostics, opts)
+keymap("x", "gw", utils.search_diagnostics, opts)
+keymap("v", "gw", utils.search_diagnostics, opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -43,6 +44,7 @@ keymap("v", ">", ">gv", opts)
 
 -- Clear highlights with esc
 keymap("n", "<esc>", ":noh<CR><esc>", opts)
+keymap("n", "<C-l>", ":noh<CR><C-l>", opts)
 keymap("n", "[c", ":diffget //2<CR>", opts)
 keymap("n", "]c", ":diffget //3<CR>", opts)
 keymap("n", "<Leader>xp", ":call setreg('+', getreg('@'))<CR>", opts)

@@ -1,8 +1,8 @@
 local M = {}
 
 function M:git_cwd()
-	local cwd =  vim.loop.cwd()
-	if vim.fn.filereadable(cwd .. "/.venv") == 1 then
+	local cwd = vim.loop.cwd()
+	if vim.fn.isdirectory(vim.fn.expand(cwd .. "/.venv")) == 1 then
 		return cwd
 	end
 	local root = vim.fn.system("git rev-parse --show-toplevel")
@@ -54,6 +54,30 @@ function M:CToggle()
 	if not vim.tbl_isempty(vim.fn.getqflist()) then
 		vim.cmd("copen")
 	end
+end
+
+function M:search_diagnostics()
+	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+	if #diagnostics == 0 then
+		vim.notify("No diagnostics", vim.log.levels.WARN)
+		return
+	end
+
+	local programming_language = vim.api.nvim_buf_get_option(0, "filetype")
+	local severity = string.lower(vim.diagnostic.severity[diagnostics[1].severity])
+	local clean_message = diagnostics[1].message:gsub("[A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
+	clean_message = clean_message:gsub("[A-Za-z0-9:/\\._%-]+[/\\][A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
+	local command = "xdg-open "
+		.. '"https://duckduckgo.com/?q='
+		.. "While developing "
+		.. programming_language
+		.. "I got this "
+		.. severity
+		.. ": "
+		.. clean_message
+		.. "?"
+		.. '"'
+	vim.fn.jobstart(command)
 end
 
 return M
