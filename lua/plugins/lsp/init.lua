@@ -69,6 +69,8 @@ return {
 						done_icon = "",
 						done_style = "Comment",
 						progress_style = "Comment",
+						group_style = "Keyword",
+						icon_style = "Keyword",
 						format_message = function(msg)
 							local message = msg.message
 							if not message then

@@ -46,7 +46,7 @@ return {
 				padding = 2,
 				max_width = 0,
 				max_height = 0,
-				border = "rounded",
+				border = require("base.utils").borders({}),
 				win_options = {
 					winblend = 10,
 				},
@@ -58,7 +58,7 @@ return {
 				max_height = 0.9,
 				min_height = { 5, 0.1 },
 				height = nil,
-				border = "rounded",
+				border = require("base.utils").borders({}),
 				win_options = {
 					winblend = 0,
 				},
@@ -70,8 +70,8 @@ return {
 				max_height = { 10, 0.9 },
 				min_height = { 5, 0.1 },
 				height = nil,
-				border = "rounded",
-				minimized_border = "none",
+				border = require("base.utils").borders({}),
+				minimized_border = require("base.utils").borders({}),
 				win_options = {
 					winblend = 0,
 				},

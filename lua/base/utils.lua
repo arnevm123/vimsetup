@@ -2,14 +2,36 @@ local M = {}
 
 function M:git_cwd()
 	local cwd = vim.loop.cwd()
-	if vim.fn.isdirectory(vim.fn.expand(cwd .. "/.venv")) == 1 then
-		return cwd
-	end
+	-- if vim.fn.isdirectory(vim.fn.expand(cwd .. "/.venv")) == 1 then
+	-- 	return cwd
+	-- end
 	local root = vim.fn.system("git rev-parse --show-toplevel")
 	if vim.v.shell_error == 0 and root ~= nil then
 		return string.gsub(root, "\n", "")
 	end
 	return cwd
+end
+
+function M:borders()
+	local border = {
+		{ "", "FloatBorder" },
+		{ " ", "FloatBorder" },
+		{ "", "FloatBorder" },
+		{ "", "FloatBorder" },
+		{ "", "FloatBorder" },
+		{ "", "FloatBorder" },
+		{ "", "FloatBorder" },
+		{ "", "FloatBorder" },
+	}
+	return border
+end
+
+function M:git_main()
+	local root = vim.fn.system("git branch | cut -c 3- | grep -E '^master$|^main$'")
+	if vim.v.shell_error ~= 0 or root == nil then
+		return false
+	end
+	return root:gsub("^\n*", ""):gsub("\n*$", "")
 end
 
 function M:Go_to_url(cmd)

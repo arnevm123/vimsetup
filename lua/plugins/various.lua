@@ -2,10 +2,11 @@ return {
 	-- text manipulation
 	{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
 	{ "tpope/vim-eunuch", cmd = { "Remove", "Delete", "Move", "Chmod", "Mkdir", "Cfind", "SudoWrite", "SudoEdit" } },
-	{ "wsdjeg/vim-fetch", lazy = false }, -- :e with line numpers
-	{ "wellle/targets.vim", event = "BufEnter" }, -- better cib
-	{ "numToStr/Comment.nvim", config = true, keys = { "gc", "gb", { "gc", mode = "x" }, { "gb", mode = "x" } } },
-	{ "kylechui/nvim-surround", config = true, keys = { "ds", "cs", "ys", { "S", mode = "v" }, { "gS", mode = "v" } } },
+	{ "wsdjeg/vim-fetch", event = "VeryLazy" }, -- :e with line numpers
+	{ "wellle/targets.vim", event = "VeryLazy" }, -- better cib
+	{ "numToStr/Comment.nvim", config = true, event = "VeryLazy" },
+	{ "kylechui/nvim-surround", config = true, event = "VeryLazy" },
+	{ "duane9/nvim-rg", cmd = { "Rg" } },
 	{ "brenoprata10/nvim-highlight-colors", config = true, cmd = { "HighlightColorsOn" } },
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
@@ -24,6 +25,18 @@ return {
 				prev = "[z",
 			},
 		},
+		config = function()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "GitConflictDetected",
+				callback = function()
+					vim.notify("Conflict detected in " .. vim.fn.expand("<afile>"))
+					vim.keymap.set("n", "cww", function()
+						engage.conflict_buster()
+						create_buffer_local_mappings()
+					end)
+				end,
+			})
+		end,
 		event = "VeryLazy",
 	},
 	-- {
@@ -134,103 +147,6 @@ return {
 		},
 	},
 	{
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		event = "VeryLazy",
-		config = function()
-			require("harpoon"):setup({
-				settings = {
-					key = function()
-						local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD")
-						if vim.v.shell_error == 0 and branch then
-							return string.gsub(branch, "\n", "") .. "-" .. vim.loop.cwd()
-						end
-						return vim.loop.cwd()
-					end,
-				},
-				default = {
-					create_list_item = function(config, short_path)
-						local root = config.get_root_dir()
-						local buf_path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-						if buf_path == "" then
-							buf_path = root
-						end
-						if short_path then
-							buf_path = "."
-							if vim.fn.filereadable(root .. "/" .. short_path) == 1 then
-								buf_path = root .. "/" .. short_path
-							else
-								local prefix = "..."
-								local isShortened = string.sub(short_path, 1, #prefix) == prefix
-								if isShortened then
-									short_path = string.sub(short_path, #prefix + 1)
-								end
-								local search_path =
-									string.gsub(short_path, "^%.{3}", ""):gsub("/", ".*"):gsub(" ", ".*")
-								local command = "fd -p " .. search_path .. " " .. root
-								local handle = io.popen(command)
-								if handle ~= nil then
-									local result = handle:read("*l")
-									handle:close()
-									if result then
-										buf_path = result
-									end
-								end
-							end
-						end
-						short_path = require("plenary.path"):new(buf_path):normalize(root)
-						local bufnr = vim.fn.bufnr(short_path, false)
-						local pos = { 1, 0 }
-						if bufnr ~= -1 then
-							pos = vim.api.nvim_win_get_cursor(0)
-						end
-						return {
-							value = buf_path,
-							context = { row = pos[1], col = pos[2], name = short_path },
-						}
-					end,
-					BufLeave = function(arg, list)
-						local bufnr = arg.buf
-						local bufname = vim.api.nvim_buf_get_name(bufnr)
-						local item = nil
-						for _, it in ipairs(list.items) do
-							local value = it.value
-							if value == bufname then
-								item = it
-								break
-							end
-						end
-						if item then
-							local pos = vim.api.nvim_win_get_cursor(0)
-							item.context.row = pos[1]
-							item.context.col = pos[2]
-						end
-					end,
-					display = function(item)
-						local t = {}
-						local str = item.context.name
-						for s in string.gmatch(str, "([^" .. "/" .. "]+)") do
-							table.insert(t, s)
-						end
-						if #t <= 5 then
-							return str
-						end
-						return ".../" .. t[#t - 3] .. "/" .. t[#t - 2] .. "/" .. t[#t - 1] .. "/" .. t[#t]
-					end,
-				},
-			})
-		end,
-		--stylua: ignore
-		keys = {
-            { "<leader>aa", function() require("harpoon"):list():append() end, desc = "harpoon add file" },
-            { "<leader>as", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "harpoon quick menu" },
-            { "<C-h>", function() require("harpoon"):list():select(1) end, desc = "harpoon file 1" },
-            { "<C-j>", function() require("harpoon"):list():select(2) end, desc = "harpoon file 2" },
-            { "<C-k>", function() require("harpoon"):list():select(3) end, desc = "harpoon file 3" },
-            { "<C-s>", function() require("harpoon"):list():select(4) end, desc = "harpoon file 4" },
-		},
-	},
-	{
 		"Exafunction/codeium.vim",
 		--stylua: ignore
 		--selene: allow(multiple_statements)
@@ -241,7 +157,7 @@ return {
 			vim.g.codeium_filetypes = { telescope = false }
 			-- vim.g.codeium_manual = true
 		end,
-		event = "BufReadPost",
+		event = "VeryLazy",
 	},
 	{
 		"kevinhwang91/nvim-fundo",
@@ -318,34 +234,34 @@ return {
 			always_context = {
 				"mod.rs",
 				"init.lua",
+				"main.go",
 			},
 			ignore_current = false,
-			window = { height = 15 },
 			per_project = true,
 		},
 		keys = { { "<leader>af", ":lua require('arena').toggle()<CR>", desc = "Arena" } },
 	},
-	{
-		"Wansmer/treesj",
-		keys = {
-			{ "<space>ej", ":lua require('treesj').join()<CR>", desc = "Join lines" },
-			{ "<space>ek", ":lua require('treesj').split()<CR>", desc = "Split lines" },
-		},
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		opts = { use_default_keymaps = false },
-	},
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {
-			key_labels = { ["<space>"] = "SPC", ["<cr>"] = "RET", ["<tab>"] = "TAB" },
-			icons = { separator = ">" },
-			triggers = { "g", "'", '"', "z" },
-			triggers_nowait = { "'", "ga", "g`", "g'", '"', "z=" },
-		},
-	},
+	-- {
+	-- 	"Wansmer/treesj",
+	-- 	keys = {
+	-- 		{ "<space>ej", ":lua require('treesj').join()<CR>", desc = "Join lines" },
+	-- 		{ "<space>ek", ":lua require('treesj').split()<CR>", desc = "Split lines" },
+	-- 	},
+	-- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
+	-- 	opts = { use_default_keymaps = false },
+	-- },
+	-- {
+	-- 	"folke/which-key.nvim",
+	-- 	event = "VeryLazy",
+	-- 	init = function()
+	-- 		vim.o.timeout = true
+	-- 		vim.o.timeoutlen = 300
+	-- 	end,
+	-- 	opts = {
+	-- 		key_labels = { ["<space>"] = "SPC", ["<cr>"] = "RET", ["<tab>"] = "TAB" },
+	-- 		icons = { separator = ">" },
+	-- 		triggers = { "g", "'", '"', "z" },
+	-- 		triggers_nowait = { "'", "ga", "g`", "g'", '"', "z=" },
+	-- 	},
+	-- },
 }

@@ -44,7 +44,6 @@ keymap("v", ">", ">gv", opts)
 
 -- Clear highlights with esc
 keymap("n", "<esc>", ":noh<CR><esc>", opts)
-keymap("n", "<C-l>", ":noh<CR><C-l>", opts)
 keymap("n", "[c", ":diffget //2<CR>", opts)
 keymap("n", "]c", ":diffget //3<CR>", opts)
 keymap("n", "<Leader>xp", ":call setreg('+', getreg('@'))<CR>", opts)

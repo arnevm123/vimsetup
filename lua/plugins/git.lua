@@ -8,6 +8,7 @@ return {
 			{ "<leader>GG", ":DiffviewOpen master<CR>", desc = "open diff with master" },
 		},
 		opts = {
+			ignored_settings = {},
 			disable_signs = false,
 			disable_hint = false,
 			disable_context_highlighting = false,
@@ -50,14 +51,27 @@ return {
 			{ "]g", ":Gitsigns next_hunk<cr>", desc = "Gitsigns next hunk" },
 			{ "[g", ":Gitsigns prev_hunk<cr>", desc = "Gitsigns prev hunk" },
 			{ "<leader>gp", ":Gitsigns preview_hunk_inline<cr>", desc = "Gitsigns preview hunk" },
-			{ "<leader>gr", ":Gitsigns reset_hunk<cr>", desc = "Gitsigns reset hunk" },
-			{ "<leader>gbr", ":Gitsigns reset_buffer<cr>", desc = "Gitsigns reset buffer" },
-			{ "<leader>gs", ":Gitsigns stage_hunk<cr>", desc = "Gitsigns stage hunk" },
-			{ "<leader>gbs", ":Gitsigns stage_buffer<cr>", desc = "Gitsigns stage buffer" },
-			{ "<leader>gu", ":Gitsigns undo_stage_hunk<cr>", desc = "Gitsigns undo stage hunk" },
-			{ "<leader>gbu", ":Gitsigns undo_stage_buffer<cr>", desc = "Gitsigns undo stage buffer" },
+			{ "<leader>gr", ":Gitsigns reset_hunk<cr>", mode = { "n", "v" }, desc = "Gitsigns reset hunk" },
+			{ "<leader>gs", ":Gitsigns stage_hunk<cr>", mode = { "n", "v" }, desc = "Gitsigns stage hunk" },
+			{ "<leader>gu", ":Gitsigns undo_stage_hunk<cr>", mode = { "n", "v" }, desc = "Gitsigns undo stage hunk" },
+			{ "<leader>gar", ":Gitsigns reset_buffer<cr>", desc = "Gitsigns reset buffer" },
+			{ "<leader>gau", ":Gitsigns undo_stage_buffer<cr>", desc = "Gitsigns undo stage buffer" },
+			{ "<leader>gas", ":Gitsigns stage_buffer<cr>", desc = "Gitsigns stage buffer" },
 			{ "<leader>gd", ":Gitsigns diffthis HEAD<cr>", desc = "Gitsigns diff with HEAD" },
-			{ "<leader>gm", ":Gitsigns diffthis main<cr>", desc = "Gitsigns diff with master" },
+			{
+				"<leader>gm",
+				function()
+					local branch = require("base.utils").git_main({})
+					if not branch then
+						branch = vim.fn.input("No main branch found, enter branch name > ")
+						if not branch or branch == "" then
+							return
+						end
+					end
+					require("gitsigns").diffthis(branch)
+				end,
+				desc = "Gitsigns diff with main",
+			},
 			{ "<leader>gl", ":Gitsigns blame_line<cr>", desc = "Gitsigns blame current line" },
 			{ "yob", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
 			{
@@ -109,7 +123,7 @@ return {
 			max_file_length = 40000,
 			preview_config = {
 				-- options passed to nvim_open_win
-				border = "single",
+				border = require("base.utils").borders({}),
 				style = "minimal",
 				relative = "cursor",
 				row = 0,
@@ -124,7 +138,6 @@ return {
 		"tpope/vim-fugitive",
 		cmd = { "Git", "Gclog", "Gvdiff", "Gvdiffsplit", "Gdiffsplit" },
 		keys = {
-
 			{ "<leader>gc", ":Gvdiffsplit!<CR>", desc = "merge conflict vertical" },
 			{ "<leader>gC", ":Gdiffsplit!<CR>", desc = "merge conflict horizontal" },
 			{ "<leader>gh", ":0Gclog<cr>", desc = "Git history" },

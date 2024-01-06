@@ -9,13 +9,21 @@ vim.api.nvim_create_autocmd("User", {
 		end
 	end,
 })
+
 autocmd("BufEnter", {
+	pattern = "*",
 	callback = function()
-		vim.opt.formatoptions:remove({ "c", "o" })
-		vim.opt.number = true
-		vim.opt.relativenumber = true
+		local excluded_filetypes = { "netrw" } -- Add more filetypes if needed
+
+		-- Check if the current filetype is in the exclusion list
+		local current_filetype = vim.bo.filetype
+		if not vim.tbl_contains(excluded_filetypes, current_filetype) then
+			vim.opt.formatoptions:remove({ "c", "o" })
+			vim.opt.number = true
+			vim.opt.relativenumber = true
+		end
 	end,
-	desc = "Disable New Line Comment",
+	desc = "Stubborn vim options...",
 })
 
 autocmd("TextYankPost", {
@@ -30,20 +38,49 @@ autocmd("TextYankPost", {
 })
 
 -- go to last loc when opening a buffer
-autocmd("BufReadPost", {
+-- autocmd("BufReadPost", {
+-- 	callback = function()
+-- 		local mark = vim.api.nvim_buf_get_mark(0, '"')
+-- 		local lcount = vim.api.nvim_buf_line_count(0)
+-- 		if mark[1] > 0 and mark[1] <= lcount then
+-- 			pcall(vim.api.nvim_win_set_cursor, 0, mark)
+-- 		end
+-- 	end,
+-- })
+
+local ignore_buftype = { "quickfix", "nofile", "help" }
+local ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" }
+
+vim.api.nvim_create_autocmd({ "BufWinEnter", "FileType" }, {
+	group = vim.api.nvim_create_augroup("reset_cursor", {}),
 	callback = function()
+		if vim.fn.line(".") > 1 then
+			return
+		end
+		if vim.tbl_contains(ignore_buftype, vim.bo.buftype) then
+			return
+		end
+		if vim.tbl_contains(ignore_filetype, vim.bo.filetype) then
+			return
+		end
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
-		local lcount = vim.api.nvim_buf_line_count(0)
-		if mark[1] > 0 and mark[1] <= lcount then
-			pcall(vim.api.nvim_win_set_cursor, 0, mark)
+		local buff_last_line = vim.api.nvim_buf_line_count(0)
+		if mark[1] > 0 and mark[1] <= buff_last_line then
+			vim.api.nvim_win_set_cursor(0, mark)
 		end
 	end,
 })
 
--- -- remove eol spaces
+-- remove eol spaces
 autocmd({ "BufWritePre" }, {
 	pattern = { "*" },
-	command = [[%s/\s\+$//e]],
+	callback = function()
+		local cursor_position = vim.fn.getpos(".")
+		vim.cmd([[%s/\s\+$//e]])
+		if cursor_position then
+			vim.fn.setpos(".", cursor_position)
+		end
+	end,
 })
 
 -- -- Set indentation to 2 spaces for some file types
@@ -61,17 +98,6 @@ autocmd("FileType", {
 	callback = function()
 		vim.keymap.set("n", "q", "<cmd>q<cr>", { silent = true, buffer = true })
 		vim.keymap.set("n", "gd", "<C-]>", { silent = true, buffer = true })
-	end,
-})
-
-autocmd("User", {
-	pattern = "GitConflictDetected",
-	callback = function()
-		vim.notify("Conflict detected in " .. vim.fn.expand("<afile>"))
-		vim.keymap.set("n", "cww", function()
-			engage.conflict_buster()
-			create_buffer_local_mappings()
-		end)
 	end,
 })
 
