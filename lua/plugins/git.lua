@@ -61,7 +61,7 @@ return {
 			{
 				"<leader>gm",
 				function()
-					local branch = require("base.utils").git_main({})
+					local branch = require("base.utils").git_main()
 					if not branch then
 						branch = vim.fn.input("No main branch found, enter branch name > ")
 						if not branch or branch == "" then
@@ -123,7 +123,7 @@ return {
 			max_file_length = 40000,
 			preview_config = {
 				-- options passed to nvim_open_win
-				border = require("base.utils").borders({}),
+				border = "none",
 				style = "minimal",
 				relative = "cursor",
 				row = 0,

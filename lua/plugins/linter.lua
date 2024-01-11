@@ -2,15 +2,21 @@ return {
 	"mfussenegger/nvim-lint",
 	config = function()
 		local lint = require("lint")
+		lint.linters.cspell.args = { "--config", "~/.config/linters/cspell.json", "--gitignore" }
+		lint.linters.vale.args = { "--config", "~/.config/linters/vale.ini" }
 		lint.linters_by_ft = {
-			go = { "golangcilint" },
+			go = { "golangcilint", "cspell" },
 			lua = { "selene" },
 			python = { "ruff" },
 			sh = { "shellcheck" },
 			typescript = { "eslint_d" },
 			yaml = { "yamllint" },
+			gitcommit = { "commitlint" },
+			NeogitCommitMessage = { "commitlint" },
+			markdown = { "markdownlint", "vale", "cspell"  },
 			["yaml.ansible"] = { "ansible_lint" },
 		}
+
 		local function fidget_linters(h)
 			local handlers = h or {}
 			local linters = lint.get_running(0)
@@ -47,7 +53,7 @@ return {
 			group = vim.api.nvim_create_augroup("lint", { clear = true }),
 			callback = function()
 				lint.try_lint()
-				fidget_linters({})
+				fidget_linters()
 			end,
 		})
 	end,

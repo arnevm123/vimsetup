@@ -1,6 +1,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.opt.compatible = false
+vim.opt.foldlevel = 999
 
 vim.opt.guicursor = ""
 vim.opt.mouse = "a"

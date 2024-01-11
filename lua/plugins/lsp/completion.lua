@@ -20,7 +20,6 @@ cmp.setup({
 		["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-e>"] = cmp.mapping.abort(),
 		["<C-q>"] = cmp.mapping(
 			cmp.mapping.confirm({
 				behavior = cmp.ConfirmBehavior.Insert,
@@ -58,10 +57,10 @@ cmp.setup({
 		format = function(entry, vim_item)
 			vim_item.menu = ({
 				nvim_lsp = "LSP",
-				nvim_lua = "Nvim",
-				luasnip = "Snip",
-				buffer = "Buf",
-				path = "Path",
+				nvim_lua = "VIM",
+				luasnip = "SNP",
+				buffer = "BUF",
+				path = "PTH",
 			})[entry.source.name]
 			return vim_item
 		end,
@@ -79,7 +78,15 @@ cmp.setup({
 	},
 	entries = { name = "custom", selection_order = "near_cursor" },
 	window = {
-		documentation = cmp.config.window.bordered(),
+		completion = {
+			scrolloff = 2,
+			border = "none",
+			winhighlight = "Normal:Float,FloatBorder:Float,Search:Float",
+		},
+		documentation = {
+			border = "single",
+			winhighlight = "Normal:Float,FloatBorder:Float,Search:Float",
+		},
 	},
 	experimental = {
 		ghost_text = false,
@@ -114,6 +121,8 @@ ls.config.set_config({
 vim.keymap.set({ "i", "s" }, "<c-k>", function()
 	if ls.expand_or_jumpable() then
 		ls.expand_or_jump()
+	else
+		vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-k>", true, true, true), "n")
 	end
 end, { silent = true })
 
@@ -122,19 +131,27 @@ end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<c-j>", function()
 	if ls.jumpable(-1) then
 		ls.jump(-1)
+	else
+		vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-j>", true, true, true), "n")
 	end
-end, { silent = true })
+end, { silent = true, noremap = true })
 
 -- <c-l> is selecting within a list of options.
 -- This is useful for choice nodes (introduced in the forthcoming episode 2)
 vim.keymap.set("i", "<c-l>", function()
 	if ls.choice_active() then
 		ls.change_choice(1)
+	else
+		vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-l>", true, true, true), "n")
 	end
 end)
 
-vim.keymap.set("i", "<c-u>", require("luasnip.extras.select_choice"))
+vim.keymap.set("i", "<C-Return>", function()
+	if ls.choice_active() then
+		require("luasnip.extras.select_choice")
+	end
+end)
 
 for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/plugins/snip/ft/*.lua", true)) do
-  loadfile(ft_path)()
+	loadfile(ft_path)()
 end

@@ -38,7 +38,7 @@ require("mason-tool-installer").setup({
 })
 
 local settings = {
-	ui = { border = require("base.utils").borders({}) },
+	ui = { border = require("base.utils").borders() },
 	log_level = vim.log.levels.INFO,
 	max_concurrent_installers = 4,
 }
@@ -54,7 +54,7 @@ if not lspconfig_status_ok then
 	return
 end
 
-require("lspconfig.ui.windows").default_options.border = require("base.utils").borders({})
+require("lspconfig.ui.windows").default_options.border = require("base.utils").borders()
 
 local opts = {}
 

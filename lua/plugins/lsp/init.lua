@@ -47,12 +47,12 @@ return {
 					gofumpt = { prepend_args = { "-extra" } },
 				},
 				formatters_by_ft = {
-					lua = { "stylua" },
-					-- python = { "isort", "black" },
-					javascript = { { "prettierd", "prettier" } },
-					typescript = { { "prettierd", "prettier" } },
 					go = { "gofumpt", "goimports_reviser" },
+					javascript = { { "prettierd", "prettier" } },
+					lua = { "stylua" },
+					markdown = { "mdslw" },
 					sh = { "shfmt" },
+					typescript = { { "prettierd", "prettier" } },
 					yaml = { "yamlfmt" },
 					-- python = { "isort", "black" },
 				},
@@ -69,8 +69,8 @@ return {
 						done_icon = "",
 						done_style = "Comment",
 						progress_style = "Comment",
-						group_style = "Keyword",
-						icon_style = "Keyword",
+						group_style = "@method",
+						icon_style = "@method",
 						format_message = function(msg)
 							local message = msg.message
 							if not message then

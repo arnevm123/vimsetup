@@ -24,6 +24,6 @@ return require("lazy").setup("plugins", {
 			},
 		},
 	},
-	ui = { border = require("base.utils").borders({}), title = "Lazy" },
+	ui = { border = require("base.utils").borders(), title = "Lazy" },
 	change_detection = { enabled = false },
 })

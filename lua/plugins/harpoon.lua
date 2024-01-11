@@ -137,7 +137,7 @@ return {
 			function()
 				require("harpoon").ui:toggle_quick_menu(
 					require("harpoon"):list(),
-					{ border = require("base.utils").borders({}), title_pos = "center" }
+					{ border = require("base.utils").borders(), title_pos = "center" }
 				)
 			end,
 			desc = "harpoon quick menu",

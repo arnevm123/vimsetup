@@ -53,21 +53,21 @@ return {
 		{
 			"<leader>ff",
 			function()
-				require("telescope").extensions.live_grep_args.live_grep_args({})
+				require("telescope").extensions.live_grep_args:live_grep_args()
 			end,
 			desc = "Telescope live grep",
 		},
 		{
 			"<leader>fu",
 			function()
-				require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({})
+				require("telescope-live-grep-args.shortcuts"):grep_word_under_cursor()
 			end,
 			desc = "Telescope live grep cursor word",
 		},
 		{
 			"<leader>fu",
 			function()
-				require("telescope-live-grep-args.shortcuts").grep_visual_selection({})
+				require("telescope-live-grep-args.shortcuts"):grep_visual_selection()
 			end,
 			desc = "Telescope live grep visual selection",
 			mode = "v",
@@ -104,7 +104,7 @@ return {
 			defaults = {
 				prompt_prefix = "",
 				entry_prefix = " ",
-				selection_caret = "> ",
+				selection_caret = ">",
 				layout_strategy = "grey",
 				layout_config = {
 					-- The extension supports both "top" and "bottom" for the prompt.

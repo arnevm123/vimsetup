@@ -12,10 +12,11 @@ return {
 	},
 
 	keys = {
-		{ "<leader>qo", ":DBUIToggle<cr>", desc = "DadBod toggle" },
-		{ "<leader>qf", ":DBUIFindBuffer<cr>", desc = "DadBod find buffer" },
-		{ "<leader>ql", ":DBUILastQueryInfo<cr>", desc = "DadBod last query info" },
-		{ "<leader>qr", ":DB<cr>", mode = "v", desc = "DadBod run selected" },
+		{ "<leader>qo", ":DBUIToggle<CR>", desc = "DadBod toggle" },
+		{ "<leader>qq", ":tabnew<CR>:DBUIToggle<CR>", desc = "DadBod toggle" },
+		{ "<leader>ql", ":DBUILastQueryInfo<CR>", desc = "DadBod last query info" },
+		{ "<leader>qs", ":DBUI_SaveQuery<CR>", desc = "DadBod save query" },
+		{ "<C-Return>", ":DB<CR>", mode = "v", desc = "DadBod run selected" },
 	},
 	config = function()
 		vim.g.db_ui_dotenv_variable_prefix = "DB_UI_"

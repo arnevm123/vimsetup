@@ -1,7 +1,7 @@
 return {
 	-- text manipulation
-	{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
-	{ "tpope/vim-eunuch", cmd = { "Remove", "Delete", "Move", "Chmod", "Mkdir", "Cfind", "SudoWrite", "SudoEdit" } },
+	{ "tpope/vim-dispatch", event = "VeryLazy" },
+	{ "tpope/vim-eunuch", event = "VeryLazy" },
 	{ "wsdjeg/vim-fetch", event = "VeryLazy" }, -- :e with line numpers
 	{ "wellle/targets.vim", event = "VeryLazy" }, -- better cib
 	{ "numToStr/Comment.nvim", config = true, event = "VeryLazy" },
@@ -12,6 +12,13 @@ return {
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
 	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
+	{
+		"tpope/vim-rsi",
+		event = "VeryLazy",
+		config = function()
+			vim.g.rsi_no_meta = 1
+		end,
+	},
 	{
 		"akinsho/git-conflict.nvim",
 		version = "*",
@@ -101,7 +108,6 @@ return {
 								.. file_name
 								.. "."
 								.. extension
-							print(string.gsub(path, "src/", "src/tests/") .. "test_" .. file_name .. "." .. extension)
 							if not io.open(test_path, "r") then
 								io.open(test_path, "w"):close()
 							end
@@ -121,7 +127,7 @@ return {
 					end
 					require("nvim-quick-switcher").find_by_fn(toggle_test)
 				end,
-				desc = "Go to service",
+				desc = "Go to test",
 			},
 			{
 				"<leader>oi",
@@ -203,7 +209,7 @@ return {
 			{
 				"<leader>rr",
 				function()
-					require("refactoring").select_refactor({})
+					require("refactoring"):select_refactor()
 				end,
 				mode = { "n", "x" },
 				desc = "refactor",
@@ -211,7 +217,7 @@ return {
 			{
 				"<leader>rp",
 				function()
-					require("refactoring").debug.print_var({})
+					require("refactoring").debug:print_var()
 				end,
 				mode = { "x", "n" },
 				desc = "refactor print",
@@ -219,7 +225,7 @@ return {
 			{
 				"<leader>rc",
 				function()
-					require("refactoring").debug.cleanup({})
+					require("refactoring").debug:cleanup()
 				end,
 				mode = { "x", "n" },
 				desc = "refactor cleanup",

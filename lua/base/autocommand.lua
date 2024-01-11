@@ -13,15 +13,19 @@ vim.api.nvim_create_autocmd("User", {
 autocmd("BufEnter", {
 	pattern = "*",
 	callback = function()
-		local excluded_filetypes = { "netrw" } -- Add more filetypes if needed
-
-		-- Check if the current filetype is in the exclusion list
+		local excluded_filetypes = { "netrw", "help" }
+		local excluded_buftypes = { "prompt", "nofile" }
 		local current_filetype = vim.bo.filetype
-		if not vim.tbl_contains(excluded_filetypes, current_filetype) then
-			vim.opt.formatoptions:remove({ "c", "o" })
-			vim.opt.number = true
-			vim.opt.relativenumber = true
+		local current_buftype = vim.bo.buftype
+		if vim.tbl_contains(excluded_filetypes, current_filetype) then
+			return
 		end
+		if vim.tbl_contains(excluded_buftypes, current_buftype) then
+			return
+		end
+		-- vim.opt.formatoptions:remove({ "c", "o" })
+		vim.opt.number = true
+		vim.opt.relativenumber = true
 	end,
 	desc = "Stubborn vim options...",
 })
@@ -75,11 +79,9 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "FileType" }, {
 autocmd({ "BufWritePre" }, {
 	pattern = { "*" },
 	callback = function()
-		local cursor_position = vim.fn.getpos(".")
-		vim.cmd([[%s/\s\+$//e]])
-		if cursor_position then
-			vim.fn.setpos(".", cursor_position)
-		end
+		local cursor = vim.api.nvim_win_get_cursor(0)
+		vim.cmd([[keepjumps keeppatterns %s/\s\+$//e]])
+		vim.api.nvim_win_set_cursor(0, cursor)
 	end,
 })
 
@@ -101,18 +103,18 @@ autocmd("FileType", {
 	end,
 })
 
--- folding
-vim.cmd([[
-function FoldText()
-let foldtextstart = repeat(' ', indent(nextnonblank(v:foldstart)))
-let uglyLine = getline(v:foldstart)
-let line = substitute(uglyLine, '^\s*\(.\{-}\)\s*$', '\1', '')
-let uglyLineEnd = getline(v:foldend)
-let lineEnd = substitute(uglyLineEnd, '^\s*\(.\{-}\)\s*$', '\1', '')
-let foldDept = getline(v:foldlevel)
-let numOfLines = v:foldend - v:foldstart
-return foldtextstart . line . ' ... ' . lineEnd . ' ' . '(' . numOfLines . 'ℓ)'
-endfunction
-set foldtext=FoldText()
-set fillchars=fold:\  " removes trailing dots. Mind that there is a whitespace after the \!
-]])
+-- -- folding
+-- vim.cmd([[
+-- function FoldText()
+-- let foldtextstart = repeat(' ', indent(nextnonblank(v:foldstart)))
+-- let uglyLine = getline(v:foldstart)
+-- let line = substitute(uglyLine, '^\s*\(.\{-}\)\s*$', '\1', '')
+-- let uglyLineEnd = getline(v:foldend)
+-- let lineEnd = substitute(uglyLineEnd, '^\s*\(.\{-}\)\s*$', '\1', '')
+-- let foldDept = getline(v:foldlevel)
+-- let numOfLines = v:foldend - v:foldstart
+-- return foldtextstart . line . ' ... ' . lineEnd . ' ' . '(' . numOfLines . 'ℓ)'
+-- endfunction
+-- set foldtext=FoldText()
+-- set fillchars=fold:\  " removes trailing dots. Mind that there is a whitespace after the \!
+-- ]])
