@@ -19,10 +19,34 @@ function M.Setup(color)
 	end
 
 	if color == "rose-pine" then
+		vim.api.nvim_set_hl(0, "QuickFixLine", { link = "@method" })
 		vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
 		vim.api.nvim_set_hl(0, "@parameter", { link = "@variable" })
 		vim.api.nvim_set_hl(0, "String", { link = "@method" })
-		-- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
+		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#2B2B2B" })
+		vim.api.nvim_set_hl(0, "netrwDir", { link = "DiagnosticVirtualTextInfo" })
+		vim.api.nvim_set_hl(0, "MatchParen", { link = "Search" })
+		vim.api.nvim_set_hl(0, "MatchParen", { bg = "#4B4B4B" })
+		local tshl = {
+			"Float",
+			"NormalFloat",
+			"FloatBorder",
+			"Title",
+			"StatusLine",
+			"TelescopeNormal",
+			"TelescopeTitle",
+			"TelescopeBorder",
+			"TelescopeBorder",
+			"TelescopePromptBorder",
+			"TelescopePromptNormal",
+			"TelescopePromptBackground",
+			"TelescopePromptTitle",
+			"TelescopePromptCounter",
+			"TelescopePromptPrefix",
+		}
+		for _, t in pairs(tshl) do
+			vim.cmd.highlight(t .. " guibg=#333333")
+		end
 	end
 
 	if color == "seoulbones" then
@@ -37,6 +61,7 @@ function M.Setup(color)
 		vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
 		vim.api.nvim_set_hl(0, "netrwDir", { link = "DiagnosticVirtualTextInfo" })
 		vim.api.nvim_set_hl(0, "ModeMsg", { link = "DiagnosticVirtualTextHint" })
+		vim.api.nvim_set_hl(0, "QuickFixLine", { link = "DiagnosticVirtualTextHint" })
 	end
 
 	if color == "rosebones" then
@@ -52,7 +77,6 @@ function M.Setup(color)
 	end
 
 	vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
-	vim.api.nvim_set_hl(0, "QuickFixLine", { link = "DiagnosticVirtualTextHint" })
 end
 
 function M.Transparent(color)
@@ -78,22 +102,16 @@ function M.Transparent(color)
 		vim.cmd.highlight(highlight .. " guibg=none ctermbg=none")
 	end
 
-	local telescope = {
+	local hl = {
 		"Float",
 		"NormalFloat",
 		"FloatBorder",
 		"Title",
-	}
-	for _, float in pairs(telescope) do
-		vim.cmd.highlight(float .. " guibg=#4B4B4B")
-	end
-
-	local tshl = {
 		"TelescopeNormal",
 		"TelescopeTitle",
 		"TelescopeBorder",
 	}
-	for _, t in pairs(tshl) do
+	for _, t in pairs(hl) do
 		vim.cmd.highlight(t .. " guibg=#2B2B2B")
 	end
 end
