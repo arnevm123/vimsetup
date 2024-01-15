@@ -40,6 +40,13 @@ return {
 			desc = "Telescope live grep",
 		},
 		{
+			"<leader>fe",
+			function()
+				require("telescope.builtin").fd({ cwd = vim.fn.expand("%:h") })
+			end,
+			desc = "Telescope live grep",
+		},
+		{
 			"<leader>fr",
 			function()
 				require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
