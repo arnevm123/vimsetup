@@ -114,5 +114,9 @@ function M.Transparent(color)
 	for _, t in pairs(hl) do
 		vim.cmd.highlight(t .. " guibg=#2B2B2B")
 	end
+
+	for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+		vim.api.nvim_set_hl(0, group, {})
+	end
 end
 return M

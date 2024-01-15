@@ -10,17 +10,15 @@ return {
 	--stylua: ignore
 	keys = {
 		{ "yod", function() require("dapui").toggle() end, { noremap = true, silent = true, desc = "Toggle dapui" } },
-		{ "<leader>sc", ":lua require'dap'.continue()<CR>", desc = "Debug continue" },
-		{ "<leader>sl", ":lua require'dap'.run_to_cursor()<CR>", desc = "Debug run to cursor" },
-		{ "<leader>so", ":lua require'dap'.step_over()<CR>", desc = "Debug step ove" },
-		{ "<leader>si", ":lua require'dap'.step_into()<CR>", desc = "Debug step into" },
-		{ "<leader>su", ":lua require'dap'.up()<CR>", desc = "Debug step up callstack" },
-		{ "<leader>sd", ":lua require'dap'.down()<CR>", desc = "Debug step down callstack" },
-		{ "<leader>sO", ":lua require'dap'.step_out()<CR>", desc = "Debug  step out" },
-		{ "<leader>bb", ":lua require'dap'.toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
-		{ "<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
-		{ "<leader>sR", ":lua require'dap'.repl.open()<CR>", desc = "Debug open repl" },
-		{ "<leader>sf", ":lua require('dapui').float_element('breakpoints')<CR>", desc = "Debug float element" },
+		{ "<leader>sc", ":lua require('dap').continue()<CR>", desc = "Debug continue" },
+		{ "<leader>sl", ":lua require('dap').run_to_cursor()<CR>", desc = "Debug run to cursor" },
+		{ "<leader>so", ":lua require('dap').step_over()<CR>", desc = "Debug step ove" },
+		{ "<leader>si", ":lua require('dap').step_into()<CR>", desc = "Debug step into" },
+		{ "<leader>su", ":lua require('dap').up()<CR>", desc = "Debug step up callstack" },
+		{ "<leader>sd", ":lua require('dap').down()<CR>", desc = "Debug step down callstack" },
+		{ "<leader>sO", ":lua require('dap').step_out()<CR>", desc = "Debug  step out" },
+		{ "<leader>sb", ":lua require('dap').toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
+		{ "<leader>SB", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
 		{ "<leader>st", " :lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
 		{ "<leader>sr", ":lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
 	},
@@ -106,22 +104,14 @@ return {
 				dapui.close()
 			end
 
-			function Toggle_type_info()
-				local config = require("dapui.config")
-				if config.render().max_type_length == nil then
-					config.setup({ render = { max_type_length = 0 } })
-				else
-					config.setup({ render = { max_type_length = nil } })
-				end
-			end
-
 			local types_enabled = true
 			Toggle_types = function()
 				types_enabled = not types_enabled
 				dapui.update_render({ max_type_length = types_enabled and -1 or 0 })
 			end
 
-			vim.keymap.set("n", "yot", ":lua Toggle_types()<CR>", {})
+			vim.keymap.set("n", "yot", Toggle_types, {})
+			-- vim.keymap.set("n", "yot", ":lua Toggle_types()<CR>", {})
 			dap.configurations = {
 				go = {
 					-- {
@@ -167,13 +157,13 @@ return {
 				-- represents a dap configuration. For more details do:
 				-- :help dap-configuration
 				dap_configurations = {
-					-- {
-					-- 	-- Must be "go" or it will be ignored by the plugin
-					-- 	type = "go",
-					-- 	name = "Attach remote",
-					-- 	mode = "remote",
-					-- 	request = "attach",
-					-- },
+					{
+						type = "go",
+						name = "lynxcontroller",
+						program = "main.go",
+						args = { "--log_level", "debug", "--log_directory", "", "--config_file", "config.yaml" },
+						request = "launch",
+					},
 				},
 				-- delve configurations
 				delve = {

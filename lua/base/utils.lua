@@ -108,12 +108,66 @@ function M:search_diagnostics()
 		.. '"'
 	vim.fn.jobstart(command)
 end
+function M:isInTable(str, tbl)
+	for _, value in ipairs(tbl) do
+		if value == str then
+			return true
+		end
+	end
+	return false
+end
+
+function M:cspell_add()
+	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+	if #diagnostics == 0 then
+		vim.notify("No diagnostics", vim.log.levels.WARN)
+		return
+	end
+	local words = {}
+
+	for _, diagnostic in ipairs(diagnostics) do
+		if diagnostic.source == "cspell" then
+			local word = string.lower(diagnostic.message:match("%((.-)%)"))
+			if not M:isInTable(word, words) then
+				table.insert(words, word)
+			end
+		end
+	end
+	if #words == 0 then
+		vim.notify("No error from cspell found", vim.log.levels.WARN)
+	end
+	local inputList = { "Select word to add:" }
+	for i, word in ipairs(words) do
+		table.insert(inputList, string.format("%d. %s", i, word))
+	end
+
+	local index = vim.fn.inputlist(inputList)
+
+	if index <= 0 then
+		vim.notify("No word selected", vim.log.levels.INFO)
+		return
+	end
+
+	local opts = {
+		on_exit = function()
+			vim.fn.jobstart("sort -u -o ~/.config/linters/allowed-words ~/.config/linters/allowed-words")
+			vim.notify("Added " .. words[index] .. " to the allowed words", vim.log.levels.INFO)
+		end,
+	}
+	local command = "echo " .. words[index] .. " >> ~/.config/linters/allowed-words"
+	vim.fn.jobstart(command, opts)
+end
 
 function M:open_last_file()
 	local files = vim.v.oldfiles
 	for _, file in ipairs(files) do
 		local file_stat = vim.loop.fs_stat(file)
-		if file_stat and file_stat.type == "file" then
+		if
+			file_stat
+			and file_stat.type == "file"
+			and file ~= vim.fn.expand("%:p")
+			and not string.find(file, ".git/COMMIT_EDITMSG")
+		then
 			local cwd = vim.loop.cwd() .. require("plenary.path").path.sep
 			if vim.fn.matchstrpos(file, cwd)[2] ~= -1 then
 				vim.cmd("e " .. file)
@@ -236,7 +290,8 @@ function M:search_folder(folder, root)
 end
 
 function M.fzf_fd()
-	local command = "fd -t f | fzf-tmux -w100% -h100% --border=none --preview-window=down:50%,border-top --preview 'bat -n --color=always {}'"
+	local command =
+		"fd -t f | fzf-tmux -w100% -h100% --border=none --preview-window=down:50%,border-top --preview 'bat -n --color=always {}'"
 
 	local handle = io.popen(command)
 	if handle == nil then

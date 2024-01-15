@@ -15,6 +15,23 @@ return {
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
 		"folke/neodev.nvim",
+
+		{
+			"chrisgrieser/nvim-scissors",
+			dependencies = "nvim-telescope/telescope.nvim", -- optional
+			opts = {
+				snippetDir = "~/.config/nvim/snippets",
+			},
+			config = function()
+				require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/nvim/snippets" } })
+				vim.keymap.set("n", "<leader>se", function()
+					require("scissors").editSnippet()
+				end)
+				vim.keymap.set({ "n", "x" }, "<leader>sa", function()
+					require("scissors").addNewSnippet()
+				end)
+			end,
+		},
 		"pmizio/typescript-tools.nvim",
 		{
 			"folke/trouble.nvim",
@@ -41,13 +58,13 @@ return {
 				formatters = {
 					goimports_reviser = {
 						command = "goimports-reviser",
-						args = { "-rm-unused", "-project-name", "unmatched.eu", "$FILENAME" },
+						args = { "-set-alias", "-rm-unused", "-project-name", "unmatched.eu", "$FILENAME" },
 						stdin = false,
 					},
 					gofumpt = { prepend_args = { "-extra" } },
 				},
 				formatters_by_ft = {
-					go = { "gofumpt", "goimports_reviser" },
+					go = { "gofumpt", "goimports", "goimports_reviser" },
 					javascript = { { "prettierd", "prettier" } },
 					lua = { "stylua" },
 					markdown = { "mdslw" },
@@ -89,12 +106,6 @@ return {
 		},
 	},
 	keys = {
-		-- {
-		-- 	"<leader>la",
-		-- 	":lua require('actions-preview').code_actions()<CR>",
-		-- 	desc = "lsp Code Action",
-		-- 	mode = { "v", "n" },
-		-- },
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<cr>", desc = "lsp workspace diagnostics" },
@@ -110,8 +121,7 @@ return {
 	config = function()
 		require("plugins.lsp.mason")
 		require("plugins.lsp.handlers").setup()
-		-- require("plugins.lsp.null-ls")
 		require("plugins.lsp.completion")
 	end,
-	event = { "BufReadPre", "BufNewFile" },
+	event = { "VeryLazy" },
 }

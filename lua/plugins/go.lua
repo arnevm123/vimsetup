@@ -2,11 +2,17 @@ return {
 	"olexsmir/gopher.nvim",
 	ft = { "go", "gomod" },
 	branch = "develop",
-	opts = {
-		gotests = {
-			template = "testify",
-		},
-	},
+	setup = function()
+		local opts = {
+			gotests = {
+				template = "testify",
+			},
+			commands = {
+				iferr = "ierr -message 'test'",
+			},
+		}
+		require("gopher").setup(opts)
+	end,
 	keys = {
 		{ "<leader>ee", ":GoIfErr<cr>" },
 	},

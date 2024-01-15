@@ -2,8 +2,28 @@ return {
 	"mfussenegger/nvim-lint",
 	config = function()
 		local lint = require("lint")
-		lint.linters.cspell.args = { "--config", "~/.config/linters/cspell.json", "--gitignore" }
-		lint.linters.vale.args = { "--config", "~/.config/linters/vale.ini" }
+		lint.linters.commitlint.args = {
+			"--config",
+			"/home/arne/.config/linters/commitlint.config.os",
+		}
+		lint.linters.cspell.args = {
+			"lint",
+			"--no-color",
+			"--no-progress",
+			"--no-summary",
+			"--config",
+			"~/.config/linters/cspell.json",
+			"--gitignore",
+		}
+		lint.linters.vale.args = {
+			"--no-exit",
+			"--output",
+			"JSON",
+			"--ext",
+			"." .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":e"),
+			"--config",
+			"/home/arne/.config/linters/vale/vale.ini",
+		}
 		lint.linters_by_ft = {
 			go = { "golangcilint", "cspell" },
 			lua = { "selene" },
@@ -13,9 +33,12 @@ return {
 			yaml = { "yamllint" },
 			gitcommit = { "commitlint" },
 			NeogitCommitMessage = { "commitlint" },
-			markdown = { "markdownlint", "vale", "cspell"  },
+			markdown = { "markdownlint", "vale", "cspell" },
 			["yaml.ansible"] = { "ansible_lint" },
 		}
+
+		local ns = require("lint").get_namespace("cspell")
+		vim.diagnostic.config({ virtual_text = false }, ns)
 
 		local function fidget_linters(h)
 			local handlers = h or {}
@@ -57,5 +80,5 @@ return {
 			end,
 		})
 	end,
-	event = { "BufReadPre", "BufNewFile" },
+	event = { "VeryLazy" },
 }

@@ -126,14 +126,14 @@ return {
 	end,
 	keys = {
 		{
-			"<leader>aa",
+			"<leader>an",
 			function()
 				require("harpoon"):list():append()
 			end,
 			desc = "harpoon add file",
 		},
 		{
-			"<leader>as",
+			"<leader>am",
 			function()
 				require("harpoon").ui:toggle_quick_menu(
 					require("harpoon"):list(),
@@ -143,32 +143,39 @@ return {
 			desc = "harpoon quick menu",
 		},
 		{
-			"<C-n>",
+			"<leader>ah",
 			function()
 				require("harpoon"):list():select(1)
 			end,
 			desc = "harpoon file 1",
 		},
 		{
-			"<C-m>",
+			"<leader>aj",
 			function()
 				require("harpoon"):list():select(2)
 			end,
 			desc = "harpoon file 2",
 		},
 		{
-			"<C-,>",
+			"<leader>ak",
 			function()
 				require("harpoon"):list():select(3)
 			end,
 			desc = "harpoon file 3",
 		},
 		{
-			"<C-.>",
+			"<leader>al",
 			function()
 				require("harpoon"):list():select(4)
 			end,
 			desc = "harpoon file 4",
+		},
+		{
+			"<leader>a;",
+			function()
+				require("harpoon"):list():select(5)
+			end,
+			desc = "harpoon file 5",
 		},
 	},
 }

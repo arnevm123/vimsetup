@@ -26,6 +26,8 @@ autocmd("BufEnter", {
 		-- vim.opt.formatoptions:remove({ "c", "o" })
 		vim.opt.number = true
 		vim.opt.relativenumber = true
+		vim.opt.scrolloff = 8
+		vim.opt.pumheight = 10
 	end,
 	desc = "Stubborn vim options...",
 })

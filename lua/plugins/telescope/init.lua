@@ -13,22 +13,32 @@ return {
 	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
 	event = "VeryLazy",
 	keys = {
-		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		-- { "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
+		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
+		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
+		{ "<leader>f;", ":Telescope neoclip<CR>", mode = { "n", "v", "x" }, desc = "Neoclip" },
+		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
+		{ "<leader>fb", ":Telescope buffers<cr>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":Telescope advanced_git_search changed_on_branch<CR>", desc = "Telescope diff branched" },
 		{ "<leader>fg", ":Telescope git_branches<CR>", desc = "Telescope branches" },
-		{ "<leader>fl", ":Telescope resume<cr>", desc = "Telescope resume" },
-		{ "<leader>fq", ":Telescope quickfix<cr>", desc = "Telescope quickfix" },
-		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
-		{ "<leader>f;", ":Telescope neoclip<CR>", mode = { "n", "v", "x" }, desc = "Neoclip" },
-		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
-		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
-		{ "<leader>f'", ":Telescope registers<cr>", desc = "Telescope registers" },
-		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
-		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
-		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
+		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
+		{ "<leader>fl", ":Telescope pickers<cr>", desc = "Telescope resume" },
 		{ "<leader>fo", ":Telescope oldfiles<CR>", desc = "Telescope old files" },
+		{ "<leader>fq", ":Telescope quickfix<CR>", desc = "Telescope quickfix" },
+		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
+		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
+		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
+		{
+			"<leader>fp",
+			function()
+				local text = vim.fn.getreg("+")
+				text = text:match("([^\n]+)")
+				text = string.gsub(text, "^%s*(.-)%s*$", "%1")
+				require("telescope.builtin").fd({ default_text = text })
+			end,
+			desc = "Telescope live grep",
+		},
 		{
 			"<leader>fr",
 			function()
@@ -102,6 +112,10 @@ return {
 		local cf_actions = telescope.extensions.changed_files.actions
 		telescope.setup({
 			defaults = {
+				cache_picker = {
+					num_pickers = 10,
+					limit_entries = 1000,
+				},
 				prompt_prefix = "",
 				entry_prefix = " ",
 				selection_caret = ">",
