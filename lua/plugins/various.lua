@@ -264,7 +264,7 @@ return {
 	-- 		vim.o.timeoutlen = 300
 	-- 	end,
 	-- 	opts = {
-	-- 		key_labels = { ["<space>"] = "SPC", ["<cr>"] = "RET", ["<tab>"] = "TAB" },
+	-- 		key_labels = { ["<space>"] = "SPC", ["<CR>"] = "RET", ["<tab>"] = "TAB" },
 	-- 		icons = { separator = ">" },
 	-- 		triggers = { "g", "'", '"', "z" },
 	-- 		triggers_nowait = { "'", "ga", "g`", "g'", '"', "z=" },

@@ -108,15 +108,15 @@ return {
 	keys = {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
-		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<cr>", desc = "lsp workspace diagnostics" },
+		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<CR>", desc = "lsp workspace diagnostics" },
 		{
 			"<leader>lf",
-			":lua require('conform').format({ timeout_ms = 2000, lsp_fallback = true })<cr>",
+			":lua require('conform').format({ timeout_ms = 2000, lsp_fallback = true })<CR>",
 			desc = "lsp format buffer",
 		},
-		{ "<leader>ll", ":lua vim.lsp.codelens.run()<cr>", desc = "lsp codelens" },
-		{ "<leader>lr", ":lua vim.lsp.buf.rename()<cr>", desc = "lsp rename variable" },
-		{ "<leader>le", ":LspRestart<cr>", desc = "Restart lsp" },
+		{ "<leader>ll", ":lua vim.lsp.codelens.run()<CR>", desc = "lsp codelens" },
+		{ "<leader>lr", ":lua vim.lsp.buf.rename()<CR>", desc = "lsp rename variable" },
+		{ "<leader>le", ":LspRestart<CR>", desc = "Restart lsp" },
 	},
 	config = function()
 		require("plugins.lsp.mason")

@@ -14,7 +14,7 @@ return {
 		require("gopher").setup(opts)
 	end,
 	keys = {
-		{ "<leader>ee", ":GoIfErr<cr>" },
+		{ "<leader>ee", ":GoIfErr<CR>" },
 	},
 }
 
@@ -52,9 +52,9 @@ return {
 -- -- event = { "CmdlineEnter" },
 -- ft = { "go", "gomod" },
 -- keys = {
--- 	{ "<leader>eb", ":GoDebug -t<cr>" },
--- 	{ "<leader>ee", ":GoIfErr<cr>" },
--- 	{ "<leader>er", ":GoGenReturn<cr>" },
+-- 	{ "<leader>eb", ":GoDebug -t<CR>" },
+-- 	{ "<leader>ee", ":GoIfErr<CR>" },
+-- 	{ "<leader>er", ":GoGenReturn<CR>" },
 -- 	{ "<leader>ot", ":GoAlt<CR>" },
 -- },
 -- build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries

@@ -48,16 +48,16 @@ return {
 		"lewis6991/gitsigns.nvim",
 		event = "BufReadPre",
 		keys = {
-			{ "]g", ":Gitsigns next_hunk<cr>", desc = "Gitsigns next hunk" },
-			{ "[g", ":Gitsigns prev_hunk<cr>", desc = "Gitsigns prev hunk" },
-			{ "<leader>gp", ":Gitsigns preview_hunk_inline<cr>", desc = "Gitsigns preview hunk" },
-			{ "<leader>gr", ":Gitsigns reset_hunk<cr>", mode = { "n", "v" }, desc = "Gitsigns reset hunk" },
-			{ "<leader>gs", ":Gitsigns stage_hunk<cr>", mode = { "n", "v" }, desc = "Gitsigns stage hunk" },
-			{ "<leader>gu", ":Gitsigns undo_stage_hunk<cr>", mode = { "n", "v" }, desc = "Gitsigns undo stage hunk" },
-			{ "<leader>gar", ":Gitsigns reset_buffer<cr>", desc = "Gitsigns reset buffer" },
-			{ "<leader>gau", ":Gitsigns undo_stage_buffer<cr>", desc = "Gitsigns undo stage buffer" },
-			{ "<leader>gas", ":Gitsigns stage_buffer<cr>", desc = "Gitsigns stage buffer" },
-			{ "<leader>gd", ":Gitsigns diffthis HEAD<cr>", desc = "Gitsigns diff with HEAD" },
+			{ "]g", ":Gitsigns next_hunk<CR>", desc = "Gitsigns next hunk" },
+			{ "[g", ":Gitsigns prev_hunk<CR>", desc = "Gitsigns prev hunk" },
+			{ "<leader>gp", ":Gitsigns preview_hunk_inline<CR>", desc = "Gitsigns preview hunk" },
+			{ "<leader>gr", ":Gitsigns reset_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns reset hunk" },
+			{ "<leader>gs", ":Gitsigns stage_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns stage hunk" },
+			{ "<leader>gu", ":Gitsigns undo_stage_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns undo stage hunk" },
+			{ "<leader>gar", ":Gitsigns reset_buffer<CR>", desc = "Gitsigns reset buffer" },
+			{ "<leader>gau", ":Gitsigns undo_stage_buffer<CR>", desc = "Gitsigns undo stage buffer" },
+			{ "<leader>gas", ":Gitsigns stage_buffer<CR>", desc = "Gitsigns stage buffer" },
+			{ "<leader>gd", ":Gitsigns diffthis HEAD<CR>", desc = "Gitsigns diff with HEAD" },
 			{
 				"<leader>gm",
 				function()
@@ -72,7 +72,7 @@ return {
 				end,
 				desc = "Gitsigns diff with main",
 			},
-			{ "<leader>gl", ":Gitsigns blame_line<cr>", desc = "Gitsigns blame current line" },
+			{ "<leader>gl", ":Gitsigns blame_line<CR>", desc = "Gitsigns blame current line" },
 			{ "yob", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
 			{
 				"<leader>gL",
@@ -140,8 +140,8 @@ return {
 		keys = {
 			{ "<leader>gc", ":Gvdiffsplit!<CR>", desc = "merge conflict vertical" },
 			{ "<leader>gC", ":Gdiffsplit!<CR>", desc = "merge conflict horizontal" },
-			{ "<leader>gh", ":0Gclog<cr>", desc = "Git history" },
-			{ "<leader>gh", ":Gclog<cr>", desc = "Git history", mode = "x" },
+			{ "<leader>gh", ":0Gclog<CR>", desc = "Git history" },
+			{ "<leader>gh", ":Gclog<CR>", desc = "Git history", mode = "x" },
 		},
 	},
 }

@@ -100,7 +100,7 @@ autocmd("FileType", {
 	group = augroup("Helpful", { clear = true }),
 	pattern = { "help" },
 	callback = function()
-		vim.keymap.set("n", "q", "<cmd>q<cr>", { silent = true, buffer = true })
+		vim.keymap.set("n", "q", "<cmd>q<CR>", { silent = true, buffer = true })
 		vim.keymap.set("n", "gd", "<C-]>", { silent = true, buffer = true })
 	end,
 })
