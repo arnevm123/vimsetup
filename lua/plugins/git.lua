@@ -46,7 +46,7 @@ return {
 	},
 	{
 		"lewis6991/gitsigns.nvim",
-		event = "BufReadPre",
+		event = "VeryLazy",
 		keys = {
 			{ "]g", ":Gitsigns next_hunk<CR>", desc = "Gitsigns next hunk" },
 			{ "[g", ":Gitsigns prev_hunk<CR>", desc = "Gitsigns prev hunk" },
@@ -75,14 +75,14 @@ return {
 			{ "<leader>gl", ":Gitsigns blame_line<CR>", desc = "Gitsigns blame current line" },
 			{ "yob", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
 			{
-				"<leader>gL",
+				"<leader>gal",
 				function()
 					require("gitsigns").blame_line({ full = true })
 				end,
 				desc = "Gitsigns blame full current line",
 			},
 			{
-				"<leader>gD",
+				"<leader>gad",
 				function()
 					require("gitsigns").diffthis("~")
 				end,

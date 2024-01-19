@@ -25,7 +25,6 @@ return {
 				["<leader>t"] = "actions.select_tab",
 				["<leader>p"] = "actions.preview",
 				["<leader>r"] = "actions.refresh",
-				["<leader>cd"] = "actions.cd",
 				["q"] = "actions.close",
 				["-"] = "actions.parent",
 				["_"] = "actions.open_cwd",

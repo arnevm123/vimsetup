@@ -2,14 +2,13 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	dependencies = {
 		"andymass/vim-matchup",
-		"windwp/nvim-ts-autotag",
+		"danymat/neogen",
+		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter-context",
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		"nvim-lua/plenary.nvim",
-		"danymat/neogen",
+		"windwp/nvim-ts-autotag",
 	},
 	event = "VeryLazy",
-	keymaps = {},
 	config = function()
 		require("neogen").setup({ snippet_engine = "luasnip" })
 		local status_ok, configs = pcall(require, "nvim-treesitter.configs")
@@ -18,10 +17,9 @@ return {
 		if not status_ok then
 			return
 		end
-
 		configs.setup({
 			modules = {},
-			sync_install = false,
+			sync_install = true,
 			auto_install = true,
 			ensure_installed = "all", -- one of "all" or a list of languages
 			ignore_install = {}, -- List of parsers to ignore installing
@@ -35,16 +33,9 @@ return {
 					end
 				end,
 			},
-			autopairs = {
-				enable = true,
-			},
-			autotag = {
-				enable = true,
-			},
-			matchup = {
-				enable = true,
-				disable_virtual_text = true,
-			},
+			autopairs = { enable = true },
+			autotag = { enable = true },
+			matchup = { enable = true, disable_virtual_text = true },
 			indent = { enable = true, disable = { "css" } },
 			incremental_selection = {
 				enable = true,
@@ -62,50 +53,24 @@ return {
 						-- You can use the capture groups defined in textobjects.scm
 						["af"] = "@function.outer",
 						["if"] = "@function.inner",
-						["al"] = "@loop.outer",
-						["il"] = "@loop.inner",
-						["ac"] = "@conditional.outer",
-						["ic"] = "@conditional.inner",
 					},
 					selection_modes = {
 						["@function.outer"] = "V", -- linewise
-						["@class.outer"] = "V", -- blockwise
 					},
 					include_surrounding_whitespace = false,
 				},
 				move = {
 					enable = true,
 					set_jumps = true,
-
-					goto_next_start = {
-						["]f"] = "@function.outer",
-						["]i"] = "@conditional.outer",
-						["]l"] = "@loop.outer",
-					},
-					goto_next_end = {
-						["]F"] = "@function.outer",
-						["]I"] = "@conditional.outer",
-						["]L"] = "@loop.outer",
-					},
-					goto_previous_start = {
-						["[f"] = "@function.outer",
-						["[i"] = "@conditional.outer",
-						["[l"] = "@loop.outer",
-					},
-					goto_previous_end = {
-						["[I"] = "@conditional.outer",
-						["[F"] = "@function.outer",
-						["[L"] = "@loop.outer",
-					},
+					goto_next_start = { ["]f"] = "@function.outer" },
+					goto_next_end = { ["]F"] = "@function.outer" },
+					goto_previous_start = { ["[f"] = "@function.outer" },
+					goto_previous_end = { ["[F"] = "@function.outer" },
 				},
 				swap = {
 					enable = true,
-					swap_next = {
-						["]a"] = "@parameter.inner",
-					},
-					swap_previous = {
-						["[a"] = "@parameter.inner",
-					},
+					swap_next = { ["]a"] = "@parameter.inner" },
+					swap_previous = { ["[a"] = "@parameter.inner" },
 				},
 			},
 		})
@@ -117,21 +82,8 @@ return {
 			min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 			patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
 				default = { "class", "function", "method", "for", "while", "if", "switch", "case" },
-				tex = { "chapter", "section", "subsection", "subsubsection" },
 				rust = { "impl_item", "struct", "enum" },
-				scala = { "object_definition" },
-				vhdl = { "process_statement", "architecture_body", "entity_declaration" },
 				markdown = { "section" },
-				elixir = {
-					"anonymous_function",
-					"arguments",
-					"block",
-					"do_block",
-					"list",
-					"map",
-					"tuple",
-					"quoted_content",
-				},
 				json = { "pair" },
 				yaml = { "block_mapping_pair" },
 			},

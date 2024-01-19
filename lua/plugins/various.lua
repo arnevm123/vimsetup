@@ -13,6 +13,31 @@ return {
 	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
 	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
 	{
+		"sourcegraph/sg.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim", --[[ "nvim-telescope/telescope.nvim ]]
+		},
+		keys = {
+			{ "<leader>cc", ":CodyToggle<CR>", mode = { "n", "v" }, desc = "Toggle Cody chat window" },
+			{ "<leader>cq", ":CodyAsk ", mode = { "n", "v" }, desc = "Ask Cody a question" },
+			{ "<leader>ct", ":CodyTask ", mode = { "n", "v" }, desc = "Create a new Cody task" },
+			{ "<leader>cp", ":CodyTaskPrevious<CR>", mode = { "n", "v" }, desc = "Go to previous Cody task" },
+			{ "<leader>cn", ":CodyTaskNext<CR>", mode = { "n", "v" }, desc = "Go to next Cody task" },
+			{ "<leader>ca", ":CodyTaskAccept<CR>", mode = { "n", "v" }, desc = "Accept current Cody task" },
+		},
+		config = true,
+		build = "nvim -l build/init.lua",
+		event = "VimEnter",
+	},
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+			require("Comment.ft").set("mysql", { "--%s", "/*%s*/" })
+		end,
+		event = "VeryLazy",
+	},
+	{
 		"tpope/vim-rsi",
 		event = "VeryLazy",
 		config = function()
@@ -69,10 +94,7 @@ return {
 		opts = {
 			preview = { auto_preview = false },
 			filter = {
-				fzf = {
-					action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
-					extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-				},
+				fzf = { extra_opts = { "--bind", "ctrl-y:toggle-all" } },
 			},
 		},
 	},
@@ -233,41 +255,12 @@ return {
 		},
 	},
 	{
-		"dzfrias/arena.nvim",
-		event = "BufWinEnter",
-		opts = {
-			max_items = 5,
-			always_context = {
-				"mod.rs",
-				"init.lua",
-				"main.go",
-			},
-			ignore_current = false,
-			per_project = true,
+		"Wansmer/treesj",
+		keys = {
+			{ "<space>ej", ":lua require('treesj').join()<CR>", desc = "Join lines" },
+			{ "<space>ek", ":lua require('treesj').split()<CR>", desc = "Split lines" },
 		},
-		keys = { { "<leader>af", ":lua require('arena').toggle()<CR>", desc = "Arena" } },
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		opts = { use_default_keymaps = false },
 	},
-	-- {
-	-- 	"Wansmer/treesj",
-	-- 	keys = {
-	-- 		{ "<space>ej", ":lua require('treesj').join()<CR>", desc = "Join lines" },
-	-- 		{ "<space>ek", ":lua require('treesj').split()<CR>", desc = "Split lines" },
-	-- 	},
-	-- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
-	-- 	opts = { use_default_keymaps = false },
-	-- },
-	-- {
-	-- 	"folke/which-key.nvim",
-	-- 	event = "VeryLazy",
-	-- 	init = function()
-	-- 		vim.o.timeout = true
-	-- 		vim.o.timeoutlen = 300
-	-- 	end,
-	-- 	opts = {
-	-- 		key_labels = { ["<space>"] = "SPC", ["<CR>"] = "RET", ["<tab>"] = "TAB" },
-	-- 		icons = { separator = ">" },
-	-- 		triggers = { "g", "'", '"', "z" },
-	-- 		triggers_nowait = { "'", "ga", "g`", "g'", '"', "z=" },
-	-- 	},
-	-- },
 }

@@ -17,7 +17,7 @@ vim.opt.cpoptions:append(">") -- when you yank multiple times into a register, t
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.hlsearch = true
+vim.opt.hlsearch = false
 vim.opt.termguicolors = true
 
 vim.opt.shiftwidth = 4

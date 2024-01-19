@@ -1,34 +1,30 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
-		"aaronhallaert/ts-advanced-git-search.nvim",
+		"nvim-lua/plenary.nvim",
+		"nvim-telescope/telescope-frecency.nvim",
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"AckslD/nvim-neoclip.lua",
-		"nvim-lua/plenary.nvim",
+		"aaronhallaert/ts-advanced-git-search.nvim",
 		"freestingo/telescope-changed-files",
-		"nvim-telescope/telescope-frecency.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
 		{ "kkharji/sqlite.lua", module = "sqlite" },
 	},
-	cmd = { "Telescope", "TelescopeDiff", "TelescopeDelta" },
 	event = "VeryLazy",
 	keys = {
 		-- { "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
+		{ "<leader>ft", ":Telescope<CR>", desc = "Telescope" },
 		{ "<leader>f'", ":Telescope registers<CR>", desc = "Telescope registers" },
 		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
 		{ "<leader>f;", ":Telescope neoclip<CR>", mode = { "n", "v", "x" }, desc = "Neoclip" },
-		{ "<leader>f=", ":Telescope advanced_git_search show_custom_functions<CR>", desc = "Telescope git stuff" },
-		{ "<leader>fb", ":Telescope buffers<CR>", desc = "Telescope buffers" },
+		{ "<leader>bb", ":Telescope buffers<CR>", desc = "Telescope buffers" },
 		{ "<leader>fc", ":Telescope advanced_git_search changed_on_branch<CR>", desc = "Telescope diff branched" },
-		{ "<leader>fg", ":Telescope git_branches<CR>", desc = "Telescope branches" },
 		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
-		{ "<leader>fl", ":Telescope pickers<CR>", desc = "Telescope resume" },
+		{ "<leader>fl", ":Telescope pickers<CR>", desc = "Telescope last searches" },
 		{ "<leader>fo", ":Telescope oldfiles<CR>", desc = "Telescope old files" },
 		{ "<leader>fq", ":Telescope quickfix<CR>", desc = "Telescope quickfix" },
-		{ "<leader>fs", ":Telescope<CR>", desc = "Telescope" },
-		{ "<leader>fw", ":TelescopeDelta<CR>", desc = "Telescope delta" },
-		{ "<leader>go", ":Telescope git_status<CR>", desc = "Telescope git status" },
+		{ "<leader>fs", ":Telescope git_status<CR>", desc = "Telescope git status" },
 		{
 			"<leader>fp",
 			function()
@@ -37,14 +33,21 @@ return {
 				text = string.gsub(text, "^%s*(.-)%s*$", "%1")
 				require("telescope.builtin").fd({ default_text = text })
 			end,
-			desc = "Telescope live grep",
+			desc = "Telescope find copied file",
+		},
+		{
+			"<leader>fi",
+			function()
+				require("telescope.builtin").live_grep({ cwd = vim.fn.expand("%:h") })
+			end,
+			desc = "Telescope fd current folder",
 		},
 		{
 			"<leader>fe",
 			function()
 				require("telescope.builtin").fd({ cwd = vim.fn.expand("%:h") })
 			end,
-			desc = "Telescope live grep",
+			desc = "Telescope fd current folder",
 		},
 		{
 			"<leader>fr",
@@ -61,7 +64,7 @@ return {
 			desc = "Telescope live grep",
 		},
 		{
-			"<leader>FF",
+			"<leader>fg",
 			function()
 				require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
 			end,
@@ -228,6 +231,12 @@ return {
 				buffers = {
 					sort_lastused = true,
 					sort_mru = true,
+					ignore_current_buffer = true,
+					layout_config = {
+						width = 0.5,
+						height = 0.4,
+						preview_width = 0,
+					},
 				},
 			},
 			extensions = {
@@ -257,24 +266,5 @@ return {
 			-- To get telescope-file-browser loaded and working with telescope,
 			-- you need to call load_extension, somewhere after setup function:
 		})
-
-		local previewers = require("telescope.previewers")
-		local builtin = require("telescope.builtin")
-
-		local delta = previewers.new_termopen_previewer({
-			get_command = function(entry)
-				return { "git", "-c", "core.pager=delta", "-c", "delta.side-by-side=false", "diff", entry.value .. "^!" }
-			end,
-		})
-
-		vim.api.nvim_create_user_command("TelescopeDelta", function()
-			local options = {}
-			options.previewer = {
-				delta,
-				require("telescope.previewers").git_commit_message.new(options),
-				previewers.git_commit_diff_as_was.new(options),
-			}
-			builtin.git_commits(options)
-		end, {})
 	end,
 }

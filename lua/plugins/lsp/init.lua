@@ -123,5 +123,5 @@ return {
 		require("plugins.lsp.handlers").setup()
 		require("plugins.lsp.completion")
 	end,
-	event = { "VeryLazy" },
+	event = { "BufReadPre", "BufNewFile" },
 }

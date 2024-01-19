@@ -68,10 +68,6 @@ local function lsp_keymaps(bufnr)
 	keymap(bufnr, "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 	keymap(bufnr, "n", "[w", "<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
 	keymap(bufnr, "n", "]w", "<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
-	keymap(bufnr, "n", "<leader>cD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-	keymap(bufnr, "n", "<leader>cd", "<cmd>Telescope lsp_definitions<CR>", opts)
-	keymap(bufnr, "n", "<leader>cI", "<cmd>Telescope lsp_implementations<CR>", opts)
-	keymap(bufnr, "n", "<leader>cr", "<cmd>Telescope lsp_references<CR>", opts)
 end
 
 M.on_attach = function(client, bufnr)

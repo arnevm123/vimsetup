@@ -22,14 +22,14 @@ cmp.setup({
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-q>"] = cmp.mapping(
 			cmp.mapping.confirm({
-				behavior = cmp.ConfirmBehavior.Insert,
+				behavior = cmp.ConfirmBehavior.Replace,
 				select = true,
 			}),
 			{ "i", "c" }
 		),
 		["<c-y>"] = cmp.mapping(
 			cmp.mapping.confirm({
-				behavior = cmp.ConfirmBehavior.Replace,
+				behavior = cmp.ConfirmBehavior.Insert,
 				select = true,
 			}),
 			{ "i", "c" }
@@ -49,7 +49,6 @@ cmp.setup({
 			end,
 		}),
 
-		-- ["<tab>"] = false,
 		["<tab>"] = cmp.config.disable,
 	}),
 	formatting = {
@@ -57,6 +56,7 @@ cmp.setup({
 		format = function(entry, vim_item)
 			vim_item.menu = ({
 				nvim_lsp = "LSP",
+				cody = "AI",
 				nvim_lua = "VIM",
 				luasnip = "SNP",
 				buffer = "BUF",
@@ -67,6 +67,7 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
+		{ name = "cody" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "buffer" },

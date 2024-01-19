@@ -87,14 +87,6 @@ autocmd({ "BufWritePre" }, {
 	end,
 })
 
--- -- Set indentation to 2 spaces for some file types
--- augroup("setIndent", { clear = true })
--- autocmd("Filetype", {
--- 	group = "setIndent",
--- 	pattern = { "xml", "html", "xhtml", "css", "scss", "javascript", "typescript", "yaml", "proto" },
--- 	command = "setlocal shiftwidth=2 tabstop=2 expandtab",
--- })
-
 autocmd("FileType", {
 	desc = "Easy quit help with 'q'",
 	group = augroup("Helpful", { clear = true }),
@@ -104,19 +96,3 @@ autocmd("FileType", {
 		vim.keymap.set("n", "gd", "<C-]>", { silent = true, buffer = true })
 	end,
 })
-
--- -- folding
--- vim.cmd([[
--- function FoldText()
--- let foldtextstart = repeat(' ', indent(nextnonblank(v:foldstart)))
--- let uglyLine = getline(v:foldstart)
--- let line = substitute(uglyLine, '^\s*\(.\{-}\)\s*$', '\1', '')
--- let uglyLineEnd = getline(v:foldend)
--- let lineEnd = substitute(uglyLineEnd, '^\s*\(.\{-}\)\s*$', '\1', '')
--- let foldDept = getline(v:foldlevel)
--- let numOfLines = v:foldend - v:foldstart
--- return foldtextstart . line . ' ... ' . lineEnd . ' ' . '(' . numOfLines . 'ℓ)'
--- endfunction
--- set foldtext=FoldText()
--- set fillchars=fold:\  " removes trailing dots. Mind that there is a whitespace after the \!
--- ]])

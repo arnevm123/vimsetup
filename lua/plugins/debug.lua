@@ -10,17 +10,17 @@ return {
 	--stylua: ignore
 	keys = {
 		{ "yod", function() require("dapui").toggle() end, { noremap = true, silent = true, desc = "Toggle dapui" } },
-		{ "<leader>sc", ":lua require('dap').continue()<CR>", desc = "Debug continue" },
-		{ "<leader>sl", ":lua require('dap').run_to_cursor()<CR>", desc = "Debug run to cursor" },
-		{ "<leader>so", ":lua require('dap').step_over()<CR>", desc = "Debug step ove" },
-		{ "<leader>si", ":lua require('dap').step_into()<CR>", desc = "Debug step into" },
-		{ "<leader>su", ":lua require('dap').up()<CR>", desc = "Debug step up callstack" },
-		{ "<leader>sd", ":lua require('dap').down()<CR>", desc = "Debug step down callstack" },
-		{ "<leader>sO", ":lua require('dap').step_out()<CR>", desc = "Debug  step out" },
-		{ "<leader>sb", ":lua require('dap').toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
-		{ "<leader>SB", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
-		{ "<leader>st", " :lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
-		{ "<leader>sr", ":lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
+		{ "<leader>dc", ":lua require('dap').continue()<CR>", desc = "Debug continue" },
+		{ "<leader>dl", ":lua require('dap').run_to_cursor()<CR>", desc = "Debug run to cursor" },
+		{ "<leader>do", ":lua require('dap').step_over()<CR>", desc = "Debug step ove" },
+		{ "<leader>di", ":lua require('dap').step_into()<CR>", desc = "Debug step into" },
+		{ "<leader>du", ":lua require('dap').up()<CR>", desc = "Debug step up callstack" },
+		{ "<leader>dd", ":lua require('dap').down()<CR>", desc = "Debug step down callstack" },
+		{ "<leader>DO", ":lua require('dap').step_out()<CR>", desc = "Debug  step out" },
+		{ "<leader>db", ":lua require('dap').toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
+		{ "<leader>DB", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
+		{ "<leader>dt", " :lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
+		{ "<leader>dr", ":lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
 	},
 		config = function()
 			local ok, dap = pcall(require, "dap")
