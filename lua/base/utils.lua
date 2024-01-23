@@ -158,7 +158,7 @@ function M:search_diagnostics_cody()
 	-- clean_message = clean_message:gsub("[A-Za-z0-9:/\\._%-]+[/\\][A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
 
 	local msg = diagnostics[index].message .. " from " .. diagnostics[index].source
-	require("sg.cody.commands").ask_range(bufnr, start_line, end_line, msg)
+	require("sg.cody.commands").ask_range(bufnr, start_line - 1, end_line, msg)
 end
 
 function M:isInTable(str, tbl)

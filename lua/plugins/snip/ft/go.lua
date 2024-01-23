@@ -60,10 +60,10 @@ local snippets = {
 		snips.in_fn
 	),
 	ls.s(
-		{ trig = "ife", name = "If error, choose me!", dscr = "If error, return wrapped with dynamic node" },
+		{ trig = "ee", name = "If error, choose me!", dscr = "If error, return wrapped with dynamic node" },
 		fmt("if {} != nil {{\n\treturn {}\n}}\n{}", {
-			ls.i(1, "err"),
-			ls.d(2, snips.make_return_nodes, { 1 }, { user_args = { { "a1", "a2" } } }),
+			ls.i(2, "err"),
+			ls.d(1, snips.make_return_nodes, { 2 }, { user_args = { { "a1", "a2" } } }),
 			ls.i(0),
 		}),
 		in_fn

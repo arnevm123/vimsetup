@@ -22,7 +22,7 @@ M.go_err_snippet = function(args, _, _, spec)
 	end
 	return ls.sn(index, {
 		ls.c(1, {
-			ls.sn(nil, fmt('fmt.Errorf("{} %w", {})', { ls.i(1, msg), ls.t(err_name) })),
+			ls.sn(nil, fmt('fmt.Errorf("failed to{} %w", {})', { ls.i(1, msg), ls.t(err_name) })),
 			ls.sn(nil, fmt('fmt.Errorf("{} %v: %w", {}, {})', { ls.i(1, msg), ls.i(2), ls.t(err_name) })),
 			ls.sn(
 				nil,
@@ -99,15 +99,13 @@ local function transform(text, info)
 	return ls.t(text)
 end
 
-local get_node_text = vim.treesitter.get_node_text
-
 local handlers = {
 	parameter_list = function(node, info)
 		local result = {}
 
 		local count = node:named_child_count()
 		for idx = 0, count - 1 do
-			table.insert(result, transform(get_node_text(node:named_child(idx), 0), info))
+			table.insert(result, transform(vim.treesitter.get_node_text(node:named_child(idx), 0), info))
 			if idx ~= count - 1 then
 				table.insert(result, ls.t({ ", " }))
 			end
@@ -117,7 +115,7 @@ local handlers = {
 	end,
 
 	type_identifier = function(node, info)
-		local text = get_node_text(node, 0)
+		local text = vim.treesitter.get_node_text(node, 0)
 		return { transform(text, info) }
 	end,
 }

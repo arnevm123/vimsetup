@@ -110,6 +110,33 @@ return {
         -- stylua: ignore
 			{ "<leader>ol", function() require("nvim-quick-switcher").find("*util.*") end, desc = "Go to util" },
 			{
+				"<leader>ow",
+				function()
+					local toggle_os = function(p)
+						local extension = p.file_type
+						local path = p.path .. "/"
+						local file_name = p.full_prefix
+						if string.find(file_name, "linux") ~= nil then
+							local pth = path .. string.gsub(file_name, "linux", "windows") .. "." .. extension
+							if not io.open(pth, "r") then
+								vim.cmd(":e " .. pth)
+							end
+							return pth
+						end
+						if string.find(file_name, "windows") ~= nil then
+							local pth = path .. string.gsub(file_name, "windows", "linux") .. "." .. extension
+							if not io.open(pth, "r") then
+								vim.cmd(":e " .. pth)
+							end
+							return pth
+						end
+						return path .. file_name
+					end
+					require("nvim-quick-switcher").find_by_fn(toggle_os)
+				end,
+				desc = "Go to windows or linux",
+			},
+			{
 				"<leader>ot",
 				function()
 					local toggle_test = function(p)
@@ -129,17 +156,20 @@ return {
 								.. "."
 								.. extension
 							if not io.open(test_path, "r") then
-								io.open(test_path, "w"):close()
+								vim.cmd(":e " .. test_path)
 							end
 							return test_path
 						end
 						if extension == "go" then
+							-- name contains test -> remove it
 							if string.find(file_name, "test") ~= nil then
 								return path .. string.gsub(file_name, "_test", "") .. "." .. extension
 							end
+
+							-- name does not contain test -> add it
 							local test_path = path .. file_name .. "_test." .. extension
 							if not io.open(test_path, "r") then
-								io.open(test_path, "w"):close()
+								vim.cmd(":e " .. test_path)
 							end
 							return test_path
 						end
@@ -265,12 +295,14 @@ return {
 		"olexsmir/gopher.nvim",
 		ft = { "go", "gomod" },
 		branch = "develop",
-		opts = {
-			gotests = { template = "testify" },
-			commands = { iferr = "ierr -message 'test'" },
-		},
+		config = function()
+			require("gopher").setup({
+				gotests = { template = "testify" },
+				commands = { iferr = "iferr -message 'fmt.Errorf(\"failed to %w\", err)'" },
+			})
+		end,
 		keys = {
-			{ "<leader>ee", ":GoIfErr<CR>", desc = "Go if err" },
+			{ "<leader>ee", ":GoIfErr<CR>jf%", desc = "Go if err" },
 			{
 				"<leader>en",
 				function()
