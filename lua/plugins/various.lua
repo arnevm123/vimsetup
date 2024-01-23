@@ -2,11 +2,9 @@ return {
 	-- text manipulation
 	{ "tpope/vim-dispatch", event = "VeryLazy" },
 	{ "tpope/vim-eunuch", event = "VeryLazy" },
-	{ "wsdjeg/vim-fetch", event = "VeryLazy" }, -- :e with line numpers
-	{ "wellle/targets.vim", event = "VeryLazy" }, -- better cib
-	{ "numToStr/Comment.nvim", config = true, event = "VeryLazy" },
-	{ "kylechui/nvim-surround", config = true, event = "VeryLazy" },
-	{ "duane9/nvim-rg", cmd = { "Rg" } },
+	{ "wsdjeg/vim-fetch", lazy = false },
+	-- { "wellle/targets.vim", event = "VeryLazy" }, -- better cib
+	-- { "kylechui/nvim-surround", config = true, event = "VeryLazy" },
 	{ "brenoprata10/nvim-highlight-colors", config = true, cmd = { "HighlightColorsOn" } },
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
@@ -262,5 +260,25 @@ return {
 		},
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		opts = { use_default_keymaps = false },
+	},
+	{
+		"olexsmir/gopher.nvim",
+		ft = { "go", "gomod" },
+		branch = "develop",
+		opts = {
+			gotests = { template = "testify" },
+			commands = { iferr = "ierr -message 'test'" },
+		},
+		keys = {
+			{ "<leader>ee", ":GoIfErr<CR>", desc = "Go if err" },
+			{
+				"<leader>en",
+				function()
+					local var = vim.fn.expand("<cword>")
+					vim.api.nvim_input("o" .. "_ = " .. var .. "<esc>^")
+				end,
+				desc = "Go empty assign",
+			},
+		},
 	},
 }

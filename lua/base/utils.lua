@@ -150,9 +150,14 @@ function M:search_diagnostics_cody()
 		end
 	end
 
-	local clean_message = diagnostics[index].message:gsub("[A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
-	clean_message = clean_message:gsub("[A-Za-z0-9:/\\._%-]+[/\\][A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
-	local msg = clean_message .. " from " .. diagnostics[index].source
+	-- See if this is needed
+	-- -- Remove patterns like "filename.extension"
+	-- clean_message = clean_message:gsub("[A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
+	--
+	-- -- Remove patterns like "path/filename.extension"
+	-- clean_message = clean_message:gsub("[A-Za-z0-9:/\\._%-]+[/\\][A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
+
+	local msg = diagnostics[index].message .. " from " .. diagnostics[index].source
 	require("sg.cody.commands").ask_range(bufnr, start_line, end_line, msg)
 end
 
