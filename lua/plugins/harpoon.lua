@@ -109,6 +109,9 @@ return {
 		harpoon:extend({
 			UI_CREATE = function(cx)
 				vim.keymap.set("n", "<esc>", "", { buffer = cx.bufnr })
+				vim.keymap.set("n", "<C-c>", function()
+					require("harpoon").ui:toggle_quick_menu()
+				end, { buffer = cx.bufnr })
 
 				vim.keymap.set("n", "<C-v>", function()
 					harpoon.ui:select_menu_item({ vsplit = true })
@@ -126,14 +129,14 @@ return {
 	end,
 	keys = {
 		{
-			"<leader>aa",
+			"<S-TAB>",
 			function()
 				require("harpoon"):list():append()
 			end,
 			desc = "harpoon add file",
 		},
 		{
-			"<leader>as",
+			"<leader><TAB>",
 			function()
 				require("harpoon").ui:toggle_quick_menu(
 					require("harpoon"):list(),

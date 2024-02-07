@@ -15,6 +15,10 @@ keymap("n", "<S-up>", ":resize -2<CR>", opts)
 keymap("n", "<S-left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<S-right>", ":vertical resize +2<CR>", opts)
 
+keymap("n", "<leader>TC", ":tabclose<CR>", opts)
+keymap("n", "<leader>TN", ":tabnew<CR>", opts)
+keymap("n", "<leader>TO", ":tabonly<CR>", opts)
+
 keymap("n", "<C-w>S", "<C-w>s<C-w>T", opts)
 keymap("c", "<tab>", "<C-z>", nosilent)
 
@@ -22,8 +26,12 @@ keymap("c", "<tab>", "<C-z>", nosilent)
 keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
+keymap("v", "<leader>A", ":%norm A", nosilent)
+keymap("v", "<leader>I", ":%norm I", nosilent)
+
 -- Add some help to visual mode
 keymap("x", ".", ":norm .<CR>", nosilent)
+keymap("x", "@", ":norm @q<CR>", nosilent)
 keymap("x", "*", '"ry/\\V<C-r>r<CR>', nosilent)
 keymap("x", "#", '"ry?\\V<C-r>r<CR>', nosilent)
 
@@ -33,6 +41,8 @@ keymap("n", "gw", utils.search_diagnostics_cody, opts)
 keymap("v", "gw", utils.search_diagnostics_cody, opts)
 keymap("n", "yoq", utils.CToggle, opts)
 keymap("n", "yov", utils.VirtualTextToggle, opts)
+keymap("n", "<leader>xu", utils.upload_go_playground, opts)
+keymap("v", "<leader>xu", utils.upload_go_playground, opts)
 keymap("n", "<leader>zg", function()
 	utils.cspell_add(vim.fn.expand("<cword>"))
 end, nosilent)
@@ -94,10 +104,17 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 -- search and replace stuff
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><left><left><left>", nosilent)
 keymap("n", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><left><left><left>", nosilent)
-keymap("v", "<leader>re", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>', nosilent)
-keymap("n", "<leader>re", ":%s/<C-r><C-w>/<C-r><C-w>/gcI<Left><Left><Left><Left>", nosilent)
+keymap("v", "<leader>re", '"hy:%s/\\<<C-r>h\\>/<C-r>h/gc<left><left><left>', nosilent)
+keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gcI<Left><Left><Left><Left>", nosilent)
 
 keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
+keymap("n", "<leader>tp", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux-popup.sh $VIM_DIR<CR>", nosilent)
 
 keymap("n", "<leader>bu", ":wa<CR>:Make<CR>", nosilent)
 keymap("n", "<leader>bi", ":wa<CR>:Dispatch<CR>", nosilent)
+keymap(
+	"n",
+	"<leader>bw",
+	":wa<CR>:Dispatch make build-windows && cp bin/lynx-controller-windows.exe ~/remmina-shared <CR>",
+	nosilent
+)

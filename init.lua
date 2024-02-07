@@ -1,6 +1,4 @@
 require("base.options")
 require("base.lazy")
-require("base.color").Setup("rose-pine")
--- require("base.color").Transparent("rose-pine")
 require("base.keymaps")
 require("base.autocommand")

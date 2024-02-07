@@ -4,9 +4,24 @@ return {
 		"andymass/vim-matchup",
 		"danymat/neogen",
 		"nvim-lua/plenary.nvim",
+		"nvim-treesitter/playground",
 		"nvim-treesitter/nvim-treesitter-context",
-		"nvim-treesitter/nvim-treesitter-textobjects",
 		"windwp/nvim-ts-autotag",
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		-- {
+		-- 	"Wansmer/sibling-swap.nvim",
+		-- 	opts = { use_default_keymaps = true },
+		-- 	keys = {
+		-- 		{ "[a", ":lua require('sibling-swap.swap').swap_with('left')<CR>", desc = "Swap with left" },
+		-- 		{ "]a", ":lua require('sibling-swap.swap').swap_with('right')<CR>", desc = "Swap with right" },
+		-- 		{ "[A", ":lua require('sibling-swap.swap').swap_with('left')<CR>", desc = "Swap + operator with left" },
+		-- 		{
+		-- 			"]A",
+		-- 			":lua require('sibling-swap.swap').swap_with('right')<CR>",
+		-- 			desc = "Swap + operator with right",
+		-- 		},
+		-- 	},
+		-- },
 	},
 	event = "VeryLazy",
 	config = function()
@@ -40,9 +55,8 @@ return {
 			incremental_selection = {
 				enable = true,
 				keymaps = {
-					init_selection = "<c-space>",
-					node_incremental = "<c-space>",
-					node_decremental = "<c-\\>",
+					node_incremental = "v",
+					node_decremental = "<leader>v",
 				},
 			},
 			textobjects = {
@@ -62,15 +76,15 @@ return {
 				move = {
 					enable = true,
 					set_jumps = true,
-					goto_next_start = { ["]f"] = "@function.outer" },
-					goto_next_end = { ["]F"] = "@function.outer" },
-					goto_previous_start = { ["[f"] = "@function.outer" },
-					goto_previous_end = { ["[F"] = "@function.outer" },
+					goto_next_end = { ["]f"] = "@function.outer" },
+					goto_next_start = { ["]F"] = "@function.outer" },
+					goto_previous_end = { ["[f"] = "@function.outer" },
+					goto_previous_start = { ["[F"] = "@function.outer" },
 				},
 				swap = {
 					enable = true,
-					swap_next = { ["]a"] = "@parameter.inner" },
-					swap_previous = { ["[a"] = "@parameter.inner" },
+					swap_next = { ["]s"] = "@parameter.inner" },
+					swap_previous = { ["[s"] = "@parameter.inner" },
 				},
 			},
 		})

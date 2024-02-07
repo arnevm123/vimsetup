@@ -2,9 +2,10 @@ return {
 	-- text manipulation
 	{ "tpope/vim-dispatch", event = "VeryLazy" },
 	{ "tpope/vim-eunuch", event = "VeryLazy" },
+	{ "szw/vim-maximizer", keys = { { "<C-w>z", ":MaximizerToggle<CR>", desc = "Toggle maximizer" } } },
 	{ "wsdjeg/vim-fetch", lazy = false },
-	-- { "wellle/targets.vim", event = "VeryLazy" }, -- better cib
-	-- { "kylechui/nvim-surround", config = true, event = "VeryLazy" },
+	{ "wellle/targets.vim", event = "VeryLazy" }, -- better cib
+	{ "kylechui/nvim-surround", config = true, event = "VeryLazy" },
 	{ "brenoprata10/nvim-highlight-colors", config = true, cmd = { "HighlightColorsOn" } },
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
@@ -13,7 +14,7 @@ return {
 	{
 		"sourcegraph/sg.nvim",
 		dependencies = {
-			"nvim-lua/plenary.nvim", --[[ "nvim-telescope/telescope.nvim ]]
+			"nvim-lua/plenary.nvim",
 		},
 		keys = {
 			{ "<leader>cc", ":CodyToggle<CR>", mode = { "n", "v" }, desc = "Toggle Cody chat window" },
@@ -69,22 +70,6 @@ return {
 		end,
 		event = "VeryLazy",
 	},
-	-- {
-	-- 	"toppair/peek.nvim",
-	-- 	cmd = { "Peek" },
-	-- 	build = "deno task --quiet build:fast",
-	-- 	config = function()
-	-- 		require("peek").setup()
-	-- 		vim.api.nvim_create_user_command("Peek", function()
-	-- 			local peek = require("peek")
-	-- 			if peek.is_open() then
-	-- 				peek.close()
-	-- 			else
-	-- 				peek.open()
-	-- 			end
-	-- 		end, {})
-	-- 	end,
-	-- },
 	{
 		"kevinhwang91/nvim-bqf",
 		dependencies = { "junegunn/fzf" },
@@ -252,7 +237,7 @@ return {
 		event = "BufEnter",
 		opts = {
 			print_var_statements = {
-				go = { 'fmt.Printf("%s %%v \\n", %s)' },
+				go = { 'spew.Printf("%s %%#v \\n", %s)' },
 			},
 		},
 		keys = {

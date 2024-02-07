@@ -13,26 +13,42 @@ return {
 	event = "VeryLazy",
 	keys = {
 		-- { "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
-		{ "<leader>ft", ":Telescope<CR>", desc = "Telescope" },
-		{ "<leader>f'", ":Telescope registers<CR>", desc = "Telescope registers" },
-		{ "<leader>f/", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Telescope current buffer fuzzy" },
+		{ "<leader>f'", ":Telescope registers<CR>", mode = { "n", "v", "x" }, desc = "Telescope registers" },
+		{ "<leader>f=", ":Telescope jumplist<CR>", mode = { "n", "v", "x" }, desc = "Telescope jumplist" },
 		{ "<leader>f;", ":Telescope neoclip<CR>", mode = { "n", "v", "x" }, desc = "Neoclip" },
-		{ "<leader>bb", ":Telescope buffers<CR>", desc = "Telescope buffers" },
-		{ "<leader>fc", ":Telescope advanced_git_search changed_on_branch<CR>", desc = "Telescope diff branched" },
-		{ "<leader>fh", ":Telescope help_tags<CR>", desc = "Telescope help tags" },
-		{ "<leader>fk", ":Telescope keymaps<CR>", desc = "Telescope keymaps" },
-		{ "<leader>fl", ":Telescope pickers<CR>", desc = "Telescope last searches" },
-		{ "<leader>fo", ":Telescope oldfiles<CR>", desc = "Telescope old files" },
-		{ "<leader>fq", ":Telescope quickfix<CR>", desc = "Telescope quickfix" },
-		{ "<leader>fs", ":Telescope git_status<CR>", desc = "Telescope git status" },
+		{ "<leader>fh", ":Telescope help_tags<CR>", mode = { "n", "v", "x" }, desc = "Telescope help tags" },
+		{ "<leader>fk", ":Telescope keymaps<CR>", mode = { "n", "v", "x" }, desc = "Telescope keymaps" },
+		{ "<leader>fl", ":Telescope pickers<CR>", mode = { "n", "v", "x" }, desc = "Telescope last searches" },
+		{ "<leader>fo", ":Telescope oldfiles<CR>", mode = { "n", "v", "x" }, desc = "Telescope old files" },
+		{ "<leader>fq", ":Telescope quickfix<CR>", mode = { "n", "v", "x" }, desc = "Telescope quickfix" },
+		{ "<leader>fs", ":Telescope git_status<CR>", mode = { "n", "v", "x" }, desc = "Telescope git status" },
+		{ "<leader>ft", ":Telescope<CR>", mode = { "n", "v", "x" }, desc = "Telescope" },
+		{ "<leader>bb", ":Telescope buffers<CR>", mode = { "n", "v", "x" }, desc = "Telescope buffers" },
+		{
+			"<leader>f/",
+			":Telescope current_buffer_fuzzy_find<CR>",
+			mode = { "n", "v", "x" },
+			desc = "Telescope current buffer fuzzy",
+		},
+		{
+			"<leader>fc",
+			":Telescope advanced_git_search changed_on_branch<CR>",
+			mode = { "n", "v", "x" },
+			desc = "Telescope diff branched",
+		},
 		{
 			"<leader>fp",
 			function()
 				local text = vim.fn.getreg("+")
+				if not text then
+					vim.notify("No text in register", vim.log.levels.ERROR)
+					return
+				end
 				text = text:match("([^\n]+)")
 				text = string.gsub(text, "^%s*(.-)%s*$", "%1")
 				require("telescope.builtin").fd({ default_text = text })
 			end,
+			mode = { "n", "v" },
 			desc = "Telescope find copied file",
 		},
 		{
@@ -40,6 +56,7 @@ return {
 			function()
 				require("telescope.builtin").live_grep({ cwd = vim.fn.expand("%:h") })
 			end,
+			mode = { "n", "v" },
 			desc = "Telescope fd current folder",
 		},
 		{
@@ -47,6 +64,7 @@ return {
 			function()
 				require("telescope.builtin").fd({ cwd = vim.fn.expand("%:h") })
 			end,
+			mode = { "n", "v" },
 			desc = "Telescope fd current folder",
 		},
 		{
@@ -54,6 +72,7 @@ return {
 			function()
 				require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
 			end,
+			mode = { "n", "v" },
 			desc = "Telescope live grep",
 		},
 		{
@@ -61,6 +80,7 @@ return {
 			function()
 				require("telescope.builtin").fd({ no_ignore = true })
 			end,
+			mode = { "n", "v" },
 			desc = "Telescope live grep",
 		},
 		{
@@ -71,10 +91,19 @@ return {
 			desc = "Telescope grep",
 		},
 		{
+			"<leader>fg",
+			function()
+				require("telescope.builtin"):grep_string()
+			end,
+			mode = "v",
+			desc = "Telescope grep",
+		},
+		{
 			"<leader>ff",
 			function()
 				require("telescope").extensions.live_grep_args:live_grep_args()
 			end,
+			mode = { "n", "v" },
 			desc = "Telescope live grep",
 		},
 		{

@@ -108,10 +108,9 @@ return {
 	keys = {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
-		{ "<leader>lw", ":Telescope lsp_workspace_diagnostics<CR>", desc = "lsp workspace diagnostics" },
 		{
 			"<leader>lf",
-			":lua require('conform').format({ timeout_ms = 2000, lsp_fallback = true })<CR>",
+			":lua require('conform').format({ async = true, lsp_fallback = true })<CR>",
 			desc = "lsp format buffer",
 		},
 		{ "<leader>ll", ":lua vim.lsp.codelens.run()<CR>", desc = "lsp codelens" },

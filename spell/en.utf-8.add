@@ -19,3 +19,7 @@ struct
 args
 gotests
 nilcheck
+gopsutils
+v3
+db
+Noc

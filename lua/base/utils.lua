@@ -1,5 +1,47 @@
 local M = {}
 
+function M.remove_bg()
+	local highlights = {
+		"Normal",
+		"DiagnosticVirtualTextError",
+		"DiagnosticVirtualTextHint",
+		"DiagnosticVirtualTextInfo",
+		"DiagnosticVirtualTextWarn",
+		"CursorLineNr",
+		"LineNr",
+		"Folded",
+		"NonText",
+		"SpecialKey",
+		"VertSplit",
+		"SignColumn",
+		"EndOfBuffer",
+	}
+	for _, highlight in pairs(highlights) do
+		vim.cmd.highlight(highlight .. " guibg=none ctermbg=none")
+	end
+
+	local hl = {
+		"Float",
+		"NormalFloat",
+		"FloatBorder",
+		"Title",
+		"TelescopeNormal",
+		"TelescopeSelection",
+		"TelescopeTitle",
+		"TelescopeBorder",
+	}
+	for _, t in pairs(hl) do
+		vim.cmd.highlight(t .. " guibg=#2B2B2B")
+	end
+
+	local groups = vim.fn.getcompletion("@lsp", "highlight")
+	if groups then
+		for _, group in ipairs(groups) do
+			vim.api.nvim_set_hl(0, group, {})
+		end
+	end
+end
+
 function M:git_cwd()
 	local cwd = vim.loop.cwd()
 	-- if vim.fn.isdirectory(vim.fn.expand(cwd .. "/.venv")) == 1 then
@@ -189,16 +231,19 @@ function M:cspell_add()
 	if #words == 0 then
 		vim.notify("No error from cspell found", vim.log.levels.WARN)
 	end
-	local inputList = { "Select word to add:" }
-	for i, word in ipairs(words) do
-		table.insert(inputList, string.format("%d. %s", i, word))
-	end
+	local index = 1
+	if #words > 1 then
+		local inputList = { "Select word to add:" }
+		for i, word in ipairs(words) do
+			table.insert(inputList, string.format("%d. %s", i, word))
+		end
 
-	local index = vim.fn.inputlist(inputList)
+		index = vim.fn.inputlist(inputList)
 
-	if index <= 0 then
-		vim.notify("No word selected", vim.log.levels.INFO)
-		return
+		if index <= 0 then
+			vim.notify("No word selected", vim.log.levels.INFO)
+			return
+		end
 	end
 
 	local opts = {
@@ -357,6 +402,75 @@ function M.fzf_fd()
 			return
 		end
 	end
+end
+
+function M.goimpl_magic()
+	local diagnostics = vim.diagnostic.get(0)
+	if #diagnostics == 0 then
+		vim.notify("No diagnostics found", vim.log.levels.WARN)
+		return
+	end
+	local diagnostic_message
+	for _, diagnostic in ipairs(diagnostics) do
+		if diagnostic.code == "InvalidIfaceAssign" then
+			diagnostic_message = diagnostic.message
+			break
+		end
+	end
+	if not diagnostic_message then
+		vim.notify("No invalid interface found", vim.log.levels.WARN)
+		return
+	end
+	local _, _, interface = string.find(diagnostic_message, "does not implement%s*(%a+)")
+	-- __AUTO_GENERATED_PRINT_VAR_START__
+	print([==[M.goimpl_magic interface:]==], vim.inspect(interface)) -- __AUTO_GENERATED_PRINT_VAR_END__
+	local _, _, implementation = diagnostic_message:find("(%a+){}")
+	-- __AUTO_GENERATED_PRINT_VAR_START__
+	print([==[M.goimpl_magic implementation:]==], vim.inspect(implementation)) -- __AUTO_GENERATED_PRINT_VAR_END__
+	vim.api.nvim_command("GoImpl " .. implementation .. " " .. interface .. " " .. interface)
+end
+
+function M.upload_go_playground()
+	local url = "https://go.dev/_/share"
+
+	local start_line = 0
+	local end_line = -1
+	local mode = string.lower(vim.fn.mode())
+	if mode == "v" then
+		start_line = vim.fn.line("v")
+		end_line = vim.fn.line(".")
+		if start_line > end_line then
+			start_line, end_line = end_line, start_line
+		end
+		start_line = start_line - 1
+	end
+
+	-- Get the current buffer number
+	local current_buffer = vim.api.nvim_get_current_buf()
+
+	-- Get all lines of the current buffer
+	local lines = vim.api.nvim_buf_get_lines(current_buffer, start_line, end_line, false)
+
+	-- Concatenate the lines to get the buffer contents
+	local contents = table.concat(lines, "\n")
+	local command =
+		string.format('curl -s -X POST -d "%s" -H "Content-Type: text/plain" -H "Accept: text/plain" %s', contents, url)
+	local handle = io.popen(command)
+	if handle == nil then
+		return
+	end
+
+	local result = handle:read("*a")
+	handle:close()
+	local playground_url = "https://go.dev/play/p/" .. result
+
+	if vim.loop.os_uname().sysname == "Darwin" then
+		vim.fn.jobstart({ "open", playground_url }, { on_exit = function() end })
+	else
+		vim.fn.jobstart({ "xdg-open", playground_url }, { on_exit = function() end })
+	end
+
+	vim.notify("Successfully uploaded a snipet to the go playground: " .. playground_url, vim.log.levels.INFO)
 end
 
 return M
