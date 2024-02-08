@@ -181,26 +181,36 @@ return {
 	{
 		"nvim-neotest/neotest",
 		dependencies = {
-			"vim-test/vim-test",
+			-- "vim-test/vim-test",
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			"antoinemadec/FixCursorHold.nvim",
 			"nvim-neotest/neotest-python",
 			"nvim-neotest/neotest-plenary",
 			"nvim-neotest/neotest-go",
 			"rouge8/neotest-rust",
 		},
-		cmd = {
-			"TestNearest",
-			"TestFile",
-			"TestSuite",
-			"TestLast",
-			"TestVisit",
-		},
+		event = "VeryLazy",
 		config = function()
+			local neotest_ns = vim.api.nvim_create_namespace("neotest")
+			vim.diagnostic.config({
+				virtual_text = {
+					format = function(diagnostic)
+						local message =
+							diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+						return message
+					end,
+				},
+			}, neotest_ns)
 			require("neotest").setup({
+				quickfix = { enabled = true, open = true },
+				diagnostic = {
+					enabled = true,
+					severity = 4,
+				},
 				adapters = {
-					require("neotest-go"),
+					require("neotest-go")({
+						experimental = { test_table = true },
+					}),
 					require("neotest-plenary"),
 					require("neotest-rust"),
 				},
@@ -208,19 +218,19 @@ return {
 		end,
 	--stylua: ignore
 	keys = {
-		{ "<leader>ta", "<cmd>lua require('neotest').run.attach()<CR>", desc = "test Attach" },
 		{ "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", desc = "test Run File" },
-		{ "<leader>tF", "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<CR>", desc = "test Debug File"},
+		{ "<leader>twf", "<cmd>lua require('neotest').watch.watch(vim.fn.expand('%'))<CR>", desc = "test Watch File" },
+		{ "<leader>tdf", "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<CR>", desc = "test Debug File"},
 		{ "<leader>tl", "<cmd>lua require('neotest').run.run_last()<CR>", desc = "test Run Last" },
-		{ "<leader>tL", "<cmd>lua require('neotest').run.run_last({ strategy = 'dap' })<CR>", desc = "test Debug Last" },
+		{ "<leader>twl", "<cmd>lua require('neotest').watch.watch_last()<CR>", desc = "test Watch Last" },
+		{ "<leader>tdl", "<cmd>lua require('neotest').run.run_last({ strategy = 'dap' })<CR>", desc = "test Debug Last" },
 		{ "<leader>tn", "<cmd>lua require('neotest').run.run()<CR>", desc = "test Run Nearest" },
-		{ "<leader>tN", "<cmd>lua require('neotest').run.run({strategy = 'dap'})<CR>", desc = "test Debug Nearest" },
+		{ "<leader>twn", "<cmd>lua require('neotest').watch.watch()<CR>", desc = "test Watch Nearest" },
+		{ "<leader>tdn", "<cmd>lua require('neotest').run.run({strategy = 'dap'})<CR>", desc = "test Debug Nearest" },
 		{ "<leader>to", "<cmd>lua require('neotest').output.open({ enter = true })<CR>", desc = "test Output" },
-		{ "<leader>tS", "<cmd>lua require('neotest').run.stop()<CR>", desc = "test Stop" },
-		{ "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>", desc = "test Summary" },
-		{ "<leader>tp", "<Plug>PlenarytestFile", desc = "PlenarytestFile" },
-		{ "<leader>tv", "<cmd>TestVisit<CR>", desc = "test Visit" },
-		{ "<leader>tx", "<cmd>TestSuite<CR>", desc = "test Suite" },
+		{ "<leader>ts", "<cmd>lua require('neotest').run.stop()<CR>", desc = "test Stop" },
+		{ "<leader>twq", "<cmd>lua require('neotest').watch.stop()<CR>", desc = "test Stop" },
+		{ "<leader>tt", "<cmd>lua require('neotest').summary.toggle()<CR>", desc = "test Summary" },
 	},
 	},
 }

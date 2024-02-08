@@ -2,6 +2,23 @@ return {
 	"mfussenegger/nvim-lint",
 	config = function()
 		local lint = require("lint")
+		-- lint.linters.golangcilint.env = {
+		-- 	["GOOS"] = "windows",
+		-- }
+		-- lint.linters.golangcilint.env = function()
+		-- 	print("ENV CALLED")
+		-- 	local buf_name = vim.api.nvim_buf_get_name(0)
+		-- 	-- __AUTO_GENERATED_PRINT_VAR_START__
+		-- 	print([==[function#function buf_name:]==], vim.inspect(buf_name)) -- __AUTO_GENERATED_PRINT_VAR_END__
+		-- 	if string.find(buf_name, "windows") ~= nil then
+		-- 		return { ["GOOS"] = "windows" }
+		-- 	elseif string.find(buf_name, "linux") ~= nil then
+		-- 		return { ["GOOS"] = "linux" }
+		-- 	elseif string.find(buf_name, "darwin") ~= nil then
+		-- 		return { ["GOOS"] = "darwin" }
+		-- 	end
+		-- 	return {}
+		-- end
 		lint.linters.commitlint.args = {
 			"--config",
 			"/home/arne/.config/linters/commitlint.config.os",

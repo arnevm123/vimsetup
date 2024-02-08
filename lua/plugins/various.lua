@@ -3,6 +3,7 @@ return {
 	{ "tpope/vim-dispatch", event = "VeryLazy" },
 	{ "tpope/vim-eunuch", event = "VeryLazy" },
 	{ "szw/vim-maximizer", keys = { { "<C-w>z", ":MaximizerToggle<CR>", desc = "Toggle maximizer" } } },
+	{ "gpanders/editorconfig.nvim", event = "VeryLazy" },
 	{ "wsdjeg/vim-fetch", lazy = false },
 	{ "wellle/targets.vim", event = "VeryLazy" }, -- better cib
 	{ "kylechui/nvim-surround", config = true, event = "VeryLazy" },

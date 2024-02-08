@@ -40,11 +40,13 @@ return {
 				fold_open = "v",
 				fold_closed = ">",
 				indent_lines = false,
+				auto_preview = false,
 				use_diagnostic_signs = true,
-				vim.keymap.set("n", "<leader>tt", function()
+				vim.keymap.set("n", "<leader>tr", function()
 					require("trouble").toggle("document_diagnostics")
 				end),
 				vim.keymap.set("n", "<leader>tq", function()
+					require("trouble").close()
 					vim.diagnostic.setqflist()
 				end),
 				vim.keymap.set("n", "<leader>tw", function()

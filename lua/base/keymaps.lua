@@ -104,7 +104,7 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 -- search and replace stuff
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><left><left><left>", nosilent)
 keymap("n", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><left><left><left>", nosilent)
-keymap("v", "<leader>re", '"hy:%s/\\<<C-r>h\\>/<C-r>h/gc<left><left><left>', nosilent)
+keymap("v", "<leader>re", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>', nosilent)
 keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gcI<Left><Left><Left><Left>", nosilent)
 
 keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
@@ -112,9 +112,22 @@ keymap("n", "<leader>tp", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux-popup.
 
 keymap("n", "<leader>bu", ":wa<CR>:Make<CR>", nosilent)
 keymap("n", "<leader>bi", ":wa<CR>:Dispatch<CR>", nosilent)
-keymap(
-	"n",
-	"<leader>bw",
-	":wa<CR>:Dispatch make build-windows && cp bin/lynx-controller-windows.exe ~/remmina-shared <CR>",
-	nosilent
-)
+keymap("n", "<leader>bw", ":BuildWindows<CR>", nosilent)
+keymap("n", "<leader>bv", ":BuildWindows ", nosilent)
+
+vim.api.nvim_create_user_command("BuildWindows", function(o)
+	local build
+	local version
+	if o.args then
+		version = o.args:gsub("^%s*(.-)%s*$", "%1")
+	end
+	if not version or version == "" or #version == 0 then
+		build = "Dispatch make build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared"
+	else
+		build = "Dispatch make VERSION="
+			.. o.args
+			.. " build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared"
+	end
+	vim.cmd("wa")
+	vim.cmd(build)
+end, { nargs = "*" })

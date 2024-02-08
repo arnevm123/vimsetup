@@ -1,5 +1,4 @@
 local M = {}
-
 function M.remove_bg()
 	local highlights = {
 		"Normal",
@@ -42,7 +41,7 @@ function M.remove_bg()
 	end
 end
 
-function M:git_cwd()
+function M.git_cwd()
 	local cwd = vim.loop.cwd()
 	-- if vim.fn.isdirectory(vim.fn.expand(cwd .. "/.venv")) == 1 then
 	-- 	return cwd
