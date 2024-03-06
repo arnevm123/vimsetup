@@ -25,3 +25,15 @@ db
 Noc
 yaml
 timestamp
+LynxConnect
+isMaster
+websocket
+specs
+LEMS
+ldevices
+LYA
+#luetooth
+bluetooth/!
+bluetooth
+frontend
+rarr

@@ -1,11 +1,11 @@
 local colorscheme = "rose-pine"
+-- local colorscheme = "seoulbones"
 return {
 	{
 		"mcchrish/zenbones.nvim",
 		lazy = colorscheme ~= "seoulbones",
 		priority = 1000,
 		config = function()
-			require("zenbones").setup()
 			vim.cmd.colorscheme("seoulbones")
 			require("base.utils").remove_bg()
 
@@ -30,7 +30,7 @@ return {
 		end,
 	},
 	{
-		"rose-pine/neovim",
+		"asilvam133/rose-pine.nvim",
 		priority = 1000,
 		lazy = colorscheme ~= "rose-pine",
 		config = function()
@@ -41,14 +41,7 @@ return {
 					transparency = true,
 				},
 				highlight_groups = {
-					netrwDir = { link = "DiagnosticVirtualTextInfo" },
-					QuickFixLine = { link = "@method" },
-					ColorColumn = { bg = "#4B4B4B" },
-					String = { link = "@method" },
 					TreesitterContext = { bg = "#2B2B2B" },
-					MatchParen = { bg = "#4B4B4B" },
-					-- @text.title.gitcommit ={ link = "Constant" },
-					-- @parameter ={ link = "@variable" },
 					DiagnosticVirtualTextError = { bg = "none" },
 					DiagnosticVirtualTextHint = { bg = "none" },
 					DiagnosticVirtualTextInfo = { bg = "none" },
@@ -70,8 +63,8 @@ return {
 					TelescopePromptCounter = { bg = "#333333" },
 					TelescopePromptPrefix = { bg = "#333333" },
 					["@text.title.gitcommit"] = { link = "Constant" },
-					["@variable.parameter"] = { link = "@variable" },
-					["@function.method.call"] = { link = "@function.method" },
+					QuickFixLine = { link = "@method" },
+					ColorColumn = { bg = "#4B4B4B" },
 				},
 			})
 			vim.cmd.colorscheme("rose-pine")

@@ -47,10 +47,10 @@ return {
 			python = { "ruff" },
 			sh = { "shellcheck" },
 			typescript = { "eslint_d" },
-			yaml = { "yamllint" },
+			-- yaml = { "yamllint" },
 			gitcommit = { "commitlint" },
 			NeogitCommitMessage = { "commitlint" },
-			markdown = { "markdownlint", "vale", "cspell" },
+			markdown = { "vale", "cspell" },
 			["yaml.ansible"] = { "ansible_lint" },
 		}
 

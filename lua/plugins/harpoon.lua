@@ -27,7 +27,7 @@ return {
 	end,
 	keys = {
 		{
-			"<leader><TAB>",
+			"<S-TAB>",
 			function()
 				require("harpoon").ui:toggle_quick_menu(
 					require("harpoon"):list(),
@@ -37,7 +37,7 @@ return {
 			desc = "harpoon quick menu",
 		},
 		{
-			"<S-TAB>",
+			"<leader>hh",
 			function()
 				require("harpoon"):list():append()
 			end,

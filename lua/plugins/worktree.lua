@@ -3,21 +3,44 @@ return {
 	config = function()
 		local Worktree = require("git-worktree")
 
-		-- Function to check if a tmux window with index 2 exists
-		local function tmuxWindowExists()
-			local cmd = "tmux list-windows | grep '2:'"
+		Worktree.setup({
+			clearjumps_on_change = true,
+		})
+
+		-- check if tmux window exists
+		local function tmuxWindowExists(window)
+			local cmd = "tmux list-windows | grep '" .. window .. "' |awk -F': ' '{print $1}'"
 			local handle = io.popen(cmd)
+			if not handle then
+				return false
+			end
 			local result = handle:read("*a")
 			handle:close()
-			return result ~= ""
+			if result == "" then
+				return false
+			end
+			return result
 		end
 
 		local function branchname(inputstr)
 			local t
+			local name = {}
+			print(inputstr)
 			for str in string.gmatch(inputstr, "([^" .. "/" .. "]+)") do
 				t = str
 			end
-			return t
+			print(t)
+			for value in t:gmatch("[^%-]+") do
+				print(value)
+				table.insert(name, value)
+				if #name == 2 then
+					break
+				end
+			end
+			if #name == 0 then
+				return t
+			end
+			return table.concat(name, "-")
 		end
 
 		Worktree.on_tree_change(function(op, metadata)
@@ -37,17 +60,31 @@ return {
 				local worktree_path = base_path .. "/" .. metadata.path .. "/"
 				local gitignored_path = base_path .. "/gitignored"
 				local link_gitignored = "ln -s " .. gitignored_path .. "/{*,.*} " .. worktree_path
-				os.execute(link_gitignored)
+				if vim.fn.isdirectory(gitignored_path) == 1 then
+					os.execute(link_gitignored)
+				end
 			end
 
 			if op == Worktree.Operations.Switch then
 				local folder = branchname(metadata.path)
-				local tmux_new = "tmux neww -dn " .. metadata.path .. " -n " .. folder .. " -t 2"
-				if tmuxWindowExists() then
-					os.execute("tmux movew -d -s 2")
+				local prev_folder = branchname(metadata.prev_path)
+				local index = tmuxWindowExists(folder)
+
+				if index then
+					if tmuxWindowExists("2:") then
+						os.execute("tmux swap-window -s 2 -t " .. index)
+					else
+						os.execute("tmux movew -s " .. index .. " .. 2")
+					end
+					print("Switched from " .. prev_folder .. " to " .. folder .. " with existing windows")
+				else
+					if tmuxWindowExists("2:") then
+						os.execute("tmux movew -d -s 2")
+					end
+					os.execute("tmux neww -dn " .. metadata.path .. " -n " .. folder .. " -t 2")
+					print("Switched from " .. prev_folder .. " to " .. folder)
 				end
-				os.execute(tmux_new)
-				print("Switched from " .. metadata.prev_path .. " to " .. metadata.path)
+				os.execute("tmux send-keys -t 1 C-z 'cd ../" .. folder .. " && fg' C-m")
 			end
 		end)
 
@@ -55,14 +92,29 @@ return {
 	end,
 	keys = {
 		{
-			"<leader>gw",
+			"<leader>ww",
 			":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>",
 			desc = "git worktrees",
 		},
 		{
-			"<leader>gz",
+			"<leader>wc",
 			":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>",
 			desc = "git create worktree",
+		},
+		{
+			"<leader>wm",
+			":lua require('git-worktree').switch_worktree('master')<CR>",
+			desc = "git switch to master worktree",
+		},
+		{
+			"<leader>wd",
+			":lua require('git-worktree').switch_worktree('develop')<CR>",
+			desc = "git switch to develop worktree",
+		},
+		{
+			"<leader>wr",
+			":lua require('git-worktree').switch_worktree('review')<CR>",
+			desc = "git switch to review worktree",
 		},
 	},
 }

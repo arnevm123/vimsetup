@@ -2,7 +2,24 @@ return {
 	{
 		"TimUntersberger/neogit",
 		cmd = { "Neogit", "DiffviewOpen" },
-		dependencies = { "sindrets/diffview.nvim", opts = { use_icons = false } },
+		dependencies = {
+			"sindrets/diffview.nvim",
+			opts = {
+				use_icons = false,
+				view = {
+					default = {
+						layout = "diff2_horizontal",
+					},
+					merge_tool = {
+						layout = "diff3_mixed",
+						disable_diagnostics = true,
+					},
+					file_history = {
+						layout = "diff2_horizontal",
+					},
+				},
+			},
+		},
 		keys = {
 			{ "<leader>gg", ":Neogit<CR>", desc = "open Neogit" },
 			{ "<leader>GG", ":DiffviewOpen master<CR>", desc = "open diff with master" },

@@ -450,10 +450,30 @@ function M.upload_go_playground()
 	-- Get all lines of the current buffer
 	local lines = vim.api.nvim_buf_get_lines(current_buffer, start_line, end_line, false)
 
+	local id = M.id()
 	-- Concatenate the lines to get the buffer contents
-	local contents = table.concat(lines, "\n")
-	local command =
-		string.format('curl -s -X POST -d "%s" -H "Content-Type: text/plain" -H "Accept: text/plain" %s', contents, url)
+	local contents = table.concat(lines, "\r\n")
+	contents = contents
+
+	-- Define the file path where you want to store the contents
+	local file_path = "/tmp/upload" .. id .. ".txt"
+
+	-- Open the file in write mode and write the contents
+	local file = io.open(file_path, "w")
+	if file == nil then
+		return
+	end
+	file:write(contents)
+	file:close()
+
+	-- Use the file path in your curl command
+	local command = 'curl -s -X POST -H "Content-Type: multipart/form-data;'
+		.. '" --data-binary @'
+		.. file_path
+		.. " "
+		.. url
+
+	-- Execute the curl command
 	local handle = io.popen(command)
 	if handle == nil then
 		return
@@ -470,6 +490,15 @@ function M.upload_go_playground()
 	end
 
 	vim.notify("Successfully uploaded a snipet to the go playground: " .. playground_url, vim.log.levels.INFO)
+end
+
+local random = math.random
+function M.id()
+	local template = "xxxxxxxx"
+	return string.gsub(template, "[xy]", function(c)
+		local v = (c == "x") and random(0, 0xf) or random(8, 0xb)
+		return string.format("%x", v)
+	end)
 end
 
 return M

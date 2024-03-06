@@ -15,6 +15,8 @@ keymap("n", "<S-up>", ":resize -2<CR>", opts)
 keymap("n", "<S-left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<S-right>", ":vertical resize +2<CR>", opts)
 
+keymap("n", "<leader>j", "i<CR><esc>==", opts)
+keymap("n", "<leader>J", "a<CR><esc>==", opts)
 keymap("n", "<leader>TC", ":tabclose<CR>", opts)
 keymap("n", "<leader>TN", ":tabnew<CR>", opts)
 keymap("n", "<leader>TO", ":tabonly<CR>", opts)
@@ -110,7 +112,23 @@ keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gcI<Left><Left><Left>
 keymap("n", "<leader>tm", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 keymap("n", "<leader>tp", ":let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux-popup.sh $VIM_DIR<CR>", nosilent)
 
-keymap("n", "<leader>bu", ":wa<CR>:Make<CR>", nosilent)
+keymap("n", "<leader>GU", ":call setenv('GOOS', '')<CR>:LspRestart<CR>", nosilent)
+keymap("n", "<leader>GW", ":call setenv('GOOS', 'windows')<CR>:LspRestart<CR>", nosilent)
+keymap("n", "<leader>GL", ":call setenv('GOOS', 'linux')<CR>:LspRestart<CR>", nosilent)
+
+keymap("n", "<leader>bu", function()
+	vim.cmd("wa")
+	local cwd = vim.loop.cwd()
+	local build_root
+	build_root = vim.lsp.get_active_clients()[1].config.cmd_cwd
+	if build_root then
+		vim.api.nvim_set_current_dir(build_root)
+	end
+	vim.cmd("Make")
+	if build_root and cwd then
+		vim.api.nvim_set_current_dir(cwd)
+	end
+end, nosilent)
 keymap("n", "<leader>bi", ":wa<CR>:Dispatch<CR>", nosilent)
 keymap("n", "<leader>bw", ":BuildWindows<CR>", nosilent)
 keymap("n", "<leader>bv", ":BuildWindows ", nosilent)

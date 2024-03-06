@@ -7,11 +7,54 @@ return {
 	{ "wsdjeg/vim-fetch", lazy = false },
 	{ "wellle/targets.vim", event = "VeryLazy" }, -- better cib
 	{ "kylechui/nvim-surround", config = true, event = "VeryLazy" },
-	{ "brenoprata10/nvim-highlight-colors", config = true, cmd = { "HighlightColorsOn" } },
+	{ "brenoprata10/nvim-highlight-colors", opts = { render = "virtual" }, config = true, event = { "VeryLazy" } },
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
 	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
+	{
+		"nvimtools/none-ls.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		event = "VeryLazy",
+		config = function()
+			local null_ls = require("null-ls")
+			null_ls.setup({
+				sources = {
+					null_ls.builtins.code_actions.gomodifytags,
+					null_ls.builtins.code_actions.impl,
+					null_ls.builtins.code_actions.refactoring,
+				},
+			})
+		end,
+	},
+	{
+		"laytan/cloak.nvim",
+		config = function()
+			require("cloak").setup({
+				enabled = true,
+				cloak_character = "*",
+				-- The applied highlight group (colors) on the cloaking, see `:h highlight`.
+				highlight_group = "Comment",
+				patterns = {
+					{
+						-- Match any file starting with ".env".
+						-- This can be a table to match multiple file patterns.
+						file_pattern = {
+							".env*",
+							"wrangler.toml",
+							".dev.vars",
+							"tcit_vpn.conf",
+						},
+						-- Match an equals sign and any character after it.
+						-- This can also be a table of patterns to cloak,
+						-- example: cloak_pattern = { ":.+", "-.+" } for yaml files.
+						cloak_pattern = { "=.+", "= .+" },
+					},
+				},
+			})
+		end,
+		lazy = false,
+	},
 	{
 		"sourcegraph/sg.nvim",
 		dependencies = {
@@ -197,7 +240,7 @@ return {
 			vim.keymap.set("i", "<C-;>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
             vim.keymap.set("i", "<C-,>", function() return vim.fn["codeium#CycleCompletions"](1) end, { expr = true })
 			vim.g.codeium_filetypes = { telescope = false }
-			-- vim.g.codeium_manual = true
+			vim.g.codeium_manual = true
 		end,
 		event = "VeryLazy",
 	},
@@ -238,7 +281,7 @@ return {
 		event = "BufEnter",
 		opts = {
 			print_var_statements = {
-				go = { 'spew.Printf("%s %%#v \\n", %s)' },
+				go = { 'log.Info("%s %%v \\n", spew.Sdump(%s))' },
 			},
 		},
 		keys = {

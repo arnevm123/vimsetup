@@ -67,12 +67,12 @@ return {
 				},
 				formatters_by_ft = {
 					go = { "gofumpt", "goimports", "goimports_reviser" },
-					javascript = { { "prettierd", "prettier" } },
+					javascript = { { "eslint_d", "prettierd", "prettier" } },
 					lua = { "stylua" },
 					markdown = { "mdslw" },
 					sh = { "shfmt" },
-					typescript = { { "prettierd", "prettier" } },
-					yaml = { "yamlfmt" },
+					typescript = { { "eslint_d", "prettierd", "prettier" } },
+					-- yaml = { "yamlfmt" },
 					-- python = { "isort", "black" },
 				},
 			},
@@ -117,6 +117,7 @@ return {
 		},
 		{ "<leader>ll", ":lua vim.lsp.codelens.run()<CR>", desc = "lsp codelens" },
 		{ "<leader>lr", ":lua vim.lsp.buf.rename()<CR>", desc = "lsp rename variable" },
+		{ "<leader>li", ":LspInfo<CR>", desc = "lsp info" },
 		{ "<leader>le", ":LspRestart<CR>", desc = "Restart lsp" },
 	},
 	config = function()
