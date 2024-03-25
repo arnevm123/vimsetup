@@ -78,7 +78,7 @@ return {
 		{
 			"<leader>fd",
 			function()
-				require("telescope.builtin").fd({ no_ignore = true })
+				require("telescope.builtin").fd()
 			end,
 			mode = { "n", "v" },
 			desc = "Telescope live grep",
@@ -137,6 +137,7 @@ return {
 			on_paste = { set_reg = true, move_to_front = true, close_telescope = true },
 			keys = { telescope = { i = { paste = "<c-y>" } } },
 		})
+
 
 		require("plugins.telescope.custom")
 		telescope.load_extension("fzf")
@@ -256,6 +257,7 @@ return {
 				},
 				oldfiles = {
 					cwd_only = true,
+					hidden = true,
 				},
 				buffers = {
 					sort_lastused = true,

@@ -2,7 +2,7 @@ local servers = {
 	"angularls",
 	"ansiblels",
 	"bashls",
-	-- "csharp_ls",
+	"csharp_ls",
 	"cssls",
 	"eslint",
 	"gopls",
@@ -11,10 +11,10 @@ local servers = {
 	"jsonls",
 	"lua_ls",
 	"marksman",
-	"omnisharp_mono",
-	"omnisharp",
+	-- "omnisharp_mono",
+	-- "omnisharp",
 	"pyright",
-	"rust_analyzer",
+	-- "rust_analyzer",
 	"tsserver",
 	"yamlls",
 }
@@ -71,6 +71,12 @@ for _, server in pairs(servers) do
 	local require_ok, conf_opts = pcall(require, "plugins.lsp.settings." .. server)
 	if require_ok then
 		opts = vim.tbl_deep_extend("force", conf_opts, opts)
+	end
+	if server == "csharp_ls" then
+		opts.handlers = {
+			["textDocument/definition"] = require("csharpls_extended").handler,
+			["textDocument/typeDefinition"] = require("csharpls_extended").handler,
+		}
 	end
 
 	lspconfig[server].setup(opts)

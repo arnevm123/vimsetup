@@ -15,7 +15,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
 		"folke/neodev.nvim",
-
+		"Decodetalkers/csharpls-extended-lsp.nvim",
 		{
 			"chrisgrieser/nvim-scissors",
 			dependencies = "nvim-telescope/telescope.nvim", -- optional
@@ -88,6 +88,7 @@ return {
 						done_icon = "",
 						done_style = "Comment",
 						progress_style = "Comment",
+						progress_ttl = 30,
 						group_style = "@method",
 						icon_style = "@method",
 						format_message = function(msg)

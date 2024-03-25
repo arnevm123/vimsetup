@@ -184,6 +184,7 @@ return {
 			-- "vim-test/vim-test",
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
+			"nvim-neotest/nvim-nio",
 			"nvim-neotest/neotest-python",
 			"nvim-neotest/neotest-plenary",
 			"nvim-neotest/neotest-go",

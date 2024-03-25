@@ -13,6 +13,16 @@ return {
 	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
 	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
 	{
+		"bloznelis/before.nvim",
+		config = function()
+			local before = require("before")
+			before.setup()
+			vim.keymap.set("n", "<leader>eo", before.jump_to_last_edit, {})
+			vim.keymap.set("n", "<leader>ei", before.jump_to_next_edit, {})
+		end,
+		event = "VeryLazy",
+	},
+	{
 		"nvimtools/none-ls.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		event = "VeryLazy",
@@ -55,22 +65,37 @@ return {
 		end,
 		lazy = false,
 	},
+	-- {
+	-- 	"sourcegraph/sg.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- 	keys = {
+	-- 		{ "<leader>cc", ":CodyToggle<CR>", mode = { "n", "v" }, desc = "Toggle Cody chat window" },
+	-- 		{ "<leader>cq", ":CodyAsk ", mode = { "n", "v" }, desc = "Ask Cody a question" },
+	-- 		{ "<leader>ct", ":CodyTask ", mode = { "n", "v" }, desc = "Create a new Cody task" },
+	-- 		{ "<leader>cp", ":CodyTaskPrevious<CR>", mode = { "n", "v" }, desc = "Go to previous Cody task" },
+	-- 		{ "<leader>cn", ":CodyTaskNext<CR>", mode = { "n", "v" }, desc = "Go to next Cody task" },
+	-- 		{ "<leader>ca", ":CodyTaskAccept<CR>", mode = { "n", "v" }, desc = "Accept current Cody task" },
+	-- 	},
+	-- 	config = true,
+	-- 	build = "nvim -l build/init.lua",
+	-- 	event = "VimEnter",
+	-- },
 	{
-		"sourcegraph/sg.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		keys = {
-			{ "<leader>cc", ":CodyToggle<CR>", mode = { "n", "v" }, desc = "Toggle Cody chat window" },
-			{ "<leader>cq", ":CodyAsk ", mode = { "n", "v" }, desc = "Ask Cody a question" },
-			{ "<leader>ct", ":CodyTask ", mode = { "n", "v" }, desc = "Create a new Cody task" },
-			{ "<leader>cp", ":CodyTaskPrevious<CR>", mode = { "n", "v" }, desc = "Go to previous Cody task" },
-			{ "<leader>cn", ":CodyTaskNext<CR>", mode = { "n", "v" }, desc = "Go to next Cody task" },
-			{ "<leader>ca", ":CodyTaskAccept<CR>", mode = { "n", "v" }, desc = "Accept current Cody task" },
-		},
-		config = true,
-		build = "nvim -l build/init.lua",
-		event = "VimEnter",
+		"mrcjkb/rustaceanvim",
+		version = "^4", -- Recommended
+		ft = { "rust" },
+		config = function()
+			vim.g.rustaceanvim = {
+				server = {
+					on_attach = require("plugins.lsp.handlers").on_attach,
+					default_settings = {
+						["rust-analyzer"] = require("plugins.lsp.settings.rust_analyzer"),
+					},
+				},
+			}
+		end,
 	},
 	{
 		"numToStr/Comment.nvim",
