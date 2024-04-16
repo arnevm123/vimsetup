@@ -256,18 +256,38 @@ return {
 			{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" } },
 		},
 	},
+	-- {
+	-- 	"Exafunction/codeium.vim",
+	-- 	--stylua: ignore
+	-- 	--selene: allow(multiple_statements)
+	-- 	config = function()
+	-- 		vim.keymap.set("i", "<C-.>", function() return vim.fn["codeium#Accept"]() end, { expr = true })
+	-- 		vim.keymap.set("i", "<C-;>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
+	--            vim.keymap.set("i", "<C-,>", function() return vim.fn["codeium#CycleCompletions"](1) end, { expr = true })
+	-- 		vim.g.codeium_filetypes = { telescope = false }
+	-- 		vim.g.codeium_manual = true
+	-- 	end,
+	-- 	event = "VeryLazy",
+	-- },
 	{
-		"Exafunction/codeium.vim",
-		--stylua: ignore
-		--selene: allow(multiple_statements)
-		config = function()
-			vim.keymap.set("i", "<C-.>", function() return vim.fn["codeium#Accept"]() end, { expr = true })
-			vim.keymap.set("i", "<C-;>", function() return vim.fn["codeium#Complete"]() end, { expr = true })
-            vim.keymap.set("i", "<C-,>", function() return vim.fn["codeium#CycleCompletions"](1) end, { expr = true })
-			vim.g.codeium_filetypes = { telescope = false }
-			vim.g.codeium_manual = true
-		end,
+		"monkoose/neocodeium",
 		event = "VeryLazy",
+		config = function()
+			local neocodeium = require("neocodeium")
+			neocodeium.setup(--[[ { manual = true } ]])
+			vim.keymap.set("i", "<C-;>", function()
+				require("neocodeium").accept()
+			end)
+			vim.keymap.set("i", "<c-.>", function()
+				require("neocodeium").cycle_or_complete()
+			end)
+			vim.keymap.set("i", "<C-,>", function()
+				require("neocodeium").cycle_or_complete(-1)
+			end)
+			vim.keymap.set("i", "<C-/>", function()
+				require("neocodeium").clear()
+			end)
+		end,
 	},
 	{
 		"kevinhwang91/nvim-fundo",

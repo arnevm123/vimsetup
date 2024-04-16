@@ -144,7 +144,6 @@ return {
 		telescope.load_extension("neoclip")
 		telescope.load_extension("live_grep_args")
 		telescope.load_extension("advanced_git_search")
-		telescope.load_extension("grey")
 		telescope.load_extension("changed_files")
 
 		local actions = require("telescope.actions")
@@ -159,7 +158,6 @@ return {
 				prompt_prefix = "",
 				entry_prefix = " ",
 				selection_caret = ">",
-				layout_strategy = "grey",
 				layout_config = {
 					-- The extension supports both "top" and "bottom" for the prompt.
 					prompt_position = "top",

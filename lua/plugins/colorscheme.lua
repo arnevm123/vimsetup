@@ -22,14 +22,6 @@ return {
 		dependencies = { "rktjmp/lush.nvim" },
 	},
 	{
-		"yorickpeterse/nvim-grey",
-		lazy = colorscheme ~= "grey",
-		priority = 1000,
-		config = function()
-			vim.g.gruvbox_baby_telescope_theme = 1
-		end,
-	},
-	{
 		"asilvam133/rose-pine.nvim",
 		priority = 1000,
 		lazy = colorscheme ~= "rose-pine",

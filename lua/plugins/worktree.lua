@@ -84,7 +84,7 @@ return {
 					os.execute("tmux neww -dn " .. metadata.path .. " -n " .. folder .. " -t 2")
 					print("Switched from " .. prev_folder .. " to " .. folder)
 				end
-				os.execute("tmux send-keys -t 1 C-z 'cd ../" .. folder .. " && fg' C-m")
+				-- os.execute("tmux send-keys -t 1 C-z 'cd ../" .. folder .. " && fg' C-m")
 			end
 		end)
 
@@ -102,19 +102,9 @@ return {
 			desc = "git create worktree",
 		},
 		{
-			"<leader>wm",
-			":lua require('git-worktree').switch_worktree('master')<CR>",
-			desc = "git switch to master worktree",
-		},
-		{
 			"<leader>wd",
 			":lua require('git-worktree').switch_worktree('develop')<CR>",
 			desc = "git switch to develop worktree",
-		},
-		{
-			"<leader>wr",
-			":lua require('git-worktree').switch_worktree('review')<CR>",
-			desc = "git switch to review worktree",
 		},
 	},
 }

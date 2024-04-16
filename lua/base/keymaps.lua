@@ -129,6 +129,7 @@ keymap("n", "<leader>bu", function()
 		vim.api.nvim_set_current_dir(cwd)
 	end
 end, nosilent)
+keymap("n", "<leader>bq", ":cfile .lint.txt<CR>", nosilent)
 keymap("n", "<leader>bi", ":wa<CR>:Dispatch<CR>", nosilent)
 keymap("n", "<leader>bw", ":BuildWindows<CR>", nosilent)
 keymap("n", "<leader>bv", ":BuildWindows ", nosilent)

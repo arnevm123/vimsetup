@@ -1,6 +1,7 @@
 return {
 	{
 		"TimUntersberger/neogit",
+		branch = "nightly",
 		cmd = { "Neogit", "DiffviewOpen" },
 		dependencies = {
 			"sindrets/diffview.nvim",
