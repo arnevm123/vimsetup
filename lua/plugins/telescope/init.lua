@@ -138,14 +138,6 @@ return {
 			keys = { telescope = { i = { paste = "<c-y>" } } },
 		})
 
-
-		require("plugins.telescope.custom")
-		telescope.load_extension("fzf")
-		telescope.load_extension("neoclip")
-		telescope.load_extension("live_grep_args")
-		telescope.load_extension("advanced_git_search")
-		telescope.load_extension("changed_files")
-
 		local actions = require("telescope.actions")
 		local lga_actions = require("telescope-live-grep-args.actions")
 		local cf_actions = telescope.extensions.changed_files.actions
@@ -280,14 +272,14 @@ return {
 					-- define mappings, e.g.
 					mappings = { -- extend mappings
 						i = {
-							["<C-k>"] = lga_actions.quote_prompt(),
+							["<C-;>"] = lga_actions.quote_prompt(),
 							["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
-							["<C-t>"] = lga_actions.quote_prompt({ postfix = " -t" }),
+							["<C-'>"] = lga_actions.quote_prompt({ postfix = " -t " }),
 						},
 						n = {
-							["<C-k>"] = lga_actions.quote_prompt(),
+							["<C-;>"] = lga_actions.quote_prompt(),
 							["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
-							["<C-t>"] = lga_actions.quote_prompt({ postfix = " -t" }),
+							["<C-'>"] = lga_actions.quote_prompt({ postfix = " -t " }),
 						},
 					},
 				},
@@ -295,5 +287,11 @@ return {
 			-- To get telescope-file-browser loaded and working with telescope,
 			-- you need to call load_extension, somewhere after setup function:
 		})
+		require("plugins.telescope.custom")
+		telescope.load_extension("fzf")
+		telescope.load_extension("neoclip")
+		telescope.load_extension("live_grep_args")
+		telescope.load_extension("advanced_git_search")
+		telescope.load_extension("changed_files")
 	end,
 }

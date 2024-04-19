@@ -141,11 +141,11 @@ vim.api.nvim_create_user_command("BuildWindows", function(o)
 		version = o.args:gsub("^%s*(.-)%s*$", "%1")
 	end
 	if not version or version == "" or #version == 0 then
-		build = "Dispatch make build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller.exe"
+		build = "Dispatch make build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller/lynxcontroller.exe"
 	else
 		build = "Dispatch make VERSION="
 			.. o.args
-			.. " build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller.exe"
+			.. " build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller/lynxcontroller.exe"
 	end
 	vim.cmd("wa")
 	vim.cmd(build)
