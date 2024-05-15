@@ -46,6 +46,7 @@ keymap("n", "yov", utils.VirtualTextToggle, opts)
 keymap("n", "<leader>xu", utils.upload_go_playground, opts)
 keymap("v", "<leader>xu", utils.upload_go_playground, opts)
 keymap("n", "<leader>zg", function()
+	---@diagnostic disable-next-line: param-type-mismatch
 	utils.cspell_add(vim.fn.expand("<cword>"))
 end, nosilent)
 
@@ -141,11 +142,12 @@ vim.api.nvim_create_user_command("BuildWindows", function(o)
 		version = o.args:gsub("^%s*(.-)%s*$", "%1")
 	end
 	if not version or version == "" or #version == 0 then
-		build = "Dispatch make build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller/lynxcontroller.exe"
+		build =
+			"Dispatch make build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller/lynxcontroller.exe"
 	else
 		build = "Dispatch make VERSION="
 			.. o.args
-			.. " build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller/lynxcontroller.exe"
+			.. " build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller.exe"
 	end
 	vim.cmd("wa")
 	vim.cmd(build)

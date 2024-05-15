@@ -1,6 +1,19 @@
-local colorscheme = "rose-pine"
+-- local colorscheme = "austere"
 -- local colorscheme = "seoulbones"
+local colorscheme = "mel"
+-- local colorscheme = "rose-pine"
 return {
+	{
+		"LuRsT/austere.vim",
+		lazy = colorscheme ~= "austere",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("austere")
+			require("base.utils").remove_bg()
+			vim.api.nvim_set_hl(0, "NeogitDiffAdd", { link = "DiffAdd" })
+			vim.api.nvim_set_hl(0, "NeogitDiffAddHighlight", { link = "DiffAdd" })
+		end,
+	},
 	{
 		"mcchrish/zenbones.nvim",
 		lazy = colorscheme ~= "seoulbones",
@@ -10,6 +23,7 @@ return {
 			require("base.utils").remove_bg()
 
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
+			vim.api.nvim_set_hl(0, "Visual", { bg  = "#3B3B3B" })
 			vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
 			vim.api.nvim_set_hl(0, "comment", { fg = "#8B8B8B", italic = true })
 			vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })
@@ -83,15 +97,18 @@ return {
 					file_tree = false,
 					cursor_line_number = true,
 				},
-				plugins = { gitsigns = true },
+				plugins = {
+					cmp = true,
+					gitsigns = true,
+					telescope = { enabled = false },
+				},
 			}
 
 			require("mellifluous").setup(opts)
 			vim.cmd.colorscheme("mellifluous")
-			-- {{{
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
 			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
-			-- }}}
+			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
 		end,
 	},
 }

@@ -23,7 +23,7 @@ autocmd("BufEnter", {
 		if vim.tbl_contains(excluded_buftypes, current_buftype) then
 			return
 		end
-		-- vim.opt.formatoptions:remove({ "c", "o" })
+		vim.opt.formatoptions:remove({ "o" })
 		vim.opt.number = true
 		vim.opt.relativenumber = true
 		vim.opt.scrolloff = 8

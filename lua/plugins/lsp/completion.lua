@@ -82,11 +82,11 @@ cmp.setup({
 		completion = {
 			scrolloff = 2,
 			border = "none",
-			winhighlight = "Normal:Float,FloatBorder:Float,Search:Float",
+			winhighlight = "Normal:Float,FloatBorder:Float,Search:Float,CursorLine:Visual",
 		},
 		documentation = {
 			border = "single",
-			winhighlight = "Normal:Float,FloatBorder:Float,Search:Float",
+			winhighlight = "Normal:Float,FloatBorder:Float,Search:Float,CursorLine:Visual",
 		},
 	},
 	experimental = {
@@ -111,10 +111,6 @@ ls.config.set_config({
 
 	-- Autosnippets:
 	enable_autosnippets = true,
-
-	-- Crazy highlights!!
-	-- #vid3
-	-- ext_opts = nil,
 })
 
 -- <c-k> is my expansion key

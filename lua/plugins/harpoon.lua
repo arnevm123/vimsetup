@@ -39,7 +39,7 @@ return {
 		{
 			"<leader>hh",
 			function()
-				require("harpoon"):list():append()
+				require("harpoon"):list():add()
 			end,
 			desc = "harpoon add file",
 		},

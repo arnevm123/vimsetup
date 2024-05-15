@@ -22,7 +22,7 @@ M.go_err_snippet = function(args, _, _, spec)
 	end
 	return ls.sn(index, {
 		ls.c(1, {
-			ls.sn(nil, fmt('fmt.Errorf("failed to{} %w", {})', { ls.i(1, msg), ls.t(err_name) })),
+			ls.sn(nil, fmt('fmt.Errorf("{} %w", {})', { ls.i(1, msg), ls.t(err_name) })),
 			ls.sn(nil, fmt('fmt.Errorf("{} %v: %w", {}, {})', { ls.i(1, msg), ls.i(2), ls.t(err_name) })),
 			ls.sn(
 				nil,

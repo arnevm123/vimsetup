@@ -13,14 +13,17 @@ return {
 	{ "mbbill/undotree", keys = { { "<leader>eu", ":UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
 	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
 	{
-		"bloznelis/before.nvim",
-		config = function()
-			local before = require("before")
-			before.setup()
-			vim.keymap.set("n", "<leader>eo", before.jump_to_last_edit, {})
-			vim.keymap.set("n", "<leader>ei", before.jump_to_next_edit, {})
-		end,
-		event = "VeryLazy",
+		"amadanmath/diag_ignore.nvim",
+		keys = {
+			{ "<Leader>ci", "<Plug>(diag_ignore)", mode = "n", desc = "Diagnostic: ignore" },
+		},
+		opts = {
+			ignores = {
+				python = { "endline", " # pyright: ignore[", "]" },
+				lua = { "prevline", "---@diagnostic disable-next-line: " },
+				go = { "endline", " // nolint: ", code = "source" },
+			},
+		},
 	},
 	{
 		"nvimtools/none-ls.nvim",
@@ -307,10 +310,11 @@ return {
 		ft = { "markdown" },
 		config = function()
 			vim.cmd([[
-              function OpenMarkdownPreview (url)
-                  execute "silent ! firefox --new-window " . a:url
-              endfunction
-              let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+				function OpenMarkdownPreview (url)
+					execute "silent ! firefox --new-window " . a:url
+				endfunction
+				let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+				let g:mkdp_auto_close = 0
             ]])
 		end,
 		build = function()
@@ -372,7 +376,7 @@ return {
 		config = function()
 			require("gopher").setup({
 				gotests = { template = "testify" },
-				commands = { iferr = "iferr -message 'fmt.Errorf(\"failed to %w\", err)'" },
+				commands = { iferr = "iferr -message 'fmt.Errorf(\"%w\", err)'" },
 			})
 		end,
 		keys = {

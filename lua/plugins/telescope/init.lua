@@ -130,7 +130,6 @@ return {
 
 		require("neoclip").setup({
 			enable_persistent_history = true,
-			continuous_sync = true,
 			db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
 			preview = true,
 			on_select = { move_to_front = true, close_telescope = true },
@@ -168,7 +167,10 @@ return {
 						prompt_position = "bottom",
 					},
 				},
-				path_display = { shorten = { len = 5, exclude = { 1, -3, -2, -1 } } },
+				-- path_display = { shorten = { len = 5, exclude = { 1, -3, -2, -1 } } },
+				path_display = {
+					"filename_first",
+				},
 				mappings = {
 					i = {
 						["<C-Down>"] = actions.cycle_history_next,
@@ -272,14 +274,14 @@ return {
 					-- define mappings, e.g.
 					mappings = { -- extend mappings
 						i = {
-							["<C-;>"] = lga_actions.quote_prompt(),
+							["<C-u>"] = lga_actions.quote_prompt(),
 							["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
-							["<C-'>"] = lga_actions.quote_prompt({ postfix = " -t " }),
+							["<C-k>"] = lga_actions.quote_prompt({ postfix = " -t " }),
 						},
 						n = {
-							["<C-;>"] = lga_actions.quote_prompt(),
+							["<C-u>"] = lga_actions.quote_prompt(),
 							["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
-							["<C-'>"] = lga_actions.quote_prompt({ postfix = " -t " }),
+							["<C-k>"] = lga_actions.quote_prompt({ postfix = " -t " }),
 						},
 					},
 				},
