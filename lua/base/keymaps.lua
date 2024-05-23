@@ -10,10 +10,14 @@ local keymap = vim.keymap.set
 keymap("", "<Space>", "<Nop>", opts)
 
 -- Resize with Shift-arrows
-keymap("n", "<S-down>", ":resize +2<CR>", opts)
-keymap("n", "<S-up>", ":resize -2<CR>", opts)
-keymap("n", "<S-left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<S-right>", ":vertical resize +2<CR>", opts)
+keymap("n", "<S-down>", "<C-w>j", opts)
+keymap("n", "<S-up>", "<C-w>k", opts)
+keymap("n", "<S-left>", "<C-w>h", opts)
+keymap("n", "<S-right>", "<C-w>l", opts)
+keymap("n", "<C-down>", ":resize +2<CR>", opts)
+keymap("n", "<C-up>", ":resize -2<CR>", opts)
+keymap("n", "<C-left>", ":vertical resize -2<CR>", opts)
+keymap("n", "<C-right>", ":vertical resize +2<CR>", opts)
 
 keymap("n", "<leader>j", "i<CR><esc>==", opts)
 keymap("n", "<leader>J", "a<CR><esc>==", opts)

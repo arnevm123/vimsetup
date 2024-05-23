@@ -23,20 +23,18 @@ local diagnostics_attrs = {
 
 local diagnostics = ""
 local function diagnostics_section()
-	local results = {}
-
-	for _, attr in pairs(diagnostics_attrs) do
-		local n = vim.diagnostic.get(0, { severity = attr[1] })
-		if #n > 0 then
-			table.insert(results, string.format(" %d %s", #n, attr[2]))
+	local res = ""
+	local diag = vim.diagnostic.count(0)
+	if not diag or #diag == 0 then
+		return ""
+	end
+	for i, diagnostic in ipairs(diagnostics_attrs) do
+		local count = diag[i]
+		if count then
+			res = res .. " | " .. count .. " " .. diagnostic[2]
 		end
 	end
-
-	local res = table.concat(results)
-	if #res ~= 0 then
-		return " |" .. res
-	end
-	return ""
+	return res
 end
 
 vim.api.nvim_create_autocmd({ "DiagnosticChanged", "BufWinEnter" }, {

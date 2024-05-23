@@ -5,7 +5,6 @@ return {
 			"leoluz/nvim-dap-go",
 			"rcarriga/nvim-dap-ui",
 			"nvim-telescope/telescope-dap.nvim",
-			-- { "daic0r/dap-helper.nvim", config = true },
 		},
 	--stylua: ignore
 	keys = {
@@ -21,6 +20,8 @@ return {
 		{ "<leader>DB", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
 		{ "<leader>dt", " :lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
 		{ "<leader>dr", ":lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
+		{ "<leader>de", "lua :require('dapui').eval(nil, { enter = true })<CR>", desc = "Debug evaluate expression" },
+
 	},
 		config = function()
 			local ok, dap = pcall(require, "dap")

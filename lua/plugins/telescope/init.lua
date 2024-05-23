@@ -1,6 +1,7 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
+		"nvim-telescope/telescope-smart-history.nvim",
 		"nvim-lua/plenary.nvim",
 		"nvim-telescope/telescope-frecency.nvim",
 		"nvim-telescope/telescope-live-grep-args.nvim",
@@ -142,6 +143,10 @@ return {
 		local cf_actions = telescope.extensions.changed_files.actions
 		telescope.setup({
 			defaults = {
+				history = {
+					path = "~/.local/share/nvim/databases/telescope_history.sqlite3",
+					limit = 100,
+				},
 				cache_picker = {
 					num_pickers = 10,
 					limit_entries = 1000,
@@ -290,6 +295,7 @@ return {
 			-- you need to call load_extension, somewhere after setup function:
 		})
 		require("plugins.telescope.custom")
+		telescope.load_extension("smart_history")
 		telescope.load_extension("fzf")
 		telescope.load_extension("neoclip")
 		telescope.load_extension("live_grep_args")
