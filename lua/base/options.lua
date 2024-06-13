@@ -29,6 +29,8 @@ vim.opt.smartindent = true
 
 vim.opt.wrap = false
 vim.opt.linebreak = true
+vim.opt.breakindent = true
+vim.opt.showbreak = "└"
 vim.opt.updatetime = 50
 vim.opt.scrolloff = 8
 vim.opt.pumheight = 10

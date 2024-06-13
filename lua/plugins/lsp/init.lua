@@ -10,11 +10,32 @@ return {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-cmdline",
+		-- "nanotee/sqls.nvim",
+		-- {
+		-- 	"MattiasMTS/cmp-dbee",
+		-- 	dependencies = {
+		-- 		{ "kndndrj/nvim-dbee" },
+		-- 	},
+		-- 	ft = "sql", -- optional but good to have
+		-- 	opts = {}, -- needed
+		-- },
 		-- Snippets
-		"saadparwaiz1/cmp_luasnip",
 		"L3MON4D3/LuaSnip",
+		"saadparwaiz1/cmp_luasnip",
 		"rafamadriz/friendly-snippets",
-		"folke/neodev.nvim",
+		{
+			"folke/lazydev.nvim",
+			ft = "lua", -- only load on lua files
+			opts = {
+				library = {
+					"lazy.nvim",
+					"luvit-meta/library",
+				},
+			},
+			dependencies = {
+				{ "Bilal2453/luvit-meta" },
+			},
+		},
 		"Decodetalkers/csharpls-extended-lsp.nvim",
 		{
 			"chrisgrieser/nvim-scissors",
@@ -36,22 +57,34 @@ return {
 		{
 			"folke/trouble.nvim",
 			opts = {
-				icons = false,
-				fold_open = "v",
-				fold_closed = ">",
-				indent_lines = false,
-				auto_preview = false,
-				use_diagnostic_signs = true,
-				vim.keymap.set("n", "<leader>tr", function()
-					require("trouble").toggle("document_diagnostics")
-				end),
-				vim.keymap.set("n", "<leader>tq", function()
-					require("trouble").close()
-					vim.diagnostic.setqflist()
-				end),
-				vim.keymap.set("n", "<leader>tw", function()
-					require("trouble").toggle("workspace_diagnostics")
-				end),
+				icons = {
+					indent = {
+						middle = " ",
+						last = " ",
+						top = " ",
+						ws = "│  ",
+					},
+				},
+				modes = {
+					diagnostics = {
+						groups = {
+							{ "filename", format = "{file_icon} {basename:Title} {count}" },
+						},
+					},
+				},
+			},
+			cmd = "Trouble",
+			keys = {
+				{
+					"<leader>tr",
+					"<cmd>Trouble diagnostics toggle filter.severity=vim.diagnostic.severity.ERROR<cr>",
+					desc = "iagnostics: Error (Trouble)",
+				},
+				{
+					"<leader>ta",
+					"<cmd>Trouble diagnostics toggle<cr>",
+					desc = "Diagnostics (Trouble)",
+				},
 			},
 		},
 		{

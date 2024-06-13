@@ -4,6 +4,7 @@ return {
 		opts = {
 			columns = { "permissions", "size" },
 			buf_options = { buflisted = false },
+			delete_to_trash = true,
 			win_options = {
 				wrap = false,
 				signcolumn = "no",
@@ -16,7 +17,7 @@ return {
 			},
 			default_file_explorer = false,
 			restore_win_options = true,
-			skip_confirm_for_simple_edits = false,
+			skip_confirm_for_simple_edits = true,
 			keymaps = {
 				["g?"] = "actions.show_help",
 				["<CR>"] = "actions.select",
@@ -34,11 +35,8 @@ return {
 			use_default_keymaps = false,
 			view_options = {
 				show_hidden = true,
-				is_hidden_file = function(name, bufnr)
-					return vim.startswith(name, ".")
-				end,
-				is_always_hidden = function(name, bufnr)
-					return false
+				is_always_hidden = function(name, _)
+					return name == ".." or name == ".git"
 				end,
 			},
 			float = {

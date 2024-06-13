@@ -9,12 +9,14 @@ if not snip_status_ok then
 end
 
 cmp.setup({
+	completion = {
+		completeopt = "menu,menuone,noinsert,noselect", -- remove default noselect
+	},
 	snippet = {
 		expand = function(args)
 			ls.lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
-
 	mapping = cmp.mapping.preset.insert({
 		["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
 		["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -55,20 +57,22 @@ cmp.setup({
 		fields = { "abbr", "menu", "kind" },
 		format = function(entry, vim_item)
 			vim_item.menu = ({
-				nvim_lsp = "LSP",
-				cody = "AI",
-				nvim_lua = "VIM",
-				luasnip = "SNP",
-				buffer = "BUF",
-				path = "PTH",
+				nvim_lsp = "[LSP]",
+				lazydev = "[LZD]",
+				-- supermaven = "[AI]",
+				-- nvim_lua = "[VIM]",
+				luasnip = "[SNP]",
+				buffer = "[BUF]",
+				path = "[PTH]",
 			})[entry.source.name]
 			return vim_item
 		end,
 	},
 	sources = {
 		{ name = "nvim_lsp" },
-		{ name = "cody" },
-		{ name = "nvim_lua" },
+		{ name = "lazydev" },
+		-- { name = "supermaven" },
+		-- { name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "path" },
@@ -94,11 +98,60 @@ cmp.setup({
 	},
 })
 
+-- Not needed with sqls
+-- cmp.setup.filetype({ "sql", "mysql" }, {
+-- 	formatting = {
+-- 		fields = { "abbr", "menu", "kind" },
+-- 		format = function(entry, vim_item)
+-- 			vim_item.menu = ({
+-- 				nvim_lsp = "[LSP]",
+-- 				["vim-dadbod-completion"] = "[DB]",
+-- 				luasnip = "[SNP]",
+-- 				buffer = "[BUF]",
+-- 			})[entry.source.name]
+-- 			return vim_item
+-- 		end,
+-- 	},
+-- 	sources = {
+-- 		{ name = "nvim_lsp" },
+-- 		{ name = "vim-dadbod-completion" },
+-- 		{ name = "luasnip" },
+-- 		{ name = "buffer" },
+-- 	},
+-- })
+
 cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = { { name = "buffer" } },
 	view = { entries = { name = "wildmenu", separator = "|" } },
 })
+
+vim.snippet.expand = ls.lsp_expand
+
+---@diagnostic disable-next-line: duplicate-set-field
+vim.snippet.active = function(filter)
+	filter = filter or {}
+	filter.direction = filter.direction or 1
+
+	if filter.direction == 1 then
+		return ls.expand_or_jumpable()
+	else
+		return ls.jumpable(filter.direction)
+	end
+end
+
+---@diagnostic disable-next-line: duplicate-set-field
+vim.snippet.jump = function(direction)
+	if direction == 1 then
+		if ls.expandable() then
+			return ls.expand_or_jump()
+		else
+			return ls.jumpable(1) and ls.jump(1)
+		end
+	else
+		return ls.jumpable(-1) and ls.jump(-1)
+	end
+end
 
 -- snippets:
 ls.config.set_config({
@@ -111,26 +164,21 @@ ls.config.set_config({
 
 	-- Autosnippets:
 	enable_autosnippets = true,
+
+	override_builtin = true,
 })
 
+vim.snippet.stop = ls.unlink_current
 -- <c-k> is my expansion key
 -- this will expand the current item or jump to the next item within the snippet.
 vim.keymap.set({ "i", "s" }, "<c-k>", function()
-	if ls.expand_or_jumpable() then
-		ls.expand_or_jump()
-	else
-		vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-k>", true, true, true), "n")
-	end
+	return vim.snippet.active({ direction = 1 }) and vim.snippet.jump(1)
 end, { silent = true })
 
 -- <c-j> is my jump backwards key.
 -- this always moves to the previous item within the snippet
 vim.keymap.set({ "i", "s" }, "<c-j>", function()
-	if ls.jumpable(-1) then
-		ls.jump(-1)
-	else
-		vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-j>", true, true, true), "n")
-	end
+	return vim.snippet.active({ direction = -1 }) and vim.snippet.jump(-1)
 end, { silent = true, noremap = true })
 
 -- <c-l> is selecting within a list of options.
@@ -140,12 +188,6 @@ vim.keymap.set("i", "<c-l>", function()
 		ls.change_choice(1)
 	else
 		vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-l>", true, true, true), "n")
-	end
-end)
-
-vim.keymap.set("i", "<C-Return>", function()
-	if ls.choice_active() then
-		require("luasnip.extras.select_choice")
 	end
 end)
 

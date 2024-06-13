@@ -126,13 +126,23 @@ function M:VirtualTextToggle()
 	vim.diagnostic.config({ virtual_text = virtual_text_enabled })
 end
 
+local dbui_enabled = false
+function M:DbuiToggle()
+	if not dbui_enabled then
+		vim.cmd("tabnew")
+		vim.cmd("DBUI")
+		dbui_enabled = true
+		return
+	end
+	vim.cmd("tabnext")
+end
+
 function M:search_diagnostics()
 	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
 	if #diagnostics == 0 then
 		vim.notify("No diagnostics", vim.log.levels.WARN)
 		return
 	end
-
 	local programming_language = vim.api.nvim_buf_get_option(0, "filetype")
 	local severity = string.lower(vim.diagnostic.severity[diagnostics[1].severity])
 	local clean_message = diagnostics[1].message:gsub("[A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")

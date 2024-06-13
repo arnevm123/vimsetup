@@ -87,15 +87,10 @@ autocmd({ "BufWritePre" }, {
 	end,
 })
 
-autocmd("FileType", {
-	desc = "Easy quit help with 'q'",
-	group = augroup("Helpful", { clear = true }),
-	pattern = { "help" },
-	callback = function()
-		vim.keymap.set("n", "q", "<cmd>q<CR>", { silent = true, buffer = true })
-		vim.keymap.set("n", "gd", "<C-]>", { silent = true, buffer = true })
-	end,
-})
+vim.cmd([[
+:autocmd BufWritePre [:;]*
+\   try | echoerr 'Forbidden file name: '..expand('<afile>') | endtry
+]])
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
 	pattern = { "*.go" },

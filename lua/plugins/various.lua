@@ -1,11 +1,29 @@
 return {
+	-- {
+	-- 	"kndndrj/nvim-dbee",
+	-- 	dependencies = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 	},
+	-- 	lazy = false,
+	-- 	build = function()
+	-- 		-- Install tries to automatically detect the install method.
+	-- 		-- if it fails, try calling it with one of these parameters:
+	-- 		--    "curl", "wget", "bitsadmin", "go"
+	-- 		require("dbee").install()
+	-- 	end,
+	-- 	config = function()
+	-- 		require("dbee").setup({
+	-- 			sources = {
+	-- 				require("dbee.sources").FileSource:new(vim.fn.stdpath("config") .. "/.db_connections/dbee.json"),
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 	-- text manipulation
-	{ "tpope/vim-dispatch", event = "VeryLazy" },
-	{ "tpope/vim-eunuch", event = "VeryLazy" },
-	{ "szw/vim-maximizer", keys = { { "<C-w>z", ":MaximizerToggle<CR>", desc = "Toggle maximizer" } } },
-	{ "gpanders/editorconfig.nvim", event = "VeryLazy" },
-	{ "wsdjeg/vim-fetch", lazy = false },
-	{ "wellle/targets.vim", event = "VeryLazy" }, -- better cib
+	{ "tpope/vim-dispatch", event = "VeryLazy" }, -- :Make
+	{ "tpope/vim-eunuch", event = "VeryLazy" }, -- :Remove
+	{ "wsdjeg/vim-fetch", lazy = false }, -- :e file:line
+	-- { "wellle/targets.vim", event = "VeryLazy" }, -- better cib
 	{ "kylechui/nvim-surround", config = true, event = "VeryLazy" },
 	{ "brenoprata10/nvim-highlight-colors", opts = { render = "virtual" }, config = true, event = { "VeryLazy" } },
 	{ "chrisbra/csv.vim", ft = "csv" },
@@ -39,34 +57,6 @@ return {
 				},
 			})
 		end,
-	},
-	{
-		"laytan/cloak.nvim",
-		config = function()
-			require("cloak").setup({
-				enabled = true,
-				cloak_character = "*",
-				-- The applied highlight group (colors) on the cloaking, see `:h highlight`.
-				highlight_group = "Comment",
-				patterns = {
-					{
-						-- Match any file starting with ".env".
-						-- This can be a table to match multiple file patterns.
-						file_pattern = {
-							".env*",
-							"wrangler.toml",
-							".dev.vars",
-							"tcit_vpn.conf",
-						},
-						-- Match an equals sign and any character after it.
-						-- This can also be a table of patterns to cloak,
-						-- example: cloak_pattern = { ":.+", "-.+" } for yaml files.
-						cloak_pattern = { "=.+", "= .+" },
-					},
-				},
-			})
-		end,
-		lazy = false,
 	},
 	-- {
 	-- 	"sourcegraph/sg.nvim",
@@ -128,18 +118,6 @@ return {
 				prev = "[z",
 			},
 		},
-		config = function()
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "GitConflictDetected",
-				callback = function()
-					vim.notify("Conflict detected in " .. vim.fn.expand("<afile>"))
-					vim.keymap.set("n", "cww", function()
-						engage.conflict_buster()
-						create_buffer_local_mappings()
-					end)
-				end,
-			})
-		end,
 		event = "VeryLazy",
 	},
 	{
@@ -272,24 +250,42 @@ return {
 	-- 	end,
 	-- 	event = "VeryLazy",
 	-- },
+	-- {
+	-- 	"monkoose/neocodeium",
+	-- 	event = "VeryLazy",
+	-- 	config = function()
+	-- 		local neocodeium = require("neocodeium")
+	-- 		neocodeium.setup(--[[ { manual = true } ]])
+	-- 		vim.keymap.set("i", "<C-;>", function()
+	-- 			require("neocodeium").accept()
+	-- 		end)
+	-- 		vim.keymap.set("i", "<c-.>", function()
+	-- 			require("neocodeium").cycle_or_complete()
+	-- 		end)
+	-- 		vim.keymap.set("i", "<C-,>", function()
+	-- 			require("neocodeium").cycle_or_complete(-1)
+	-- 		end)
+	-- 		vim.keymap.set("i", "<C-/>", function()
+	-- 			require("neocodeium").clear()
+	-- 		end)
+	-- 	end,
+	-- },
 	{
-		"monkoose/neocodeium",
-		event = "VeryLazy",
+		"supermaven-inc/supermaven-nvim",
+		lazy = false,
+		-- event = "VeryLazy",
 		config = function()
-			local neocodeium = require("neocodeium")
-			neocodeium.setup(--[[ { manual = true } ]])
-			vim.keymap.set("i", "<C-;>", function()
-				require("neocodeium").accept()
-			end)
-			vim.keymap.set("i", "<c-.>", function()
-				require("neocodeium").cycle_or_complete()
-			end)
-			vim.keymap.set("i", "<C-,>", function()
-				require("neocodeium").cycle_or_complete(-1)
-			end)
-			vim.keymap.set("i", "<C-/>", function()
-				require("neocodeium").clear()
-			end)
+			require("supermaven-nvim").setup({
+				keymaps = {
+					accept_suggestion = "<C-;>",
+					clear_suggestion = "<C-/>",
+					accept_word = "<C-.>",
+				},
+				color = {
+					suggestion_color = "#6B6B6B",
+					cterm = 244,
+				},
+			})
 		end,
 	},
 	{

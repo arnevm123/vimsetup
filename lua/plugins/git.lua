@@ -152,13 +152,20 @@ return {
 		},
 	},
 	{
-		"tpope/vim-fugitive",
-		cmd = { "Git", "Gclog", "Gvdiff", "Gvdiffsplit", "Gdiffsplit" },
-		keys = {
-			{ "<leader>gc", ":Gvdiffsplit!<CR>", desc = "merge conflict vertical" },
-			{ "<leader>gC", ":Gdiffsplit!<CR>", desc = "merge conflict horizontal" },
-			{ "<leader>gh", ":0Gclog<CR>", desc = "Git history" },
-			{ "<leader>gh", ":Gclog<CR>", desc = "Git history", mode = "x" },
+		"rbong/vim-flog",
+		lazy = true,
+		cmd = { "Flog", "Flogsplit", "Floggit" },
+		dependencies = {
+			{
+				"tpope/vim-fugitive",
+				cmd = { "Git", "Gclog", "Gvdiff", "Gvdiffsplit", "Gdiffsplit" },
+				keys = {
+					{ "<leader>gc", ":Gvdiffsplit!<CR>", desc = "merge conflict vertical" },
+					{ "<leader>gC", ":Gdiffsplit!<CR>", desc = "merge conflict horizontal" },
+					{ "<leader>gh", ":0Gclog<CR>", desc = "Git history" },
+					{ "<leader>gh", ":Gclog<CR>", desc = "Git history", mode = "x" },
+				},
+			},
 		},
 	},
 }

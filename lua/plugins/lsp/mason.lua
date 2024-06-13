@@ -2,16 +2,18 @@ local servers = {
 	"angularls",
 	"ansiblels",
 	"bashls",
-	"csharp_ls",
+	"clangd",
+	-- "csharp_ls",
 	"cssls",
 	"eslint",
 	"gopls",
+	"sqls",
 	"volar",
 	"html",
 	"jsonls",
 	"lua_ls",
 	"marksman",
-	-- "omnisharp_mono",
+	"omnisharp_mono",
 	-- "omnisharp",
 	"pyright",
 	-- "rust_analyzer",
@@ -84,3 +86,22 @@ for _, server in pairs(servers) do
 
 	lspconfig[server].setup(opts)
 end
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "SqlsConnectionChoice",
+	callback = function(event)
+		vim.notify(event.data.choice)
+	end,
+})
+
+-- vim.lsp.util.stylize_markdown = function(bufnr, contents, opt)
+-- 	contents = vim.lsp.util._normalize_markdown(contents, {
+-- 		width = vim.lsp.util._make_floating_popup_size(contents, opt),
+-- 	})
+--
+-- 	vim.bo[bufnr].filetype = "markdown"
+-- 	vim.treesitter.start(bufnr)
+-- 	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
+--
+-- 	return contents
+-- end

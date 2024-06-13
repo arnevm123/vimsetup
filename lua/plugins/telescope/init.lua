@@ -7,30 +7,49 @@ return {
 		"nvim-telescope/telescope-live-grep-args.nvim",
 		"AckslD/nvim-neoclip.lua",
 		"aaronhallaert/ts-advanced-git-search.nvim",
-		"freestingo/telescope-changed-files",
-		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
+		{
+			"AdeAttwood/ivy.nvim",
+			build = "cargo build --release",
+		},
+		-- { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
 		{ "kkharji/sqlite.lua", module = "sqlite" },
 	},
 	event = "VeryLazy",
 	keys = {
 		-- { "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>f'", ":Telescope registers<CR>", mode = { "n", "v", "x" }, desc = "Telescope registers" },
-		{ "<leader>f=", ":Telescope jumplist<CR>", mode = { "n", "v", "x" }, desc = "Telescope jumplist" },
+		{ "<leader>fj", ":Telescope jumplist<CR>", mode = { "n", "v", "x" }, desc = "Telescope jumplist" },
 		{ "<leader>f;", ":Telescope neoclip<CR>", mode = { "n", "v", "x" }, desc = "Neoclip" },
+		{
+			"<C-r><C-r>",
+			"<Plug>(TelescopeFuzzyCommandSearch)",
+			mode = { "c" },
+			desc = "Telescope fuzzy command search",
+		},
+		{
+			"<C-p>",
+			function()
+				local paste = require("neoclip.storage").get().yanks[1]
+				vim.fn.setreg('"', paste.contents)
+				vim.api.nvim_put(paste.contents, paste.regtype, true, true)
+			end,
+			mode = { "n", "v", "x" },
+			desc = "Neoclip paste last",
+		},
 		{ "<leader>fh", ":Telescope help_tags<CR>", mode = { "n", "v", "x" }, desc = "Telescope help tags" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", mode = { "n", "v", "x" }, desc = "Telescope keymaps" },
 		{ "<leader>fl", ":Telescope pickers<CR>", mode = { "n", "v", "x" }, desc = "Telescope last searches" },
-		{ "<leader>fo", ":Telescope oldfiles<CR>", mode = { "n", "v", "x" }, desc = "Telescope old files" },
+		{ "<leader>fo", ":Telescope oldfiles hidden=true<CR>", mode = { "n", "v", "x" }, desc = "Telescope old files" },
 		{ "<leader>fq", ":Telescope quickfix<CR>", mode = { "n", "v", "x" }, desc = "Telescope quickfix" },
-		{ "<leader>fs", ":Telescope git_status<CR>", mode = { "n", "v", "x" }, desc = "Telescope git status" },
-		{ "<leader>ft", ":Telescope<CR>", mode = { "n", "v", "x" }, desc = "Telescope" },
-		{ "<leader>bb", ":Telescope buffers<CR>", mode = { "n", "v", "x" }, desc = "Telescope buffers" },
 		{
-			"<leader>f/",
-			":Telescope current_buffer_fuzzy_find<CR>",
+			"<leader>fs",
+			":Telescope git_status hidden=true<CR>",
 			mode = { "n", "v", "x" },
-			desc = "Telescope current buffer fuzzy",
+			desc = "Telescope git status",
 		},
+		{ "<leader>ft", ":Telescope<CR>", mode = { "n", "v", "x" }, desc = "Telescope" },
+		{ "<leader>bb", ":IvyBuffers<CR>", mode = { "n", "v", "x" }, desc = "Ivy buffers" },
+		{ "<leader>f/", ":IvyLines<CR>", mode = { "n", "v", "x" }, desc = "Ivy current buffer fuzzy" },
 		{
 			"<leader>fc",
 			":Telescope advanced_git_search changed_on_branch<CR>",
@@ -47,7 +66,7 @@ return {
 				end
 				text = text:match("([^\n]+)")
 				text = string.gsub(text, "^%s*(.-)%s*$", "%1")
-				require("telescope.builtin").fd({ default_text = text })
+				require("telescope.builtin").find_files({ default_text = text, hidden = true })
 			end,
 			mode = { "n", "v" },
 			desc = "Telescope find copied file",
@@ -55,7 +74,7 @@ return {
 		{
 			"<leader>fi",
 			function()
-				require("telescope.builtin").live_grep({ cwd = vim.fn.expand("%:h") })
+				require("telescope.builtin").live_grep({ cwd = vim.fn.expand("%:h"), hidden = true })
 			end,
 			mode = { "n", "v" },
 			desc = "Telescope fd current folder",
@@ -63,7 +82,7 @@ return {
 		{
 			"<leader>fe",
 			function()
-				require("telescope.builtin").fd({ cwd = vim.fn.expand("%:h") })
+				require("telescope.builtin").fd({ cwd = vim.fn.expand("%:h"), hidden = true })
 			end,
 			mode = { "n", "v" },
 			desc = "Telescope fd current folder",
@@ -71,30 +90,23 @@ return {
 		{
 			"<leader>fr",
 			function()
-				require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
+				require("telescope").extensions.frecency.frecency({ workspace = "CWD", hidden = true })
 			end,
 			mode = { "n", "v" },
 			desc = "Telescope live grep",
 		},
-		{
-			"<leader>fd",
-			function()
-				require("telescope.builtin").fd()
-			end,
-			mode = { "n", "v" },
-			desc = "Telescope live grep",
-		},
+		{ "<leader>fd", ":IvyFd<CR>", mode = { "n", "v" }, desc = "Ivy fd" },
 		{
 			"<leader>fg",
 			function()
-				require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
+				require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > "), hidden = true })
 			end,
 			desc = "Telescope grep",
 		},
 		{
 			"<leader>fg",
 			function()
-				require("telescope.builtin"):grep_string()
+				require("telescope.builtin"):grep_string({ hidden = true })
 			end,
 			mode = "v",
 			desc = "Telescope grep",
@@ -102,7 +114,7 @@ return {
 		{
 			"<leader>ff",
 			function()
-				require("telescope").extensions.live_grep_args:live_grep_args()
+				require("telescope").extensions.live_grep_args:live_grep_args({ hidden = true })
 			end,
 			mode = { "n", "v" },
 			desc = "Telescope live grep",
@@ -110,20 +122,24 @@ return {
 		{
 			"<leader>fu",
 			function()
-				require("telescope-live-grep-args.shortcuts"):grep_word_under_cursor()
+				require("telescope-live-grep-args.shortcuts").grep_word_under_cursor({ hidden = true })
 			end,
 			desc = "Telescope live grep cursor word",
 		},
 		{
 			"<leader>fu",
 			function()
-				require("telescope-live-grep-args.shortcuts"):grep_visual_selection()
+				require("telescope-live-grep-args.shortcuts").grep_visual_selection({ hidden = true })
 			end,
 			desc = "Telescope live grep visual selection",
 			mode = "v",
 		},
 	},
 	config = function()
+		vim.api.nvim_del_keymap("n", "<leader>p")
+		vim.api.nvim_del_keymap("n", "<leader>b")
+		vim.api.nvim_set_keymap("n", "<leader>p", '"+p', { noremap = true, silent = true })
+		-- { "<C-r><C-r>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = { "c"}, desc = "Telescope fuzzy command search" },
 		local status_ok, telescope = pcall(require, "telescope")
 		if not status_ok then
 			return
@@ -138,9 +154,27 @@ return {
 			keys = { telescope = { i = { paste = "<c-y>" } } },
 		})
 
+		vim.api.nvim_create_autocmd("FocusLost", {
+			group = vim.api.nvim_create_augroup("NeoClipFocusLost", {}),
+			pattern = "*",
+			callback = function()
+				require("neoclip").db_push()
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("FocusGained", {
+			group = vim.api.nvim_create_augroup("NeoClipFocusGained", {}),
+			pattern = "*",
+			callback = function()
+				require("nio").run(function()
+					require("nio").sleep(200)
+					require("neoclip").db_pull()
+				end)
+			end,
+		})
+
 		local actions = require("telescope.actions")
 		local lga_actions = require("telescope-live-grep-args.actions")
-		local cf_actions = telescope.extensions.changed_files.actions
 		telescope.setup({
 			defaults = {
 				history = {
@@ -242,16 +276,6 @@ return {
 				},
 			},
 			pickers = {
-				git_branches = {
-					mappings = {
-						i = {
-							["<C-f>"] = cf_actions.find_changed_files,
-						},
-						n = {
-							["<C-f>"] = cf_actions.find_changed_files,
-						},
-					},
-				},
 				oldfiles = {
 					cwd_only = true,
 					hidden = true,
@@ -268,12 +292,12 @@ return {
 				},
 			},
 			extensions = {
-				fzf = {
-					fuzzy = true, -- false will only do exact matching
-					override_generic_sorter = true, -- override the generic sorter
-					override_file_sorter = true, -- override the file sorter
-					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-				},
+				-- fzf = {
+				-- 	fuzzy = true, -- false will only do exact matching
+				-- 	override_generic_sorter = true, -- override the generic sorter
+				-- 	override_file_sorter = true, -- override the file sorter
+				-- 	case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+				-- },
 				live_grep_args = {
 					auto_quoting = true, -- enable/disable auto-quoting
 					-- define mappings, e.g.
@@ -296,10 +320,10 @@ return {
 		})
 		require("plugins.telescope.custom")
 		telescope.load_extension("smart_history")
-		telescope.load_extension("fzf")
+		telescope.load_extension("git_worktree")
+		-- telescope.load_extension("fzf")
 		telescope.load_extension("neoclip")
 		telescope.load_extension("live_grep_args")
 		telescope.load_extension("advanced_git_search")
-		telescope.load_extension("changed_files")
 	end,
 }

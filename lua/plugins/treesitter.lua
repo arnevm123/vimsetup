@@ -52,13 +52,13 @@ return {
 			autotag = { enable = true },
 			matchup = { enable = true, disable_virtual_text = true },
 			indent = { enable = true, disable = { "css" } },
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					node_incremental = "<leader>v",
-					node_decremental = "<leader>V",
-				},
-			},
+			-- incremental_selection = {
+			-- 	enable = true,
+			-- 	keymaps = {
+			-- 		node_incremental = "<leader>v",
+			-- 		node_decremental = "<leader>V",
+			-- 	},
+			-- },
 			textobjects = {
 				select = {
 					enable = true,

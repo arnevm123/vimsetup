@@ -1,8 +1,30 @@
 -- local colorscheme = "austere"
 -- local colorscheme = "seoulbones"
 local colorscheme = "mel"
+-- local colorscheme = "lackluster"
+-- local colorscheme = "lackluster-hack"
+-- local colorscheme = "lackluster-mint"
 -- local colorscheme = "rose-pine"
+-- local colorscheme = "monochrome"
 return {
+	{
+		"kdheepak/monochrome.nvim",
+		lazy = colorscheme ~= "monochrome",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("monochrome")
+			require("base.utils").remove_bg()
+		end,
+	},
+	{
+		"slugbyte/lackluster.nvim",
+		lazy = colorscheme ~= "lackluster" or colorscheme ~= "lackluster-hack" or colorscheme ~= "lackluster-mint",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme(colorscheme)
+			require("base.utils").remove_bg()
+		end,
+	},
 	{
 		"LuRsT/austere.vim",
 		lazy = colorscheme ~= "austere",
@@ -23,7 +45,7 @@ return {
 			require("base.utils").remove_bg()
 
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
-			vim.api.nvim_set_hl(0, "Visual", { bg  = "#3B3B3B" })
+			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
 			vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
 			vim.api.nvim_set_hl(0, "comment", { fg = "#8B8B8B", italic = true })
 			vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })

@@ -13,49 +13,15 @@ return {
 
 	keys = {
 		{ "<leader>qt", ":DBUIToggle<CR>", desc = "DadBod Toggle" },
-		{ "<leader>qo", ":tabnew<CR>:DBUIToggle<CR>", desc = "DadBod Open new tab" },
+		{ "<leader>qo", ":lua require('base.utils').DbuiToggle()<CR>", desc = "DadBod Open new tab" },
 		{ "<leader>ql", ":DBUILastQueryInfo<CR>", desc = "DadBod last query info" },
-		{ "<leader>qs", ":DBUI_SaveQuer<CR>", desc = "DadBod save query" },
-		{ "<C-Return>", ":DB<CR>", mode = "v", desc = "DadBod run selected" },
+		{ "<leader>qs", "<PLUG>(DBUI_SaveQuery)", desc = "DadBod save query" },
+		{ "<leader>qq", "<PLUG>(DBUI_ExecuteQuery)", mode = { "v", "x", "n" }, desc = "DadBod run query" },
 	},
 	config = function()
+		vim.g.db_ui_auto_execute_table_helpers = 1
 		vim.g.db_ui_dotenv_variable_prefix = "DB_UI_"
 		vim.g.db_ui_save_location = vim.fn.stdpath("config") .. require("plenary.path").path.sep .. ".db_connections"
-
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = {
-				"sql",
-			},
-			command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
-		})
-
-		local function db_completion()
-			require("cmp").setup.buffer({
-				formatting = {
-					fields = { "abbr", "menu", "kind" },
-					format = function(entry, vim_item)
-						vim_item.menu = ({
-							["vim-dadbod-completion"] = "[DB]",
-							buffer = "Buf",
-						})[entry.source.name]
-						return vim_item
-					end,
-				},
-				sources = {
-					{ name = "vim-dadbod-completion" },
-					{ name = "buffer" },
-				},
-			})
-		end
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = {
-				"sql",
-				"mysql",
-				"plsql",
-			},
-			callback = function()
-				vim.schedule(db_completion)
-			end,
-		})
+		vim.g.db_ui_execute_on_save = 0
 	end,
 }

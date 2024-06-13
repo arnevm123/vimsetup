@@ -16,9 +16,9 @@ local icons = {
 
 local diagnostics_attrs = {
 	{ "Error", icons.diagnostics.error },
-	-- { "Warn", icons.diagnostics.warning },
-	-- { "Hint", icons.diagnostics.hint },
-	-- { "Info", icons.diagnostics.info },
+	{ "Warn", icons.diagnostics.warning },
+	{ "Hint", icons.diagnostics.hint },
+	{ "Info", icons.diagnostics.info },
 }
 
 local diagnostics = ""
