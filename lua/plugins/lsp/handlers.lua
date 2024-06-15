@@ -71,7 +71,7 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-	client.server_capabilities.semanticTokensProvider = nil
+	-- client.server_capabilities.semanticTokensProvider = nil
 	lsp_keymaps(bufnr)
 end
 return M
