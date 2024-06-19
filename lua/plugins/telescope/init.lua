@@ -11,7 +11,7 @@ return {
 			"AdeAttwood/ivy.nvim",
 			build = "cargo build --release",
 		},
-		-- { "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
+		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
 		{ "kkharji/sqlite.lua", module = "sqlite" },
 	},
 	event = "VeryLazy",
@@ -292,12 +292,12 @@ return {
 				},
 			},
 			extensions = {
-				-- fzf = {
-				-- 	fuzzy = true, -- false will only do exact matching
-				-- 	override_generic_sorter = true, -- override the generic sorter
-				-- 	override_file_sorter = true, -- override the file sorter
-				-- 	case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-				-- },
+				fzf = {
+					fuzzy = true, -- false will only do exact matching
+					override_generic_sorter = true, -- override the generic sorter
+					override_file_sorter = true, -- override the file sorter
+					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+				},
 				live_grep_args = {
 					auto_quoting = true, -- enable/disable auto-quoting
 					-- define mappings, e.g.
@@ -321,7 +321,7 @@ return {
 		require("plugins.telescope.custom")
 		telescope.load_extension("smart_history")
 		telescope.load_extension("git_worktree")
-		-- telescope.load_extension("fzf")
+		telescope.load_extension("fzf")
 		telescope.load_extension("neoclip")
 		telescope.load_extension("live_grep_args")
 		telescope.load_extension("advanced_git_search")
