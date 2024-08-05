@@ -18,10 +18,6 @@ M.setup = function()
 		{ name = "DiagnosticSignInfo", text = "i" },
 	}
 
-	for _, sign in ipairs(signs) do
-		vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-	end
-
 	local config = {
 		virtual_text = {
 			source = true,
@@ -71,7 +67,7 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-	-- client.server_capabilities.semanticTokensProvider = nil
+	client.server_capabilities.semanticTokensProvider = nil
 	lsp_keymaps(bufnr)
 end
 return M

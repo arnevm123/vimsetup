@@ -1,6 +1,11 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
+		{
+			"rachartier/tiny-code-action.nvim",
+			config = true,
+		},
+		"aznhe21/actions-preview.nvim",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -10,6 +15,7 @@ return {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-cmdline",
+		"hrsh7th/cmp-nvim-lsp-signature-help",
 		-- "nanotee/sqls.nvim",
 		-- {
 		-- 	"MattiasMTS/cmp-dbee",
@@ -143,6 +149,13 @@ return {
 	},
 	keys = {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
+		{ "<leader>la", ":lua require('actions-preview').code_actions()<CR>", desc = "lsp Code Action", mode = { "n", "v" } },
+		{
+			"<leader>la",
+			":lua require('tiny-code-action').code_action()<CR>",
+			desc = "lsp Code Action",
+			mode = { "n", "v" },
+		},
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{
 			"<leader>lf",

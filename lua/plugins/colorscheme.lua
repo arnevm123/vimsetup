@@ -1,41 +1,7 @@
--- local colorscheme = "austere"
 -- local colorscheme = "seoulbones"
 local colorscheme = "mel"
--- local colorscheme = "lackluster"
--- local colorscheme = "lackluster-hack"
--- local colorscheme = "lackluster-mint"
 -- local colorscheme = "rose-pine"
--- local colorscheme = "monochrome"
 return {
-	{
-		"kdheepak/monochrome.nvim",
-		lazy = colorscheme ~= "monochrome",
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("monochrome")
-			require("base.utils").remove_bg()
-		end,
-	},
-	{
-		"slugbyte/lackluster.nvim",
-		lazy = colorscheme ~= "lackluster" or colorscheme ~= "lackluster-hack" or colorscheme ~= "lackluster-mint",
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme(colorscheme)
-			require("base.utils").remove_bg()
-		end,
-	},
-	{
-		"LuRsT/austere.vim",
-		lazy = colorscheme ~= "austere",
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("austere")
-			require("base.utils").remove_bg()
-			vim.api.nvim_set_hl(0, "NeogitDiffAdd", { link = "DiffAdd" })
-			vim.api.nvim_set_hl(0, "NeogitDiffAddHighlight", { link = "DiffAdd" })
-		end,
-	},
 	{
 		"mcchrish/zenbones.nvim",
 		lazy = colorscheme ~= "seoulbones",
@@ -66,33 +32,33 @@ return {
 				styles = {
 					bold = true,
 					italic = true,
-					transparency = true,
+					-- transparency = true,
 				},
 				highlight_groups = {
-					TreesitterContext = { bg = "#2B2B2B" },
+					-- TreesitterContext = { bg = "#2B2B2B" },
 					DiagnosticVirtualTextError = { bg = "none" },
 					DiagnosticVirtualTextHint = { bg = "none" },
 					DiagnosticVirtualTextInfo = { bg = "none" },
 					DiagnosticVirtualTextWarn = { bg = "none" },
-					Float = { bg = "#333333" },
-					NormalFloat = { bg = "#333333" },
-					FloatBorder = { bg = "#333333" },
-					Title = { bg = "#333333" },
-					StatusLine = { bg = "#333333" },
-					TelescopeNormal = { bg = "#333333" },
-					TelescopeTitle = { bg = "#333333" },
-					TelescopeBorder = { bg = "#333333" },
-					TelescopeSelection = { bg = "#333333" },
-					TelescopeSelectionCaret = { bg = "#333333" },
-					TelescopePromptBorder = { bg = "#333333" },
-					TelescopePromptNormal = { bg = "#333333" },
-					TelescopePromptBackground = { bg = "#333333" },
-					TelescopePromptTitle = { bg = "#333333" },
-					TelescopePromptCounter = { bg = "#333333" },
-					TelescopePromptPrefix = { bg = "#333333" },
-					["@text.title.gitcommit"] = { link = "Constant" },
-					QuickFixLine = { link = "@method" },
-					ColorColumn = { bg = "#4B4B4B" },
+					-- Float = { bg = "#333333" },
+					-- NormalFloat = { bg = "#333333" },
+					-- FloatBorder = { bg = "#333333" },
+					-- Title = { bg = "#333333" },
+					-- StatusLine = { bg = "#333333" },
+					-- TelescopeNormal = { bg = "#333333" },
+					-- TelescopeTitle = { bg = "#333333" },
+					-- TelescopeBorder = { bg = "#333333" },
+					-- TelescopeSelection = { bg = "#333333" },
+					-- TelescopeSelectionCaret = { bg = "#333333" },
+					-- TelescopePromptBorder = { bg = "#333333" },
+					-- TelescopePromptNormal = { bg = "#333333" },
+					-- TelescopePromptBackground = { bg = "#333333" },
+					-- TelescopePromptTitle = { bg = "#333333" },
+					-- TelescopePromptCounter = { bg = "#333333" },
+					-- TelescopePromptPrefix = { bg = "#333333" },
+					-- ["@text.title.gitcommit"] = { link = "Constant" },
+					-- QuickFixLine = { link = "@method" },
+					-- ColorColumn = { bg = "#4B4B4B" },
 				},
 			})
 			vim.cmd.colorscheme("rose-pine")

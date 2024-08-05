@@ -62,6 +62,25 @@ return {
 		},
 	},
 	{
+		"isakbm/gitgraph.nvim",
+		dependencies = { "sindrets/diffview.nvim" },
+		opts = {
+			symbols = {
+				merge_commit = "M",
+				commit = "*",
+			},
+			format = {
+				timestamp = "%H:%M:%S %d-%m-%Y",
+				fields = { "hash", "timestamp", "author", "branch_name", "tag" },
+			},
+		},
+		init = function()
+			vim.keymap.set("n", "<leader>GR", function()
+				require("gitgraph").draw({}, { all = true, max_count = 5000 })
+			end, { desc = "new git graph" })
+		end,
+	},
+	{
 		"lewis6991/gitsigns.nvim",
 		event = "VeryLazy",
 		keys = {
@@ -108,12 +127,12 @@ return {
 		},
 		opts = {
 			signs = {
-				add = { hl = "DiffAdd", text = "│", numhl = "DiffAdd" },
-				change = { hl = "DiffChange", text = "│", numhl = "DiffChange" },
-				delete = { hl = "DiffDelete", text = "_", numhl = "DiffDelete" },
-				topdelete = { hl = "DiffDelete", text = "‾", numhl = "DiffDelete" },
-				changedelete = { hl = "DiffDelete", text = "~", numhl = "DiffChange" },
-				untracked = { hl = "DiffAdd", text = "║", numhl = "DiffAdd" },
+				add = { text = "│" },
+				change = { text = "│" },
+				delete = { text = "_" },
+				topdelete = { text = "‾" },
+				changedelete = { text = "~" },
+				untracked = { text = "║" },
 			},
 			signcolumn = true, -- toggle with `:gitsigns toggle_signs`
 			numhl = false, -- toggle with `:gitsigns toggle_numhl`
@@ -125,15 +144,6 @@ return {
 			},
 			attach_to_untracked = true,
 			current_line_blame = false, -- toggle with `:gitsigns toggle_current_line_blame`
-			current_line_blame_opts = {
-				virt_text = true,
-				virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-				delay = 0,
-				ignore_whitespace = true,
-			},
-			current_line_blame_formatter_opts = {
-				relative_time = false,
-			},
 			sign_priority = 6,
 			update_debounce = 100,
 			status_formatter = nil, -- use default
@@ -145,9 +155,6 @@ return {
 				relative = "cursor",
 				row = 0,
 				col = 1,
-			},
-			yadm = {
-				enable = false,
 			},
 		},
 	},

@@ -54,21 +54,24 @@ cmp.setup({
 		["<tab>"] = cmp.config.disable,
 	}),
 	formatting = {
+		expandable_indicator = true,
 		fields = { "abbr", "menu", "kind" },
 		format = function(entry, vim_item)
 			vim_item.menu = ({
+				luasnip = "[SNP]",
 				nvim_lsp = "[LSP]",
 				lazydev = "[LZD]",
-				-- supermaven = "[AI]",
-				-- nvim_lua = "[VIM]",
-				luasnip = "[SNP]",
+				nvim_lsp_signature_help = "[SIG]",
 				buffer = "[BUF]",
 				path = "[PTH]",
+				-- supermaven = "[AI]",
+				-- nvim_lua = "[VIM]",
 			})[entry.source.name]
 			return vim_item
 		end,
 	},
 	sources = {
+		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lsp" },
 		{ name = "lazydev" },
 		-- { name = "supermaven" },

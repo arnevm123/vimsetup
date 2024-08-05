@@ -11,6 +11,14 @@ vim.opt.relativenumber = true
 vim.opt.cursorlineopt = "number"
 vim.opt.cursorline = true
 
+vim.o.list = true
+vim.opt.listchars = {
+	tab = "  ",
+	trail = "·",
+	extends = "»",
+	precedes = "«",
+}
+
 vim.opt.backup = false
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("data") .. "/databases/undodir"

@@ -4,3 +4,4 @@ lua/.luarc.json
 .db_connections/
 .queries/
 sqls.lua
+.supermaven/

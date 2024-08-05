@@ -1,4 +1,48 @@
 return {
+	{
+		"maxandron/goplements.nvim",
+		config = function()
+			local goplements = require("goplements")
+			---@diagnostic disable-next-line: missing-fields
+			goplements.setup({
+				prefix = {
+					interface = "󰘧 ",
+					struct = "󰡱 ",
+				},
+				display_package = true,
+			})
+
+			local enabled = false
+			vim.api.nvim_create_user_command("GoIpmlToggle", function()
+				if enabled then
+					enabled = false
+					goplements.disable()
+				else
+					enabled = true
+					goplements.enable()
+				end
+			end, {})
+		end,
+		keys = {
+			{ "yop", "<cmd>GoIpmlToggle<CR>", desc = "Toggle Goplements" },
+		},
+	},
+	{
+		"chrisgrieser/nvim-lsp-endhints",
+		opts = {
+			icons = {
+				type = "",
+				parameter = "",
+			},
+		},
+		keys = {
+			{
+				"yoi",
+				"<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",
+				desc = "Toggle inlay hints",
+			},
+		},
+	},
 	-- {
 	-- 	"kndndrj/nvim-dbee",
 	-- 	dependencies = {
@@ -376,7 +420,23 @@ return {
 			})
 		end,
 		keys = {
-			{ "<leader>ee", ":GoIfErr<CR>jf%", desc = "Go if err" },
+			{ "<leader>ee", '0f=llvt("hy:GoIfErr<CR>jf%i<C-r>h: <esc>', desc = "Go if err" },
+			{
+				"<leader>er",
+				function()
+					local line = vim.api.nvim_get_current_line()
+					if line:match("^%s*if") then
+						if string.find(line, ";") then
+							vim.api.nvim_feedkeys("^df f;s\x0dif \x1b", "n", true)
+							return
+						end
+						vim.api.nvim_feedkeys("k", "n", true)
+					end
+					vim.api.nvim_feedkeys("Jcff;\x1bIif \x1b", "n", true)
+				end,
+				desc = "Go if err join",
+			},
+			{ "<leader>ew", "^df f;s<CR>if <esc>", desc = "Go if err split" },
 			{
 				"<leader>en",
 				function()

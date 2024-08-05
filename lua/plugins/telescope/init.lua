@@ -10,13 +10,21 @@ return {
 		{
 			"AdeAttwood/ivy.nvim",
 			build = "cargo build --release",
+			opts = {
+				backends = {
+					{ "ivy.backends.buffers", { keymap = "<leader>bb" } },
+					{ "ivy.backends.files", { keymap = "<leader>fd" } },
+					{ "ivy.backends.ag", { keymap = "<leader>/" } },
+					-- require("plugins.ivy.recent_files"),
+				},
+			},
 		},
 		{ "nvim-telescope/telescope-fzf-native.nvim", enabled = vim.fn.executable("make") == 1, build = "make" },
 		{ "kkharji/sqlite.lua", module = "sqlite" },
 	},
 	event = "VeryLazy",
 	keys = {
-		-- { "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
+		{ "<leader>fc", ":TelescopeDiff<CR>", desc = "Telescope diff master" },
 		{ "<leader>f'", ":Telescope registers<CR>", mode = { "n", "v", "x" }, desc = "Telescope registers" },
 		{ "<leader>fj", ":Telescope jumplist<CR>", mode = { "n", "v", "x" }, desc = "Telescope jumplist" },
 		{ "<leader>f;", ":Telescope neoclip<CR>", mode = { "n", "v", "x" }, desc = "Neoclip" },
@@ -36,6 +44,32 @@ return {
 			mode = { "n", "v", "x" },
 			desc = "Neoclip paste last",
 		},
+		{
+			"<leader>FF",
+			function()
+				vim.ivy.run(
+					-- The name given to the results window and displayed to the user
+					"Title",
+					-- Call back function to get all the candidates that will be displayed in
+					-- the results window, The `input` will be passed in, so you can filter
+					-- your results with the value from the prompt
+					function(input)
+						return {
+							{ content = "One" },
+							{ content = "Two" },
+							{ content = "Three" },
+						}
+					end,
+					-- Action callback that will be called on the completion or peek actions.
+					-- The currently selected item is passed in as the result.
+					function(result)
+						vim.cmd("edit " .. result)
+					end
+				)
+			end,
+			mode = { "n" },
+		},
+
 		{ "<leader>fh", ":Telescope help_tags<CR>", mode = { "n", "v", "x" }, desc = "Telescope help tags" },
 		{ "<leader>fk", ":Telescope keymaps<CR>", mode = { "n", "v", "x" }, desc = "Telescope keymaps" },
 		{ "<leader>fl", ":Telescope pickers<CR>", mode = { "n", "v", "x" }, desc = "Telescope last searches" },
@@ -48,14 +82,14 @@ return {
 			desc = "Telescope git status",
 		},
 		{ "<leader>ft", ":Telescope<CR>", mode = { "n", "v", "x" }, desc = "Telescope" },
-		{ "<leader>bb", ":IvyBuffers<CR>", mode = { "n", "v", "x" }, desc = "Ivy buffers" },
+		-- { "<leader>bb", ":IvyBuffers<CR>", mode = { "n", "v", "x" }, desc = "Ivy buffers" },
 		{ "<leader>f/", ":IvyLines<CR>", mode = { "n", "v", "x" }, desc = "Ivy current buffer fuzzy" },
-		{
-			"<leader>fc",
-			":Telescope advanced_git_search changed_on_branch<CR>",
-			mode = { "n", "v", "x" },
-			desc = "Telescope diff branched",
-		},
+		-- {
+		-- 	"<leader>fc",
+		-- 	":Telescope advanced_git_search changed_on_branch<CR>",
+		-- 	mode = { "n", "v", "x" },
+		-- 	desc = "Telescope diff branched",
+		-- },
 		{
 			"<leader>fp",
 			function()
@@ -95,26 +129,22 @@ return {
 			mode = { "n", "v" },
 			desc = "Telescope live grep",
 		},
-		{ "<leader>fd", ":IvyFd<CR>", mode = { "n", "v" }, desc = "Ivy fd" },
 		{
 			"<leader>fg",
 			function()
-				require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > "), hidden = true })
+				require("telescope.builtin").grep_string({
+					search = vim.fn.input("Grep > "),
+					additional_args = { "--hidden" },
+				})
 			end,
-			desc = "Telescope grep",
-		},
-		{
-			"<leader>fg",
-			function()
-				require("telescope.builtin"):grep_string({ hidden = true })
-			end,
-			mode = "v",
 			desc = "Telescope grep",
 		},
 		{
 			"<leader>ff",
 			function()
-				require("telescope").extensions.live_grep_args:live_grep_args({ hidden = true })
+				require("telescope").extensions.live_grep_args:live_grep_args({
+					vimgrep_arguments = { "rg", "--hidden" },
+				})
 			end,
 			mode = { "n", "v" },
 			desc = "Telescope live grep",
@@ -136,10 +166,43 @@ return {
 		},
 	},
 	config = function()
-		vim.api.nvim_del_keymap("n", "<leader>p")
-		vim.api.nvim_del_keymap("n", "<leader>b")
-		vim.api.nvim_set_keymap("n", "<leader>p", '"+p', { noremap = true, silent = true })
 		-- { "<C-r><C-r>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = { "c"}, desc = "Telescope fuzzy command search" },
+		function Searchlatest()
+			vim.ivy.run(
+				-- The name given to the results window and displayed to the user
+				"Old files",
+				-- Call back function to get all the candidates that will be displayed in
+				-- the results window, The `input` will be passed in, so you can filter
+				-- your results with the value from the prompt
+				function(_)
+					local files = vim.v.oldfiles
+					local result = {}
+					for _, file in ipairs(files) do
+						local file_stat = vim.loop.fs_stat(file)
+						if
+							file_stat
+							and file_stat.type == "file"
+							and file ~= vim.fn.expand("%:p")
+							and not string.find(file, ".git/COMMIT_EDITMSG")
+						then
+							local cwd = vim.loop.cwd() .. require("plenary.path").path.sep
+							if vim.fn.matchstrpos(file, cwd)[2] ~= -1 then
+								-- remove cwd from filename
+
+								local filename = string.sub(file, string.len(cwd) + 1)
+								table.insert(result, #result, { content = filename })
+							end
+						end
+					end
+					return result
+				end,
+				-- Action callback that will be called on the completion or peek actions.
+				-- The currently selected item is passed in as the result.
+				function(result)
+					vim.cmd("edit " .. result.path)
+				end
+			)
+		end
 		local status_ok, telescope = pcall(require, "telescope")
 		if not status_ok then
 			return
@@ -195,7 +258,6 @@ return {
 					-- You can adjust these settings to your liking.
 					width = 0.8,
 					height = 0.8,
-					preview_width = 0.6,
 					vertical = {
 						mirror = true,
 						prompt_position = "top",

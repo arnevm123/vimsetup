@@ -42,11 +42,16 @@ local branch_diff = function(opts)
 end
 
 vim.api.nvim_create_user_command("TelescopeDiff", function(opts)
-	local branchName = "master"
+	local branchName
 	if opts.args ~= nil and opts.args ~= "" then
 		branchName = opts.args
+	else
+		branchName = require("base.utils").git_main()
+		if branchName == false then
+			return
+		end
 	end
-	local command = "git diff --name-only --relative $(git merge-base ".. branchName .." HEAD)"
+	local command = "git diff --name-only --relative $(git merge-base " .. branchName .. " HEAD)"
 
 	local previewer = branch_diff({ base_branch = branchName })
 	local entry_maker = function(entry)
@@ -74,7 +79,7 @@ vim.api.nvim_create_user_command("TelescopeDiff", function(opts)
 		table.insert(files, token)
 	end
 	local options = {
-		prompt_title = "changes from ".. branchName .." files",
+		prompt_title = "changes from " .. branchName .. " files",
 		finder = finders.new_table({
 			results = files,
 			entry_maker = entry_maker,

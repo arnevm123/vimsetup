@@ -13,12 +13,13 @@ local servers = {
 	"jsonls",
 	"lua_ls",
 	"marksman",
-	"omnisharp_mono",
-	-- "omnisharp",
+	-- "omnisharp_mono",
+	"omnisharp",
 	"pyright",
 	-- "rust_analyzer",
 	-- "tsserver",
 	"yamlls",
+	"zls",
 }
 
 local linters_and_formatters = {

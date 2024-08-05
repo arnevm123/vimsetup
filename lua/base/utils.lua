@@ -265,21 +265,29 @@ function M:cspell_add()
 	vim.fn.jobstart(command, opts)
 end
 
+function M.test()
+	local ts_utils = require("nvim-treesitter.ts_utils")
+	local current_node = ts_utils.get_node_at_cursor()
+	if not current_node then
+		return ""
+	end
+	print(vim.inspect(current_node))
+end
+
 function M:open_last_file()
 	local files = vim.v.oldfiles
 	for _, file in ipairs(files) do
 		local file_stat = vim.loop.fs_stat(file)
+		local cwd = vim.loop.cwd() .. require("plenary.path").path.sep
 		if
 			file_stat
 			and file_stat.type == "file"
 			and file ~= vim.fn.expand("%:p")
 			and not string.find(file, ".git/COMMIT_EDITMSG")
+			and vim.fn.matchstrpos(file, cwd)[2] ~= -1
 		then
-			local cwd = vim.loop.cwd() .. require("plenary.path").path.sep
-			if vim.fn.matchstrpos(file, cwd)[2] ~= -1 then
-				vim.cmd("e " .. file)
-				return
-			end
+			vim.cmd("e " .. file)
+			return
 		end
 	end
 end
