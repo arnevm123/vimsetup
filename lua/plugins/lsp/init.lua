@@ -149,13 +149,13 @@ return {
 	},
 	keys = {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
-		{ "<leader>la", ":lua require('actions-preview').code_actions()<CR>", desc = "lsp Code Action", mode = { "n", "v" } },
-		{
-			"<leader>la",
-			":lua require('tiny-code-action').code_action()<CR>",
-			desc = "lsp Code Action",
-			mode = { "n", "v" },
-		},
+		-- { "<leader>la", ":lua require('actions-preview').code_actions()<CR>", desc = "lsp Code Action", mode = { "n", "v" } },
+		-- {
+		-- 	"<leader>la",
+		-- 	":lua require('tiny-code-action').code_action()<CR>",
+		-- 	desc = "lsp Code Action",
+		-- 	mode = { "n", "v" },
+		-- },
 		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{
 			"<leader>lf",

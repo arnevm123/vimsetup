@@ -1,5 +1,49 @@
 return {
 	{
+		"stevearc/quicker.nvim",
+		lazy = false,
+		opts = {
+			keys = {
+				{
+					"]",
+					function()
+						require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+					end,
+					desc = "Expand quickfix context",
+				},
+				{
+					"[",
+					function()
+						require("quicker").collapse()
+					end,
+					desc = "Collapse quickfix context",
+				},
+			},
+		},
+	},
+	{
+		"MagicDuck/grug-far.nvim",
+		opts = {
+			startInInsertMode = false,
+			transient = true,
+		},
+		config = true,
+		keys = {
+			{ "<leader>ss", ":lua require('grug-far').grug_far()<CR>", desc = "Toggle Grug Far" },
+			{
+				"<leader>su",
+				":lua require('grug-far').grug_far({ prefills = { search = vim.fn.expand('<cword>') } } )<CR>",
+				desc = "Toggle Grug Far",
+			},
+			{
+				"<leader>ss",
+				":lua require('grug-far'). with_visual_selection()<CR>",
+				mode = "x",
+				desc = "Toggle Grug Far",
+			},
+		},
+	},
+	{
 		"maxandron/goplements.nvim",
 		config = function()
 			local goplements = require("goplements")

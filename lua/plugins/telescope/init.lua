@@ -111,7 +111,7 @@ return {
 				require("telescope.builtin").live_grep({ cwd = vim.fn.expand("%:h"), hidden = true })
 			end,
 			mode = { "n", "v" },
-			desc = "Telescope fd current folder",
+			desc = "Telescope live grep current folder",
 		},
 		{
 			"<leader>fe",
