@@ -9,7 +9,7 @@ local servers = {
 	"gopls",
 	"sqls",
 	"volar",
-	"harper_ls",
+	-- "harper_ls",
 	"html",
 	"jsonls",
 	"lua_ls",

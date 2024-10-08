@@ -12,11 +12,12 @@ return {
 	},
 
 	keys = {
-		{ "<leader>qt", ":DBUIToggle<CR>", desc = "DadBod Toggle" },
-		{ "<leader>qo", ":lua require('base.utils').DbuiToggle()<CR>", desc = "DadBod Open new tab" },
-		{ "<leader>ql", ":DBUILastQueryInfo<CR>", desc = "DadBod last query info" },
+		{ "<leader>qt", "<cmd>DBUIToggle<CR>", desc = "DadBod Toggle" },
+		{ "<leader>qo", "<cmd>lua require('base.utils').DbuiToggle()<CR>", desc = "DadBod Open new tab" },
+		{ "<leader>ql", "<cmd>DBUILastQueryInfo<CR>", desc = "DadBod last query info" },
 		{ "<leader>qs", "<PLUG>(DBUI_SaveQuery)", desc = "DadBod save query" },
 		{ "<leader>qq", "<PLUG>(DBUI_ExecuteQuery)", mode = { "v", "x", "n" }, desc = "DadBod run query" },
+		{ "<C-q>", "<PLUG>(DBUI_ExecuteQuery)", mode = { "v", "x", "n" }, desc = "DadBod run query" },
 	},
 	config = function()
 		vim.g.db_ui_auto_execute_table_helpers = 1

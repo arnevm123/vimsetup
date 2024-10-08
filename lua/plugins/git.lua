@@ -1,7 +1,7 @@
 return {
 	{
 		"TimUntersberger/neogit",
-		cmd = { "Neogit", "DiffviewOpen" },
+		cmd = { "Neogit", "DiffviewOpen", "DiffviewFileHistory" },
 		dependencies = {
 			"sindrets/diffview.nvim",
 			opts = {
@@ -21,8 +21,8 @@ return {
 			},
 		},
 		keys = {
-			{ "<leader>gg", ":Neogit<CR>", desc = "open Neogit" },
-			{ "<leader>GG", ":DiffviewOpen master<CR>", desc = "open diff with master" },
+			{ "<leader>gg", "<cmd>Neogit<CR>", desc = "open Neogit" },
+			{ "<leader>GG", "<cmd>DiffviewOpen master<CR>", desc = "open diff with master" },
 		},
 		opts = {
 			ignored_settings = {},
@@ -84,16 +84,16 @@ return {
 		"lewis6991/gitsigns.nvim",
 		event = "VeryLazy",
 		keys = {
-			{ "]g", ":Gitsigns next_hunk<CR>", desc = "Gitsigns next hunk" },
-			{ "[g", ":Gitsigns prev_hunk<CR>", desc = "Gitsigns prev hunk" },
-			{ "<leader>gp", ":Gitsigns preview_hunk_inline<CR>", desc = "Gitsigns preview hunk" },
-			{ "<leader>gr", ":Gitsigns reset_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns reset hunk" },
-			{ "<leader>gs", ":Gitsigns stage_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns stage hunk" },
-			{ "<leader>gu", ":Gitsigns undo_stage_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns undo stage hunk" },
-			{ "<leader>gar", ":Gitsigns reset_buffer<CR>", desc = "Gitsigns reset buffer" },
-			{ "<leader>gau", ":Gitsigns undo_stage_buffer<CR>", desc = "Gitsigns undo stage buffer" },
-			{ "<leader>gas", ":Gitsigns stage_buffer<CR>", desc = "Gitsigns stage buffer" },
-			{ "<leader>gd", ":Gitsigns diffthis HEAD<CR>", desc = "Gitsigns diff with HEAD" },
+			{ "]g", "<cmd>Gitsigns next_hunk<CR>", desc = "Gitsigns next hunk" },
+			{ "[g", "<cmd>Gitsigns prev_hunk<CR>", desc = "Gitsigns prev hunk" },
+			{ "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<CR>", desc = "Gitsigns preview hunk" },
+			{ "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns reset hunk" },
+			{ "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns stage hunk" },
+			{ "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns undo stage hunk" },
+			{ "<leader>gar", "<cmd>Gitsigns reset_buffer<CR>", desc = "Gitsigns reset buffer" },
+			{ "<leader>gau", "<cmd>Gitsigns undo_stage_buffer<CR>", desc = "Gitsigns undo stage buffer" },
+			{ "<leader>gas", "<cmd>Gitsigns stage_buffer<CR>", desc = "Gitsigns stage buffer" },
+			{ "<leader>gd", "<cmd>Gitsigns diffthis HEAD<CR>", desc = "Gitsigns diff with HEAD" },
 			{
 				"<leader>gm",
 				function()
@@ -108,8 +108,8 @@ return {
 				end,
 				desc = "Gitsigns diff with main",
 			},
-			{ "<leader>gl", ":Gitsigns blame_line<CR>", desc = "Gitsigns blame current line" },
-			{ "yob", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
+			{ "<leader>gl", "<cmd>Gitsigns blame_line<CR>", desc = "Gitsigns blame current line" },
+			{ "yob", "<cmd>Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
 			{
 				"<leader>gal",
 				function()
@@ -167,10 +167,10 @@ return {
 				"tpope/vim-fugitive",
 				cmd = { "Git", "Gclog", "Gvdiff", "Gvdiffsplit", "Gdiffsplit" },
 				keys = {
-					{ "<leader>gc", ":Gvdiffsplit!<CR>", desc = "merge conflict vertical" },
-					{ "<leader>gC", ":Gdiffsplit!<CR>", desc = "merge conflict horizontal" },
-					{ "<leader>gh", ":0Gclog<CR>", desc = "Git history" },
-					{ "<leader>gh", ":Gclog<CR>", desc = "Git history", mode = "x" },
+					{ "<leader>gc", "<cmd>Gvdiffsplit!<CR>", desc = "merge conflict vertical" },
+					{ "<leader>gC", "<cmd>Gdiffsplit!<CR>", desc = "merge conflict horizontal" },
+					{ "<leader>gh", "<cmd>0Gclog<CR>", desc = "Git history" },
+					{ "<leader>gh", "<cmd>Gclog<CR>", desc = "Git history", mode = "x" },
 				},
 			},
 		},

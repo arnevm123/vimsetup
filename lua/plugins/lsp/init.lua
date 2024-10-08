@@ -5,6 +5,10 @@ return {
 			"rachartier/tiny-code-action.nvim",
 			config = true,
 		},
+		{
+			"smjonas/inc-rename.nvim",
+			config = true,
+		},
 		"aznhe21/actions-preview.nvim",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
@@ -16,7 +20,7 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-cmdline",
 		"hrsh7th/cmp-nvim-lsp-signature-help",
-		-- "nanotee/sqls.nvim",
+		"nanotee/sqls.nvim",
 		-- {
 		-- 	"MattiasMTS/cmp-dbee",
 		-- 	dependencies = {
@@ -112,7 +116,7 @@ return {
 					sh = { "shfmt" },
 					typescript = { { "eslint_d", "prettierd", "prettier" } },
 					-- yaml = { "yamlfmt" },
-					-- python = { "isort", "black" },
+					python = { "isort", "black" },
 				},
 			},
 		},
@@ -149,23 +153,24 @@ return {
 	},
 	keys = {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
-		-- { "<leader>la", ":lua require('actions-preview').code_actions()<CR>", desc = "lsp Code Action", mode = { "n", "v" } },
+		-- { "<leader>la", "<cmd>lua require('actions-preview').code_actions()<CR>", desc = "lsp Code Action", mode = { "n", "v" } },
 		-- {
 		-- 	"<leader>la",
-		-- 	":lua require('tiny-code-action').code_action()<CR>",
+		-- 	"<cmd>lua require('tiny-code-action').code_action()<CR>",
 		-- 	desc = "lsp Code Action",
 		-- 	mode = { "n", "v" },
 		-- },
-		{ "<leader>ld", ":Telescope diagnostics<CR>", desc = "lsp diagnostics" },
+		{ "<leader>ld", "<cmd>Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{
 			"<leader>lf",
-			":lua require('conform').format({ async = true, lsp_fallback = true })<CR>",
+			"<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>",
 			desc = "lsp format buffer",
 		},
-		{ "<leader>ll", ":lua vim.lsp.codelens.run()<CR>", desc = "lsp codelens" },
-		{ "<leader>lr", ":lua vim.lsp.buf.rename()<CR>", desc = "lsp rename variable" },
-		{ "<leader>li", ":LspInfo<CR>", desc = "lsp info" },
-		{ "<leader>le", ":LspRestart<CR>", desc = "Restart lsp" },
+		{ "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<CR>", desc = "lsp codelens" },
+		-- { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "lsp rename variable" },
+		{ "<leader>lr", '"hyiw:IncRename <C-r>h', desc = "lsp rename variable" },
+		{ "<leader>li", "<cmd>LspInfo<CR>", desc = "lsp info" },
+		{ "<leader>le", "<cmd>LspRestart<CR>", desc = "Restart lsp" },
 	},
 	config = function()
 		require("plugins.lsp.mason")

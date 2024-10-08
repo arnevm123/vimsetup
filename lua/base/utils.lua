@@ -126,12 +126,22 @@ function M:VirtualTextToggle()
 	vim.diagnostic.config({ virtual_text = virtual_text_enabled })
 end
 
-local dbui_enabled = false
 function M:DbuiToggle()
+	local tabs = vim.api.nvim_list_tabpages()
+	local dbui_enabled = false
+	for _, tab in ipairs(tabs) do
+		local wins = vim.api.nvim_tabpage_list_wins(tab)
+		for _, win in ipairs(wins) do
+			local buf = vim.api.nvim_win_get_buf(win)
+			local buf_name = vim.api.nvim_buf_get_name(buf)
+			if buf_name:match("dbui") then
+				dbui_enabled = true
+			end
+		end
+	end
 	if not dbui_enabled then
 		vim.cmd("tabnew")
 		vim.cmd("DBUI")
-		dbui_enabled = true
 		return
 	end
 	vim.cmd("tabnext")

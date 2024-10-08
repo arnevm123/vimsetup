@@ -1,7 +1,34 @@
+local colorscheme = "vague"
 -- local colorscheme = "seoulbones"
-local colorscheme = "mel"
+-- local colorscheme = "mel"
+-- local colorscheme = "posterpole"
 -- local colorscheme = "rose-pine"
 return {
+	{
+		"ilof2/posterpole.nvim",
+		lazy = colorscheme ~= "posterpole",
+		priority = 1000,
+		config = function()
+			require("posterpole").setup({
+				transparent = true,
+				colorless_bg = false, -- grayscale or not
+				dim_inactive = false,
+				brightness = 0, -- negative numbers - darker, positive - lighter
+			})
+			vim.cmd("colorscheme posterpole")
+		end,
+	},
+	{
+		"vague2k/vague.nvim",
+		lazy = colorscheme ~= "vague",
+		priority = 1000,
+		config = function()
+			require("vague").setup({
+				transparent = false, -- don't set background
+			})
+			vim.cmd.colorscheme("vague")
+		end,
+	},
 	{
 		"mcchrish/zenbones.nvim",
 		lazy = colorscheme ~= "seoulbones",
@@ -19,7 +46,8 @@ return {
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
 			vim.api.nvim_set_hl(0, "netrwDir", { link = "DiagnosticVirtualTextInfo" })
 			vim.api.nvim_set_hl(0, "ModeMsg", { link = "DiagnosticVirtualTextHint" })
-			vim.api.nvim_set_hl(0, "QuickFixLine", { link = "DiagnosticVirtualTextHint" })
+			-- vim.api.nvim_set_hl(0, "QuickFixLine", { link = "DiagnosticVirtualTextHint" })
+			vim.api.nvim_set_hl(0, "@string", { link = "Constant" })
 		end,
 		dependencies = { "rktjmp/lush.nvim" },
 	},
@@ -47,7 +75,7 @@ return {
 					-- StatusLine = { bg = "#333333" },
 					-- TelescopeNormal = { bg = "#333333" },
 					-- TelescopeTitle = { bg = "#333333" },
-					-- TelescopeBorder = { bg = "#333333" },
+					-- TelescopeNormal = { bg = "#333333" },
 					-- TelescopeSelection = { bg = "#333333" },
 					-- TelescopeSelectionCaret = { bg = "#333333" },
 					-- TelescopePromptBorder = { bg = "#333333" },
@@ -94,6 +122,7 @@ return {
 
 			require("mellifluous").setup(opts)
 			vim.cmd.colorscheme("mellifluous")
+			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
 			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
 			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })

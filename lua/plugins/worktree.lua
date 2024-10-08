@@ -1,5 +1,5 @@
 return {
-	"ThePrimeagen/git-worktree.nvim",
+	"theprimeagen/git-worktree.nvim",
 	config = function()
 		local Worktree = require("git-worktree")
 
@@ -93,17 +93,17 @@ return {
 	keys = {
 		{
 			"<leader>ww",
-			":lua require('telescope').extensions.git_worktree.git_worktrees()<CR>",
+			"<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>",
 			desc = "git worktrees",
 		},
 		{
 			"<leader>wc",
-			":lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>",
+			"<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>",
 			desc = "git create worktree",
 		},
 		{
 			"<leader>wd",
-			":lua require('git-worktree').switch_worktree('develop')<CR>",
+			"<cmd>lua require('git-worktree').switch_worktree('develop')<CR>",
 			desc = "git switch to develop worktree",
 		},
 	},

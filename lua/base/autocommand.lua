@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("User", {
 autocmd("BufEnter", {
 	pattern = "*",
 	callback = function()
-		local excluded_filetypes = { "netrw", "help", "ivy" }
+		local excluded_filetypes = { "netrw", "help", "ivy", "qf" }
 		local excluded_buftypes = { "prompt", "nofile" }
 		local current_filetype = vim.bo.filetype
 		local current_buftype = vim.bo.buftype

@@ -12,12 +12,12 @@ return {
 		-- 	"Wansmer/sibling-swap.nvim",
 		-- 	opts = { use_default_keymaps = true },
 		-- 	keys = {
-		-- 		{ "[a", ":lua require('sibling-swap.swap').swap_with('left')<CR>", desc = "Swap with left" },
-		-- 		{ "]a", ":lua require('sibling-swap.swap').swap_with('right')<CR>", desc = "Swap with right" },
-		-- 		{ "[A", ":lua require('sibling-swap.swap').swap_with('left')<CR>", desc = "Swap + operator with left" },
+		-- 		{ "[a", "<cmd>lua require('sibling-swap.swap').swap_with('left')<CR>", desc = "Swap with left" },
+		-- 		{ "]a", "<cmd>lua require('sibling-swap.swap').swap_with('right')<CR>", desc = "Swap with right" },
+		-- 		{ "[A", "<cmd>lua require('sibling-swap.swap').swap_with('left')<CR>", desc = "Swap + operator with left" },
 		-- 		{
 		-- 			"]A",
-		-- 			":lua require('sibling-swap.swap').swap_with('right')<CR>",
+		-- 			"<cmd>lua require('sibling-swap.swap').swap_with('right')<CR>",
 		-- 			desc = "Swap + operator with right",
 		-- 		},
 		-- 	},
@@ -27,8 +27,9 @@ return {
 	config = function()
 		require("neogen").setup({ snippet_engine = "luasnip" })
 		local status_ok, configs = pcall(require, "nvim-treesitter.configs")
-		vim.keymap.set("n", "<Leader>nf", ':lua require("neogen").generate({ type = "func"})<CR>')
-		vim.keymap.set("n", "<Leader>nt", ':lua require("neogen").generate({ type = "type"})<CR>')
+		vim.keymap.set("n", "<leader>nn", ':lua require("neogen").generate()<CR>')
+		vim.keymap.set("n", "<leader>nf", ':lua require("neogen").generate({ type = "func"})<CR>')
+		vim.keymap.set("n", "<leader>nt", ':lua require("neogen").generate({ type = "type"})<CR>')
 		if not status_ok then
 			return
 		end

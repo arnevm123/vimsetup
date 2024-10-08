@@ -9,17 +9,17 @@ return {
 	--stylua: ignore
 	keys = {
 		{ "yod", function() require("dapui").toggle() end, { noremap = true, silent = true, desc = "Toggle dapui" } },
-		{ "<leader>dc", ":lua require('dap').continue()<CR>", desc = "Debug continue" },
-		{ "<leader>dl", ":lua require('dap').run_to_cursor()<CR>", desc = "Debug run to cursor" },
-		{ "<leader>do", ":lua require('dap').step_over()<CR>", desc = "Debug step ove" },
-		{ "<leader>di", ":lua require('dap').step_into()<CR>", desc = "Debug step into" },
-		{ "<leader>du", ":lua require('dap').up()<CR>", desc = "Debug step up callstack" },
-		{ "<leader>dd", ":lua require('dap').down()<CR>", desc = "Debug step down callstack" },
-		{ "<leader>DO", ":lua require('dap').step_out()<CR>", desc = "Debug  step out" },
-		{ "<leader>db", ":lua require('dap').toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
-		{ "<leader>DB", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
+		{ "<leader>dc", "<cmd>lua require('dap').continue()<CR>", desc = "Debug continue" },
+		{ "<leader>dl", "<cmd>lua require('dap').run_to_cursor()<CR>", desc = "Debug run to cursor" },
+		{ "<leader>do", "<cmd>lua require('dap').step_over()<CR>", desc = "Debug step ove" },
+		{ "<leader>di", "<cmd>lua require('dap').step_into()<CR>", desc = "Debug step into" },
+		{ "<leader>du", "<cmd>lua require('dap').up()<CR>", desc = "Debug step up callstack" },
+		{ "<leader>dd", "<cmd>lua require('dap').down()<CR>", desc = "Debug step down callstack" },
+		{ "<leader>DO", "<cmd>lua require('dap').step_out()<CR>", desc = "Debug  step out" },
+		{ "<leader>db", "<cmd>lua require('dap').toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
+		{ "<leader>DB", "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Debug toggle conditional breakpoint" },
 		{ "<leader>dt", " :lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
-		{ "<leader>dr", ":lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
+		{ "<leader>dr", "<cmd>lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
 		{ "<leader>de", "lua :require('dapui').eval(nil, { enter = true })<CR>", desc = "Debug evaluate expression" },
 
 	},
@@ -112,7 +112,7 @@ return {
 			end
 
 			vim.keymap.set("n", "yot", Toggle_types, {})
-			-- vim.keymap.set("n", "yot", ":lua Toggle_types()<CR>", {})
+			-- vim.keymap.set("n", "yot", "<cmd>lua Toggle_types()<CR>", {})
 			dap.configurations = {
 				go = {
 					-- {
@@ -163,6 +163,13 @@ return {
 						name = "lynxcontroller",
 						program = "main.go",
 						args = { "--log_level", "debug", "--log_directory", "", "--config_file", "config.yaml" },
+						request = "launch",
+					},
+					{
+						type = "go",
+						name = "LEMS",
+						program = "main.go",
+						args = { "--config_file=config.yaml" },
 						request = "launch",
 					},
 				},
@@ -243,8 +250,7 @@ return {
 				lang = { go = { coverage_file = ".coverage.out" } },
 			})
 
-			vim.api.nvim_create_user_command(
-				"LoadCov", function()
+			vim.api.nvim_create_user_command("LoadCov", function()
 				vim.fn.jobstart("make test", {
 					on_exit = function(_, exit_code)
 						if exit_code ~= 0 then
@@ -255,9 +261,7 @@ return {
 						vim.notify("Test coverage loaded", vim.log.levels.INFO)
 					end,
 				})
-				end,
-				{}
-			)
+			end, {})
 		end,
 		keys = {
 			{ "<leader>tc", "<cmd>CoverageToggle<CR>", desc = "Test Coverage" },
