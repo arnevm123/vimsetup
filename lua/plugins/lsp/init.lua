@@ -98,24 +98,41 @@ return {
 			},
 		},
 		{
+			"m00qek/baleia.nvim",
+			version = "*",
+			config = function()
+				vim.g.baleia = require("baleia").setup({})
+				-- Command to colorize the current buffer
+				vim.api.nvim_create_user_command("BaleiaColorize", function()
+					vim.g.baleia.once(vim.api.nvim_get_current_buf())
+				end, { bang = true })
+			end,
+		},
+		{
 			"stevearc/conform.nvim",
 			opts = {
 				formatters = {
+					sqlffluf = {
+						command = "sqlfluff",
+						args = { "fix", "--dialect=mysql", "-" },
+						stdin = true,
+					},
 					goimports_reviser = {
 						command = "goimports-reviser",
-						args = { "-set-alias", "-rm-unused", "-project-name", "unmatched.eu", "$FILENAME" },
+						args = { "-rm-unused", "-project-name", "unmatched.eu", "$FILENAME" },
 						stdin = false,
 					},
 					gofumpt = { prepend_args = { "-extra" } },
 				},
 				formatters_by_ft = {
 					go = { "gofumpt", "goimports", "goimports_reviser" },
-					javascript = { { "eslint_d", "prettierd", "prettier" } },
+					javascript = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
 					lua = { "stylua" },
 					markdown = { "mdslw" },
 					sh = { "shfmt" },
 					typescript = { { "eslint_d", "prettierd", "prettier" } },
 					-- yaml = { "yamlfmt" },
+					mysql = { "sqlffluf" },
 					python = { "isort", "black" },
 				},
 			},

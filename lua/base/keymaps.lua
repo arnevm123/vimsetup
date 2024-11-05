@@ -89,6 +89,8 @@ keymap("n", "<leader>ro", utils.open_last_file, nosilent)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
+keymap("n", "[<space>", "o<esc>k", opts)
+keymap("n", "]<space>", "O<esc>j", opts)
 keymap("n", "[c", "<cmd>diffget //2<CR>", opts)
 keymap("n", "]c", "<cmd>diffget //3<CR>", opts)
 keymap("n", "<Leader>xp", "<cmd>call setreg('+', getreg('@'))<CR>", opts)
@@ -127,7 +129,7 @@ keymap("n", "<leader>bu", function()
 	vim.cmd("wa")
 	local cwd = vim.loop.cwd()
 	local build_root
-	build_root = vim.lsp.get_active_clients()[1].config.cmd_cwd
+	build_root = vim.lsp.get_clients()[1].config.cmd_cwd
 	if build_root then
 		vim.api.nvim_set_current_dir(build_root)
 	end
@@ -136,6 +138,38 @@ keymap("n", "<leader>bu", function()
 		vim.api.nvim_set_current_dir(cwd)
 	end
 end, nosilent)
+
+
+keymap("n", "<leader>bt", function()
+	vim.cmd("wa")
+	local cwd = vim.loop.cwd()
+	local build_root
+	build_root = vim.lsp.get_clients()[1].config.cmd_cwd
+	if build_root then
+		vim.api.nvim_set_current_dir(build_root)
+	end
+	vim.cmd("Dispatch make test")
+	if build_root and cwd then
+		vim.api.nvim_set_current_dir(cwd)
+	end
+end, nosilent)
+
+keymap("n", "<leader>bl", function()
+	vim.cmd("wa")
+	local cwd = vim.loop.cwd()
+	local build_root
+	build_root = vim.lsp.get_clients()[1].config.cmd_cwd
+	if build_root then
+		vim.api.nvim_set_current_dir(build_root)
+	end
+	vim.cmd("Dispatch make lint")
+	if build_root and cwd then
+		vim.api.nvim_set_current_dir(cwd)
+	end
+	vim.cmd("cfile .lint.txt")
+
+end, nosilent)
+
 keymap("n", "<leader>bs", "<cmd>&g<CR>", nosilent)
 keymap("n", "<leader>bq", "<cmd>cfile .lint.txt<CR>", nosilent)
 keymap("n", "<leader>bi", "<cmd>wa<CR>:Dispatch<CR>", nosilent)

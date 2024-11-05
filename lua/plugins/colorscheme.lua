@@ -1,9 +1,33 @@
 local colorscheme = "vague"
+-- local colorscheme = "no-clown-fiesta"
+-- local colorscheme = "gruber-darker"
 -- local colorscheme = "seoulbones"
 -- local colorscheme = "mel"
 -- local colorscheme = "posterpole"
 -- local colorscheme = "rose-pine"
 return {
+
+	{
+		"aktersnurra/no-clown-fiesta.nvim",
+		lazy = colorscheme ~= "no-clown-fiesta",
+		config = function()
+			require("no-clown-fiesta").setup({
+				transparent = true, -- removes the background
+			})
+			vim.cmd.colorscheme("no-clown-fiesta")
+		end,
+	},
+	{
+		-- "blazkowolf/gruber-darker.nvim",
+		"thimc/gruber-darker.nvim",
+		lazy = colorscheme ~= "gruber-darker",
+		config = function()
+			require("gruber-darker").setup({
+				transparent = true, -- removes the background
+			})
+			vim.cmd.colorscheme("gruber-darker")
+		end,
+	},
 	{
 		"ilof2/posterpole.nvim",
 		lazy = colorscheme ~= "posterpole",
@@ -27,6 +51,7 @@ return {
 				transparent = false, -- don't set background
 			})
 			vim.cmd.colorscheme("vague")
+			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#333333" })
 		end,
 	},
 	{

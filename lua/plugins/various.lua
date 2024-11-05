@@ -1,5 +1,49 @@
 return {
-
+	{
+		{ "meznaric/key-analyzer.nvim", opts = {}, cmd = "KeyAnalyzer" },
+	},
+	{
+		"chrisgrieser/nvim-various-textobjs",
+		event = "UIEnter",
+		opts = { useDefaultKeymaps = true },
+	},
+	{
+		"keaising/textobj-backtick.nvim",
+		event = "UIEnter",
+		config = true,
+	},
+	-- {
+	-- 	"yetone/avante.nvim",
+	-- 	event = "VeryLazy",
+	-- 	lazy = false,
+	-- 	version = false, -- set this if you want to always pull the latest change
+	-- 	opts = {
+	-- 		hints = { enabled = true },
+	-- 	},
+	-- 	-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+	-- 	build = "make",
+	-- 	-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		{
+	-- 			"stevearc/dressing.nvim",
+	-- 			opts = {
+	-- 				input = { enabled = true },
+	-- 				select = { enabled = true },
+	-- 			},
+	-- 		},
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		{
+	-- 			-- Make sure to set this up properly if you have lazy=true
+	-- 			"MeanderingProgrammer/render-markdown.nvim",
+	-- 			opts = {
+	-- 				file_types = { "Avante" },
+	-- 			},
+	-- 			ft = { "Avante" },
+	-- 		},
+	-- 	},
+	-- },
 	{
 		"gcmt/vessel.nvim",
 		opts = {
@@ -55,14 +99,6 @@ return {
 		end,
 		cmd = {
 			"Code",
-		},
-	},
-	{
-		"RayenMnif/tgpt.nvim",
-		config = true,
-		cmd = {
-			"Chat",
-			"RateMyCode",
 		},
 	},
 	{
@@ -385,7 +421,15 @@ return {
 	{ "brenoprata10/nvim-highlight-colors", opts = { render = "virtual" }, config = true, event = { "VeryLazy" } },
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
-	{ "mbbill/undotree", keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>", desc = "Toggle undo tree" } } },
+	{
+		"mbbill/undotree",
+		config = function()
+			vim.cmd([[
+				let g:undotree_WindowLayout=4
+            ]])
+		end,
+		keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>", desc = "Toggle undo tree" } },
+	},
 	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
 	{
 		"amadanmath/diag_ignore.nvim",
@@ -482,7 +526,14 @@ return {
 		dependencies = { "junegunn/fzf" },
 		ft = "qf",
 		opts = {
-			preview = { auto_preview = false },
+			preview = {
+				auto_preview = false,
+				border = "single",
+				show_title = false,
+				show_scroll_bar = false,
+				winblend = 0,
+				win_height = 100,
+			},
 			filter = {
 				fzf = { extra_opts = { "--bind", "ctrl-y:toggle-all" } },
 			},

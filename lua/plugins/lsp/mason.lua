@@ -1,6 +1,7 @@
 local servers = {
 	"angularls",
 	"ansiblels",
+	"biome",
 	"bashls",
 	"clangd",
 	-- "csharp_ls",
@@ -19,6 +20,7 @@ local servers = {
 	"pyright",
 	-- "rust_analyzer",
 	-- "tsserver",
+	"ts_ls",
 	"yamlls",
 	"zls",
 }
@@ -75,15 +77,6 @@ for _, server in pairs(servers) do
 	local require_ok, conf_opts = pcall(require, "plugins.lsp.settings." .. server)
 	if require_ok then
 		opts = vim.tbl_deep_extend("force", conf_opts, opts)
-	end
-	if server == "volar" then
-		opts.filetypes = { "typescript", "javascript", "vue" }
-	end
-	if server == "csharp_ls" then
-		opts.handlers = {
-			["textDocument/definition"] = require("csharpls_extended").handler,
-			["textDocument/typeDefinition"] = require("csharpls_extended").handler,
-		}
 	end
 
 	lspconfig[server].setup(opts)

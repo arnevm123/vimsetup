@@ -10,6 +10,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorlineopt = "number"
 vim.opt.cursorline = true
+vim.opt.laststatus = 3
 
 vim.o.list = true
 vim.opt.listchars = {

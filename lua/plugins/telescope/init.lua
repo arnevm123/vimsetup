@@ -12,8 +12,8 @@ return {
 			build = "cargo build --release",
 			opts = {
 				backends = {
-					{ "ivy.backends.buffers", { keymap = "<leader>bb" } },
-					{ "ivy.backends.files", { keymap = "<leader>fd" } },
+					-- { "ivy.backends.buffers", { keymap = "<leader>bb" } },
+					{ "ivy.backends.files", { keymap = "<leader>xd" } },
 					{ "ivy.backends.ag", { keymap = "<leader>/" } },
 					-- require("plugins.ivy.recent_files"),
 				},
@@ -34,46 +34,15 @@ return {
 			mode = { "c" },
 			desc = "Telescope fuzzy command search",
 		},
-		{
-			"<C-p>",
-			function()
-				local paste = require("neoclip.storage").get().yanks[1]
-				vim.fn.setreg('"', paste.contents)
-				vim.api.nvim_put(paste.contents, paste.regtype, true, true)
-			end,
-			mode = { "n", "v", "x" },
-			desc = "Neoclip paste last",
-		},
-		{
-			"<leader>FF",
-			function()
-				vim.ivy.run(
-					-- The name given to the results window and displayed to the user
-					"Title",
-					-- Call back function to get all the candidates that will be displayed in
-					-- the results window, The `input` will be passed in, so you can filter
-					-- your results with the value from the prompt
-					function(input)
-						return {
-							{ content = "One" },
-							{ content = "Two" },
-							{ content = "Three" },
-						}
-					end,
-					-- Action callback that will be called on the completion or peek actions.
-					-- The currently selected item is passed in as the result.
-					function(result)
-						vim.cmd("edit " .. result)
-					end
-				)
-			end,
-			mode = { "n" },
-		},
-
 		{ "<leader>fh", "<cmd>Telescope help_tags<CR>", mode = { "n", "v", "x" }, desc = "Telescope help tags" },
 		{ "<leader>fk", "<cmd>Telescope keymaps<CR>", mode = { "n", "v", "x" }, desc = "Telescope keymaps" },
 		{ "<leader>fl", "<cmd>Telescope pickers<CR>", mode = { "n", "v", "x" }, desc = "Telescope last searches" },
-		{ "<leader>fo", "<cmd>Telescope oldfiles hidden=true<CR>", mode = { "n", "v", "x" }, desc = "Telescope old files" },
+		{
+			"<leader>fo",
+			"<cmd>Telescope oldfiles hidden=true<CR>",
+			mode = { "n", "v", "x" },
+			desc = "Telescope old files",
+		},
 		{ "<leader>fq", "<cmd>Telescope quickfix<CR>", mode = { "n", "v", "x" }, desc = "Telescope quickfix" },
 		{
 			"<leader>fs",
@@ -82,8 +51,8 @@ return {
 			desc = "Telescope git status",
 		},
 		{ "<leader>ft", "<cmd>Telescope<CR>", mode = { "n", "v", "x" }, desc = "Telescope" },
-		-- { "<leader>bb", "<cmd>IvyBuffers<CR>", mode = { "n", "v", "x" }, desc = "Ivy buffers" },
-		{ "<leader>f/", "<cmd>IvyLines<CR>", mode = { "n", "v", "x" }, desc = "Ivy current buffer fuzzy" },
+		{ "<leader>bb", "<cmd>Telescope buffers<CR>", mode = { "n", "v", "x" }, desc = "Telescope buffers" },
+		-- { "<leader>f/", "<cmd>IvyLines<CR>", mode = { "n", "v", "x" }, desc = "Ivy current buffer fuzzy" },
 		-- {
 		-- 	"<leader>fc",
 		-- 	"<cmd>Telescope advanced_git_search changed_on_branch<CR>",
@@ -112,6 +81,14 @@ return {
 			end,
 			mode = { "n", "v" },
 			desc = "Telescope live grep current folder",
+		},
+		{
+			"<leader>fd",
+			function()
+				require("telescope.builtin").fd({ hidden = true })
+			end,
+			mode = { "n", "v" },
+			desc = "Telescope fd current folder",
 		},
 		{
 			"<leader>fe",
@@ -240,6 +217,8 @@ return {
 		local lga_actions = require("telescope-live-grep-args.actions")
 		telescope.setup({
 			defaults = {
+				borderchars = { "", "", "", "", "", "", "", "" },
+				-- border = false,
 				history = {
 					path = "~/.local/share/nvim/databases/telescope_history.sqlite3",
 					limit = 100,
@@ -248,25 +227,36 @@ return {
 					num_pickers = 10,
 					limit_entries = 1000,
 				},
-				prompt_prefix = "",
+				prompt_prefix = "> ",
 				entry_prefix = " ",
 				selection_caret = ">",
+				layout_strategy = "vertical",
+				anchor_padding = 0,
+				prompt_title = false,
+				results_title = false,
+				preview_title = false,
 				layout_config = {
-					-- The extension supports both "top" and "bottom" for the prompt.
-					prompt_position = "top",
-
-					-- You can adjust these settings to your liking.
-					width = 0.8,
-					height = 0.8,
 					vertical = {
-						mirror = true,
+						height = vim.o.lines,
+						width = vim.o.columns,
 						prompt_position = "top",
-						preview_cutoff = 10,
+						preview_height = 0.70,
 					},
-					center = {
-						preview_cutoff = 1000000,
-						prompt_position = "bottom",
-					},
+					-- -- The extension supports both "top" and "bottom" for the prompt.
+					-- prompt_position = "top",
+					--
+					-- -- You can adjust these settings to your liking.
+					-- width = 0.8,
+					-- height = 0.8,
+					-- vertical = {
+					-- 	mirror = true,
+					-- 	prompt_position = "top",
+					-- 	preview_cutoff = 10,
+					-- },
+					-- center = {
+					-- 	preview_cutoff = 1000000,
+					-- 	prompt_position = "bottom",
+					-- },
 				},
 				-- path_display = { shorten = { len = 5, exclude = { 1, -3, -2, -1 } } },
 				path_display = {
@@ -346,11 +336,11 @@ return {
 					sort_lastused = true,
 					sort_mru = true,
 					ignore_current_buffer = true,
-					layout_config = {
-						width = 0.5,
-						height = 0.4,
-						preview_width = 0,
-					},
+					-- layout_config = {
+					-- 	width = 0.5,
+					-- 	height = 0.4,
+					-- 	preview_width = 0,
+					-- },
 				},
 			},
 			extensions = {
