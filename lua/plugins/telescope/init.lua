@@ -45,7 +45,7 @@ return {
 		},
 		{ "<leader>fq", "<cmd>Telescope quickfix<CR>", mode = { "n", "v", "x" }, desc = "Telescope quickfix" },
 		{
-			"<leader>fs",
+			"<leader>fe",
 			"<cmd>Telescope git_status hidden=true<CR>",
 			mode = { "n", "v", "x" },
 			desc = "Telescope git status",
@@ -75,7 +75,7 @@ return {
 			desc = "Telescope find copied file",
 		},
 		{
-			"<leader>fi",
+			"<leader>fie",
 			function()
 				require("telescope.builtin").live_grep({ cwd = vim.fn.expand("%:h"), hidden = true })
 			end,
@@ -91,7 +91,7 @@ return {
 			desc = "Telescope fd current folder",
 		},
 		{
-			"<leader>fe",
+			"<leader>fig",
 			function()
 				require("telescope.builtin").fd({ cwd = vim.fn.expand("%:h"), hidden = true })
 			end,
@@ -117,7 +117,7 @@ return {
 			desc = "Telescope grep",
 		},
 		{
-			"<leader>ff",
+			"<leader>fs",
 			function()
 				require("telescope").extensions.live_grep_args:live_grep_args({
 					vimgrep_arguments = { "rg", "--hidden" },
