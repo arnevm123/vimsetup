@@ -1,4 +1,5 @@
 return {
+	{ "nvzone/typr", dependencies = { "nvzone/volt" }, cmd = { "Typr", "TyprStats" } },
 	{
 		"claydugo/browsher.nvim",
 		event = "VeryLazy",
@@ -108,38 +109,38 @@ return {
 		event = "UIEnter",
 		opts = { useDefaultKeymaps = true },
 	},
-	-- {
-	-- 	"yetone/avante.nvim",
-	-- 	event = "VeryLazy",
-	-- 	lazy = false,
-	-- 	version = false, -- set this if you want to always pull the latest change
-	-- 	opts = {
-	-- 		hints = { enabled = true },
-	-- 	},
-	-- 	-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-	-- 	build = "make",
-	-- 	-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-	-- 	dependencies = {
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 		{
-	-- 			"stevearc/dressing.nvim",
-	-- 			opts = {
-	-- 				input = { enabled = true },
-	-- 				select = { enabled = true },
-	-- 			},
-	-- 		},
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"MunifTanjim/nui.nvim",
-	-- 		{
-	-- 			-- Make sure to set this up properly if you have lazy=true
-	-- 			"MeanderingProgrammer/render-markdown.nvim",
-	-- 			opts = {
-	-- 				file_types = { "Avante" },
-	-- 			},
-	-- 			ft = { "Avante" },
-	-- 		},
-	-- 	},
-	-- },
+	{
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		lazy = false,
+		version = false, -- set this if you want to always pull the latest change
+		opts = {
+			hints = { enabled = true },
+		},
+		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+		build = "make",
+		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			{
+				"stevearc/dressing.nvim",
+				opts = {
+					input = { enabled = true },
+					select = { enabled = true },
+				},
+			},
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			{
+				-- Make sure to set this up properly if you have lazy=true
+				"MeanderingProgrammer/render-markdown.nvim",
+				opts = {
+					file_types = { "Avante" },
+				},
+				ft = { "Avante" },
+			},
+		},
+	},
 	{
 		"gcmt/vessel.nvim",
 		opts = {
