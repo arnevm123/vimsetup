@@ -1,47 +1,19 @@
 return {
-	{ "nvzone/typr", dependencies = { "nvzone/volt" }, cmd = { "Typr", "TyprStats" } },
-	{
-		"claydugo/browsher.nvim",
-		event = "VeryLazy",
-		config = function()
-			-- Specify empty to use below default options
-			require("browsher").setup({
-				providers = {
-					["gitlab.telecom%-it.be"] = {
-						url_template = "%s/-/blob/%s/%s",
-						single_line_format = "#L%d",
-						multi_line_format = "#L%d-%d",
-					},
-				},
-			})
-		end,
-	},
-	{
-		"folke/twilight.nvim",
-		opts = {},
-		event = "VeryLazy",
-	},
-	{
-		"kelvinauta/focushere.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("focushere").setup()
-			-- Optional KeyMap
-			vim.keymap.set("v", "zf", ":FocusHere<CR>", { noremap = true, silent = true })
-			vim.keymap.set("n", "zf", ":FocusClear<CR>", { noremap = true, silent = true })
-		end,
-	},
 	{
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,
 		---@type snacks.Config
 		opts = {
-			bigfile = { enabled = true },
 			notifier = { enabled = false },
+			scroll = { enabled = false },
+			words = { enabled = false },
+			zen = { enabled = false },
+			animate = { enabled = false },
+			bigfile = { enabled = true },
 			quickfile = { enabled = true },
 			statuscolumn = { enabled = true },
-			words = { enabled = false },
+			indent = { enabled = false, },
 		},
 		keys = {
 			{
@@ -107,7 +79,7 @@ return {
 	{
 		"chrisgrieser/nvim-various-textobjs",
 		event = "UIEnter",
-		opts = { useDefaultKeymaps = true },
+		opts = { keymaps = { useDefaults = true } },
 	},
 	{
 		"yetone/avante.nvim",
@@ -115,19 +87,60 @@ return {
 		lazy = false,
 		version = false, -- set this if you want to always pull the latest change
 		opts = {
-			hints = { enabled = true },
+			provider = "copilot",
+			hints = { enabled = false },
+			windows = {
+				position = "bottom",
+				width = 70,
+				sidebar_header = { enabled = false },
+				-- input = { prefix = "> ", height = 8, },
+				edit = { border = "single" },
+				ask = { border = "single" },
+			},
 		},
 		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
 		build = "make",
 		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
 		dependencies = {
+			{
+				"zbirenbaum/copilot.lua", -- for providers='copilot'
+				event = "VeryLazy",
+				opts = {
+					panel = {
+						enabled = true,
+						auto_refresh = false,
+						keymap = {
+							jump_prev = "[[",
+							jump_next = "]]",
+							accept = "<CR>",
+							refresh = "gr",
+							open = "<C-CR>",
+						},
+						layout = {
+							position = "top", -- | top | left | right
+							ratio = 0.3,
+						},
+					},
+					suggestion = {
+						enabled = true,
+						auto_trigger = true,
+						hide_during_completion = true,
+						debounce = 75,
+						keymap = {
+							accept = "<C-;>",
+							accept_word = false,
+							accept_line = false,
+							next = false,
+							prev = false,
+							dismiss = "<C-/>",
+						},
+					},
+				},
+			},
 			"nvim-treesitter/nvim-treesitter",
 			{
 				"stevearc/dressing.nvim",
-				opts = {
-					input = { enabled = true },
-					select = { enabled = true },
-				},
+				opts = { enabled = false, input = { enabled = false }, select = { enabled = false } },
 			},
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
@@ -204,50 +217,6 @@ return {
 				"<cmd>lua require('grug-far'). with_visual_selection()<CR>",
 				mode = "x",
 				desc = "Toggle Grug Far",
-			},
-		},
-	},
-	{
-		"maxandron/goplements.nvim",
-		config = function()
-			local goplements = require("goplements")
-			---@diagnostic disable-next-line: missing-fields
-			goplements.setup({
-				prefix = {
-					interface = "󰘧 ",
-					struct = "󰡱 ",
-				},
-				display_package = true,
-			})
-
-			local enabled = false
-			vim.api.nvim_create_user_command("GoIpmlToggle", function()
-				if enabled then
-					enabled = false
-					goplements.disable()
-				else
-					enabled = true
-					goplements.enable()
-				end
-			end, {})
-		end,
-		keys = {
-			{ "yop", "<cmd>GoIpmlToggle<CR>", desc = "Toggle Goplements" },
-		},
-	},
-	{
-		"chrisgrieser/nvim-lsp-endhints",
-		opts = {
-			icons = {
-				type = "",
-				parameter = "",
-			},
-		},
-		keys = {
-			{
-				"yoi",
-				"<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",
-				desc = "Toggle inlay hints",
 			},
 		},
 	},
@@ -351,16 +320,7 @@ return {
 	{
 		"akinsho/git-conflict.nvim",
 		version = "*",
-		opts = {
-			default_mappings = {
-				ours = "<leader>zo",
-				theirs = "<leader>zt",
-				none = "<leader>zn",
-				both = "<leader>zb",
-				next = "]z",
-				prev = "[z",
-			},
-		},
+		config = true,
 		event = "VeryLazy",
 	},
 	{
@@ -487,36 +447,24 @@ return {
 			{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" } },
 		},
 	},
-	{
-		"supermaven-inc/supermaven-nvim",
-		lazy = false,
-		-- event = "VeryLazy",
-		config = function()
-			require("supermaven-nvim").setup({
-				keymaps = {
-					accept_suggestion = "<C-;>",
-					clear_suggestion = "<C-/>",
-					accept_word = "<C-.>",
-				},
-				color = {
-					suggestion_color = "#6B6B6B",
-					cterm = 244,
-				},
-			})
-		end,
-	},
-	{
-		"kevinhwang91/nvim-fundo",
-		dependencies = "kevinhwang91/promise-async",
-		build = function()
-			require("fundo").install()
-		end,
-		config = function()
-			vim.o.undofile = true
-			require("fundo").setup()
-		end,
-		lazy = false,
-	},
+	-- {
+	-- 	"supermaven-inc/supermaven-nvim",
+	-- 	lazy = false,
+	-- 	-- event = "VeryLazy",
+	-- 	config = function()
+	-- 		require("supermaven-nvim").setup({
+	-- 			keymaps = {
+	-- 				accept_suggestion = "<C-;>",
+	-- 				clear_suggestion = "<C-/>",
+	-- 				accept_word = "<C-.>",
+	-- 			},
+	-- 			color = {
+	-- 				suggestion_color = "#6B6B6B",
+	-- 				cterm = 244,
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -533,46 +481,6 @@ return {
 		build = function()
 			vim.fn["mkdp#util#install"]()
 		end,
-	},
-	{
-		"ThePrimeagen/refactoring.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		event = "BufEnter",
-		opts = {
-			print_var_statements = {
-				go = { 'log.Info("%s %%v \\n", spew.Sdump(%s))' },
-				cs = { 'Logger.Error($"%s {%s}");' },
-			},
-		},
-		keys = {
-			{
-				"<leader>rr",
-				function()
-					require("refactoring"):select_refactor()
-				end,
-				mode = { "n", "x" },
-				desc = "refactor",
-			},
-			{
-				"<leader>rp",
-				function()
-					require("refactoring").debug:print_var()
-				end,
-				mode = { "x", "n" },
-				desc = "refactor print",
-			},
-			{
-				"<leader>rc",
-				function()
-					require("refactoring").debug:cleanup()
-				end,
-				mode = { "x", "n" },
-				desc = "refactor cleanup",
-			},
-		},
 	},
 	{
 		"Wansmer/treesj",

@@ -6,7 +6,6 @@ local colorscheme = "vague"
 -- local colorscheme = "posterpole"
 -- local colorscheme = "rose-pine"
 return {
-
 	{
 		"aktersnurra/no-clown-fiesta.nvim",
 		lazy = colorscheme ~= "no-clown-fiesta",
@@ -48,7 +47,7 @@ return {
 		priority = 1000,
 		config = function()
 			require("vague").setup({
-				transparent = false, -- don't set background
+				transparent = true, -- don't set background
 			})
 			vim.cmd.colorscheme("vague")
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#333333" })

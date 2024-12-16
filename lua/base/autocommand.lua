@@ -116,3 +116,19 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 		golangcilint.cwd = cwd
 	end,
 })
+
+local statusline_bg = 0
+
+autocmd("RecordingEnter", {
+	callback = function()
+		local StatusLine_hl = vim.api.nvim_get_hl(0, { name = "StatusLine" })
+		statusline_bg = StatusLine_hl.bg
+		vim.api.nvim_set_hl(0, "StatusLine", { bg = "#6327A6" })
+	end,
+})
+
+autocmd("RecordingLeave", {
+	callback = function()
+		vim.api.nvim_set_hl(0, "StatusLine", { bg = statusline_bg })
+	end,
+})
