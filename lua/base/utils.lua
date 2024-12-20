@@ -143,30 +143,7 @@ function M:DbuiToggle()
 	vim.cmd("tabnext")
 end
 
-function M:search_diagnostics()
-	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
-	if #diagnostics == 0 then
-		vim.notify("No diagnostics", vim.log.levels.WARN)
-		return
-	end
-	local programming_language = vim.api.nvim_buf_get_option(0, "filetype")
-	local severity = string.lower(vim.diagnostic.severity[diagnostics[1].severity])
-	local clean_message = diagnostics[1].message:gsub("[A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
-	clean_message = clean_message:gsub("[A-Za-z0-9:/\\._%-]+[/\\][A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
-	local command = "xdg-open "
-		.. '"https://duckduckgo.com/?q='
-		.. "While developing "
-		.. programming_language
-		.. "I got this "
-		.. severity
-		.. ": "
-		.. clean_message
-		.. "?"
-		.. '"'
-	vim.fn.jobstart(command)
-end
-
-function M:search_diagnostics_cody()
+function M:search_diagnotics_avante()
 	local start_line, end_line
 	local mode = string.lower(vim.fn.mode())
 	if mode == "v" then
@@ -215,7 +192,7 @@ function M:search_diagnostics_cody()
 	-- clean_message = clean_message:gsub("[A-Za-z0-9:/\\._%-]+[/\\][A-Za-z0-9:/\\._%-]+[.][A-Za-z0-9]+", "")
 
 	local msg = diagnostics[index].message .. " from " .. diagnostics[index].source
-	require("sg.cody.commands").ask_range(bufnr, start_line - 1, end_line, msg)
+	require("avante.api").ask({ question = msg })
 end
 
 function M:isInTable(str, tbl)
@@ -269,15 +246,6 @@ function M:cspell_add()
 	}
 	local command = "echo " .. words[index] .. " >> ~/.config/linters/allowed-words"
 	vim.fn.jobstart(command, opts)
-end
-
-function M.test()
-	local ts_utils = require("nvim-treesitter.ts_utils")
-	local current_node = ts_utils.get_node_at_cursor()
-	if not current_node then
-		return ""
-	end
-	print(vim.inspect(current_node))
 end
 
 function M:open_last_file()
@@ -412,7 +380,7 @@ end
 
 function M.fzf_fd()
 	local command =
-		"fd -t f | fzf-tmux -w100% -h100% --border=none --preview-window=down:50%,border-top --preview 'bat -n --color=always {}'"
+		"fd -t f | fzf-tmux -w100% -h100% --layout=reverse --border=top --preview-window=up:75%,border-top --preview 'cat {}'"
 
 	local handle = io.popen(command)
 	if handle == nil then
@@ -425,104 +393,6 @@ function M.fzf_fd()
 			return
 		end
 	end
-end
-
-function M.goimpl_magic()
-	local diagnostics = vim.diagnostic.get(0)
-	if #diagnostics == 0 then
-		vim.notify("No diagnostics found", vim.log.levels.WARN)
-		return
-	end
-	local diagnostic_message
-	for _, diagnostic in ipairs(diagnostics) do
-		if diagnostic.code == "InvalidIfaceAssign" then
-			diagnostic_message = diagnostic.message
-			break
-		end
-	end
-	if not diagnostic_message then
-		vim.notify("No invalid interface found", vim.log.levels.WARN)
-		return
-	end
-	local _, _, interface = string.find(diagnostic_message, "does not implement%s*(%a+)")
-	-- __AUTO_GENERATED_PRINT_VAR_START__
-	print([==[M.goimpl_magic interface:]==], vim.inspect(interface)) -- __AUTO_GENERATED_PRINT_VAR_END__
-	local _, _, implementation = diagnostic_message:find("(%a+){}")
-	-- __AUTO_GENERATED_PRINT_VAR_START__
-	print([==[M.goimpl_magic implementation:]==], vim.inspect(implementation)) -- __AUTO_GENERATED_PRINT_VAR_END__
-	vim.api.nvim_command("GoImpl " .. implementation .. " " .. interface .. " " .. interface)
-end
-
-function M.upload_go_playground()
-	local url = "https://go.dev/_/share"
-
-	local start_line = 0
-	local end_line = -1
-	local mode = string.lower(vim.fn.mode())
-	if mode == "v" then
-		start_line = vim.fn.line("v")
-		end_line = vim.fn.line(".")
-		if start_line > end_line then
-			start_line, end_line = end_line, start_line
-		end
-		start_line = start_line - 1
-	end
-
-	-- Get the current buffer number
-	local current_buffer = vim.api.nvim_get_current_buf()
-
-	-- Get all lines of the current buffer
-	local lines = vim.api.nvim_buf_get_lines(current_buffer, start_line, end_line, false)
-
-	local id = M.id()
-	-- Concatenate the lines to get the buffer contents
-	local contents = table.concat(lines, "\r\n")
-	contents = contents
-
-	-- Define the file path where you want to store the contents
-	local file_path = "/tmp/upload" .. id .. ".txt"
-
-	-- Open the file in write mode and write the contents
-	local file = io.open(file_path, "w")
-	if file == nil then
-		return
-	end
-	file:write(contents)
-	file:close()
-
-	-- Use the file path in your curl command
-	local command = 'curl -s -X POST -H "Content-Type: multipart/form-data;'
-		.. '" --data-binary @'
-		.. file_path
-		.. " "
-		.. url
-
-	-- Execute the curl command
-	local handle = io.popen(command)
-	if handle == nil then
-		return
-	end
-
-	local result = handle:read("*a")
-	handle:close()
-	local playground_url = "https://go.dev/play/p/" .. result
-
-	if vim.loop.os_uname().sysname == "Darwin" then
-		vim.fn.jobstart({ "open", playground_url }, { on_exit = function() end })
-	else
-		vim.fn.jobstart({ "xdg-open", playground_url }, { on_exit = function() end })
-	end
-
-	vim.notify("Successfully uploaded a snipet to the go playground: " .. playground_url, vim.log.levels.INFO)
-end
-
-local random = math.random
-function M.id()
-	local template = "xxxxxxxx"
-	return string.gsub(template, "[xy]", function(c)
-		local v = (c == "x") and random(0, 0xf) or random(8, 0xb)
-		return string.format("%x", v)
-	end)
 end
 
 return M

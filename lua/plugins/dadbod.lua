@@ -4,13 +4,7 @@ return {
 		{ "tpope/vim-dadbod" },
 		{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" } },
 	},
-	cmd = {
-		"DBUI",
-		"DBUIToggle",
-		"DBUIAddConnection",
-		"DBUIFindBuffer",
-	},
-
+	cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
 	keys = {
 		{ "<leader>qt", "<cmd>DBUIToggle<CR>", desc = "DadBod Toggle" },
 		{ "<leader>qo", "<cmd>lua require('base.utils').DbuiToggle()<CR>", desc = "DadBod Open new tab" },

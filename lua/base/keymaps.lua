@@ -10,17 +10,11 @@ local keymap = vim.keymap.set
 keymap("", "<Space>", "<Nop>", opts)
 
 -- Resize with Shift-arrows
-keymap("n", "<S-down>", "<C-w>j", opts)
-keymap("n", "<S-up>", "<C-w>k", opts)
-keymap("n", "<S-left>", "<C-w>h", opts)
-keymap("n", "<S-right>", "<C-w>l", opts)
 keymap("n", "<C-down>", "<cmd>resize +2<CR>", opts)
 keymap("n", "<C-up>", "<cmd>resize -2<CR>", opts)
 keymap("n", "<C-left>", "<cmd>vertical resize -2<CR>", opts)
 keymap("n", "<C-right>", "<cmd>vertical resize +2<CR>", opts)
 
-keymap("n", "<leader>j", "i<CR><esc>==", opts)
-keymap("n", "<leader>J", "a<CR><esc>==", opts)
 keymap("n", "<leader>TC", "<cmd>tabclose<CR>", opts)
 keymap("n", "<leader>TN", "<cmd>tabnew<CR>", opts)
 keymap("n", "<leader>TO", "<cmd>tabonly<CR>", opts)
@@ -32,9 +26,6 @@ keymap("c", "<tab>", "<C-z>", nosilent)
 keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
-keymap("v", "<leader>A", ":%norm A", nosilent)
-keymap("v", "<leader>I", ":%norm I", nosilent)
-
 -- Add some help to visual mode
 keymap("x", ".", "<cmd>norm .<CR>", nosilent)
 keymap("x", "@", "<cmd>norm @q<CR>", nosilent)
@@ -43,12 +34,9 @@ keymap("x", "#", '"ry?\\V<C-r>r<CR>', nosilent)
 
 keymap("n", "dd", utils.Smart_dd, expr)
 keymap("n", "gx", utils.Go_to_url, opts)
-keymap("n", "gw", utils.search_diagnostics_cody, opts)
-keymap("v", "gw", utils.search_diagnostics_cody, opts)
+keymap("n", "gw", utils.search_diagnotics_avante, opts)
 keymap("n", "yoq", utils.CToggle, opts)
 keymap("n", "yov", utils.VirtualTextToggle, opts)
-keymap("n", "<leader>xu", utils.upload_go_playground, opts)
-keymap("v", "<leader>xu", utils.upload_go_playground, opts)
 keymap("n", "<leader>zg", function()
 	---@diagnostic disable-next-line: param-type-mismatch
 	utils.cspell_add(vim.fn.expand("<cword>"))

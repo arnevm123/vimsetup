@@ -4,31 +4,10 @@ local colorscheme = "vague"
 -- colorscheme = "seoulbones"
 -- colorscheme = "mel"
 -- colorscheme = "rose-pine"
-return {
-	{
-		"aktersnurra/no-clown-fiesta.nvim",
-		lazy = colorscheme ~= "no-clown-fiesta",
-		config = function()
-			require("no-clown-fiesta").setup({
-				transparent = true, -- removes the background
-			})
-			vim.cmd.colorscheme("no-clown-fiesta")
-		end,
-	},
-	{
-		-- "blazkowolf/gruber-darker.nvim",
-		"thimc/gruber-darker.nvim",
-		lazy = colorscheme ~= "gruber-darker",
-		config = function()
-			require("gruber-darker").setup({
-				-- transparent = true, -- removes the background
-			})
-			vim.cmd.colorscheme("gruber-darker")
-		end,
-	},
-	{
+if colorscheme == "vague" then
+	return {
 		"vague2k/vague.nvim",
-		lazy = colorscheme ~= "vague",
+		lazy = false,
 		priority = 1000,
 		config = function()
 			require("vague").setup({
@@ -38,10 +17,34 @@ return {
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#333333" })
 			vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#555555" })
 		end,
-	},
-	{
+	}
+elseif colorscheme == "no-clown-fiesta" then
+	return {
+		"aktersnurra/no-clown-fiesta.nvim",
+		lazy = false,
+		config = function()
+			require("no-clown-fiesta").setup({
+				transparent = true, -- removes the background
+			})
+			vim.cmd.colorscheme("no-clown-fiesta")
+		end,
+	}
+elseif colorscheme == "gruber-darker" then
+	return {
+		-- "blazkowolf/gruber-darker.nvim",
+		"thimc/gruber-darker.nvim",
+		lazy = false,
+		config = function()
+			require("gruber-darker").setup({
+				-- transparent = true, -- removes the background
+			})
+			vim.cmd.colorscheme("gruber-darker")
+		end,
+	}
+elseif colorscheme == "seoulbones" then
+	return {
 		"mcchrish/zenbones.nvim",
-		lazy = colorscheme ~= "seoulbones",
+		lazy = false,
 		priority = 1000,
 		config = function()
 			vim.cmd.colorscheme("seoulbones")
@@ -60,40 +63,11 @@ return {
 			vim.api.nvim_set_hl(0, "@string", { link = "Constant" })
 		end,
 		dependencies = { "rktjmp/lush.nvim" },
-	},
-	{
-		"asilvam133/rose-pine.nvim",
-		priority = 1000,
-		lazy = colorscheme ~= "rose-pine",
-		config = function()
-			require("rose-pine").setup({
-				styles = {
-					bold = true,
-					italic = true,
-					-- transparency = true,
-				},
-				highlight_groups = {
-					-- TreesitterContext = { bg = "#2B2B2B" },
-					DiagnosticVirtualTextError = { bg = "none" },
-					DiagnosticVirtualTextHint = { bg = "none" },
-					DiagnosticVirtualTextInfo = { bg = "none" },
-					DiagnosticVirtualTextWarn = { bg = "none" },
-					-- Float = { bg = "#333333" },
-					-- NormalFloat = { bg = "#333333" },
-					-- FloatBorder = { bg = "#333333" },
-					-- Title = { bg = "#333333" },
-					-- StatusLine = { bg = "#333333" },
-					-- ["@text.title.gitcommit"] = { link = "Constant" },
-					-- QuickFixLine = { link = "@method" },
-					-- ColorColumn = { bg = "#4B4B4B" },
-				},
-			})
-			vim.cmd.colorscheme("rose-pine")
-		end,
-	},
-	{
+	}
+elseif colorscheme == "mel" then
+	return {
 		"ramojus/mellifluous.nvim",
-		lazy = colorscheme ~= "mel",
+		lazy = false,
 		priority = 1000,
 		config = function()
 			local opts = {
@@ -125,5 +99,36 @@ return {
 			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
 			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
 		end,
-	},
-}
+	}
+elseif colorscheme == "rose-pine" then
+	return {
+		"asilvam133/rose-pine.nvim",
+		priority = 1000,
+		lazy = false,
+		config = function()
+			require("rose-pine").setup({
+				styles = {
+					bold = true,
+					italic = true,
+					-- transparency = true,
+				},
+				highlight_groups = {
+					-- TreesitterContext = { bg = "#2B2B2B" },
+					DiagnosticVirtualTextError = { bg = "none" },
+					DiagnosticVirtualTextHint = { bg = "none" },
+					DiagnosticVirtualTextInfo = { bg = "none" },
+					DiagnosticVirtualTextWarn = { bg = "none" },
+					-- Float = { bg = "#333333" },
+					-- NormalFloat = { bg = "#333333" },
+					-- FloatBorder = { bg = "#333333" },
+					-- Title = { bg = "#333333" },
+					-- StatusLine = { bg = "#333333" },
+					-- ["@text.title.gitcommit"] = { link = "Constant" },
+					-- QuickFixLine = { link = "@method" },
+					-- ColorColumn = { bg = "#4B4B4B" },
+				},
+			})
+			vim.cmd.colorscheme("rose-pine")
+		end,
+	}
+end

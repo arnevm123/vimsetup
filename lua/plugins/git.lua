@@ -7,16 +7,9 @@ return {
 			opts = {
 				use_icons = false,
 				view = {
-					default = {
-						layout = "diff2_horizontal",
-					},
-					merge_tool = {
-						layout = "diff3_mixed",
-						disable_diagnostics = true,
-					},
-					file_history = {
-						layout = "diff2_horizontal",
-					},
+					default = { layout = "diff2_horizontal" },
+					merge_tool = { layout = "diff3_mixed", disable_diagnostics = true },
+					file_history = { layout = "diff2_horizontal" },
 				},
 			},
 		},
@@ -62,25 +55,6 @@ return {
 		},
 	},
 	{
-		"isakbm/gitgraph.nvim",
-		dependencies = { "sindrets/diffview.nvim" },
-		opts = {
-			symbols = {
-				merge_commit = "M",
-				commit = "*",
-			},
-			format = {
-				timestamp = "%H:%M:%S %d-%m-%Y",
-				fields = { "hash", "timestamp", "author", "branch_name", "tag" },
-			},
-		},
-		init = function()
-			vim.keymap.set("n", "<leader>GR", function()
-				require("gitgraph").draw({}, { all = true, max_count = 5000 })
-			end, { desc = "new git graph" })
-		end,
-	},
-	{
 		"lewis6991/gitsigns.nvim",
 		event = "VeryLazy",
 		keys = {
@@ -89,7 +63,12 @@ return {
 			{ "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<CR>", desc = "Gitsigns preview hunk" },
 			{ "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns reset hunk" },
 			{ "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns stage hunk" },
-			{ "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<CR>", mode = { "n", "v" }, desc = "Gitsigns undo stage hunk" },
+			{
+				"<leader>gu",
+				"<cmd>Gitsigns undo_stage_hunk<CR>",
+				mode = { "n", "v" },
+				desc = "Gitsigns undo stage hunk",
+			},
 			{ "<leader>gar", "<cmd>Gitsigns reset_buffer<CR>", desc = "Gitsigns reset buffer" },
 			{ "<leader>gau", "<cmd>Gitsigns undo_stage_buffer<CR>", desc = "Gitsigns undo stage buffer" },
 			{ "<leader>gas", "<cmd>Gitsigns stage_buffer<CR>", desc = "Gitsigns stage buffer" },
@@ -162,6 +141,9 @@ return {
 		"rbong/vim-flog",
 		lazy = true,
 		cmd = { "Flog", "Flogsplit", "Floggit" },
+		keys = {
+			{ "<leader>gf", "<cmd>Flog<CR>", desc = "File history" },
+		},
 		dependencies = {
 			{
 				"tpope/vim-fugitive",

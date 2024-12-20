@@ -4,24 +4,9 @@ return {
 		"andymass/vim-matchup",
 		"danymat/neogen",
 		"nvim-lua/plenary.nvim",
-		"nvim-treesitter/playground",
 		"nvim-treesitter/nvim-treesitter-context",
-		"windwp/nvim-ts-autotag",
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		-- {
-		-- 	"Wansmer/sibling-swap.nvim",
-		-- 	opts = { use_default_keymaps = true },
-		-- 	keys = {
-		-- 		{ "[a", "<cmd>lua require('sibling-swap.swap').swap_with('left')<CR>", desc = "Swap with left" },
-		-- 		{ "]a", "<cmd>lua require('sibling-swap.swap').swap_with('right')<CR>", desc = "Swap with right" },
-		-- 		{ "[A", "<cmd>lua require('sibling-swap.swap').swap_with('left')<CR>", desc = "Swap + operator with left" },
-		-- 		{
-		-- 			"]A",
-		-- 			"<cmd>lua require('sibling-swap.swap').swap_with('right')<CR>",
-		-- 			desc = "Swap + operator with right",
-		-- 		},
-		-- 	},
-		-- },
+		"windwp/nvim-ts-autotag",
 	},
 	event = "VeryLazy",
 	config = function()
@@ -37,10 +22,10 @@ return {
 			modules = {},
 			sync_install = true,
 			auto_install = true,
-			ensure_installed = "all", -- one of "all" or a list of languages
-			ignore_install = {}, -- List of parsers to ignore installing
+			ensure_installed = "all",
+			ignore_install = {},
 			highlight = {
-				enable = true, -- false will disable the whole extension
+				enable = true,
 				disable = function(_, buf)
 					local max_filesize = 100 * 1024 -- 100 KB
 					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -84,19 +69,19 @@ return {
 		})
 
 		require("treesitter-context").setup({
-			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-			max_lines = 5, -- How many lines the window should span. Values <= 0 mean no limit.
-			trim_scope = "inner", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-			min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-			patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+			enable = true,
+			max_lines = 5,
+			trim_scope = "inner",
+			min_window_height = 0,
+			patterns = {
 				default = { "class", "function", "method", "for", "while", "if", "switch", "case" },
 				rust = { "impl_item", "struct", "enum" },
 				markdown = { "section" },
 				json = { "pair" },
 				yaml = { "block_mapping_pair" },
 			},
-			zindex = 20, -- The Z-index of the context window
-			mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+			zindex = 20,
+			mode = "cursor",
 			separator = nil,
 		})
 	end,

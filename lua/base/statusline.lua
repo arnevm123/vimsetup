@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd({ "DiagnosticChanged", "BufWinEnter" }, {
 local function unsaved_buffers()
 	for _, buf in pairs(vim.api.nvim_list_bufs()) do
 		if vim.api.nvim_get_current_buf() ~= buf then
-			if vim.api.nvim_buf_get_option(buf, "modified") then
+			if vim.bo[buf].modified then
 				return string.format(" %s ", icons.buffers.unsaved_others)
 			end
 		end
