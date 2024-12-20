@@ -1,10 +1,9 @@
 local colorscheme = "vague"
--- local colorscheme = "no-clown-fiesta"
--- local colorscheme = "gruber-darker"
--- local colorscheme = "seoulbones"
--- local colorscheme = "mel"
--- local colorscheme = "posterpole"
--- local colorscheme = "rose-pine"
+-- colorscheme = "no-clown-fiesta"
+-- colorscheme = "gruber-darker"
+-- colorscheme = "seoulbones"
+-- colorscheme = "mel"
+-- colorscheme = "rose-pine"
 return {
 	{
 		"aktersnurra/no-clown-fiesta.nvim",
@@ -22,23 +21,9 @@ return {
 		lazy = colorscheme ~= "gruber-darker",
 		config = function()
 			require("gruber-darker").setup({
-				transparent = true, -- removes the background
+				-- transparent = true, -- removes the background
 			})
 			vim.cmd.colorscheme("gruber-darker")
-		end,
-	},
-	{
-		"ilof2/posterpole.nvim",
-		lazy = colorscheme ~= "posterpole",
-		priority = 1000,
-		config = function()
-			require("posterpole").setup({
-				transparent = true,
-				colorless_bg = false, -- grayscale or not
-				dim_inactive = false,
-				brightness = 0, -- negative numbers - darker, positive - lighter
-			})
-			vim.cmd("colorscheme posterpole")
 		end,
 	},
 	{
@@ -51,6 +36,7 @@ return {
 			})
 			vim.cmd.colorscheme("vague")
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#333333" })
+			vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#555555" })
 		end,
 	},
 	{
@@ -138,7 +124,6 @@ return {
 					cursor_line_number = true,
 				},
 				plugins = {
-					cmp = true,
 					gitsigns = true,
 					telescope = { enabled = false },
 				},
