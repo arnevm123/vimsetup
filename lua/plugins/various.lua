@@ -5,15 +5,16 @@ return {
 		lazy = false,
 		---@type snacks.Config
 		opts = {
-			notifier = { enabled = false },
-			scroll = { enabled = false },
-			words = { enabled = false },
 			zen = { enabled = false },
+			words = { enabled = false },
+			scroll = { enabled = false },
+			indent = { enabled = false },
 			animate = { enabled = false },
+			notifier = { enabled = false },
+			statuscolumn = { enabled = false },
+
 			bigfile = { enabled = true },
 			quickfile = { enabled = true },
-			statuscolumn = { enabled = true },
-			indent = { enabled = false },
 		},
 		keys = {
 			{
@@ -37,24 +38,6 @@ return {
 				end,
 				desc = "Lazygit Current File History",
 			},
-			{
-				"<leader>N",
-				desc = "Neovim News",
-				function()
-					require("snacks").win({
-						file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-						width = 0.6,
-						height = 0.6,
-						wo = {
-							spell = false,
-							wrap = false,
-							signcolumn = "yes",
-							statuscolumn = " ",
-							conceallevel = 3,
-						},
-					})
-				end,
-			},
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("User", {
@@ -65,17 +48,6 @@ return {
 			})
 		end,
 	},
-	{
-		"oysandvik94/curl.nvim",
-		cmd = { "CurlOpen" },
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		opts = {
-			open_with = "tab",
-		},
-	},
-	{ "meznaric/key-analyzer.nvim", opts = {}, cmd = "KeyAnalyzer" },
 	{
 		"chrisgrieser/nvim-various-textobjs",
 		event = "UIEnter",
@@ -220,41 +192,17 @@ return {
 			},
 		},
 	},
-	-- {
-	-- 	"kndndrj/nvim-dbee",
-	-- 	dependencies = {
-	-- 		"MunifTanjim/nui.nvim",
-	-- 	},
-	-- 	lazy = false,
-	-- 	build = function()
-	-- 		-- Install tries to automatically detect the install method.
-	-- 		-- if it fails, try calling it with one of these parameters:
-	-- 		--    "curl", "wget", "bitsadmin", "go"
-	-- 		require("dbee").install()
-	-- 	end,
-	-- 	config = function()
-	-- 		require("dbee").setup({
-	-- 			sources = {
-	-- 				require("dbee.sources").FileSource:new(vim.fn.stdpath("config") .. "/.db_connections/dbee.json"),
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
 	-- text manipulation
 	{ "tpope/vim-dispatch", event = "VeryLazy" }, -- :Make
 	{ "tpope/vim-eunuch", event = "VeryLazy" }, -- :Remove
-	{ "tpope/vim-tbone", event = "VeryLazy" }, -- :Remove
 	{ "wsdjeg/vim-fetch", lazy = false }, -- :e file:line
 	{ "kylechui/nvim-surround", config = true, event = "VeryLazy" },
-	{ "brenoprata10/nvim-highlight-colors", opts = { render = "virtual" }, config = true, event = { "VeryLazy" } },
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{
 		"mbbill/undotree",
 		config = function()
-			vim.cmd([[
-				let g:undotree_WindowLayout=4
-            ]])
+			vim.cmd([[ let g:undotree_WindowLayout=4 ]])
 		end,
 		keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>", desc = "Toggle undo tree" } },
 	},
@@ -435,17 +383,12 @@ return {
 	},
 	{
 		"johmsalas/text-case.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim" },
 		config = function()
 			require("textcase").setup({
 				substitude_command_name = "S",
 			})
-			require("telescope").load_extension("textcase")
 		end,
 		event = "VeryLazy",
-		keys = {
-			{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" } },
-		},
 	},
 	-- {
 	-- 	"supermaven-inc/supermaven-nvim",

@@ -1,18 +1,13 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		{
-			"rachartier/tiny-code-action.nvim",
-			config = true,
-		},
-		{
-			"smjonas/inc-rename.nvim",
-			config = true,
-		},
-		"aznhe21/actions-preview.nvim",
+		{ "smjonas/inc-rename.nvim", config = true },
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		"nanotee/sqls.nvim",
+		-- Snippets
+		"L3MON4D3/LuaSnip",
 		-- -- Autocompletion
 		{
 			"saghen/blink.cmp",
@@ -44,7 +39,7 @@ return {
 						draw = {
 							-- Aligns the keyword you've typed to a component in the menu
 							align_to_component = "none", -- or 'none' to disable
-							columns = { { "label", "label_description", gap = 1 }, { "kind_icon"}, {"source_name" } },
+							columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "source_name" } },
 							components = {
 								kind_icon = { width = { fill = true } },
 							},
@@ -209,7 +204,6 @@ return {
 		-- "hrsh7th/cmp-nvim-lsp",
 		-- "hrsh7th/cmp-cmdline",
 		-- "hrsh7th/cmp-nvim-lsp-signature-help",
-		"nanotee/sqls.nvim",
 		-- {
 		-- 	"MattiasMTS/cmp-dbee",
 		-- 	dependencies = {
@@ -218,8 +212,6 @@ return {
 		-- 	ft = "sql", -- optional but good to have
 		-- 	opts = {}, -- needed
 		-- },
-		-- Snippets
-		"L3MON4D3/LuaSnip",
 		-- "saadparwaiz1/cmp_luasnip",
 		-- "rafamadriz/friendly-snippets",
 		{
@@ -238,7 +230,6 @@ return {
 		"Decodetalkers/csharpls-extended-lsp.nvim",
 		{
 			"chrisgrieser/nvim-scissors",
-			dependencies = "nvim-telescope/telescope.nvim", -- optional
 			opts = {
 				snippetDir = "~/.config/nvim/snippets",
 			},
@@ -285,17 +276,6 @@ return {
 					desc = "Diagnostics (Trouble)",
 				},
 			},
-		},
-		{
-			"m00qek/baleia.nvim",
-			version = "*",
-			config = function()
-				vim.g.baleia = require("baleia").setup({})
-				-- Command to colorize the current buffer
-				vim.api.nvim_create_user_command("BaleiaColorize", function()
-					vim.g.baleia.once(vim.api.nvim_get_current_buf())
-				end, { bang = true })
-			end,
 		},
 		{
 			"stevearc/conform.nvim",
@@ -359,24 +339,13 @@ return {
 	},
 	keys = {
 		{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
-		-- { "<leader>la", "<cmd>lua require('actions-preview').code_actions()<CR>", desc = "lsp Code Action", mode = { "n", "v" } },
-		-- {
-		-- 	"<leader>la",
-		-- 	"<cmd>lua require('tiny-code-action').code_action()<CR>",
-		-- 	desc = "lsp Code Action",
-		-- 	mode = { "n", "v" },
-		-- },
-		{ "<leader>ld", "<cmd>Telescope diagnostics<CR>", desc = "lsp diagnostics" },
 		{
 			"<leader>lf",
 			"<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>",
 			desc = "lsp format buffer",
 		},
-		{ "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<CR>", desc = "lsp codelens" },
-		-- { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "lsp rename variable" },
 		{ "<leader>lr", '"hyiw:IncRename <C-r>h', desc = "lsp rename variable" },
-		{ "<leader>li", "<cmd>LspInfo<CR>", desc = "lsp info" },
-		{ "<leader>le", "<cmd>LspRestart<CR>", desc = "Restart lsp" },
+		-- { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "lsp rename variable" },
 	},
 	config = function()
 		require("plugins.lsp.mason")

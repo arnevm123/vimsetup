@@ -4,7 +4,6 @@ return {
 		dependencies = {
 			"leoluz/nvim-dap-go",
 			"rcarriga/nvim-dap-ui",
-			"nvim-telescope/telescope-dap.nvim",
 		},
 	--stylua: ignore
 	keys = {
@@ -29,7 +28,6 @@ return {
 				return
 			end
 
-			require("telescope").load_extension("dap")
 			require("dapui").setup({
 				icons = { expanded = "v", collapsed = ">" },
 				mappings = {

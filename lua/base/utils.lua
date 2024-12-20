@@ -24,10 +24,6 @@ function M.remove_bg()
 		"NormalFloat",
 		"FloatBorder",
 		"Title",
-		"TelescopeNormal",
-		"TelescopeSelection",
-		"TelescopeTitle",
-		"TelescopeBorder",
 	}
 	for _, t in pairs(hl) do
 		vim.cmd.highlight(t .. " guibg=#2B2B2B")

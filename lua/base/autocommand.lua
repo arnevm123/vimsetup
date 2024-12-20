@@ -1,15 +1,6 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-vim.api.nvim_create_autocmd("User", {
-	pattern = "TelescopePreviewerLoaded",
-	callback = function(args)
-		if args.data.filetype ~= "help" then
-			vim.wo.number = true
-		end
-	end,
-})
-
 autocmd("BufEnter", {
 	pattern = "*",
 	callback = function()
