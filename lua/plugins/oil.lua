@@ -75,5 +75,6 @@ return {
 			},
 		},
 		cmd = { "Oil" },
+		keys = { { "-", "<cmd>Oil<cr>", desc = "Oil" } },
 	},
 }

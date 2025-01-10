@@ -29,10 +29,7 @@ return {
 		{
 			"<leader>hp",
 			function()
-				require("harpoon").ui:toggle_quick_menu(
-					require("harpoon"):list(),
-					{ border = require("base.utils").borders(), title_pos = "center" }
-				)
+				require("harpoon").ui:toggle_quick_menu(require("harpoon"):list(), { title = "" })
 			end,
 			desc = "harpoon quick menu",
 		},

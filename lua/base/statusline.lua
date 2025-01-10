@@ -1,12 +1,4 @@
-local group = vim.api.nvim_create_augroup("StatusLine", { clear = true })
-
 local icons = {
-	diagnostics = {
-		error = "E",
-		warning = "W",
-		hint = "h",
-		info = "i",
-	},
 	buffers = {
 		readonly = "R",
 		modified = "●",
@@ -14,35 +6,31 @@ local icons = {
 	},
 }
 
-local diagnostics_attrs = {
-	{ "Error", icons.diagnostics.error },
-	{ "Warn", icons.diagnostics.warning },
-	{ "Hint", icons.diagnostics.hint },
-	{ "Info", icons.diagnostics.info },
-}
+local function diagnostic()
+	local hints = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+	local info = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+	local warns = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+	local errors = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
 
-local diagnostics = ""
-local function diagnostics_section()
-	local res = ""
-	local diag = vim.diagnostic.count(0)
-	if not diag or #diag == 0 then
-		return ""
+	local parts = {}
+	if #hints > 0 then
+		table.insert(parts, string.format("h: %d", #hints))
 	end
-	for i, diagnostic in ipairs(diagnostics_attrs) do
-		local count = diag[i]
-		if count then
-			res = res .. " | " .. count .. " " .. diagnostic[2]
-		end
+	if #info > 0 then
+		table.insert(parts, string.format("i: %d", #info))
 	end
-	return res
+	if #warns > 0 then
+		table.insert(parts, string.format("W: %d", #warns))
+	end
+	if #errors > 0 then
+		table.insert(parts, string.format("E: %d", #errors))
+	end
+
+	if #parts > 0 then
+		return " " .. table.concat(parts, " | ")
+	end
+	return ""
 end
-
-vim.api.nvim_create_autocmd({ "DiagnosticChanged", "BufWinEnter" }, {
-	group = group,
-	callback = function()
-		diagnostics = diagnostics_section()
-	end,
-})
 
 local function unsaved_buffers()
 	for _, buf in pairs(vim.api.nvim_list_bufs()) do
@@ -155,7 +143,7 @@ local function get_git_info()
 	local remote = get_git_remote_name(root)
 	local branch = ""
 	if remote ~= "No remote" then
-		branch = get_git_branch(root)
+		branch = get_git_branch(root) or branch
 	end
 
 	if branch and #branch > 25 then
@@ -169,16 +157,19 @@ local function get_git_info()
 end
 
 local function left_section()
-	return file_section() .. unsaved_buffers() .. diagnostics
+	return file_section() .. diagnostic() .. unsaved_buffers()
 end
 
 local function right_section()
-	return get_git_info() .. "%l/%L"
+	return get_git_info() .. "%3l/%-3L"
 end
 
-_G.set_statusline = function()
-	return " " .. left_section() .. "%=" .. right_section() .. " "
+local M = {}
+
+M.set_statusline = function()
+	return left_section() .. "%=" .. right_section()
 end
 
-vim.o.statusline = "%!v:lua.set_statusline()"
--- vim.o.statusline = [[%<%f %h%m%r %y%=%{v:register} %-14.(%l,%c%V%) %P]]
+vim.o.statusline = "%!v:lua.require('base.statusline').set_statusline()"
+
+return M

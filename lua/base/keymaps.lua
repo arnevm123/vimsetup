@@ -27,8 +27,8 @@ keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 
 -- Add some help to visual mode
-keymap("x", ".", "<cmd>norm .<CR>", nosilent)
-keymap("x", "@", "<cmd>norm @q<CR>", nosilent)
+keymap("v", ".", ":normal .<CR>", nosilent)
+keymap("x", "@", ":normal @q<CR>", nosilent)
 keymap("x", "*", '"ry/\\V<C-r>r<CR>', nosilent)
 keymap("x", "#", '"ry?\\V<C-r>r<CR>', nosilent)
 
@@ -127,7 +127,6 @@ keymap("n", "<leader>bu", function()
 	end
 end, nosilent)
 
-
 keymap("n", "<leader>bt", function()
 	vim.cmd("wa")
 	local cwd = vim.loop.cwd()
@@ -155,7 +154,6 @@ keymap("n", "<leader>bl", function()
 		vim.api.nvim_set_current_dir(cwd)
 	end
 	vim.cmd("cfile .lint.txt")
-
 end, nosilent)
 
 keymap("n", "<leader>bs", "<cmd>&g<CR>", nosilent)
@@ -181,3 +179,13 @@ vim.api.nvim_create_user_command("BuildWindows", function(o)
 	vim.cmd("wa")
 	vim.cmd(build)
 end, { nargs = "*" })
+
+-- TPOPE RSI
+keymap("i", "<C-B>", "<Left>", opts)
+keymap("i", "<C-F>", "<Right>", opts)
+keymap("c", "<C-B>", "<Left>", opts)
+keymap("c", "<C-F>", "<Right>", opts)
+
+keymap("i", "<C-A>", "<C-O>^", opts)
+keymap("i", "<C-D>", "<Del>", opts)
+keymap("i", "<C-E>", "<End>", opts)
