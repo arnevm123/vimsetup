@@ -2,10 +2,10 @@ local colorscheme
 -- colorscheme = "vague"
 colorscheme = "seoulbones"
 -- colorscheme = "mel"
-if colorscheme == "vague" then
-	return {
+return {
+	{
 		"vague2k/vague.nvim",
-		lazy = false,
+		lazy = colorscheme ~= "vague",
 		priority = 1000,
 		config = function()
 			require("vague").setup({
@@ -16,16 +16,14 @@ if colorscheme == "vague" then
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#333333" })
 			vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#555555" })
 		end,
-	}
-elseif colorscheme == "seoulbones" then
-	return {
+	},
+	{
 		"mcchrish/zenbones.nvim",
-		lazy = false,
+		lazy = colorscheme ~= "seoulbones",
 		priority = 1000,
 		config = function()
 			vim.cmd.colorscheme("seoulbones")
 			require("base.utils").remove_bg()
-
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
 			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
 			vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
@@ -39,11 +37,10 @@ elseif colorscheme == "seoulbones" then
 			vim.api.nvim_set_hl(0, "@string", { link = "Constant" })
 		end,
 		dependencies = { "rktjmp/lush.nvim" },
-	}
-elseif colorscheme == "mel" then
-	return {
+	},
+	{
 		"ramojus/mellifluous.nvim",
-		lazy = false,
+		lazy = colorscheme ~= "mel",
 		priority = 1000,
 		config = function()
 			local opts = {
@@ -75,5 +72,5 @@ elseif colorscheme == "mel" then
 			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
 			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
 		end,
-	}
-end
+	},
+}

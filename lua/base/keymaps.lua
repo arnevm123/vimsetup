@@ -34,7 +34,6 @@ keymap("x", "#", '"ry?\\V<C-r>r<CR>', nosilent)
 
 keymap("n", "dd", utils.Smart_dd, expr)
 keymap("n", "gx", utils.Go_to_url, opts)
-keymap("n", "gw", utils.search_diagnotics_avante, opts)
 keymap("n", "yoq", utils.CToggle, opts)
 keymap("n", "yov", utils.VirtualTextToggle, opts)
 keymap("n", "<leader>zg", function()
@@ -77,8 +76,6 @@ keymap("n", "<leader>ro", utils.open_last_file, nosilent)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
-keymap("n", "[<space>", "o<esc>k", opts)
-keymap("n", "]<space>", "O<esc>j", opts)
 keymap("n", "[c", "<cmd>diffget //2<CR>", opts)
 keymap("n", "]c", "<cmd>diffget //3<CR>", opts)
 keymap("n", "<Leader>xp", "<cmd>call setreg('+', getreg('@'))<CR>", opts)
@@ -88,7 +85,6 @@ keymap("n", "<Leader>xo", ":e <C-r>+<CR>", { noremap = true, desc = "Go to locat
 -- next greatest remap ever : asbjornHaland
 keymap("n", "<leader>y", '"+y', opts)
 keymap("v", "<leader>y", '"+y', opts)
-keymap("n", "<leader>Y", '"+Y', opts)
 
 keymap("n", "<leader>p", '"+p', opts)
 keymap("v", "<leader>p", '"+p', opts)
@@ -103,8 +99,6 @@ keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><l
 keymap("n", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><left><left><left>", nosilent)
 keymap("v", "<leader>re", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>', nosilent)
 keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gcI<Left><Left><Left><Left>", nosilent)
--- Lookbehind don't match
-keymap("n", "<leader>rl", ":%s/\\(\\)\\@<!<left><left><left><left><left><left>", nosilent)
 
 keymap("n", "<leader>tm", "<cmd>let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 keymap("n", "<leader>tp", "<cmd>let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux-popup.sh $VIM_DIR<CR>", nosilent)
@@ -112,6 +106,16 @@ keymap("n", "<leader>tp", "<cmd>let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux-po
 keymap("n", "<leader>GU", "<cmd>call setenv('GOOS', '')<CR>:LspRestart<CR>", nosilent)
 keymap("n", "<leader>GW", "<cmd>call setenv('GOOS', 'windows')<CR>:LspRestart<CR>", nosilent)
 keymap("n", "<leader>GL", "<cmd>call setenv('GOOS', 'linux')<CR>:LspRestart<CR>", nosilent)
+
+-- TPOPE RSI
+keymap("i", "<C-B>", "<Left>", opts)
+keymap("i", "<C-F>", "<Right>", opts)
+keymap("c", "<C-B>", "<Left>", opts)
+keymap("c", "<C-F>", "<Right>", opts)
+
+keymap("i", "<C-A>", "<C-O>^", opts)
+keymap("i", "<C-D>", "<Del>", opts)
+keymap("i", "<C-E>", "<End>", opts)
 
 keymap("n", "<leader>bu", function()
 	vim.cmd("wa")
@@ -155,37 +159,3 @@ keymap("n", "<leader>bl", function()
 	end
 	vim.cmd("cfile .lint.txt")
 end, nosilent)
-
-keymap("n", "<leader>bs", "<cmd>&g<CR>", nosilent)
-keymap("n", "<leader>bq", "<cmd>cfile .lint.txt<CR>", nosilent)
-keymap("n", "<leader>bi", "<cmd>wa<CR>:Dispatch<CR>", nosilent)
-keymap("n", "<leader>bw", "<cmd>BuildWindows<CR>", nosilent)
-keymap("n", "<leader>bv", ":BuildWindows ", nosilent)
-
-vim.api.nvim_create_user_command("BuildWindows", function(o)
-	local build
-	local version
-	if o.args then
-		version = o.args:gsub("^%s*(.-)%s*$", "%1")
-	end
-	if not version or version == "" or #version == 0 then
-		build =
-			"Dispatch make build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller/lynxcontroller.exe"
-	else
-		build = "Dispatch make VERSION="
-			.. o.args
-			.. " build-windows && cp bin/lynxcontroller-windows.exe ~/remmina-shared/lynxcontroller.exe"
-	end
-	vim.cmd("wa")
-	vim.cmd(build)
-end, { nargs = "*" })
-
--- TPOPE RSI
-keymap("i", "<C-B>", "<Left>", opts)
-keymap("i", "<C-F>", "<Right>", opts)
-keymap("c", "<C-B>", "<Left>", opts)
-keymap("c", "<C-F>", "<Right>", opts)
-
-keymap("i", "<C-A>", "<C-O>^", opts)
-keymap("i", "<C-D>", "<Del>", opts)
-keymap("i", "<C-E>", "<End>", opts)
