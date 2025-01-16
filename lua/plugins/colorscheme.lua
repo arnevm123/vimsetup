@@ -1,8 +1,64 @@
 local colorscheme
 -- colorscheme = "vague"
 colorscheme = "seoulbones"
+-- colorscheme = "jo"
 -- colorscheme = "mel"
 return {
+	{
+		"https://github.com/RRethy/base16-nvim",
+		lazy = colorscheme ~= "jo",
+		config = function()
+			local bg = "None"
+			local accent = "#333333"
+			local accent2 = "#555555" -- highlight
+
+			local text = "#abb2bf"
+			local dark_text = "#3E4451" -- comments, line numbers
+
+			local keyword = "#8F939A"
+			local func = "#B6AB8B"
+			local types = "#65838E"
+			local constant = "#705040"
+
+			local for_tesing = "#FF0000"
+
+			-- local bg = "#0F1919"
+			-- local accent = "#102121"
+			-- local accent2 = "#0D2525" -- highlight
+			--
+			-- local text = "#abb2bf"
+			-- local dark_text = "#3E4451" -- comments, line numbers
+			--
+			-- local keyword = "#8F939A"
+			-- local func = "#B6AB8B"
+			-- local types = "#65838E"
+			-- local constant = "#A06057"
+			--
+			-- local for_tesing = "#FF0000"
+			--
+			require("base16-colorscheme").setup({
+				base00 = bg,
+				base01 = accent,
+				base02 = accent2,
+				base03 = dark_text,
+				base04 = dark_text,
+				base05 = text,
+				base06 = for_tesing,
+				base07 = for_tesing,
+				base08 = text,
+				base09 = constant,
+				base0A = types,
+				base0B = constant,
+				base0C = text,
+				base0D = func,
+				base0E = keyword,
+				base0F = text,
+			})
+			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
+			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
+			-- vim.cmd("colorscheme base16")
+		end,
+	},
 	{
 		"vague2k/vague.nvim",
 		lazy = colorscheme ~= "vague",
@@ -15,6 +71,8 @@ return {
 			vim.api.nvim_set_hl(0, "HarpoonWindow", { bg = "#333333" })
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#333333" })
 			vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#555555" })
+			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
+			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
 		end,
 	},
 	{
@@ -26,6 +84,7 @@ return {
 			require("base.utils").remove_bg()
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
 			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
+			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = "#3B3B3B" })
 			vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#4B4B4B" })
 			vim.api.nvim_set_hl(0, "comment", { fg = "#8B8B8B", italic = true })
 			vim.api.nvim_set_hl(0, "IncSearch", { bg = "#6B6B6B" })
@@ -71,6 +130,7 @@ return {
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
 			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
 			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
+			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = "#3B3B3B" })
 		end,
 	},
 }

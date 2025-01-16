@@ -9,6 +9,7 @@ return {
 	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
 	{ "chentoast/marks.nvim", event = "VeryLazy", opts = { default_mappings = false } },
 	{ "mbbill/undotree", keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>" } } },
+	{ "mcauley-penney/visual-whitespace.nvim", event = "VeryLazy", config = true },
 	{
 		"numToStr/Comment.nvim",
 		config = function()
