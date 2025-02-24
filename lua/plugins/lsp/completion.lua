@@ -18,7 +18,7 @@ return {
 				["<S-Tab>"] = { "snippet_backward", "fallback" },
 			},
 			completion = {
-				keyword = { range = "full" },
+				keyword = { range = "prefix" },
 				accept = { auto_brackets = { enabled = false } },
 				menu = {
 					scrollbar = false,
@@ -35,17 +35,6 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "lazydev" },
 
-				cmdline = function()
-					local type = vim.fn.getcmdtype()
-					if type == "/" or type == "?" then
-						return { "buffer" }
-					end
-					if type == ":" then
-						return { "cmdline" }
-					end
-					return {}
-				end,
-
 				-- Function to use when transforming the items before they're returned for all providers
 				-- The default will lower the score for snippets to sort them lower in the list
 				transform_items = function(_, items)
@@ -61,7 +50,7 @@ return {
 					lsp = { name = "[LSP]" },
 					path = { name = "[PTH]" },
 					buffer = { name = "[BFR]" },
-					snippets = { name = "[SNP]" },
+					snippets = { name = "[SNP]", opts = { search_paths = { "~/.config/nvim/snippets" } } },
 					lazydev = { name = "[LZD]", module = "lazydev.integrations.blink", score_offset = 100 },
 				},
 			},

@@ -6,6 +6,7 @@ return {
 			"andymass/vim-matchup",
 			"windwp/nvim-ts-autotag",
 		},
+		build = ":TSUpdate",
 		event = "VeryLazy",
 		config = function()
 			require("nvim-treesitter.configs").setup({
@@ -45,10 +46,10 @@ return {
 					move = {
 						enable = true,
 						set_jumps = true,
-						goto_next_end = { ["]f"] = "@function.outer" },
-						goto_next_start = { ["]F"] = "@function.outer" },
-						goto_previous_end = { ["[f"] = "@function.outer" },
-						goto_previous_start = { ["[F"] = "@function.outer" },
+						goto_next_end = { ["]F"] = "@function.outer" },
+						goto_next_start = { ["]f"] = "@function.outer" },
+						goto_previous_end = { ["[F"] = "@function.outer" },
+						goto_previous_start = { ["[f"] = "@function.outer" },
 					},
 					swap = {
 						enable = true,

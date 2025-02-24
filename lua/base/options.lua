@@ -45,3 +45,5 @@ vim.opt.spelllang = "en_gb"
 
 vim.opt.grepprg = "rg --vimgrep"
 vim.cmd("set path+=**")
+
+vim.o.diffopt = 'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'

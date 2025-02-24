@@ -49,7 +49,7 @@ keymap("n", "<leader>rf", function()
 	utils:rg({ ask_folder = true })
 end, nosilent)
 
-keymap("n", "<leader>ru", function()
+keymap("n", "<leader>fq", function()
 	utils:rg({ search_string = vim.fn.expand("<cword>") })
 end, nosilent)
 

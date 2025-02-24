@@ -24,7 +24,9 @@ return {
 				typescript = { { "eslint_d", "prettierd", "prettier" } },
 				-- yaml = { "yamlfmt" },
 				mysql = { "sqlffluf" },
+				sql = { "sqlffluf" },
 				python = { "isort", "black" },
+				-- ["*"] = { "injected" }, -- enables injected-lang formatting for all filetypes
 			},
 		},
 	},

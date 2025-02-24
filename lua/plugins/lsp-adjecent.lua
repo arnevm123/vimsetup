@@ -57,4 +57,39 @@ return {
 			},
 		},
 	},
+	{
+		"folke/trouble.nvim",
+		opts = {
+			warn_no_results = false,
+			indent_guides = false,
+		},
+		cmd = "Trouble",
+		keys = {
+			{
+				"yox",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"]x",
+				"<cmd>Trouble diagnostics next<CR><cmd>Trouble diagnostics jump_only<CR>",
+				desc = "Next diagnostic (Trouble)",
+			},
+			{
+				"[x",
+				"<cmd>Trouble diagnostics prev<CR><cmd>Trouble diagnostics jump_only<CR>",
+				desc = "Previous diagnostic (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+		},
+	},
 }

@@ -3,7 +3,7 @@ local M = {}
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-M.capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities)
+M.capabilities = require("blink.cmp").get_lsp_capabilities(M.capabilities)
 
 M.setup = function()
 	local signs = {

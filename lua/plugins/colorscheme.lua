@@ -1,8 +1,10 @@
 local colorscheme
 -- colorscheme = "vague"
-colorscheme = "seoulbones"
+-- colorscheme = "seoulbones"
 -- colorscheme = "jo"
--- colorscheme = "mel"
+colorscheme = "mel"
+-- colorscheme = "shadow"
+-- colorscheme = "jb"
 return {
 	{
 		"https://github.com/RRethy/base16-nvim",
@@ -118,19 +120,38 @@ return {
 					file_tree = false,
 					cursor_line_number = true,
 				},
-				plugins = {
-					gitsigns = true,
-					telescope = { enabled = false },
-				},
+				plugins = { gitsigns = true },
 			}
 
 			require("mellifluous").setup(opts)
 			vim.cmd.colorscheme("mellifluous")
-			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
 			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
+			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
+			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
+			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
+		end,
+	},
+	{
+		"rjshkhr/shadow.nvim",
+		lazy = colorscheme ~= "shadow",
+		priority = 1000,
+		config = function()
+			vim.opt.termguicolors = true
+			vim.cmd.colorscheme("shadow")
+			require("base.utils").remove_bg()
 			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
+			-- local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
 			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = "#3B3B3B" })
+		end,
+	},
+	{
+		"nickkadutskyi/jb.nvim",
+		lazy = colorscheme ~= "jb",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("jb")
+			vim.o.background = "light"
 		end,
 	},
 }

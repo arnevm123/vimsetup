@@ -5,7 +5,6 @@ return {
 			require("plugins.lsp.completion"),
 			require("plugins.lsp.formatting"),
 
-			"nanotee/sqls.nvim",
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",

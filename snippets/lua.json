@@ -1,1 +1,1 @@
-{"opts":{"prefix":"opts","body":["opts = {","\t$0","},"]}}
+{"ct":{"prefix":"ct","body":"ctx context.Context"},"opts":{"prefix":"opts","body":["opts = {","\t$0","},"]}}
