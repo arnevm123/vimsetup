@@ -3,7 +3,12 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
-			"andymass/vim-matchup",
+			{
+				"andymass/vim-matchup",
+				config = function()
+					vim.g.matchup_matchparen_offscreen = {}
+				end,
+			},
 			"windwp/nvim-ts-autotag",
 		},
 		build = ":TSUpdate",
