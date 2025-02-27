@@ -5,6 +5,18 @@ return {
 		version = "v0.*",
 		dependencies = "rafamadriz/friendly-snippets",
 		opts = {
+			cmdline = {
+				completion = { menu = { draw = { columns = { { "label" } } } }, },
+				keymap = {
+					["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+					["<C-e>"] = { "hide" },
+					["<C-y>"] = { "select_and_accept" },
+					["<C-p>"] = { "show", "select_prev", "fallback" },
+					["<C-n>"] = { "show", "select_next", "fallback" },
+					["<Tab>"] = { "show", "select_next", "fallback" },
+					["<S-Tab>"] = { "show", "select_prev", "fallback" },
+				},
+			},
 			snippets = { preset = "default" },
 			keymap = {
 				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
@@ -25,9 +37,6 @@ return {
 					draw = {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "source_name" } },
 					},
-					auto_show = function(ctx)
-						return ctx.mode ~= "cmdline"
-					end,
 				},
 				documentation = { auto_show = false },
 			},
@@ -50,10 +59,13 @@ return {
 					lsp = { name = "[LSP]" },
 					path = { name = "[PTH]" },
 					buffer = { name = "[BFR]" },
+					omni = { name = "[OMN]" },
+					cmdline = { name = "[CMD]" },
 					snippets = { name = "[SNP]", opts = { search_paths = { "~/.config/nvim/snippets" } } },
 					lazydev = { name = "[LZD]", module = "lazydev.integrations.blink", score_offset = 100 },
 				},
 			},
+			fuzzy = { implementation = "rust" },
 		},
 		opts_extend = { "sources.default" },
 	},

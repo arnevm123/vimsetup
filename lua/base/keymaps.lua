@@ -34,8 +34,6 @@ keymap("x", "#", '"ry?\\V<C-r>r<CR>', nosilent)
 
 keymap("n", "dd", utils.Smart_dd, expr)
 keymap("n", "gx", utils.Go_to_url, opts)
-keymap("n", "yoq", utils.CToggle, opts)
-keymap("n", "yov", utils.VirtualTextToggle, opts)
 keymap("n", "<leader>zg", function()
 	---@diagnostic disable-next-line: param-type-mismatch
 	utils.cspell_add(vim.fn.expand("<cword>"))
@@ -116,6 +114,25 @@ keymap("c", "<C-F>", "<Right>", opts)
 keymap("i", "<C-A>", "<C-O>^", opts)
 keymap("i", "<C-D>", "<Del>", opts)
 keymap("i", "<C-E>", "<End>", opts)
+
+-- UNIMPAIRED
+keymap("n", "[q", ":silent! cprevious<CR>", opts)
+keymap("n", "]q", ":silent! cnext<CR>", opts)
+keymap("n", "[Q", ":cfirst<CR>", opts)
+keymap("n", "]Q", ":clast<CR>", opts)
+
+keymap("n", "yoq", utils.CToggle, opts)
+keymap("n", "yov", utils.VirtualTextToggle, opts)
+
+keymap("n", "yoh", function()
+	vim.o.hlsearch = not vim.o.hlsearch
+end, opts)
+keymap("n", "yos", function()
+	vim.o.spell = not vim.o.spell
+end, opts)
+keymap("n", "yow", function()
+	vim.o.wrap = not vim.o.wrap
+end, opts)
 
 keymap("n", "<leader>bu", function()
 	vim.cmd("wa")

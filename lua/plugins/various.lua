@@ -9,7 +9,6 @@ return {
 	{ "akinsho/git-conflict.nvim", config = true, event = "VeryLazy" },
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
-	{ "arnevm123/unimpaired.nvim", config = true, event = "VeryLazy" },
 	{ "chentoast/marks.nvim", event = "VeryLazy", opts = { default_mappings = false } },
 	{ "mbbill/undotree", keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>" } } },
 	{ "mcauley-penney/visual-whitespace.nvim", event = "VeryLazy", opts = { nl_char = "" } },

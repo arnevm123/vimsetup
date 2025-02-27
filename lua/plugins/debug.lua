@@ -16,7 +16,6 @@ return {
 			{ "<leader>DO", "<cmd>lua require('dap').step_out()<CR>", desc = "Debug  step out" },
 			{ "<leader>db", "<cmd>lua require('dap').toggle_breakpoint()<CR>", desc = "Debug toggle breakpoint" },
 			{ "<leader>DB", "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>" },
-			{ "<leader>dt", " :lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
 			{ "<leader>dr", "<cmd>lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
 			{ "<leader>de", "lua :require('dapui').eval(nil, { enter = true })<CR>" },
 		},
