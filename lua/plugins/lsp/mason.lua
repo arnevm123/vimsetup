@@ -7,6 +7,7 @@ local servers = {
 	-- "csharp_ls",
 	"cssls",
 	"eslint",
+	"gitlab_ci_ls",
 	"gopls",
 	"sqls",
 	"volar",

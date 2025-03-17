@@ -20,7 +20,9 @@ return {
 		config = function()
 			require("gopher").setup({
 				gotests = { template = "testify" },
-				commands = { iferr = "iferr -message 'fmt.Errorf(\"%w\", err)'" },
+				iferr = {
+					message = "fmt.Errorf(\"%w\", err)",
+				},
 			})
 		end,
 		keys = {

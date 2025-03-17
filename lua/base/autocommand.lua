@@ -112,3 +112,10 @@ autocmd("RecordingLeave", {
 		vim.api.nvim_set_hl(0, "StatusLine", { bg = statusline_bg })
 	end,
 })
+
+autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*.gitlab-ci*.{yml,yaml}",
+	callback = function()
+		vim.bo.filetype = "yaml.gitlab"
+	end,
+})

@@ -116,7 +116,7 @@ return {
 				},
 				flat_background = {
 					line_numbers = true,
-					floating_windows = false,
+					floating_windows = true,
 					file_tree = false,
 					cursor_line_number = true,
 				},

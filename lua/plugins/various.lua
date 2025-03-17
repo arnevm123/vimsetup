@@ -1,4 +1,22 @@
 return {
+	{
+		"topaxi/pipeline.nvim",
+		keys = {
+			{ "<leader>ci", "<cmd>Pipeline<cr>", desc = "Open pipeline.nvim" },
+		},
+		-- optional, you can also install and use `yq` instead.
+		build = "make",
+		---@type pipeline.Config
+		opts = {
+			providers = {
+				gitlab = { "https://gitlab.telecom-it.be/api/graphql/" },
+			},
+
+			allowed_hosts = {
+				"gitlab.telecom-it.be",
+			},
+		},
+	},
 	{ "nanotee/sqls.nvim", lazy = false },
 	{ "OXY2DEV/patterns.nvim", lazy = false }, -- :Patterns
 	{ "typicode/bg.nvim", lazy = false }, -- Sync bg colors between nvim and terminal
