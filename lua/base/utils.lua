@@ -123,6 +123,13 @@ function M:VirtualTextToggle()
 	vim.diagnostic.config({ virtual_text = virtual_text_enabled })
 end
 
+local virtual_lines_enabled = false
+
+function M:VirtualLinesToggle()
+	virtual_lines_enabled = not virtual_lines_enabled
+	vim.diagnostic.config({ virtual_lines = virtual_lines_enabled })
+end
+
 function M:DbuiToggle()
 	local tabs = vim.api.nvim_list_tabpages()
 	local dbui_enabled = false

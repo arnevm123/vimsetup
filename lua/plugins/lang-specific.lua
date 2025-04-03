@@ -16,15 +16,12 @@ return {
 	{
 		"olexsmir/gopher.nvim",
 		ft = { "go", "gomod" },
-		branch = "develop",
-		config = function()
-			require("gopher").setup({
-				gotests = { template = "testify" },
-				iferr = {
-					message = "fmt.Errorf(\"%w\", err)",
-				},
-			})
-		end,
+		opts = {
+			gotests = { template = "testify" },
+			iferr = {
+				message = 'fmt.Errorf("%w", err)',
+			},
+		},
 		keys = {
 			{ "<leader>ee", '0f=llvt("hy:GoIfErr<CR>jf%i<C-r>h: <esc>', desc = "Go if err" },
 			{

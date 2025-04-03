@@ -1,24 +1,14 @@
 return {
 	{
 		"topaxi/pipeline.nvim",
-		keys = {
-			{ "<leader>ci", "<cmd>Pipeline<cr>", desc = "Open pipeline.nvim" },
-		},
-		-- optional, you can also install and use `yq` instead.
+		keys = { { "<leader>ci", "<cmd>Pipeline<cr>", desc = "Open pipeline.nvim" } },
 		build = "make",
-		---@type pipeline.Config
 		opts = {
-			providers = {
-				gitlab = { "https://gitlab.telecom-it.be/api/graphql/" },
-			},
-
-			allowed_hosts = {
-				"gitlab.telecom-it.be",
-			},
+			providers = { gitlab = { "https://gitlab.telecom-it.be/api/graphql/" } },
+			allowed_hosts = { "gitlab.telecom-it.be" },
 		},
 	},
 	{ "nanotee/sqls.nvim", lazy = false },
-	{ "OXY2DEV/patterns.nvim", lazy = false }, -- :Patterns
 	{ "typicode/bg.nvim", lazy = false }, -- Sync bg colors between nvim and terminal
 	{ "tpope/vim-eunuch", event = "VeryLazy" }, -- :Remove
 	{ "tpope/vim-dispatch", event = "VeryLazy" }, -- :Make
@@ -30,17 +20,6 @@ return {
 	{ "chentoast/marks.nvim", event = "VeryLazy", opts = { default_mappings = false } },
 	{ "mbbill/undotree", keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>" } } },
 	{ "mcauley-penney/visual-whitespace.nvim", event = "VeryLazy", opts = { nl_char = "" } },
-	{
-		"rest-nvim/rest.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		ft = { "http", "rest" },
-		keys = {
-			{ "<leader>rr", "<cmd>Rest run<CR>" },
-			{ "<leader>rl", "<cmd>Rest env set ~/http.env/http.local<CR>" },
-			{ "<leader>r5", "<cmd>Rest env set ~/http.env/http.56.100<CR>" },
-			{ "<leader>ra", "<cmd>Rest env set ~/http.env/http.ralph<CR>" },
-		},
-	},
 	{
 		"numToStr/Comment.nvim",
 		config = function()

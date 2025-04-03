@@ -9,6 +9,8 @@ local servers = {
 	"eslint",
 	"gitlab_ci_ls",
 	"gopls",
+	-- "golangci_lint_ls",
+	"ols",
 	"sqls",
 	"volar",
 	-- "harper_ls",

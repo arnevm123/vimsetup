@@ -19,7 +19,7 @@ return {
 			{ "<leader>DB", "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>" },
 			{ "<leader>dt", "<cmd>lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
 			{ "<leader>dr", "<cmd>lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
-			{ "<leader>dw", "<cmd>lua require('dap-view').add_expr()<CR>", desc = "Debug latest test" },
+			{ "<leader>dw", "<cmd>lua require('dap-view').add_expr()<CR>", desc = "Debug watch" },
 			{
 				"<leader>da",
 				function()

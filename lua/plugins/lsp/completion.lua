@@ -33,6 +33,7 @@ return {
 				keyword = { range = "prefix" },
 				accept = { auto_brackets = { enabled = false } },
 				menu = {
+					border = "none",
 					scrollbar = false,
 					draw = {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "source_name" } },

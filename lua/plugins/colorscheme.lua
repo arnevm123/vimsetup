@@ -5,6 +5,7 @@ local colorscheme
 colorscheme = "mel"
 -- colorscheme = "shadow"
 -- colorscheme = "jb"
+-- colorscheme = "makurai"
 return {
 	{
 		"https://github.com/RRethy/base16-nvim",
@@ -116,7 +117,7 @@ return {
 				},
 				flat_background = {
 					line_numbers = true,
-					floating_windows = true,
+					floating_windows = false,
 					file_tree = false,
 					cursor_line_number = true,
 				},
@@ -130,6 +131,8 @@ return {
 			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
 			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
+			local float_bg = vim.api.nvim_get_hl(0, { name = "NormalFloat" }).bg
+			vim.api.nvim_set_hl(0, "FloatBorder", { bg = float_bg })
 		end,
 	},
 	{
@@ -152,6 +155,14 @@ return {
 		config = function()
 			vim.cmd.colorscheme("jb")
 			vim.o.background = "light"
+		end,
+	},
+	{
+		"Skardyy/makurai-nvim",
+		lazy = colorscheme ~= "makurai",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("makurai_less")
 		end,
 	},
 }

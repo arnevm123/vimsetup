@@ -89,9 +89,6 @@ keymap("v", "<leader>p", '"+p', opts)
 keymap("n", "<leader>P", '"+P', opts)
 keymap("v", "<leader>P", '"+P', opts)
 
-keymap("n", "<C-d>", "<C-d>zz", opts)
-keymap("n", "<C-u>", "<C-u>zz", opts)
-
 -- search and replace stuff
 keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><left><left><left>", nosilent)
 keymap("n", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><left><left><left>", nosilent)
@@ -115,14 +112,15 @@ keymap("i", "<C-A>", "<C-O>^", opts)
 keymap("i", "<C-D>", "<Del>", opts)
 keymap("i", "<C-E>", "<End>", opts)
 
--- UNIMPAIRED
-keymap("n", "[q", ":silent! cprevious<CR>", opts)
-keymap("n", "]q", ":silent! cnext<CR>", opts)
-keymap("n", "[Q", ":cfirst<CR>", opts)
-keymap("n", "]Q", ":clast<CR>", opts)
+-- UNIMPAIRED -- not needed since nvim 0.11
+-- keymap("n", "[q", ":silent! cprevious<CR>", opts)
+-- keymap("n", "]q", ":silent! cnext<CR>", opts)
+-- keymap("n", "[Q", ":cfirst<CR>", opts)
+-- keymap("n", "]Q", ":clast<CR>", opts)
 
 keymap("n", "yoq", utils.CToggle, opts)
 keymap("n", "yov", utils.VirtualTextToggle, opts)
+keymap("n", "yol", utils.VirtualLinesToggle, opts)
 
 keymap("n", "yoh", function()
 	vim.o.hlsearch = not vim.o.hlsearch
