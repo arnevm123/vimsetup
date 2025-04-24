@@ -15,7 +15,7 @@ return {
 		keys = {
 			{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
 			{ "<leader>lf", "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>" },
-			{ "<leader>lr", '"hyiw:IncRename <C-r>h', desc = "lsp rename variable" },
+			{ "<leader>lr", ':IncRename <C-r><C-w>', desc = "lsp rename variable" },
 			-- default keymap: grn
 			-- { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "lsp rename variable" },
 		},

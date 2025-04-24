@@ -14,7 +14,7 @@ return {
 			require("neoclip").setup({
 				enable_persistent_history = true,
 				db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-				preview = false,
+				preview = true,
 				keys = { fzf = { paste = "ctrl-y" } },
 			})
 
@@ -55,7 +55,7 @@ return {
 						horizontal = "right:50%",
 						layout = "vertical",
 						full_screen = true,
-						title = false,
+						title = true,
 					},
 				},
 				grep = {

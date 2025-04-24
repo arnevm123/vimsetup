@@ -14,6 +14,8 @@ keymap("n", "<C-down>", "<cmd>resize +2<CR>", opts)
 keymap("n", "<C-up>", "<cmd>resize -2<CR>", opts)
 keymap("n", "<C-left>", "<cmd>vertical resize -2<CR>", opts)
 keymap("n", "<C-right>", "<cmd>vertical resize +2<CR>", opts)
+keymap("n", "ycc", "yygccp", { remap = true })
+keymap("i", "<C-l>", "<c-g>u<Esc>[s1z=gi<c-g>u")
 
 keymap("n", "<leader>TC", "<cmd>tabclose<CR>", opts)
 keymap("n", "<leader>TN", "<cmd>tabnew<CR>", opts)

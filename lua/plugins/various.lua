@@ -1,4 +1,5 @@
 return {
+	{ "catgoose/nvim-colorizer.lua", event = "VeryLazy", opts = { lazy_load = true } },
 	{
 		"topaxi/pipeline.nvim",
 		keys = { { "<leader>ci", "<cmd>Pipeline<cr>", desc = "Open pipeline.nvim" } },
@@ -12,7 +13,19 @@ return {
 	{ "typicode/bg.nvim", lazy = false }, -- Sync bg colors between nvim and terminal
 	{ "tpope/vim-eunuch", event = "VeryLazy" }, -- :Remove
 	{ "tpope/vim-dispatch", event = "VeryLazy" }, -- :Make
-	{ "johmsalas/text-case.nvim", opts = { substitude_command_name = "S" }, event = "VeryLazy" },
+	{
+		"johmsalas/text-case.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+		config = function()
+			require("textcase").setup({ substitude_command_name = "S" })
+			require("telescope").load_extension("textcase")
+		end,
+		keys = {
+			"ga", -- Default invocation prefix
+			{ "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "x" }, desc = "Telescope" },
+		},
+		event = "VeryLazy",
+	},
 	{ "wsdjeg/vim-fetch", lazy = false }, -- :e file:line
 	{ "akinsho/git-conflict.nvim", config = true, event = "VeryLazy" },
 	{ "chrisbra/csv.vim", ft = "csv" },

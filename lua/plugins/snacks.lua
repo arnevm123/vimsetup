@@ -32,8 +32,23 @@ return {
 			quickfile = { enabled = true },
 		},
 		keys = {
-			{ "<leader>gb", "<cmd>lua Snacks.git.blame_line() <CR>", desc = "Git Blame Line", },
-			{ "<leader>gB", "<cmd>lua Snacks.gitbrowse()<CR>", desc = "Git Browse", },
+			{ "<leader>gb", "<cmd>lua Snacks.git.blame_line() <CR>", desc = "Git Blame Line" },
+			{ "<leader>gB", "<cmd>lua Snacks.gitbrowse()<CR>", desc = "Git Browse" },
+			{ "]r", "<cmd>lua Snacks.words.jump(vim.v.count1)<CR>", desc = "Next Reference" },
+			{ "[r", "<cmd>lua Snacks.words.jump(-vim.v.count1)<CR>", desc = "Prev Reference" },
+			{
+				"yor",
+				function()
+					local s = require("snacks")
+					if s.words.is_enabled() then
+						s.words.disable()
+					else
+						s.words.enable()
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(":<Esc>", true, false, true), "n", false)
+					end
+				end,
+				desc = "toggle lsp words",
+			},
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("User", {

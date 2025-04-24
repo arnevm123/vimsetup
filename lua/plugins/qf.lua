@@ -17,4 +17,31 @@ return {
 			},
 		},
 	},
+	{
+		"stevearc/quicker.nvim",
+		event = "FileType qf",
+		---@module "quicker"
+		---@type quicker.SetupOptions
+		opts = {
+			type_icons = {
+				E = "󰅚 ",
+				W = "󰀪 ",
+				I = " ",
+				N = " ",
+				H = " ",
+			},
+			-- Border characters
+			borders = {
+				vert = "┃",
+				-- Strong headers separate results from different files
+				strong_header = "━",
+				strong_cross = "╋",
+				strong_end = "┫",
+				-- Soft headers separate results within the same file
+				soft_header = "╌",
+				soft_cross = "╂",
+				soft_end = "┨",
+			},
+		},
+	},
 }

@@ -127,6 +127,7 @@ return {
 			require("mellifluous").setup(opts)
 			vim.cmd.colorscheme("mellifluous")
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
+			vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#333333" })
 			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
 			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
 			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
