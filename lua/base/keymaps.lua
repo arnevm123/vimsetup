@@ -9,6 +9,9 @@ local keymap = vim.keymap.set
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 
+keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
 -- Resize with Shift-arrows
 keymap("n", "<C-down>", "<cmd>resize +2<CR>", opts)
 keymap("n", "<C-up>", "<cmd>resize -2<CR>", opts)
