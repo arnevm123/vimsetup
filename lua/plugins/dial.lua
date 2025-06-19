@@ -20,6 +20,11 @@ return {
 						cyclic = true,
 					}),
 					augend.constant.new({
+						elements = { "[ ]", "[x]" },
+						word = false,
+						cyclic = true,
+					}),
+					augend.constant.new({
 						elements = { "Info", "Warn", "Error" },
 						word = false,
 						cyclic = true,

@@ -4,7 +4,7 @@ return {
 		dependencies = {
 			"leoluz/nvim-dap-go",
 			"rcarriga/nvim-dap-ui",
-			{ "igorlfs/nvim-dap-view", opts = { windows = { terminal = { hide = { "go" } } } } },
+			--[[ 			{ "igorlfs/nvim-dap-view", opts = { windows = { terminal = { hide = { "go" } } } } }, ]]
 			{
 				"Weissle/persistent-breakpoints.nvim",
 				opts = { load_breakpoints_event = { "BufReadPost" } },
@@ -12,7 +12,7 @@ return {
 			},
 		},
 		keys = {
-			{ "yod", "<cmd>lua  require('dap-view').toggle()<CR>", { noremap = true, silent = true } },
+			--[[ 			{ "yod", "<cmd>lua  require('dap-view').toggle()<CR>", { noremap = true, silent = true } }, ]]
 			{ "<F5>", "<cmd>lua require('dap').continue()<CR>", desc = "Debug continue" },
 			{ "<F4>", "<cmd>lua require('dap').step_into()<CR>", desc = "Debug step into" },
 			{ "<F3>", "<cmd>lua require('dap').step_over()<CR>", desc = "Debug step ove" },
@@ -26,7 +26,7 @@ return {
 			{ "<leader>dt", "<cmd>lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
 			{ "<leader>dt", "<cmd>lua require('dap-go').debug_test()<CR>", desc = "Debug nearest test" },
 			{ "<leader>dr", "<cmd>lua require('dap-go').debug_last_test()<CR>", desc = "Debug latest test" },
-			{ "<leader>dw", "<cmd>lua require('dap-view').add_expr()<CR>", desc = "Debug watch" },
+			--[[ 			{ "<leader>dw", "<cmd>lua require('dap-view').add_expr()<CR>", desc = "Debug watch" }, ]]
 			{
 				"<leader>da",
 				function()
@@ -116,7 +116,8 @@ return {
 			--
 			-- vim.keymap.set("n", "yot", Toggle_types, {})
 			-- vim.keymap.set("n", "yot", "<cmd>lua Toggle_types()<CR>", {})
-			local dv = require("dap-view")
+
+			--[[ local dv = require("dap-view")
 			dap.listeners.before.attach["dap-view-config"] = function()
 				dv.open()
 			end
@@ -128,7 +129,8 @@ return {
 			end
 			dap.listeners.before.event_exited["dap-view-config"] = function()
 				dv.close()
-			end
+			end ]]
+
 			-- dap.configurations = {
 			-- 	go = {
 			-- 		-- {

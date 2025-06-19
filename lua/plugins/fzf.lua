@@ -3,45 +3,18 @@ return {
 
 		"ibhagwan/fzf-lua",
 		lazy = false,
-		dependencies = {
-			{ "kkharji/sqlite.lua", module = "sqlite" },
-			"AckslD/nvim-neoclip.lua",
-			"nvim-neotest/nvim-nio",
-		},
 		config = function()
 			local actions = require("fzf-lua.actions")
-
-			require("neoclip").setup({
-				enable_persistent_history = true,
-				db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-				preview = true,
-				keys = { fzf = { paste = "ctrl-y" } },
-			})
-
-			vim.api.nvim_create_autocmd("FocusLost", {
-				group = vim.api.nvim_create_augroup("NeoClipFocusLost", {}),
-				pattern = "*",
-				callback = function()
-					require("neoclip").db_push()
-				end,
-			})
-
-			vim.api.nvim_create_autocmd("FocusGained", {
-				group = vim.api.nvim_create_augroup("NeoClipFocusGained", {}),
-				pattern = "*",
-				callback = function()
-					require("nio").run(function()
-						require("nio").sleep(200)
-						require("neoclip").db_pull()
-					end)
-				end,
-			})
-
 			require("fzf-lua").setup({
 				oldfiles = { include_current_session = true },
 				previewers = { builtin = { syntax_limit_b = 1024 * 100 } },
 				lines = { file_icons = false, show_bufname = false },
-				files = { formatter = "path.filename_first", no_header_i = true, header = false },
+				files = {
+					formatter = "path.filename_first",
+					no_header_i = true,
+					header = false,
+					fzf_opts = { ["--literal"] = true },
+				},
 				actions = { files = { true, ["Ctrl-q"] = { fn = actions.file_edit_or_qf, prefix = "select-all+" } } },
 				fzf_opts = { ["--border"] = "top", ["--layout"] = "reverse", ["--pointer"] = ">" },
 				winopts = {
@@ -63,19 +36,10 @@ return {
 					no_header_i = true,
 					header = false,
 					rg_glob = true,
-					-- first returned string is the new search query
-					-- second returned string are (optional) additional rg flags
-					-- @return string, string?
-					rg_glob_fn = function(query, _)
-						local regex, flags = query:match("^(.-)%s%-%-(.*)$")
-						-- If no separator is detected will return the original query
-						return (regex or query), flags
-					end,
 				},
 			})
 		end,
 		keys = {
-			{ "<leader>f;", "<cmd>lua require('neoclip.fzf')()<CR>", mode = { "n", "v", "x" }, desc = "Neoclip" },
 			{ "<leader>ff", "<cmd>FzfLua resume<CR>", mode = { "n", "v" }, desc = "FZF resume" },
 			{ "<leader>f/", "<cmd>FzfLua lines<CR>", mode = { "n", "v" }, desc = "FZF current file" },
 			{ "<leader>fd", "<cmd>FzfLua files<CR>", mode = { "n", "v" }, desc = "FZF current folder" },

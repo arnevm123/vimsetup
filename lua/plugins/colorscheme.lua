@@ -1,4 +1,5 @@
 local colorscheme
+-- local colorscheme = os.getenv("VIM_COLORSCHEME") or "vague"
 -- colorscheme = "vague"
 -- colorscheme = "seoulbones"
 -- colorscheme = "jo"
@@ -6,6 +7,7 @@ colorscheme = "mel"
 -- colorscheme = "shadow"
 -- colorscheme = "jb"
 -- colorscheme = "makurai"
+-- colorscheme = "vinyl"
 return {
 	{
 		"https://github.com/RRethy/base16-nvim",

@@ -2,8 +2,12 @@ return {
 	{
 		"saghen/blink.cmp",
 		lazy = false, -- lazy loading handled internally
-		version = "v0.*",
-		dependencies = "rafamadriz/friendly-snippets",
+		build = "cargo build --release",
+		dependencies = {
+			{ "rafamadriz/friendly-snippets" },
+			-- { "samiulsami/cmp-go-deep" },
+			{ "saghen/blink.compat" },
+		},
 		opts = {
 			cmdline = {
 				completion = { menu = { draw = { columns = { { "label" } } } } },
@@ -43,7 +47,14 @@ return {
 			},
 			signature = { enabled = true },
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer", "lazydev" },
+				default = {
+					"lsp",
+					"path",
+					"snippets",
+					"buffer",
+					"lazydev",
+					"go_deep",
+				},
 
 				-- Function to use when transforming the items before they're returned for all providers
 				-- The default will lower the score for snippets to sort them lower in the list
@@ -64,6 +75,7 @@ return {
 					cmdline = { name = "[CMD]" },
 					snippets = { name = "[SNP]", opts = { search_paths = { "~/.config/nvim/snippets" } } },
 					lazydev = { name = "[LZD]", module = "lazydev.integrations.blink", score_offset = 100 },
+					go_deep = { name = "[GOD]", module = "blink.compat.source", opts = { cmp_name = "go_deep" } },
 				},
 			},
 			fuzzy = { implementation = "rust" },

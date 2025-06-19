@@ -43,8 +43,26 @@ vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "80,120"
 vim.opt.spelllang = "en_gb"
 
-vim.opt.grepprg = "rg --vimgrep"
-vim.cmd("set path+=**")
-
 vim.o.diffopt = "internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram"
 vim.o.winborder = "rounded"
+
+vim.g.suda_smart_edit = 1
+
+function Fd(file_pattern, _)
+  -- if first char is * then fuzzy search
+  if file_pattern:sub(1, 1) == "*" then
+    file_pattern = file_pattern:gsub(".", ".*%0") .. ".*"
+  end
+  local cmd = 'fd  --color=never --full-path --type file --hidden --exclude=".git" --exclude="deps" "'
+    .. file_pattern
+    .. '"'
+  local result = vim.fn.systemlist(cmd)
+  return result
+end
+
+vim.opt.findfunc = "v:lua.Fd"
+
+vim.opt.grepprg = "rg --vimgrep --smart-case"
+
+vim.opt.path:append("**")
+

@@ -32,7 +32,11 @@ return {
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "chentoast/marks.nvim", event = "VeryLazy", opts = { default_mappings = false } },
 	{ "mbbill/undotree", keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>" } } },
-	{ "mcauley-penney/visual-whitespace.nvim", event = "VeryLazy", opts = { nl_char = "" } },
+	{
+		"mcauley-penney/visual-whitespace.nvim",
+		event = "ModeChanged *:[vV\22]",
+		opts = { fileformat_chars = { unix = "" } },
+	},
 	{
 		"numToStr/Comment.nvim",
 		config = function()
@@ -87,6 +91,59 @@ return {
 			{ "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" } },
 			{ "<c-n>", "<Plug>(YankyNextEntry)" },
 			{ "<c-p>", "<Plug>(YankyPreviousEntry)" },
+		},
+	},
+	{
+		"lambdalisue/vim-suda",
+		lazy = false,
+	},
+
+	-- {
+	-- 	"m4xshen/hardtime.nvim",
+	-- 	lazy = false,
+	-- 	dependencies = { "MunifTanjim/nui.nvim" },
+	-- 	opts = {},
+	-- },
+	{
+		"SyedAsimShah1/quick-todo.nvim",
+		config = function()
+			require("quick-todo").setup({
+				keys = {
+					open = "<leader>to",
+				},
+				window = {
+					height = 0.5,
+					width = 0.5,
+					winblend = 0,
+					border = "rounded",
+				},
+			})
+		end,
+		keys = { "<leader>to" },
+	},
+	{
+		"harrisoncramer/gitlab.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"nvim-lua/plenary.nvim",
+			"sindrets/diffview.nvim",
+		},
+		build = function()
+			require("gitlab.server").build(true)
+		end, -- Builds the Go binary
+		config = function()
+			require("gitlab").setup({
+				auth_provider = function()
+					local env_token = os.getenv("GITLAB_TOKEN")
+					local env_url = os.getenv("GITLAB_URL")
+					return env_token, env_url, nil
+				end,
+			})
+		end,
+		keys = {
+			{ "<leader>mro", "<cmd>lua require('gitlab').choose_merge_request()<cr>", desc = "Open GitLab" },
+			{ "<leader>mrr", "<cmd>lua require('gitlab').review()<cr>", desc = "Open GitLab" },
+			{ "<leader>mrc", "<cmd>lua require('gitlab').create_mr()<cr>", desc = "Open GitLab" },
 		},
 	},
 }

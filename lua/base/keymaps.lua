@@ -6,6 +6,37 @@ local expr = { noremap = true, expr = true }
 -- Shorten function name
 local keymap = vim.keymap.set
 
+--LSP
+keymap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+keymap("n", "gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+keymap(
+	"n",
+	"gr",
+	"<cmd>lua vim.lsp.buf.references({includeDeclaration = false})<CR>",
+	{ noremap = true, silent = true, nowait = true }
+)
+keymap("n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+keymap("n", "<leader>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "[w", "<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
+keymap("n", "]w", "<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
+-- Not needed since nvim 0.11
+-- keymap( "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+-- keymap( "n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+-- keymap( "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+
+-- Jump to the end of the tree-sitter node in insert mode
+keymap("i", "<C-l>", function()
+	local node = vim.treesitter.get_node()
+	if node ~= nil then
+		local row, col = node:end_()
+		pcall(vim.api.nvim_win_set_cursor, 0, { row + 1, col })
+	else
+		print("no node found")
+	end
+end, { desc = "insjump" })
+-- Correct spelling in insert mode
+keymap("i", "<C-s>", "<c-g>u<Esc>[s1z=gi<c-g>u")
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 
@@ -18,7 +49,6 @@ keymap("n", "<C-up>", "<cmd>resize -2<CR>", opts)
 keymap("n", "<C-left>", "<cmd>vertical resize -2<CR>", opts)
 keymap("n", "<C-right>", "<cmd>vertical resize +2<CR>", opts)
 keymap("n", "ycc", "yygccp", { remap = true })
-keymap("i", "<C-l>", "<c-g>u<Esc>[s1z=gi<c-g>u")
 
 keymap("n", "<leader>TC", "<cmd>tabclose<CR>", opts)
 keymap("n", "<leader>TN", "<cmd>tabnew<CR>", opts)

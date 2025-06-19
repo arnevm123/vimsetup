@@ -19,7 +19,8 @@ local servers = {
 	"lua_ls",
 	"marksman",
 	-- "omnisharp_mono",
-	"omnisharp",
+	-- "omnisharp",
+	-- "roslyn",
 	"pyright",
 	-- "rust_analyzer",
 	-- "tsserver",
@@ -52,6 +53,10 @@ local settings = {
 	ui = { border = require("base.utils").borders() },
 	log_level = vim.log.levels.INFO,
 	max_concurrent_installers = 4,
+    registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+    },
 }
 
 require("mason").setup(settings)
