@@ -69,11 +69,10 @@ return {
 			{
 				"yor",
 				function()
-					local s = require("snacks")
-					if s.words.is_enabled() then
-						s.words.disable()
+					if Snacks.words.is_enabled() then
+						Snacks.words.disable()
 					else
-						s.words.enable()
+						Snacks.words.enable()
 						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(":<Esc>", true, false, true), "n", false)
 					end
 				end,
@@ -139,7 +138,7 @@ return {
 				vim.api.nvim_create_autocmd("User", {
 					pattern = "VeryLazy",
 					callback = function()
-						require("snacks").toggle.diagnostics():map("yoe")
+						Snacks.toggle.diagnostics():map("yoe")
 					end,
 				})
 			end,
