@@ -85,7 +85,7 @@ return {
 			{ "<leader>fd", '<cmd>lua require("plugins.snacks.fff").fff()<CR>', desc = "Find files" },
 			{ "<leader>fs", "<cmd>lua Snacks.picker.grep()<CR>", desc = "Live grep" },
 			-- { "<leader>fs", '<cmd>lua require("plugins.snacks.multi-grep").multi_grep()<CR>', desc = "multi grep" },
-			-- {
+			{
 				"<leader>fo",
 				function()
 					Snacks.picker.recent({
