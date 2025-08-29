@@ -14,6 +14,14 @@ return {
 		},
 	},
 	{
+		"Jay-Madden/auto-fix-return.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = true,
+	},
+	{
 		"olexsmir/gopher.nvim",
 		ft = { "go", "gomod" },
 		opts = {

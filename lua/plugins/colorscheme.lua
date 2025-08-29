@@ -61,6 +61,7 @@ return {
 			})
 			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
 			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
+			vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { bg = "#555555" })
 			-- vim.cmd("colorscheme base16")
 		end,
 	},
@@ -131,6 +132,7 @@ return {
 			vim.api.nvim_set_hl(0, "@text.title.gitcommit", { link = "Constant" })
 			vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#333333" })
 			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#DDDDDD", bg = "NONE" })
+			vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { bg = "#333322" })
 			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
 			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })

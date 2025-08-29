@@ -1,4 +1,5 @@
 return {
+	{ "nvim-tree/nvim-web-devicons", opts = { color_icons = false } },
 	{ "catgoose/nvim-colorizer.lua", event = "VeryLazy", opts = { lazy_load = true } },
 	{
 		"topaxi/pipeline.nvim",
@@ -78,7 +79,6 @@ return {
 	{
 		"gbprod/yanky.nvim",
 		opts = {
-			ring = { storage = "sqlite" },
 			system_clipboard = { sync_with_ring = false },
 			highlight = { timer = 75, on_yank = false },
 			preserve_cursor_position = { enabled = false },

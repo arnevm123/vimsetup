@@ -41,7 +41,7 @@ return {
 				},
 				ignore = {},
 			},
-			notification = { window = { winblend = 0 } },
+			notification = { window = { winblend = 100 } },
 		},
 	},
 	{

@@ -10,13 +10,16 @@ return {
 				},
 				goimports_reviser = {
 					command = "goimports-reviser",
-					args = { "-rm-unused", "-project-name", "unmatched.eu", "$FILENAME" },
+					args = function()
+						local pkg_name = vim.fn.system("go list"):gsub("%s+", "")
+						return { "-rm-unused", "-set-alias", "-project-name", pkg_name, "$FILENAME" }
+					end,
 					stdin = false,
 				},
 				gofumpt = { prepend_args = { "-extra" } },
 			},
 			formatters_by_ft = {
-				go = { "gofumpt", "goimports", "goimports_reviser" },
+				go = { "golangci-lint", "gofumpt", "goimports", "goimports_reviser" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				html = { "prettierd", "prettier", stop_after_first = true },

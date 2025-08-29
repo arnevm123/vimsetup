@@ -8,12 +8,10 @@ local servers = {
 	"cssls",
 	"eslint",
 	"gitlab_ci_ls",
-	"gopls",
+	-- "gopls",
 	-- "golangci_lint_ls",
 	"ols",
 	"sqls",
-	"volar",
-	-- "harper_ls",
 	"html",
 	"jsonls",
 	"lua_ls",
@@ -53,10 +51,10 @@ local settings = {
 	ui = { border = require("base.utils").borders() },
 	log_level = vim.log.levels.INFO,
 	max_concurrent_installers = 4,
-    registries = {
-        "github:mason-org/mason-registry",
-        "github:Crashdummyy/mason-registry",
-    },
+	registries = {
+		"github:mason-org/mason-registry",
+		"github:Crashdummyy/mason-registry",
+	},
 }
 
 require("mason").setup(settings)

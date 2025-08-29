@@ -46,8 +46,6 @@ vim.opt.spelllang = "en_gb"
 vim.o.diffopt = "internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram"
 vim.o.winborder = "rounded"
 
-vim.g.suda_smart_edit = 1
-
 function Fd(file_pattern, _)
   -- if first char is * then fuzzy search
   if file_pattern:sub(1, 1) == "*" then

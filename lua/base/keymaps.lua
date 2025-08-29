@@ -129,6 +129,8 @@ keymap("x", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><l
 keymap("n", "<leader>rk", ":s/\\(.*\\)/\\1<left><left><left><left><left><left><left><left><left>", nosilent)
 keymap("v", "<leader>re", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>', nosilent)
 keymap("n", "<leader>re", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gcI<Left><Left><Left><Left>", nosilent)
+keymap("v", "<leader>r#", '"hy:%s#<C-r>h#<C-r>h#gc<left><left><left>', nosilent)
+keymap("n", "<leader>r#", ":%s#\\<<C-r><C-w>\\>#<C-r><C-w>#gcI<Left><Left><Left><Left>", nosilent)
 
 keymap("n", "<leader>tm", "<cmd>let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux split-window -hc $VIM_DIR<CR>", nosilent)
 keymap("n", "<leader>tp", "<cmd>let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux-popup.sh $VIM_DIR<CR>", nosilent)

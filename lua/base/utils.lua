@@ -71,7 +71,6 @@ function M.borders()
 	return border
 end
 
-
 function M:Go_to_url(cmd)
 	local sysname = vim.loop.os_uname().sysname
 	local url = vim.fn.expand("<cfile>", nil, nil)
@@ -349,6 +348,23 @@ function M.fzf_fd()
 			return
 		end
 	end
+end
+
+function M.toggle_case_rename()
+	local cword = vim.fn.expand("<cword>")
+	local first_char = cword:sub(1, 1)
+	local rest = cword:sub(2)
+
+	if first_char == first_char:lower() then
+		first_char = first_char:upper()
+	else
+		first_char = first_char:lower()
+	end
+
+	local new_name = first_char .. rest
+
+	local rename_cmd = string.format(":lua vim.lsp.buf.rename('%s')<CR>", new_name)
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(rename_cmd, true, true, true), "n", true)
 end
 
 return M

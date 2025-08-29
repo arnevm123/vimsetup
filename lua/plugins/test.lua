@@ -25,7 +25,7 @@ return {
 			}, neotest_ns)
 			---@diagnostic disable-next-line: missing-fields
 			require("neotest").setup({
-				quickfix = { enabled = true, open = true },
+				quickfix = { enabled = true, open = false },
 				diagnostic = {
 					enabled = true,
 					severity = 4,
