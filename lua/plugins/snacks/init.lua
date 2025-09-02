@@ -80,9 +80,9 @@ return {
 			},
 			{ "<leader><space>", "<cmd>lua Snacks.picker.smart()<CR>", desc = "Smart Find Files" },
 			{ "<leader>ff", "<cmd>lua Snacks.picker.resume()<CR>", desc = "Resume picker" },
-			-- { "<leader>fd", "<cmd>lua Snacks.picker.files()<CR>", desc = "Find files" },
 			{ "<leader>fd", '<cmd>lua require("plugins.snacks.fff").fff()<CR>', desc = "Find files" },
 			{ "<leader>fs", "<cmd>lua Snacks.picker.grep()<CR>", desc = "Live grep" },
+			-- { "<leader>fd", "<cmd>lua Snacks.picker.files()<CR>", desc = "Find files" },
 			-- { "<leader>fs", '<cmd>lua require("plugins.snacks.multi-grep").multi_grep()<CR>', desc = "multi grep" },
 			{
 				"<leader>fo",
@@ -106,42 +106,42 @@ return {
 				"<cmd>lua Snacks.picker.grep_word()<CR>",
 				desc = "Visual selection or word",
 				mode = { "n", "x" },
-				{ "<leader>ft", "<cmd>lua Snacks.picker()<CR>", desc = "Pickers list" },
-				{ "<leader>fj", "<cmd>lua Snacks.picker.jumps()<CR>", desc = "Jumps" },
-				{ "<leader>bb", "<cmd>lua Snacks.picker.buffers()<CR>", desc = "Buffers" },
-				{
-					"<leader>fis",
-					'<cmd>lua Snacks.picker.grep({ cwd = vim.fn.expand("%:h") })<CR>',
-					desc = "Live grep dir",
-				},
-				{
-					"<leader>fid",
-					'<cmd>lua Snacks.picker.files({ cwd = vim.fn.expand("%:h") })<CR>',
-					desc = "Find files in dir",
-				},
-				{
-					"<leader>fp",
-					function()
-						local text = vim.fn.getreg("+")
-						if not text or text == "" then
-							vim.notify("No text in register", vim.log.levels.ERROR)
-							return
-						end
-						text = text:match("([^\n]+)")
-						text = text and vim.trim(text) or ""
-						Snacks.picker.files({ default_text = text, hidden = true })
-					end,
-					desc = "Find copied file",
-				},
 			},
-			init = function()
-				vim.api.nvim_create_autocmd("User", {
-					pattern = "VeryLazy",
-					callback = function()
-						Snacks.toggle.diagnostics():map("yoe")
-					end,
-				})
-			end,
+			{ "<leader>ft", "<cmd>lua Snacks.picker()<CR>", desc = "Pickers list" },
+			{ "<leader>fj", "<cmd>lua Snacks.picker.jumps()<CR>", desc = "Jumps" },
+			{ "<leader>bb", "<cmd>lua Snacks.picker.buffers()<CR>", desc = "Buffers" },
+			{
+				"<leader>fis",
+				'<cmd>lua Snacks.picker.grep({ cwd = vim.fn.expand("%:h") })<CR>',
+				desc = "Live grep dir",
+			},
+			{
+				"<leader>fid",
+				'<cmd>lua Snacks.picker.files({ cwd = vim.fn.expand("%:h") })<CR>',
+				desc = "Find files in dir",
+			},
+			{
+				"<leader>fp",
+				function()
+					local text = vim.fn.getreg("+")
+					if not text or text == "" then
+						vim.notify("No text in register", vim.log.levels.ERROR)
+						return
+					end
+					text = text:match("([^\n]+)")
+					text = text and vim.trim(text) or ""
+					Snacks.picker.files({ default_text = text, hidden = true })
+				end,
+				desc = "Find copied file",
+			},
 		},
+		init = function()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "VeryLazy",
+				callback = function()
+					Snacks.toggle.diagnostics():map("yoe")
+				end,
+			})
+		end,
 	},
 }
