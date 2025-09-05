@@ -142,7 +142,7 @@ return {
 		lazy = true,
 		cmd = { "Flog", "Flogsplit", "Floggit" },
 		keys = {
-			{ "<leader>gf", "<cmd>Flog<CR>", desc = "File history" },
+			{ "<leader>gf", "<cmd>lua require('base.utils').FlogToggle()<CR>", desc = "Flog" },
 		},
 		dependencies = {
 			{

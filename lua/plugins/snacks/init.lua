@@ -78,7 +78,7 @@ return {
 				end,
 				desc = "toggle lsp words",
 			},
-			{ "<leader><space>", "<cmd>lua Snacks.picker.smart()<CR>", desc = "Smart Find Files" },
+			-- { "<leader><space>", "<cmd>lua Snacks.picker.smart()<CR>", desc = "Smart Find Files" },
 			{ "<leader>ff", "<cmd>lua Snacks.picker.resume()<CR>", desc = "Resume picker" },
 			{ "<leader>fd", '<cmd>lua require("plugins.snacks.fff").fff()<CR>', desc = "Find files" },
 			{ "<leader>fs", "<cmd>lua Snacks.picker.grep()<CR>", desc = "Live grep" },

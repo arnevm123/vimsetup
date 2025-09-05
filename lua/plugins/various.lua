@@ -1,15 +1,6 @@
 return {
 	{ "nvim-tree/nvim-web-devicons", opts = { color_icons = false } },
 	{ "catgoose/nvim-colorizer.lua", event = "VeryLazy", opts = { lazy_load = true } },
-	{
-		"topaxi/pipeline.nvim",
-		keys = { { "<leader>ci", "<cmd>Pipeline<cr>", desc = "Open pipeline.nvim" } },
-		build = "make",
-		opts = {
-			providers = { gitlab = { "https://gitlab.telecom-it.be/api/graphql/" } },
-			allowed_hosts = { "gitlab.telecom-it.be" },
-		},
-	},
 	{ "nanotee/sqls.nvim", lazy = false },
 	{ "typicode/bg.nvim", lazy = false }, -- Sync bg colors between nvim and terminal
 	{ "tpope/vim-eunuch", event = "VeryLazy" }, -- :Remove
@@ -32,7 +23,7 @@ return {
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "chentoast/marks.nvim", event = "VeryLazy", opts = { default_mappings = false } },
-	{ "mbbill/undotree", keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>" } } },
+	{ "mbbill/undotree", event = "VeryLazy", keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>" } } },
 	{
 		"mcauley-penney/visual-whitespace.nvim",
 		event = "ModeChanged *:[vV\22]",
@@ -97,53 +88,31 @@ return {
 		"lambdalisue/vim-suda",
 		lazy = false,
 	},
-
-	-- {
-	-- 	"m4xshen/hardtime.nvim",
-	-- 	lazy = false,
-	-- 	dependencies = { "MunifTanjim/nui.nvim" },
-	-- 	opts = {},
-	-- },
 	{
-		"SyedAsimShah1/quick-todo.nvim",
-		config = function()
-			require("quick-todo").setup({
-				keys = {
-					open = "<leader>to",
-				},
-				window = {
-					height = 0.5,
-					width = 0.5,
-					winblend = 0,
-					border = "rounded",
-				},
-			})
-		end,
-		keys = { "<leader>to" },
-	},
-	{
-		"harrisoncramer/gitlab.nvim",
+		"ej-shafran/compile-mode.nvim",
+		event = "VeryLazy",
 		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-			"sindrets/diffview.nvim",
+			{ "nvim-lua/plenary.nvim" },
+			{ "m00qek/baleia.nvim", tag = "v1.3.0" },
 		},
-		build = function()
-			require("gitlab.server").build(true)
-		end, -- Builds the Go binary
 		config = function()
-			require("gitlab").setup({
-				auth_provider = function()
-					local env_token = os.getenv("GITLAB_TOKEN")
-					local env_url = os.getenv("GITLAB_URL")
-					return env_token, env_url, nil
-				end,
-			})
+			---@module "compile-mode"
+			---@type CompileModeOpts
+			vim.g.compile_mode = {
+				default_command = "",
+				baleia_setup = true,
+				bang_expansion = true,
+				error_ignore_file_list = { "Makefile$", "makefile$", "GNUmakefile$" },
+				hidden_output = "\\v^(\\d{2}-\\d{2}-\\d{4} )",
+				error_regexp_table = {
+					go_logs = {
+						regex = "\\v.*\\[(.+):([0-9]+)\\]",
+						filename = 1,
+						row = 2,
+					},
+				},
+				focus_compilation_buffer = true,
+			}
 		end,
-		keys = {
-			{ "<leader>mro", "<cmd>lua require('gitlab').choose_merge_request()<cr>", desc = "Open GitLab" },
-			{ "<leader>mrr", "<cmd>lua require('gitlab').review()<cr>", desc = "Open GitLab" },
-			{ "<leader>mrc", "<cmd>lua require('gitlab').create_mr()<cr>", desc = "Open GitLab" },
-		},
 	},
 }

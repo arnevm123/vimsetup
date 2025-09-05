@@ -20,10 +20,6 @@ keymap("n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 keymap("n", "<leader>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 keymap("n", "[w", "<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
 keymap("n", "]w", "<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
--- Not needed since nvim 0.11
--- keymap( "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
--- keymap( "n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
--- keymap( "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
 -- Jump to the end of the tree-sitter node in insert mode
 keymap("i", "<C-l>", function()
@@ -48,11 +44,14 @@ keymap("n", "<C-down>", "<cmd>resize +2<CR>", opts)
 keymap("n", "<C-up>", "<cmd>resize -2<CR>", opts)
 keymap("n", "<C-left>", "<cmd>vertical resize -2<CR>", opts)
 keymap("n", "<C-right>", "<cmd>vertical resize +2<CR>", opts)
+
 keymap("n", "ycc", "yygccp", { remap = true })
 
 keymap("n", "<leader>TC", "<cmd>tabclose<CR>", opts)
 keymap("n", "<leader>TN", "<cmd>tabnew<CR>", opts)
 keymap("n", "<leader>TO", "<cmd>tabonly<CR>", opts)
+keymap("n", "]T", "<cmd>tabnext<CR>", opts)
+keymap("n", "[T", "<cmd>tabprev<CR>", opts)
 
 keymap("n", "<C-w>S", "<C-w>s<C-w>T", opts)
 keymap("c", "<tab>", "<C-z>", nosilent)
@@ -169,45 +168,52 @@ keymap("n", "yow", function()
 	vim.o.wrap = not vim.o.wrap
 end, opts)
 
+local function get_build_root()
+	local ok, clients = pcall(vim.lsp.get_clients)
+	if not ok or not clients or #clients == 0 then
+		return nil
+	end
+	local root = clients[1].config and clients[1].config.cmd_cwd
+	if root and vim.fn.isdirectory(root) == 1 then
+		return root
+	end
+	return nil
+end
+
+local function run_compile(cmd)
+	vim.g.compilation_directory = get_build_root()
+	if not cmd then
+		vim.cmd("below 15 Compile")
+	elseif cmd == "recompile" then
+		vim.cmd("below 15 Recompile")
+	else
+		vim.cmd("below 15 Compile " .. cmd)
+	end
+end
+
+-- Keymaps
 keymap("n", "<leader>bu", function()
-	vim.cmd("wa")
-	local cwd = vim.loop.cwd()
-	local build_root
-	build_root = vim.lsp.get_clients()[1].config.cmd_cwd
-	if build_root then
-		vim.api.nvim_set_current_dir(build_root)
-	end
-	vim.cmd("Make")
-	if build_root and cwd then
-		vim.api.nvim_set_current_dir(cwd)
-	end
+	run_compile("make build")
 end, nosilent)
-
 keymap("n", "<leader>bt", function()
-	vim.cmd("wa")
-	local cwd = vim.loop.cwd()
-	local build_root
-	build_root = vim.lsp.get_clients()[1].config.cmd_cwd
-	if build_root then
-		vim.api.nvim_set_current_dir(build_root)
-	end
-	vim.cmd("Dispatch make test")
-	if build_root and cwd then
-		vim.api.nvim_set_current_dir(cwd)
-	end
+	run_compile("make test")
+end, nosilent)
+keymap("n", "<leader>bl", function()
+	run_compile("make lint")
+end, nosilent)
+keymap("n", "<leader>bg", function()
+	run_compile()
+end, nosilent)
+keymap("n", "<leader>br", function()
+	run_compile("LOG_LEVEL=trace make run")
+end, nosilent)
+keymap("n", "<leader>bp", function()
+	run_compile("recompile")
 end, nosilent)
 
-keymap("n", "<leader>bl", function()
-	vim.cmd("wa")
-	local cwd = vim.loop.cwd()
-	local build_root
-	build_root = vim.lsp.get_clients()[1].config.cmd_cwd
-	if build_root then
-		vim.api.nvim_set_current_dir(build_root)
-	end
-	vim.cmd("Dispatch make lint")
-	if build_root and cwd then
-		vim.api.nvim_set_current_dir(cwd)
-	end
-	vim.cmd("cfile .lint.txt")
-end, nosilent)
+-- Other keymaps
+keymap("n", "<leader>bn", ":lua require('compile-mode').next_error()<CR>", opts)
+keymap("n", "<leader>bp", ":lua require('compile-mode').prev_error()<CR>", opts)
+keymap("n", "<leader>bd", ":silent! execute 'bdelete' bufname('*compilation*')<CR>", opts)
+keymap("n", "<leader>bq", ":silent! execute 'bdelete' bufname('*compilation*')<CR>:QuickfixErrors<CR>", opts)
+-- keymap("n", "<leader>br", ":Recompile<CR>", opts)

@@ -150,6 +150,29 @@ function M:DbuiToggle()
 	vim.cmd("tabnext")
 end
 
+function M:FlogToggle()
+	local tabs = vim.api.nvim_list_tabpages()
+
+	for _, tab in ipairs(tabs) do
+		local wins = vim.api.nvim_tabpage_list_wins(tab)
+		for _, win in ipairs(wins) do
+			local buf = vim.api.nvim_win_get_buf(win)
+			local buf_name = vim.api.nvim_buf_get_name(buf)
+			if buf_name:match("flog") then
+				local cur_tab = vim.api.nvim_get_current_tabpage()
+				vim.api.nvim_set_current_tabpage(tab)
+				vim.cmd("tabclose")
+				if cur_tab ~= tab then
+					vim.api.nvim_set_current_tabpage(cur_tab)
+				end
+				return
+			end
+		end
+	end
+
+	vim.cmd("Flog")
+end
+
 function M:isInTable(str, tbl)
 	for _, value in ipairs(tbl) do
 		if value == str then
@@ -364,6 +387,7 @@ function M.toggle_case_rename()
 	local new_name = first_char .. rest
 
 	local rename_cmd = string.format(":lua vim.lsp.buf.rename('%s')<CR>", new_name)
+
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(rename_cmd, true, true, true), "n", true)
 end
 

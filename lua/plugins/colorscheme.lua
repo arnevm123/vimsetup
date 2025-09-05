@@ -3,11 +3,12 @@ local colorscheme
 -- colorscheme = "vague"
 -- colorscheme = "seoulbones"
 -- colorscheme = "jo"
-colorscheme = "mel"
+-- colorscheme = "mel"
 -- colorscheme = "shadow"
 -- colorscheme = "jb"
 -- colorscheme = "makurai"
 -- colorscheme = "vinyl"
+colorscheme = "vscode-gruber"
 return {
 	{
 		"https://github.com/RRethy/base16-nvim",
@@ -168,6 +169,22 @@ return {
 		priority = 1000,
 		config = function()
 			vim.cmd.colorscheme("makurai_less")
+		end,
+	},
+	{
+		"shadowy-pycoder/vscode-gruber.nvim",
+		lazy = colorscheme ~= "vscode-gruber",
+		dependencies = { "rktjmp/lush.nvim" },
+		name = "vscode-gruber",
+		branch = "main",
+		priority = 1000,
+		config = function()
+			vim.cmd("colorscheme vscode-gruber")
+			vim.api.nvim_set_hl(0, "Number", { link = "String" })
+			vim.api.nvim_set_hl(0, "comment", { fg = "#B5CEA8", italic = true })
+			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
+			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
+			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
 		end,
 	},
 }
