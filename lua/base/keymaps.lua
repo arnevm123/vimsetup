@@ -3,8 +3,12 @@ local nosilent = { noremap = true }
 local opts = { noremap = true, silent = true }
 local expr = { noremap = true, expr = true }
 
--- Shorten function name
 local keymap = vim.keymap.set
+
+--Remap space as leader key
+keymap("", "<Space>", "<Nop>", opts)
+keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 --LSP
 keymap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
@@ -33,11 +37,6 @@ keymap("i", "<C-l>", function()
 end, { desc = "insjump" })
 -- Correct spelling in insert mode
 keymap("i", "<C-s>", "<c-g>u<Esc>[s1z=gi<c-g>u")
---Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
-
-keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Resize with Shift-arrows
 keymap("n", "<C-down>", "<cmd>resize +2<CR>", opts)
@@ -148,12 +147,6 @@ keymap("i", "<C-A>", "<C-O>^", opts)
 keymap("i", "<C-D>", "<Del>", opts)
 keymap("i", "<C-E>", "<End>", opts)
 
--- UNIMPAIRED -- not needed since nvim 0.11
--- keymap("n", "[q", ":silent! cprevious<CR>", opts)
--- keymap("n", "]q", ":silent! cnext<CR>", opts)
--- keymap("n", "[Q", ":cfirst<CR>", opts)
--- keymap("n", "]Q", ":clast<CR>", opts)
-
 keymap("n", "yoq", utils.CToggle, opts)
 keymap("n", "yov", utils.VirtualTextToggle, opts)
 keymap("n", "yol", utils.VirtualLinesToggle, opts)
@@ -167,53 +160,3 @@ end, opts)
 keymap("n", "yow", function()
 	vim.o.wrap = not vim.o.wrap
 end, opts)
-
-local function get_build_root()
-	local ok, clients = pcall(vim.lsp.get_clients)
-	if not ok or not clients or #clients == 0 then
-		return nil
-	end
-	local root = clients[1].config and clients[1].config.cmd_cwd
-	if root and vim.fn.isdirectory(root) == 1 then
-		return root
-	end
-	return nil
-end
-
-local function run_compile(cmd)
-	vim.g.compilation_directory = get_build_root()
-	if not cmd then
-		vim.cmd("below 15 Compile")
-	elseif cmd == "recompile" then
-		vim.cmd("below 15 Recompile")
-	else
-		vim.cmd("below 15 Compile " .. cmd)
-	end
-end
-
--- Keymaps
-keymap("n", "<leader>bu", function()
-	run_compile("make build")
-end, nosilent)
-keymap("n", "<leader>bt", function()
-	run_compile("make test")
-end, nosilent)
-keymap("n", "<leader>bl", function()
-	run_compile("make lint")
-end, nosilent)
-keymap("n", "<leader>bg", function()
-	run_compile()
-end, nosilent)
-keymap("n", "<leader>br", function()
-	run_compile("LOG_LEVEL=trace make run")
-end, nosilent)
-keymap("n", "<leader>bp", function()
-	run_compile("recompile")
-end, nosilent)
-
--- Other keymaps
-keymap("n", "<leader>bn", ":lua require('compile-mode').next_error()<CR>", opts)
-keymap("n", "<leader>bp", ":lua require('compile-mode').prev_error()<CR>", opts)
-keymap("n", "<leader>bd", ":silent! execute 'bdelete' bufname('*compilation*')<CR>", opts)
-keymap("n", "<leader>bq", ":silent! execute 'bdelete' bufname('*compilation*')<CR>:QuickfixErrors<CR>", opts)
--- keymap("n", "<leader>br", ":Recompile<CR>", opts)

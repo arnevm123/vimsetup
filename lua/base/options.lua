@@ -42,6 +42,7 @@ vim.opt.pumheight = 10
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "80,120"
 vim.opt.spelllang = "en_gb"
+vim.opt.confirm = true
 
 vim.o.diffopt = "internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram"
 vim.o.winborder = "rounded"

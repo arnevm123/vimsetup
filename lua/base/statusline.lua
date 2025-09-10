@@ -56,7 +56,7 @@ local function file_section()
 	local name = vim.fn.expand("%")
 	local root = vim.fn.getcwd()
 	name = remove_string_from_start(name, root)
-	local attr, icon = "", ""
+	local attr = ""
 
 	if vim.bo.modified and vim.bo.readonly then
 		attr = icons.buffers.modified .. " " .. icons.buffers.readonly
@@ -73,8 +73,7 @@ local function file_section()
 	if name == "" then
 		name = "No Name"
 	end
-
-	return string.format("%s %s%s", icon, name, attr)
+	return string.format("%s%s", name, attr)
 end
 
 local branch_cache = {}
@@ -161,7 +160,7 @@ local function left_section()
 end
 
 local function right_section()
-	return get_git_info() .. "%3l/%-3L"
+	return require("grapple").statusline({ icon = "" }) .. " " .. get_git_info() .. "%3l/%-3L"
 end
 
 local M = {}

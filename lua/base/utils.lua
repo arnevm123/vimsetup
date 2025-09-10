@@ -39,9 +39,6 @@ end
 
 function M.git_cwd()
 	local cwd = vim.loop.cwd()
-	-- if vim.fn.isdirectory(vim.fn.expand(cwd .. "/.venv")) == 1 then
-	-- 	return cwd
-	-- end
 	local root = vim.fn.system("git rev-parse --show-toplevel")
 	if vim.v.shell_error == 0 and root ~= nil then
 		return string.gsub(root, "\n", "")
@@ -389,6 +386,38 @@ function M.toggle_case_rename()
 	local rename_cmd = string.format(":lua vim.lsp.buf.rename('%s')<CR>", new_name)
 
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(rename_cmd, true, true, true), "n", true)
+end
+
+local function can_lsp_rename()
+	local params = vim.lsp.util.make_position_params()
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
+
+	for _, client in ipairs(clients) do
+		if client.server_capabilities.renameProvider then
+			local resp = client.request_sync("textDocument/prepareRename", params, 1000, 0)
+			if resp and resp.result then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function M.try_lsp_rename(case)
+	if can_lsp_rename() then
+		if case then
+			require("textcase").lsp_rename(case)
+			return
+		end
+		vim.cmd("TextCaseOpenTelescopeLSPChange")
+		return
+	end
+
+	if case then
+		require("textcase").current_word(case)
+		return
+	end
+	vim.cmd("TextCaseOpenTelescopeQuickChange")
 end
 
 return M

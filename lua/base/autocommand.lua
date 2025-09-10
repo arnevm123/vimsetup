@@ -72,31 +72,6 @@ vim.cmd([[
 \   try | echoerr 'Forbidden file name: '..expand('<afile>') | endtry
 ]])
 
--- vim.api.nvim_create_autocmd({ "BufEnter" }, {
--- 	pattern = { "*.go" },
--- 	callback = function()
--- 		local lsputil = require("lspconfig.util")
--- 		local cwd = lsputil.root_pattern("go.mod")(vim.fn.expand("%:p"))
--- 		local config = lsputil.root_pattern(".golangci.yaml")(vim.fn.expand("%:p"))
--- 		if config ~= nil then
--- 			config = config .. "/.golangci.yaml"
--- 		else
--- 			config = "~/.config/linters/golangci.yaml"
--- 		end
--- 		local golangcilint = require("lint.linters.golangcilint")
--- 		golangcilint.args = {
--- 			"run",
--- 			"--out-format",
--- 			"json",
--- 			"--timeout",
--- 			"5m",
--- 			"--config",
--- 			config,
--- 		}
--- 		golangcilint.cwd = cwd
--- 	end,
--- })
-
 local statusline_bg = 0
 
 autocmd("RecordingEnter", {
