@@ -159,8 +159,54 @@ local function left_section()
 	return file_section() .. diagnostic() .. unsaved_buffers()
 end
 
+---@param opts? { scope?: string }
+local function grapple_statusline(opts)
+	local grapple = require("grapple")
+
+	---@diagnostic disable-next-line: param-type-mismatch
+	local tags, err = grapple.tags(opts)
+	if not tags then
+		return err
+	end
+
+	local current
+	if opts == nil then
+		current = grapple.find({ buffer = 0 })
+	else
+		current = grapple.find({ buffer = 0, scope = opts.scope })
+	end
+
+	local output = {}
+	for _, tag in ipairs(tags) do
+        -- stylua: ignore
+        local tag_str = tag.name and tag.name
+		if current and current.path == tag.path then
+			table.insert(output, "[" .. tag_str .. "]")
+		elseif tag_str then
+			table.insert(output, " " .. tag_str .. " ")
+		end
+	end
+
+	return table.concat(output)
+end
+
+local function grapple()
+	local grapple_branch = grapple_statusline()
+	local grapple_git = grapple_statusline({ scope = "git" })
+
+	if grapple_git == "" then
+		return grapple_branch
+	end
+
+	if grapple_branch == "" then
+		return grapple_git
+	end
+
+	return grapple_branch .. " | " .. grapple_git
+end
+
 local function right_section()
-	return require("grapple").statusline({ icon = "" }) .. " " .. get_git_info() .. "%3l/%-3L"
+	return grapple() .. " " .. get_git_info() .. "%3l/%-3L"
 end
 
 local M = {}

@@ -7,7 +7,11 @@ local function save_mark()
 	local filepath = vim.api.nvim_buf_get_name(0)
 	local filename = vim.fn.fnamemodify(filepath, ":t")
 	local grapple = require("grapple")
-	local entry = grapple.find({ name = char })
+	local scope
+	if char == string.upper(char) and char ~= string.lower(char) then
+		scope = "git"
+	end
+	local entry = grapple.find({ name = char, scope = scope })
 	if entry then
 		if entry.path == filepath then
 			vim.notify(filename .. " is already marked as " .. char)
@@ -18,7 +22,7 @@ local function save_mark()
 			return
 		end
 	end
-	grapple.tag({ name = char })
+	grapple.tag({ name = char, scope = scope })
 	vim.defer_fn(function()
 		vim.notify("Marked " .. filename .. " as " .. char)
 	end, 10)
@@ -34,8 +38,15 @@ local function open_mark()
 	if char == "'" then
 		grapple.toggle_tags()
 		return
+	elseif char == '"' then
+		grapple.toggle_tags({ scope = "git" })
+		return
 	end
-	grapple.select({ name = char })
+	if char == string.upper(char) and char ~= string.lower(char) then
+		grapple.select({ name = char, scope = "git" })
+	else
+		grapple.select({ name = char })
+	end
 end
 
 return {
@@ -46,6 +57,7 @@ return {
 			name_pos = "start",
 			icons = false,
 			quick_select = "",
+			scope = "git_branch",
 			command = function(path)
 				local bufnr = vim.fn.bufnr(path)
 				if bufnr == -1 then
