@@ -30,7 +30,36 @@ return {
 		},
 		config = function()
 			require("plugins.lsp.mason")
-			require("plugins.lsp.handlers").setup()
+			local signs = {
+				{ name = "DiagnosticSignError", text = "E" },
+				{ name = "DiagnosticSignWarn", text = "W" },
+				{ name = "DiagnosticSignHint", text = "h" },
+				{ name = "DiagnosticSignInfo", text = "i" },
+			}
+			local config = {
+				virtual_text = { source = true },
+				signs = { active = signs },
+				update_in_insert = false,
+				underline = true,
+				severity_sort = true,
+				float = { focusable = true, style = "minimal", source = "always" },
+			}
+
+			vim.diagnostic.config(config)
+
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			capabilities.textDocument.completion.completionItem.snippetSupport = true
+			capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+
+			local on_attach = function(client, _)
+				client.server_capabilities.semanticTokensProvider = nil
+			end
+
+			vim.lsp.config("*", {
+				on_attach = on_attach,
+				capabilities = capabilities,
+			})
 		end,
 		event = { "BufReadPre", "BufNewFile" },
 	},

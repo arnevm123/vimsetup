@@ -43,9 +43,7 @@ local linters_and_formatters = {
 	"yamllint",
 }
 
-require("mason-tool-installer").setup({
-	ensure_installed = linters_and_formatters,
-})
+require("mason-tool-installer").setup({ ensure_installed = linters_and_formatters })
 
 local settings = {
 	ui = { border = require("base.utils").borders() },
@@ -58,34 +56,4 @@ local settings = {
 }
 
 require("mason").setup(settings)
-require("mason-lspconfig").setup({
-	ensure_installed = servers,
-	automatic_installation = false,
-})
-
-require("lspconfig.ui.windows").default_options.border = require("base.utils").borders()
-
-local opts = {}
-
-for _, server in pairs(servers) do
-	opts = {
-		on_attach = require("plugins.lsp.handlers").on_attach,
-		capabilities = require("plugins.lsp.handlers").capabilities,
-	}
-
-	server = vim.split(server, "@")[1]
-
-	local require_ok, conf_opts = pcall(require, "plugins.lsp.settings." .. server)
-	if require_ok then
-		opts = vim.tbl_deep_extend("force", conf_opts, opts)
-	end
-
-	vim.lsp.config(server, opts)
-end
-
-vim.api.nvim_create_autocmd("User", {
-	pattern = "SqlsConnectionChoice",
-	callback = function(event)
-		vim.notify(event.data.choice)
-	end,
-})
+require("mason-lspconfig").setup({ ensure_installed = servers, automatic_installation = false })
