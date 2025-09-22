@@ -13,14 +13,14 @@ return {
 			{ "Bilal2453/luvit-meta" },
 		},
 	},
-	{
-		"Jay-Madden/auto-fix-return.nvim",
-		event = "VeryLazy",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-		config = true,
-	},
+	-- {
+	-- 	"Jay-Madden/auto-fix-return.nvim",
+	-- 	event = "VeryLazy",
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 	},
+	-- 	config = true,
+	-- },
 	{
 		"olexsmir/gopher.nvim",
 		ft = { "go", "gomod" },
@@ -67,7 +67,7 @@ return {
 				server = {
 					on_attach = require("plugins.lsp.handlers").on_attach,
 					default_settings = {
-						["rust-analyzer"] = require("plugins.lsp.settings.rust_analyzer"),
+						["rust-analyzer"] = require("lsp.rust_analyzer"),
 					},
 				},
 			}

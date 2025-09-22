@@ -164,16 +164,27 @@ return {
 				baleia_setup = true,
 				bang_expansion = true,
 				error_ignore_file_list = { "Makefile$", "makefile$", "GNUmakefile$" },
-				hidden_output = "\\v^(\\d{2}-\\d{2}-\\d{4} )",
-				error_regexp_table = {
-					go_logs = {
-						regex = "\\v.*\\[(.+):([0-9]+)\\]",
-						filename = 1,
-						row = 2,
-					},
-				},
+				-- hidden_output = "\\v^(\\d{2}-\\d{2}-\\d{4} )",
+				-- error_regexp_table = {
+				-- 	go_logs = {
+				-- 		regex = "\\v.*\\[(.+):([0-9]+)\\]",
+				-- 		filename = 1,
+				-- 		row = 2,
+				-- 	},
+				-- },
 				focus_compilation_buffer = true,
 			}
 		end,
+	},
+	{
+		"retran/meow.yarn.nvim",
+		dependencies = { "MunifTanjim/nui.nvim" },
+		config = function()
+			require("meow.yarn").setup({})
+		end,
+		keys = {
+			{ "<leader>yc", "<cmd>MeowYarn call callers<CR>" },
+			{ "<leader>yC", "<cmd>MeowYarn call callees<CR>" },
+		},
 	},
 }

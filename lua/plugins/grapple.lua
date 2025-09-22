@@ -1,17 +1,34 @@
+local function get_scope(char)
+	if char:match("%u") or char == '"' then
+		return "git"
+	end
+	return "git_branch"
+end
+
+local function is_valid_mark(char)
+	return char ~= "" and not vim.startswith(char, "<") and not vim.startswith(char, "")
+end
+
+local function is_menu_char(char)
+	return char == "'" or char == '"'
+end
+
 local function save_mark()
 	local char = vim.fn.getcharstr()
-	-- Handle ESC, Ctrl-C, etc.
-	if char == "" or vim.startswith(char, "<") or vim.startswith(char, "") then
+	if not is_valid_mark(char) then
 		return
 	end
+
+	if is_menu_char(char) then
+		return
+	end
+
+	local grapple = require("grapple")
 	local filepath = vim.api.nvim_buf_get_name(0)
 	local filename = vim.fn.fnamemodify(filepath, ":t")
-	local grapple = require("grapple")
-	local scope
-	if char == string.upper(char) and char ~= string.lower(char) then
-		scope = "git"
-	end
-	local entry = grapple.find({ name = char, scope = scope })
+	local opts = { name = char, scope = get_scope(char) }
+
+	local entry = grapple.find(opts)
 	if entry then
 		if entry.path == filepath then
 			vim.notify(filename .. " is already marked as " .. char)
@@ -22,7 +39,7 @@ local function save_mark()
 			return
 		end
 	end
-	grapple.tag({ name = char, scope = scope })
+	grapple.tag(opts)
 	vim.defer_fn(function()
 		vim.notify("Marked " .. filename .. " as " .. char)
 	end, 10)
@@ -30,23 +47,15 @@ end
 
 local function open_mark()
 	local char = vim.fn.getcharstr()
-	-- Handle ESC, Ctrl-C, etc.
-	if char == "" or vim.startswith(char, "<") or vim.startswith(char, "") then
+	if not is_valid_mark(char) then
 		return
 	end
 	local grapple = require("grapple")
-	if char == "'" then
-		grapple.toggle_tags()
-		return
-	elseif char == '"' then
-		grapple.toggle_tags({ scope = "git" })
+	if is_menu_char(char) then
+		grapple.toggle_tags({ scope = get_scope(char) })
 		return
 	end
-	if char == string.upper(char) and char ~= string.lower(char) then
-		grapple.select({ name = char, scope = "git" })
-	else
-		grapple.select({ name = char })
-	end
+	grapple.select({ name = char, scope = get_scope(char) })
 end
 
 return {

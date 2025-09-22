@@ -63,11 +63,6 @@ require("mason-lspconfig").setup({
 	automatic_installation = false,
 })
 
-local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_status_ok then
-	return
-end
-
 require("lspconfig.ui.windows").default_options.border = require("base.utils").borders()
 
 local opts = {}
@@ -85,7 +80,7 @@ for _, server in pairs(servers) do
 		opts = vim.tbl_deep_extend("force", conf_opts, opts)
 	end
 
-	lspconfig[server].setup(opts)
+	vim.lsp.config(server, opts)
 end
 
 vim.api.nvim_create_autocmd("User", {
@@ -94,15 +89,3 @@ vim.api.nvim_create_autocmd("User", {
 		vim.notify(event.data.choice)
 	end,
 })
-
--- vim.lsp.util.stylize_markdown = function(bufnr, contents, opt)
--- 	contents = vim.lsp.util._normalize_markdown(contents, {
--- 		width = vim.lsp.util._make_floating_popup_size(contents, opt),
--- 	})
---
--- 	vim.bo[bufnr].filetype = "markdown"
--- 	vim.treesitter.start(bufnr)
--- 	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
---
--- 	return contents
--- end

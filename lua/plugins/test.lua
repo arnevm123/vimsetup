@@ -11,7 +11,6 @@ return {
 			"fredrikaverpil/neotest-golang",
 			"rouge8/neotest-rust",
 		},
-		event = "VeryLazy",
 		config = function()
 			local neotest_ns = vim.api.nvim_create_namespace("neotest")
 			vim.diagnostic.config({
