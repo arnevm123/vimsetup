@@ -4,17 +4,11 @@ return {
 		dependencies = {
 			require("plugins.lsp.completion"),
 			require("plugins.lsp.formatting"),
-
-			{
-				"williamboman/mason.nvim",
-			},
-			{
-				"williamboman/mason-lspconfig.nvim",
-			},
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			-- language support
-			{ "smjonas/inc-rename.nvim", config = true },
 			"pmizio/typescript-tools.nvim",
+			{ "smjonas/inc-rename.nvim", config = true },
 		},
 		keys = {
 			{ "<leader>la", vim.lsp.buf.code_action, desc = "lsp Code Action", mode = { "n", "v" } },
