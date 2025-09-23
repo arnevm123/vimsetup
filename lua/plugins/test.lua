@@ -8,20 +8,16 @@ return {
 			"nvim-neotest/nvim-nio",
 			"nvim-neotest/neotest-python",
 			"nvim-neotest/neotest-plenary",
-			"fredrikaverpil/neotest-golang",
+			{
+				"fredrikaverpil/neotest-golang",
+				version = "*",
+				build = function()
+					vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait()
+				end,
+			},
 			"rouge8/neotest-rust",
 		},
 		config = function()
-			local neotest_ns = vim.api.nvim_create_namespace("neotest")
-			vim.diagnostic.config({
-				virtual_text = {
-					format = function(diagnostic)
-						local message =
-							diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-						return message
-					end,
-				},
-			}, neotest_ns)
 			---@diagnostic disable-next-line: missing-fields
 			require("neotest").setup({
 				quickfix = { enabled = true, open = false },
@@ -30,7 +26,7 @@ return {
 					severity = 4,
 				},
 				adapters = {
-					require("neotest-golang")(), -- Registration
+					require("neotest-golang")({ runner = "gotestsum" }),
 					require("neotest-plenary"),
 					require("neotest-rust"),
 				},
@@ -39,8 +35,9 @@ return {
 		keys = {
 			{ "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", desc = "test Run File" },
 			{ "<leader>tn", "<cmd>lua require('neotest').run.run()<CR>", desc = "test Run Nearest" },
+			{ "<leader>tdn", "<cmd>lua require('neotest').run.run({strategy = 'dap'})<CR>", desc = "test Run Nearest" },
 			{ "<leader>tl", "<cmd>lua require('neotest').run.run_last()<CR>", desc = "test Run Last" },
-			{ "<leader>td", "<cmd>lua require('neotest').run.run_last({strategy = 'dap'})<CR>", desc = "test Debug", },
+			{ "<leader>tdl", "<cmd>lua require('neotest').run.run_last({strategy = 'dap'})<CR>", desc = "test Debug" },
 			{ "<leader>tt", "<cmd>lua require('neotest').summary.toggle()<CR>", desc = "test Summary" },
 		},
 	},
