@@ -44,7 +44,6 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities.textDocument.completion.completionItem.snippetSupport = true
 			capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
 			local on_attach = function(client, _)
 				client.server_capabilities.semanticTokensProvider = nil
