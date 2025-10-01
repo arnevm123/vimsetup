@@ -45,15 +45,67 @@ return {
 		},
 	},
 	{
-		"amadanmath/diag_ignore.nvim",
+		"chrisgrieser/nvim-rulebook",
+		event = "VeryLazy",
+		config = function()
+			local golangci = {
+				comment = function(diag)
+					local code = diag.message:match("^(%w+):")
+					local cmt = string.format("// nolint:%s", diag.source)
+					if code then
+						return string.format("%s // %s", cmt, code)
+					end
+					return cmt
+				end,
+				location = "sameLine",
+				doesNotUseCodes = true,
+			}
+			require("rulebook").setup({ ---@diagnostic disable-line: missing-fields
+				forwSearchLines = 10,
+				ignoreComments = {
+					shellcheck = { ---@diagnostic disable-line: missing-fields
+						comment = "# shellcheck disable=%s",
+						location = "prevLine",
+						multiRuleIgnore = true,
+						multiRuleSeparator = ",",
+					},
+					revive = golangci,
+					gosec = golangci,
+					mnd = golangci,
+					gocritic = golangci,
+					forbidigo = golangci,
+				},
+				ruleDocs = {
+					fallback = function(diag)
+						local line = vim.api.nvim_buf_get_lines(diag.bufnr, diag.lnum, diag.lnum + 1, false)[1]
+						return "https://chatgpt.com/?q=Explain%20the%20following%20diagnostic%20error%3A%20"
+							.. diag.message
+							.. "%0AOffending line%3A%0A"
+							.. line
+							.. "%0A"
+					end,
+				},
+			})
+		end,
 		keys = {
-			{ "<Leader>le", "<Plug>(diag_ignore)", mode = "n", desc = "Diagnostic: ignore" },
-		},
-		opts = {
-			ignores = {
-				python = { "endline", " # pyright: ignore[", "]" },
-				lua = { "prevline", "---@diagnostic disable-next-line: " },
-				go = { "endline", " // nolint: ", code = "source" },
+			{ "<Leader>le", "<cmd>lua require('rulebook').ignoreRule()<CR>", mode = "n", desc = "Diagnostic: ignore" },
+			{
+				"<Leader>ll",
+				"<cmd>lua require('rulebook').lookupRule()<CR>",
+				mode = "n",
+				desc = "Diagnostic: lookup rule",
+			},
+			{
+				"<Leader>ly",
+				"<cmd>lua require('rulebook').lookupRule()<CR>",
+				mode = "n",
+				desc = "Diagnostic: lookup rule",
+			},
+			{
+				"<Leader>lo",
+				"<cmd>lua require('rulebook').suppressFormatter()<CR>",
+				mode = { "n", "x" },
+				desc = "Diagnostic: lookup rule",
 			},
 		},
 	},
