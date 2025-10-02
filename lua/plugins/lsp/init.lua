@@ -1,12 +1,12 @@
+local servers = require("plugins.lsp.servers")
 return {
 	{
 		"neovim/nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			require("plugins.lsp.completion"),
 			require("plugins.lsp.formatting"),
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			require("plugins.lsp.installation"),
 			"pmizio/typescript-tools.nvim",
 			{ "smjonas/inc-rename.nvim", config = true },
 		},
@@ -19,18 +19,20 @@ return {
 				"<cmd>lua require('base.utils').toggle_case_rename()<CR>",
 				desc = "lsp toggle case rename",
 			},
-			-- default keymap: grn
-			-- { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "lsp rename variable" },
 		},
 		config = function()
-			require("plugins.lsp.mason")
+			for _, server in pairs(servers.manually_install) do
+				vim.lsp.enable(server)
+			end
+
 			local signs = {
 				{ name = "DiagnosticSignError", text = "E" },
 				{ name = "DiagnosticSignWarn", text = "W" },
 				{ name = "DiagnosticSignHint", text = "h" },
 				{ name = "DiagnosticSignInfo", text = "i" },
 			}
-			local config = {
+
+			local diag_config = {
 				virtual_text = { source = true },
 				signs = { active = signs },
 				update_in_insert = false,
@@ -39,7 +41,7 @@ return {
 				float = { focusable = true, style = "minimal", source = "always" },
 			}
 
-			vim.diagnostic.config(config)
+			vim.diagnostic.config(diag_config)
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -49,11 +51,7 @@ return {
 				client.server_capabilities.semanticTokensProvider = nil
 			end
 
-			vim.lsp.config("*", {
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
+			vim.lsp.config("*", { on_attach = on_attach, capabilities = capabilities })
 		end,
-		event = { "BufReadPre", "BufNewFile" },
 	},
 }

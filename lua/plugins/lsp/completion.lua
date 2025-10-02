@@ -5,7 +5,6 @@ return {
 		build = "cargo build --release",
 		dependencies = {
 			{ "rafamadriz/friendly-snippets" },
-			-- { "samiulsami/cmp-go-deep" },
 			{ "saghen/blink.compat" },
 		},
 		opts = {
