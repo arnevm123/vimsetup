@@ -18,6 +18,7 @@ return {
 					},
 				},
 			},
+			{ "madmaxieee/fff-snacks.nvim", cmd = "FFFSnacks", config = true },
 		},
 		opts = {
 			zen = { enabled = false },
@@ -45,19 +46,9 @@ return {
 						},
 					},
 				},
-				layouts = {
-					ivy_split = {
-						layout = {
-							height = 0.25,
-						},
-					},
-				},
-				layout = {
-					preset = "ivy_split",
-				},
+				layouts = { ivy_split = { layout = { height = 0.25 } } },
+				layout = { preset = "ivy_split" },
 			},
-			-- 	icons = { files = { enabled = false } },
-
 			bigfile = { enabled = true },
 			quickfile = { enabled = true },
 		},
@@ -78,12 +69,9 @@ return {
 				end,
 				desc = "toggle lsp words",
 			},
-			-- { "<leader><space>", "<cmd>lua Snacks.picker.smart()<CR>", desc = "Smart Find Files" },
 			{ "<leader>ff", "<cmd>lua Snacks.picker.resume()<CR>", desc = "Resume picker" },
-			{ "<leader>fd", '<cmd>lua require("plugins.snacks.fff").fff()<CR>', desc = "Find files" },
+			{ "<leader>fd", "<cmd>FFFSnacks <cr>", desc = "Find files" },
 			{ "<leader>fs", "<cmd>lua Snacks.picker.grep()<CR>", desc = "Live grep" },
-			-- { "<leader>fd", "<cmd>lua Snacks.picker.files()<CR>", desc = "Find files" },
-			-- { "<leader>fs", '<cmd>lua require("plugins.snacks.multi-grep").multi_grep()<CR>', desc = "multi grep" },
 			{
 				"<leader>fo",
 				function()
