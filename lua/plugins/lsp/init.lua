@@ -42,6 +42,7 @@ return {
 			}
 
 			vim.diagnostic.config(diag_config)
+			vim.lsp.inline_completion.enable(true)
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities.textDocument.completion.completionItem.snippetSupport = true

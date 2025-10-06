@@ -5,6 +5,7 @@ M.lsp = {
 	"ansiblels",
 	"biome",
 	"bashls",
+	"copilot",
 	"clangd",
 	"csharp_ls",
 	"cssls",

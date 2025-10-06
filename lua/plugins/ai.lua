@@ -1,20 +1,28 @@
 return {
 	{
-		"supermaven-inc/supermaven-nvim",
-		lazy = false,
-		-- event = "VeryLazy",
-		config = function()
-			require("supermaven-nvim").setup({
-				keymaps = {
-					accept_suggestion = "<C-;>",
-					clear_suggestion = "<C-/>",
-					accept_word = "<C-.>",
-				},
-				color = {
-					suggestion_color = "#6B6B6B",
-					cterm = 244,
-				},
-			})
-		end,
+		"folke/sidekick.nvim",
+		opts = {
+			nes = { enabled = true },
+			cli = { mux = { backend = "tmux", enabled = true } },
+		},
+		event = "VeryLazy",
+		keys = {
+			{
+				"<c-;>",
+				function()
+					require("sidekick").nes_jump_or_apply()
+				end,
+				expr = true,
+				desc = "Goto/Apply Next Edit Suggestion",
+			},
+			{
+				"<c-.>",
+				function()
+					require("sidekick.cli").toggle({ name = "copilot", focus = true })
+				end,
+				mode = { "n", "x", "i", "t" },
+				desc = "Sidekick Switch Focus",
+			},
+		},
 	},
 }
