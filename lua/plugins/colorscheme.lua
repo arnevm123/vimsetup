@@ -193,7 +193,7 @@ return {
 		lazy = colorscheme ~= "grey",
 		priority = 1000,
 		config = function()
-			vim.o.background ="light"
+			vim.o.background = "light"
 			vim.cmd.colorscheme("grey")
 		end,
 	},
@@ -202,8 +202,10 @@ return {
 		lazy = colorscheme ~= "envy",
 		priority = 1000,
 		config = function()
-			vim.o.background ="light"
+			vim.o.background = "light"
 			vim.cmd.colorscheme("envy")
+			local statusline_bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
+			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = statusline_bg })
 		end,
 	},
 }
