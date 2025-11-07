@@ -2,7 +2,6 @@ return {
 	{ "nvim-tree/nvim-web-devicons", opts = { color_icons = false } },
 	{ "catgoose/nvim-colorizer.lua", event = "VeryLazy", opts = { lazy_load = true } },
 	{ "nanotee/sqls.nvim", lazy = false },
-	{ "typicode/bg.nvim", lazy = false }, -- Sync bg colors between nvim and terminal
 	{ "tpope/vim-eunuch", event = "VeryLazy" }, -- :Remove
 	{ "tpope/vim-dispatch", event = "VeryLazy" }, -- :Make
 	{ "wsdjeg/vim-fetch", lazy = false }, -- :e file:line
@@ -10,7 +9,7 @@ return {
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "chentoast/marks.nvim", event = "VeryLazy", opts = { default_mappings = false } },
-	{ "mbbill/undotree", event = "VeryLazy", keys = { { "<leader>eu", "<cmd>UndotreeToggle<CR>" } } },
+	-- { "nvim.undotree", event = "VeryLazy", keys = { { "<leader>eu", "<cmd>Undotree<CR>" } } },
 	{
 		"johmsalas/text-case.nvim",
 		dependencies = { "nvim-telescope/telescope.nvim" },
@@ -62,15 +61,6 @@ return {
 		},
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		opts = { use_default_keymaps = false },
-	},
-	{
-		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		build = "cd app && yarn install",
-		init = function()
-			vim.g.mkdp_filetypes = { "markdown" }
-		end,
-		ft = { "markdown" },
 	},
 	{
 		"gbprod/yanky.nvim",
@@ -151,6 +141,24 @@ return {
 			keymap("n", "<leader>bn", ":lua require('compile-mode').next_error()<CR>", opts)
 			keymap("n", "<leader>bp", ":lua require('compile-mode').prev_error()<CR>", opts)
 			keymap("n", "<leader>bd", ":silent! execute 'bdelete' bufname('*compilation*')<CR>", opts)
+
+			vim.keymap.set("n", "yoc", function()
+				local bufnr = vim.g.compilation_buffer
+
+				if not bufnr then
+					vim.notify("Compilation buffer not found", vim.log.levels.WARN)
+					return
+				end
+
+				local winid = vim.fn.bufwinid(bufnr)
+				if winid == -1 then
+					vim.cmd("belowright 15 split")
+					vim.cmd("buffer " .. bufnr)
+				else
+					vim.api.nvim_win_close(winid, false)
+				end
+			end, { noremap = true, silent = true, desc = "Toggle compilation buffer" })
+
 			keymap(
 				"n",
 				"<leader>bq",
@@ -164,27 +172,49 @@ return {
 				baleia_setup = true,
 				bang_expansion = true,
 				error_ignore_file_list = { "Makefile$", "makefile$", "GNUmakefile$" },
-				-- hidden_output = "\\v^(\\d{2}-\\d{2}-\\d{4} )",
-				-- error_regexp_table = {
-				-- 	go_logs = {
-				-- 		regex = "\\v.*\\[(.+):([0-9]+)\\]",
-				-- 		filename = 1,
-				-- 		row = 2,
-				-- 	},
-				-- },
+				hidden_output = "\\v^(\\d{2}-\\d{2}-\\d{4} )",
+				error_regexp_table = {
+					go_logs = {
+						regex = "\\v.*\\[(.+):([0-9]+)\\]",
+						filename = 1,
+						row = 2,
+					},
+				},
 				focus_compilation_buffer = true,
 			}
 		end,
 	},
+	-- {
+	-- 	"rachartier/tiny-inline-diagnostic.nvim",
+	-- 	event = "VeryLazy",
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		local opts = {
+	-- 			-- Choose a preset style for diagnostic appearance
+	-- 			-- Available: "modern", "classic", "minimal", "powerline", "ghost", "simple", "nonerdfont", "amongus"
+	-- 			preset = "modern",
+	--
+	-- 			-- Make diagnostic background transparent
+	-- 			transparent_bg = false,
+	-- 			options = {
+	-- 				use_icons_from_diagnostic = true,
+	-- 				set_arrow_to_diag_color = true,
+	-- 				show_all_diags_on_cursorline = false,
+	-- 				multilines = {
+	-- 					enabled = true,
+	-- 					always_show = true,
+	-- 				},
+	-- 			},
+	-- 		}
+	-- 		require("tiny-inline-diagnostic").setup(opts)
+	-- 		vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+	-- 	end,
+	-- },
 	{
-		"retran/meow.yarn.nvim",
-		dependencies = { "MunifTanjim/nui.nvim" },
-		config = function()
-			require("meow.yarn").setup({})
-		end,
+		"XXiaoA/atone.nvim",
+		cmd = "Atone",
+		opts = {},
 		keys = {
-			{ "<leader>yc", "<cmd>MeowYarn call callers<CR>" },
-			{ "<leader>yC", "<cmd>MeowYarn call callees<CR>" },
-		},
+			{ "<leader>eu", "<cmd>Atone toggle<CR>", desc = "Atone" }, },
 	},
 }

@@ -39,6 +39,7 @@ return {
 				gitcommit = { "commitlint" },
 				NeogitCommitMessage = { "commitlint" },
 				markdown = { "vale", "cspell" },
+				-- ["yaml.docker-compose"] = { "dclint" },
 				["yaml.ansible"] = { "ansible_lint" },
 			}
 

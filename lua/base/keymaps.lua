@@ -10,6 +10,8 @@ keymap("", "<Space>", "<Nop>", opts)
 keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- vim.cmd("packadd nvim.undotree")
+-- keymap("n", "<leader>eu", ":Undotree<CR>", opts)
 --LSP
 keymap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)

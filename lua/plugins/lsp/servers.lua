@@ -3,6 +3,8 @@ local M = {}
 M.lsp = {
 	"angularls",
 	"ansiblels",
+	"docker_compose_language_service",
+	"docker_language_server",
 	"biome",
 	"bashls",
 	"copilot",

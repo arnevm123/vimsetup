@@ -1,4 +1,5 @@
 require("base.options")
+require("base.filetypes")
 require("base.lazy")
 require("base.keymaps")
 require("base.autocommand")

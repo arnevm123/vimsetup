@@ -58,19 +58,4 @@ return {
 			},
 		},
 	},
-	{
-		"mrcjkb/rustaceanvim",
-		version = "^4", -- Recommended
-		ft = { "rust" },
-		config = function()
-			vim.g.rustaceanvim = {
-				server = {
-					on_attach = require("plugins.lsp.handlers").on_attach,
-					default_settings = {
-						["rust-analyzer"] = require("lsp.rust_analyzer"),
-					},
-				},
-			}
-		end,
-	},
 }

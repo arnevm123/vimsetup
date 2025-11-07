@@ -6,9 +6,10 @@ local colorscheme
 -- colorscheme = "mel"
 -- colorscheme = "shadow"
 -- colorscheme = "jb"
--- colorscheme = "makurai"
--- colorscheme = "vinyl"
-colorscheme = "vscode-gruber"
+-- colorscheme = "vscode-gruber"
+-- colorscheme = "studio"
+-- colorscheme = "grey"
+colorscheme = "envy"
 return {
 	{
 		"https://github.com/RRethy/base16-nvim",
@@ -164,14 +165,6 @@ return {
 		end,
 	},
 	{
-		"Skardyy/makurai-nvim",
-		lazy = colorscheme ~= "makurai",
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("makurai_less")
-		end,
-	},
-	{
 		"shadowy-pycoder/vscode-gruber.nvim",
 		lazy = colorscheme ~= "vscode-gruber",
 		dependencies = { "rktjmp/lush.nvim" },
@@ -185,6 +178,32 @@ return {
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#4B4B4B" })
 			local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
 			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = visual_bg })
+		end,
+	},
+	{
+		"jnz/studio98",
+		lazy = colorscheme ~= "studio",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("studio98")
+		end,
+	},
+	{
+		"yorickpeterse/nvim-grey",
+		lazy = colorscheme ~= "grey",
+		priority = 1000,
+		config = function()
+			vim.o.background ="light"
+			vim.cmd.colorscheme("grey")
+		end,
+	},
+	{
+		"kkga/vim-envy",
+		lazy = colorscheme ~= "envy",
+		priority = 1000,
+		config = function()
+			vim.o.background ="light"
+			vim.cmd.colorscheme("envy")
 		end,
 	},
 }

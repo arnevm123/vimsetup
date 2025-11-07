@@ -68,8 +68,7 @@ autocmd({ "BufWritePre" }, {
 })
 
 vim.cmd([[
-:autocmd BufWritePre [:;12]*,
-\   try | echoerr 'Forbidden file name: '..expand('<afile>') | endtry
+autocmd BufWritePre /\v^[:;]12.{,3}$/ try | echoerr 'Forbidden file name: ' .. expand('<afile>') | endtry
 ]])
 
 local statusline_bg = 0

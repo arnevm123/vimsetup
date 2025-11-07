@@ -32,17 +32,27 @@ return {
 				enabled = true,
 				sources = {
 					select = {
-						config = function(opts)
-							local max = math.floor(vim.o.lines * 0.8 - 10)
-							-- Hack: this is to work around these two issues
-							-- https://github.com/folke/snacks.nvim/issues/2035
-							-- https://github.com/folke/snacks.nvim/issues/902#issuecomment-2649284650
-							-- the vscode layout has an extra 0.5 of height, so we take the existing max
-							-- and use that
-							opts.layout.layout.height = math.min(max, opts.layout.layout.height + 0.5)
-						end,
+						-- config = function(opts)
+						-- 	opts.layout.config = function(layout)
+						-- 		for _, box in ipairs(layout.layout) do
+						-- 			if box.win == "list" then
+						-- 				box.height = math.max(math.min(#opts.items, vim.o.lines * 0.8 - 10), 2)
+						-- 			end
+						-- 		end
+						-- 	end
+						-- end,
+						-- config = function(opts)
+						-- 	local max = math.floor(vim.o.lines * 0.8 - 10)
+						-- 	-- Hack: this is to work around these two issues
+						-- 	-- https://github.com/folke/snacks.nvim/issues/2035
+						-- 	-- https://github.com/folke/snacks.nvim/issues/902#issuecomment-2649284650
+						-- 	-- the vscode layout has an extra 0.5 of height, so we take the existing max
+						-- 	-- and use that
+						-- 	opts.layout.layout.height = math.min(max, opts.layout.layout.height + 0.5)
+						-- end,
 						layout = {
-							preset = "bottom",
+							preset = "ivy_split",
+							hidden = { "preview" },
 						},
 					},
 				},
