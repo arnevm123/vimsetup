@@ -32,6 +32,7 @@ return {
 			lint.linters_by_ft = {
 				go = { "golangcilint", "cspell" },
 				lua = { "selene" },
+				haskell = { "hlint" },
 				python = { "ruff" },
 				sh = { "shellcheck" },
 				typescript = { "eslint_d" },

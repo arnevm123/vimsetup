@@ -8,11 +8,24 @@ return {
 		event = "VeryLazy",
 		keys = {
 			{
+				"<leader>su",
+				function()
+					require("sidekick.nes").update()
+				end,
+				desc = "Update Next Edit Suggestion",
+			},
+			{
+				"<leader>st",
+				function()
+					require("sidekick.nes").toggle()
+				end,
+				desc = "Toggle Next Edit Suggestion",
+			},
+			{
 				"<c-;>",
 				function()
 					require("sidekick").nes_jump_or_apply()
 				end,
-				expr = true,
 				desc = "Goto/Apply Next Edit Suggestion",
 			},
 			{
