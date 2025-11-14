@@ -31,7 +31,7 @@ return {
 			{
 				"<c-.>",
 				function()
-					require("sidekick.cli").toggle({ name = "copilot", focus = true })
+					require("sidekick.cli").toggle({ name = "codex", focus = true })
 				end,
 				mode = { "n", "x", "i", "t" },
 				desc = "Sidekick Switch Focus",

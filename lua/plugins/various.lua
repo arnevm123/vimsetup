@@ -138,11 +138,11 @@ return {
 			end, nosilent)
 
 			-- Other keymaps
-			keymap("n", "<leader>bn", ":lua require('compile-mode').next_error()<CR>", opts)
-			keymap("n", "<leader>bp", ":lua require('compile-mode').prev_error()<CR>", opts)
+			keymap("n", "]x", ":lua require('compile-mode').next_error()<CR>", opts)
+			keymap("n", "[x", ":lua require('compile-mode').prev_error()<CR>", opts)
 			keymap("n", "<leader>bd", ":silent! execute 'bdelete' bufname('*compilation*')<CR>", opts)
 
-			vim.keymap.set("n", "yoc", function()
+			vim.keymap.set("n", "yox", function()
 				local bufnr = vim.g.compilation_buffer
 
 				if not bufnr then
@@ -174,6 +174,12 @@ return {
 				error_ignore_file_list = { "Makefile$", "makefile$", "GNUmakefile$" },
 				hidden_output = "\\v^(\\d{2}-\\d{2}-\\d{4} )",
 				error_regexp_table = {
+					["00-rust"] = {
+						regex = "^\\s*--> \\([^:]\\+\\):\\(\\d\\+\\):\\(\\d\\+\\)",
+						filename = 1,
+						row = 2,
+						col = 3,
+					},
 					go_logs = {
 						regex = "\\v.*\\[(.+):([0-9]+)\\]",
 						filename = 1,
@@ -215,6 +221,7 @@ return {
 		cmd = "Atone",
 		opts = {},
 		keys = {
-			{ "<leader>eu", "<cmd>Atone toggle<CR>", desc = "Atone" }, },
+			{ "<leader>eu", "<cmd>Atone toggle<CR>", desc = "Atone" },
+		},
 	},
 }

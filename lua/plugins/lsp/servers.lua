@@ -28,6 +28,7 @@ M.lsp = {
 
 M.manually_install = {
 	"gopls",
+	"rust_analyzer",
 }
 
 M.linters_and_formatters = {

@@ -25,8 +25,12 @@ keymap(
 keymap("n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 keymap("n", "<leader>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 keymap("i", "<c-;>", "<cmd>lua vim.lsp.inline_completion.get()<CR>", opts)
-keymap("n", "[w", "<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
-keymap("n", "]w", "<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>", opts)
+keymap("n", "[w", function()
+	vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
+end, opts)
+keymap("n", "]w", function()
+	vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
+end, opts)
 
 -- Jump to the end of the tree-sitter node in insert mode
 keymap("i", "<C-l>", function()
