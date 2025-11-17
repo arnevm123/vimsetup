@@ -15,6 +15,16 @@ return {
 					augend.date.alias["%m/%d/%Y"], -- date (02/19/2022, etc.)
 					augend.date.alias["%H:%M"],
 					augend.constant.new({
+						elements = { ">=", "<" },
+						word = false,
+						cyclic = true,
+					}),
+					augend.constant.new({
+						elements = { ">", "<=" },
+						word = false,
+						cyclic = true,
+					}),
+					augend.constant.new({
 						elements = { "&&", "||" },
 						word = false,
 						cyclic = true,
