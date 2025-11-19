@@ -52,12 +52,22 @@ function Fd(file_pattern, _)
 	if file_pattern:sub(1, 1) == "*" then
 		file_pattern = file_pattern:gsub(".", ".*%0") .. ".*"
 	end
-	local cmd = 'fd  --color=never --full-path --type file --hidden --exclude=".git" --exclude="deps" "'
+	local cmd = 'fd --color=never --full-path --type file --hidden --exclude=".git" --exclude="deps" "'
 		.. file_pattern
 		.. '"'
 	local result = vim.fn.systemlist(cmd)
 	return result
 end
+
+vim.opt.listchars = {
+	multispace = "·",
+	leadmultispace = "· ",
+	lead = "·",
+	trail = "·",
+	tab = "─ ",
+	nbsp = "␣",
+}
+vim.opt.list = true
 
 vim.opt.findfunc = "v:lua.Fd"
 

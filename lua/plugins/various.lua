@@ -29,11 +29,6 @@ return {
 		event = "VeryLazy",
 	},
 	{
-		"mcauley-penney/visual-whitespace.nvim",
-		event = "ModeChanged *:[vV\22]",
-		opts = { fileformat_chars = { unix = "" } },
-	},
-	{
 		"numToStr/Comment.nvim",
 		config = function()
 			require("Comment").setup()
@@ -49,7 +44,7 @@ return {
 		},
 		config = true,
 		keys = {
-			{ "<leader>ss", "<cmd>lua require('grug-far').grug_far()<CR>" },
+			{ "<leader>ss", "<cmd>lua require('grug-far').open()<CR>" },
 			{ "<leader>ss", "<cmd>lua require('grug-far').with_visual_selection()<CR>", mode = "x" },
 		},
 	},
