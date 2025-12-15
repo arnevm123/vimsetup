@@ -2,7 +2,47 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				branch = "main",
+				config = function()
+					require("nvim-treesitter-textobjects").setup({
+						select = {
+							lookahead = true,
+							selection_modes = {
+								["@parameter.outer"] = "v", -- charwise
+								["@function.outer"] = "V", -- linewise
+								["@class.outer"] = "<c-v>", -- blockwise
+							},
+							include_surrounding_whitespace = false,
+						},
+					})
+				end,
+				keys = {
+					{
+						"af",
+						function()
+							require("nvim-treesitter-textobjects.select").select_textobject(
+								"@function.outer",
+								"textobjects"
+							)
+						end,
+						mode = { "x", "o" },
+						desc = "Select function (outer)",
+					},
+					{
+						"if",
+						function()
+							require("nvim-treesitter-textobjects.select").select_textobject(
+								"@function.inner",
+								"textobjects"
+							)
+						end,
+						mode = { "x", "o" },
+						desc = "Select function (inner)",
+					},
+				},
+			},
 			{
 				"andymass/vim-matchup",
 				config = function()
@@ -14,7 +54,7 @@ return {
 		build = ":TSUpdate",
 		event = "VeryLazy",
 		config = function()
-			require("nvim-treesitter.configs").setup({
+			require("nvim-treesitter").setup({
 				modules = {},
 				sync_install = true,
 				auto_install = true,
@@ -34,36 +74,6 @@ return {
 				autotag = { enable = true },
 				matchup = { enable = true, disable_virtual_text = true },
 				indent = { enable = true, disable = { "css" } },
-				textobjects = {
-					select = {
-						enable = true,
-						lookahead = true,
-						keymaps = {
-							-- You can use the capture groups defined in textobjects.scm
-							["af"] = "@function.outer",
-							["if"] = "@function.inner",
-							["ac"] = "@comment.outer",
-							["ic"] = "@comment.inner",
-						},
-						selection_modes = {
-							["@function.outer"] = "V", -- linewise
-						},
-						include_surrounding_whitespace = false,
-					},
-					move = {
-						enable = true,
-						set_jumps = true,
-						goto_next_end = { ["]F"] = "@function.outer" },
-						goto_next_start = { ["]f"] = "@function.outer" },
-						goto_previous_end = { ["[F"] = "@function.outer" },
-						goto_previous_start = { ["[f"] = "@function.outer" },
-					},
-					swap = {
-						enable = true,
-						swap_next = { ["]s"] = "@parameter.inner" },
-						swap_previous = { ["[s"] = "@parameter.inner" },
-					},
-				},
 			})
 		end,
 	},

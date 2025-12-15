@@ -9,7 +9,8 @@ local colorscheme
 -- colorscheme = "vscode-gruber"
 -- colorscheme = "studio"
 -- colorscheme = "grey"
-colorscheme = "envy"
+-- colorscheme = "envy"
+colorscheme = "zen"
 return {
 	{
 		"https://github.com/RRethy/base16-nvim",
@@ -206,6 +207,16 @@ return {
 			vim.cmd.colorscheme("envy")
 			local statusline_bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = statusline_bg })
+		end,
+	},
+	{
+		"nendix/zen.nvim",
+		lazy = colorscheme ~= "zen",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("zen")
+			-- local statusline_bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
+			-- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = statusline_bg })
 		end,
 	},
 }

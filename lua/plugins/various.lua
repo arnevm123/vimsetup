@@ -97,7 +97,6 @@ return {
 				end
 				return nil
 			end
-
 			local function run_compile(cmd)
 				vim.g.compilation_directory = get_build_root()
 				if not cmd then
@@ -108,7 +107,6 @@ return {
 					vim.cmd("below 15 Compile " .. cmd)
 				end
 			end
-
 			-- Keymaps
 			local nosilent = { noremap = true }
 			local opts = { noremap = true, silent = true }
@@ -131,20 +129,16 @@ return {
 			keymap("n", "<leader>be", function()
 				run_compile("recompile")
 			end, nosilent)
-
 			-- Other keymaps
 			keymap("n", "]x", ":lua require('compile-mode').next_error()<CR>", opts)
 			keymap("n", "[x", ":lua require('compile-mode').prev_error()<CR>", opts)
 			keymap("n", "<leader>bd", ":silent! execute 'bdelete' bufname('*compilation*')<CR>", opts)
-
 			vim.keymap.set("n", "yox", function()
 				local bufnr = vim.g.compilation_buffer
-
 				if not bufnr then
 					vim.notify("Compilation buffer not found", vim.log.levels.WARN)
 					return
 				end
-
 				local winid = vim.fn.bufwinid(bufnr)
 				if winid == -1 then
 					vim.cmd("belowright 15 split")
@@ -153,7 +147,6 @@ return {
 					vim.api.nvim_win_close(winid, false)
 				end
 			end, { noremap = true, silent = true, desc = "Toggle compilation buffer" })
-
 			keymap(
 				"n",
 				"<leader>bq",
@@ -217,6 +210,27 @@ return {
 		opts = {},
 		keys = {
 			{ "<leader>eu", "<cmd>Atone toggle<CR>", desc = "Atone" },
+		},
+	},
+	{
+		"esmuellert/vscode-diff.nvim",
+		dependencies = { "MunifTanjim/nui.nvim" },
+		cmd = { "CodeDiff" },
+	},
+	{
+		"vihu/penview.nvim",
+		build = function()
+			require("penview.build").install()
+		end,
+		ft = "markdown",
+		config = function()
+			require("penview").setup({
+				browser = "firefox", -- Required: your browser command
+			})
+		end,
+		keys = {
+			{ "<leader>mo", "<cmd>PenviewStart<cr>", desc = "[M]arkown [O]pen" },
+			{ "<leader>mc", "<cmd>PenviewStop<cr>", desc = "[M]arkown [C]lose" },
 		},
 	},
 }

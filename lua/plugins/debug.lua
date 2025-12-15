@@ -78,7 +78,7 @@ return {
 					sidebar.open()
 					vim.cmd("wincmd q")
 				end,
-				desc = "Debug latest test",
+				desc = "Debug Show sidebar",
 			},
 			{
 				"<leader>dh",
@@ -86,14 +86,14 @@ return {
 					require("dap.ui.widgets").hover(nil, { border = "single" })
 				end,
 				-- "<cmd>lua require('dap.ui.widgets').hover(nil, { border = 'rounded' })<CR>",
-				desc = "Debug latest test",
+				desc = "Debug show hover",
 			},
 			{
 				"<leader>dp",
 				function()
 					require("dap.ui.widgets").preview(nil)
 				end,
-				desc = "Debug latest test",
+				desc = "Debug preview",
 			},
 			-- { "<leader>de", "lua :require('dapui').eval(nil, { enter = true })<CR>" },
 		},
