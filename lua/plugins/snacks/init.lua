@@ -84,7 +84,8 @@ return {
 				desc = "toggle lsp words",
 			},
 			{ "<leader>ff", "<cmd>lua Snacks.picker.resume()<CR>", desc = "Resume picker" },
-			{ "<leader>fd", "<cmd>FFFSnacks <cr>", desc = "Find files" },
+			-- { "<leader>fd", "<cmd>FFFSnacks <cr>", desc = "Find files" },
+			{ "<leader>fd", "<cmd>lua Snacks.picker.files() <cr>", desc = "Find files" },
 			{ "<leader>fs", "<cmd>lua Snacks.picker.grep()<CR>", desc = "Live grep" },
 			{
 				"<leader>fo",

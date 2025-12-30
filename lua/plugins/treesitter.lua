@@ -3,63 +3,24 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
 			{
-				"nvim-treesitter/nvim-treesitter-textobjects",
-				branch = "main",
-				config = function()
-					require("nvim-treesitter-textobjects").setup({
-						select = {
-							lookahead = true,
-							selection_modes = {
-								["@parameter.outer"] = "v", -- charwise
-								["@function.outer"] = "V", -- linewise
-								["@class.outer"] = "<c-v>", -- blockwise
-							},
-							include_surrounding_whitespace = false,
-						},
-					})
-				end,
-				keys = {
-					{
-						"af",
-						function()
-							require("nvim-treesitter-textobjects.select").select_textobject(
-								"@function.outer",
-								"textobjects"
-							)
-						end,
-						mode = { "x", "o" },
-						desc = "Select function (outer)",
-					},
-					{
-						"if",
-						function()
-							require("nvim-treesitter-textobjects.select").select_textobject(
-								"@function.inner",
-								"textobjects"
-							)
-						end,
-						mode = { "x", "o" },
-						desc = "Select function (inner)",
-					},
-				},
-			},
-			{
 				"andymass/vim-matchup",
 				config = function()
 					vim.g.matchup_matchparen_offscreen = {}
 				end,
 			},
-			"windwp/nvim-ts-autotag",
 		},
-		build = ":TSUpdate",
+		build = function()
+			require("nvim-treesitter").install("stable")
+			require("nvim-treesitter").update()
+		end,
 		event = "VeryLazy",
 		config = function()
+			require("nvim-treesitter").install("all")
 			require("nvim-treesitter").setup({
 				modules = {},
 				sync_install = true,
 				auto_install = true,
 				ensure_installed = "all",
-				ignore_install = {},
 				highlight = {
 					enable = true,
 					disable = function(_, buf)
@@ -90,6 +51,42 @@ return {
 			mode = "cursor",
 			separator = nil,
 		},
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+		dependencies = { "nvim-treesitter/nvim-treesitter", branch = "main" },
+		init = function()
+			vim.g.no_plugin_maps = true
+		end,
+		config = function()
+			require("nvim-treesitter-textobjects").setup({
+				select = {
+					lookahead = true,
+					selection_modes = {
+						["@parameter.outer"] = "v", -- charwise
+						["@function.outer"] = "V", -- linewise
+						["@class.outer"] = "<c-v>", -- blockwise
+					},
+					include_surrounding_whitespace = false,
+				},
+			})
+
+			local select = require("nvim-treesitter-textobjects.select")
+			vim.keymap.set({ "x", "o" }, "af", function()
+				select.select_textobject("@function.outer", "textobjects")
+			end)
+			vim.keymap.set({ "x", "o" }, "if", function()
+				select.select_textobject("@function.inner", "textobjects")
+			end)
+			local swap = require("nvim-treesitter-textobjects.swap")
+			vim.keymap.set("n", "[e", function()
+				swap.swap_next("@parameter.inner")
+			end)
+			vim.keymap.set("n", "]e", function()
+				swap.swap_previous("@parameter.outer")
+			end)
+		end,
 	},
 }
 
