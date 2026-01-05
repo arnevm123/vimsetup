@@ -55,6 +55,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		branch = "main",
+		event = "VeryLazy",
 		dependencies = { "nvim-treesitter/nvim-treesitter", branch = "main" },
 		init = function()
 			vim.g.no_plugin_maps = true
