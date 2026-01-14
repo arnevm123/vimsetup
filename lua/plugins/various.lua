@@ -178,32 +178,6 @@ return {
 			}
 		end,
 	},
-	-- {
-	-- 	"rachartier/tiny-inline-diagnostic.nvim",
-	-- 	event = "VeryLazy",
-	-- 	priority = 1000,
-	-- 	config = function()
-	-- 		local opts = {
-	-- 			-- Choose a preset style for diagnostic appearance
-	-- 			-- Available: "modern", "classic", "minimal", "powerline", "ghost", "simple", "nonerdfont", "amongus"
-	-- 			preset = "modern",
-	--
-	-- 			-- Make diagnostic background transparent
-	-- 			transparent_bg = false,
-	-- 			options = {
-	-- 				use_icons_from_diagnostic = true,
-	-- 				set_arrow_to_diag_color = true,
-	-- 				show_all_diags_on_cursorline = false,
-	-- 				multilines = {
-	-- 					enabled = true,
-	-- 					always_show = true,
-	-- 				},
-	-- 			},
-	-- 		}
-	-- 		require("tiny-inline-diagnostic").setup(opts)
-	-- 		vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
-	-- 	end,
-	-- },
 	{
 		"XXiaoA/atone.nvim",
 		cmd = "Atone",
