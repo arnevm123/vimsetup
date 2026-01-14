@@ -3,14 +3,15 @@ local colorscheme
 -- colorscheme = "vague"
 -- colorscheme = "seoulbones"
 -- colorscheme = "jo"
--- colorscheme = "mel"
+colorscheme = "mel"
 -- colorscheme = "shadow"
 -- colorscheme = "jb"
 -- colorscheme = "vscode-gruber"
 -- colorscheme = "studio"
 -- colorscheme = "grey"
 -- colorscheme = "envy"
-colorscheme = "zen"
+-- colorscheme = "zen"
+-- colorscheme = "koda"
 return {
 	{
 		"https://github.com/RRethy/base16-nvim",
@@ -217,6 +218,15 @@ return {
 			vim.cmd.colorscheme("zen")
 			-- local statusline_bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
 			-- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = statusline_bg })
+		end,
+	},
+	{
+		"oskarnurm/koda.nvim",
+		lazy = colorscheme ~= "koda",
+		priority = 1000,
+		config = function()
+			require("koda").setup({ bold = true, italic = true })
+			vim.cmd("colorscheme koda")
 		end,
 	},
 }

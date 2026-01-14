@@ -42,7 +42,10 @@ return {
 						columns = { { "label", "label_description", gap = 1 }, { "kind_icon" }, { "source_name" } },
 					},
 				},
-				documentation = { auto_show = false },
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 0,
+				},
 			},
 			signature = { enabled = true },
 			sources = {

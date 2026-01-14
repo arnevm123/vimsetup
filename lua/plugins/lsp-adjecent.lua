@@ -75,6 +75,7 @@ return {
 					gocritic = golangci,
 					forbidigo = golangci,
 					unusedfunc = golangci,
+					contextcheck = golangci,
 				},
 				ruleDocs = {
 					fallback = function(diag)
