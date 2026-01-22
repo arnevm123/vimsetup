@@ -23,7 +23,7 @@ keymap(
 	{ noremap = true, silent = true, nowait = true }
 )
 keymap("n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-keymap("n", "<leader>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "<leader>K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 keymap("i", "<c-;>", "<cmd>lua vim.lsp.inline_completion.get()<CR>", opts)
 keymap("n", "[w", function()
 	vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })

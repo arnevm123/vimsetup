@@ -1,7 +1,6 @@
 return {
 	{
-		"arnevm123/yankbank-nvim",
-		branch = "add-snacks-picker",
+		"ptdewey/yankbank-nvim",
 		lazy = false,
 		dependencies = { "folke/snacks.nvim" },
 		config = function()
