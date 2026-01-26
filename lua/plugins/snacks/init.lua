@@ -4,6 +4,7 @@ return {
 		lazy = false,
 		---@type snacks.Config
 		dependencies = {
+			{ "2kabhishek/seeker.nvim", opts = {} },
 			{
 				"dmtrKovalenko/fff.nvim",
 				build = function()
@@ -85,8 +86,8 @@ return {
 			},
 			{ "<leader>ff", "<cmd>lua Snacks.picker.resume()<CR>", desc = "Resume picker" },
 			-- { "<leader>fd", "<cmd>FFFSnacks <cr>", desc = "Find files" },
-			{ "<leader>fd", "<cmd>lua Snacks.picker.files() <cr>", desc = "Find files" },
-			{ "<leader>fs", "<cmd>lua Snacks.picker.grep()<CR>", desc = "Live grep" },
+			{ "<leader>fd", "<cmd>Seeker files<cr>", desc = "Find files" },
+			{ "<leader>fs", "<cmd>Seeker grep<CR>", desc = "Live grep" },
 			{
 				"<leader>fo",
 				function()
