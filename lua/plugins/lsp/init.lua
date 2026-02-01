@@ -25,16 +25,8 @@ return {
 				vim.lsp.enable(server)
 			end
 
-			local signs = {
-				{ name = "DiagnosticSignError", text = "E" },
-				{ name = "DiagnosticSignWarn", text = "W" },
-				{ name = "DiagnosticSignHint", text = "h" },
-				{ name = "DiagnosticSignInfo", text = "i" },
-			}
-
 			local diag_config = {
 				virtual_text = { source = true },
-				signs = { active = signs },
 				update_in_insert = false,
 				underline = true,
 				severity_sort = true,
