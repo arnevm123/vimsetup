@@ -7,16 +7,12 @@ return {
 		keys = {
 			{
 				"<leader>se",
-				function()
-					require("scissors").editSnippet()
-				end,
+				function() require("scissors").editSnippet() end,
 				{ desc = "Edit snippet" },
 			},
 			{
 				"<leader>sa",
-				function()
-					require("scissors").addNewSnippet()
-				end,
+				function() require("scissors").addNewSnippet() end,
 				{ desc = "Add new snippet" },
 			},
 		},

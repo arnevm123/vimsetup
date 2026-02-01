@@ -25,12 +25,8 @@ keymap(
 keymap("n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 keymap("n", "<leader>K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 keymap("i", "<c-;>", "<cmd>lua vim.lsp.inline_completion.get()<CR>", opts)
-keymap("n", "[w", function()
-	vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
-end, opts)
-keymap("n", "]w", function()
-	vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
-end, opts)
+keymap("n", "[w", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR }) end, opts)
+keymap("n", "]w", function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR }) end, opts)
 
 -- Jump to the end of the tree-sitter node in insert mode
 keymap("i", "<C-l>", function()
@@ -83,29 +79,22 @@ keymap("n", "<leader>rg", utils.rg, nosilent)
 keymap("v", "<leader>rg", utils.rg, nosilent)
 keymap("n", "<leader>rd", utils.fzf_fd, nosilent)
 
-keymap("n", "<leader>rf", function()
-	utils:rg({ ask_folder = true })
-end, nosilent)
+keymap("n", "<leader>rf", function() utils:rg({ ask_folder = true }) end, nosilent)
 
-keymap("n", "<leader>fq", function()
-	utils:rg({ search_string = vim.fn.expand("<cword>") })
-end, nosilent)
+keymap("n", "<leader>fq", function() utils:rg({ search_string = vim.fn.expand("<cword>") }) end, nosilent)
 
-keymap("n", "<leader>RG", function()
-	utils:rg({ case_insensitive = true })
-end, nosilent)
+keymap("n", "<leader>RG", function() utils:rg({ case_insensitive = true }) end, nosilent)
 
-keymap("v", "<leader>RG", function()
-	utils:rg({ case_insensitive = true })
-end, nosilent)
+keymap("v", "<leader>RG", function() utils:rg({ case_insensitive = true }) end, nosilent)
 
-keymap("n", "<leader>RF", function()
-	utils:rg({ ask_folder = true, case_insensitive = true })
-end, nosilent)
+keymap("n", "<leader>RF", function() utils:rg({ ask_folder = true, case_insensitive = true }) end, nosilent)
 
-keymap("n", "<leader>RU", function()
-	utils:rg({ search_string = vim.fn.expand("<cword>"), case_insensitive = true })
-end, nosilent)
+keymap(
+	"n",
+	"<leader>RU",
+	function() utils:rg({ search_string = vim.fn.expand("<cword>"), case_insensitive = true }) end,
+	nosilent
+)
 
 keymap("n", "<leader>ro", utils.open_last_file, nosilent)
 
@@ -158,12 +147,6 @@ keymap("n", "yoq", utils.CToggle, opts)
 keymap("n", "yov", utils.VirtualTextToggle, opts)
 keymap("n", "yol", utils.VirtualLinesToggle, opts)
 
-keymap("n", "yoh", function()
-	vim.o.hlsearch = not vim.o.hlsearch
-end, opts)
-keymap("n", "yos", function()
-	vim.o.spell = not vim.o.spell
-end, opts)
-keymap("n", "yow", function()
-	vim.o.wrap = not vim.o.wrap
-end, opts)
+keymap("n", "yoh", function() vim.o.hlsearch = not vim.o.hlsearch end, opts)
+keymap("n", "yos", function() vim.o.spell = not vim.o.spell end, opts)
+keymap("n", "yow", function() vim.o.wrap = not vim.o.wrap end, opts)

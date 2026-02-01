@@ -1,9 +1,7 @@
 local ls = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
 local ok, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
-if not ok then
-	error("Please install nvim-treesitter")
-end
+if not ok then error("Please install nvim-treesitter") end
 local ts_locals = require("nvim-treesitter.locals")
 local rep = require("luasnip.extras").rep
 local ai = require("luasnip.nodes.absolute_indexer")
@@ -14,12 +12,8 @@ M.go_err_snippet = function(args, _, _, spec)
 	local err_name = args[1][1]
 	local index = spec and spec.index or nil
 	local msg = spec and spec[1] or ""
-	if spec and spec[2] then
-		err_name = err_name .. spec[2]
-	end
-	if err_name == "nil" then
-		return ls.sn(index, ls.sn(nil, ls.i(1, "nil")))
-	end
+	if spec and spec[2] then err_name = err_name .. spec[2] end
+	if err_name == "nil" then return ls.sn(index, ls.sn(nil, ls.i(1, "nil"))) end
 	return ls.sn(index, {
 		ls.c(1, {
 			ls.sn(nil, fmt('fmt.Errorf("{} %w", {})', { ls.i(1, msg), ls.t(err_name) })),
@@ -45,9 +39,7 @@ local function transform(text, info)
 		info.index = info.index + 1
 		return ls.sn(info.index, fmt(template, ls.i(1, default)))
 	end
-	local new_sn = function(default)
-		return string_sn("{}", default)
-	end
+	local new_sn = function(default) return string_sn("{}", default) end
 
 	-- cutting the name if exists.
 	if text:find([[^[^\[]*string$]]) then
@@ -62,18 +54,14 @@ local function transform(text, info)
 
 	-- separating the type from the name if exists.
 	local type = text:match([[^[%a%d]+ ([%a%d]+)$]])
-	if type then
-		text = type
-	end
+	if type then text = type end
 
 	if text == "int" or text == "int64" or text == "int32" then
 		return new_sn("0")
 	elseif text == "float32" or text == "float64" then
 		return new_sn("0")
 	elseif text == "error" then
-		if not info then
-			return ls.t("err")
-		end
+		if not info then return ls.t("err") end
 
 		info.index = info.index + 1
 		return M.go_err_snippet({ { info.err_name } }, nil, nil, { index = info.index })
@@ -106,9 +94,7 @@ local handlers = {
 		local count = node:named_child_count()
 		for idx = 0, count - 1 do
 			table.insert(result, transform(vim.treesitter.get_node_text(node:named_child(idx), 0), info))
-			if idx ~= count - 1 then
-				table.insert(result, ls.t({ ", " }))
-			end
+			if idx ~= count - 1 then table.insert(result, ls.t({ ", " })) end
 		end
 
 		return result
@@ -123,9 +109,7 @@ local handlers = {
 local query_is_set = false
 
 local function set_query()
-	if query_is_set then
-		return
-	end
+	if query_is_set then return end
 	query_is_set = true
 	vim.treesitter.query.set(
 		"go",
@@ -157,29 +141,21 @@ local function return_value_nodes(info)
 		end
 	end
 
-	if not function_node then
-		return
-	end
+	if not function_node then return end
 
 	for _, node in vim.treesitter.query.get("go", "LuaSnip_Result"):iter_captures(function_node, 0) do
-		if handlers[node:type()] then
-			return handlers[node:type()](node, info)
-		end
+		if handlers[node:type()] then return handlers[node:type()](node, info) end
 	end
 	return ls.t({ "" })
 end
 
 local function is_in_function()
 	local current_node = ts_utils.get_node_at_cursor()
-	if not current_node then
-		return false
-	end
+	if not current_node then return false end
 	local expr = current_node
 
 	while expr do
-		if expr:type() == "function_declaration" or expr:type() == "method_declaration" then
-			return true
-		end
+		if expr:type() == "function_declaration" or expr:type() == "method_declaration" then return true end
 		expr = expr:parent()
 	end
 	return false
@@ -222,9 +198,7 @@ function M.is_in_test_file()
 	return vim.endswith(filename, "_test.go")
 end
 
-function M.is_in_test_function()
-	return M.is_in_test_file() and is_in_function()
-end
+function M.is_in_test_function() return M.is_in_test_file() and is_in_function() end
 
 M.create_t_run = function(args)
 	return ls.sn(1, {
@@ -253,9 +227,7 @@ M.mirror_t_run_funcs = function(args)
 		end
 	end
 	local str = table.concat(strs, "")
-	if #str == 0 then
-		return ls.sn(1, ls.t(""))
-	end
+	if #str == 0 then return ls.sn(1, ls.t("")) end
 	return ls.sn(1, fmt(str, {}))
 end
 

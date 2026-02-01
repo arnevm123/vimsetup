@@ -19,10 +19,16 @@ return {
 				.. ".db_connections"
 			vim.g.db_ui_execute_on_save = 0
 			vim.api.nvim_create_autocmd("FileType", {
-			  pattern = "dbout",
-			  callback = function()
-				vim.api.nvim_buf_set_keymap(0, "n", "gd", "<Plug>(DBUI_JumpToForeignKey)", { noremap = false, silent = true })
-			  end
+				pattern = "dbout",
+				callback = function()
+					vim.api.nvim_buf_set_keymap(
+						0,
+						"n",
+						"gd",
+						"<Plug>(DBUI_JumpToForeignKey)",
+						{ noremap = false, silent = true }
+					)
+				end,
 			})
 		end,
 	},

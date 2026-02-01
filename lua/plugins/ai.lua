@@ -9,9 +9,7 @@ return {
 		keys = {
 			{
 				"<leader>su",
-				function()
-					require("sidekick.nes").update()
-				end,
+				function() require("sidekick.nes").update() end,
 				desc = "Update Next Edit Suggestion",
 			},
 			{
@@ -39,16 +37,12 @@ return {
 			},
 			{
 				"<c-;>",
-				function()
-					require("sidekick").nes_jump_or_apply()
-				end,
+				function() require("sidekick").nes_jump_or_apply() end,
 				desc = "Goto/Apply Next Edit Suggestion",
 			},
 			{
 				"<c-.>",
-				function()
-					require("sidekick.cli").toggle({ name = "codex", focus = true })
-				end,
+				function() require("sidekick.cli").toggle({ name = "codex", focus = true }) end,
 				mode = { "n", "x", "i", "t" },
 				desc = "Sidekick Switch Focus",
 			},

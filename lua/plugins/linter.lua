@@ -70,13 +70,9 @@ return {
 
 				-- tell fidget to finish linters that are done running
 				for lntr, handle in pairs(handlers) do
-					if not vim.tbl_contains(linters, lntr) then
-						handle:finish()
-					end
+					if not vim.tbl_contains(linters, lntr) then handle:finish() end
 				end
-				vim.defer_fn(function()
-					fidget_linters(handlers)
-				end, 50)
+				vim.defer_fn(function() fidget_linters(handlers) end, 50)
 			end
 
 			vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {

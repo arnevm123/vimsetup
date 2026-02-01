@@ -186,9 +186,7 @@ return {
 		"jnz/studio98",
 		lazy = colorscheme ~= "studio",
 		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("studio98")
-		end,
+		config = function() vim.cmd.colorscheme("studio98") end,
 	},
 	{
 		"yorickpeterse/nvim-grey",

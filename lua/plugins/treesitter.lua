@@ -4,9 +4,7 @@ return {
 		dependencies = {
 			{
 				"andymass/vim-matchup",
-				config = function()
-					vim.g.matchup_matchparen_offscreen = {}
-				end,
+				config = function() vim.g.matchup_matchparen_offscreen = {} end,
 			},
 		},
 		build = function()
@@ -26,9 +24,7 @@ return {
 					disable = function(_, buf)
 						local max_filesize = 100 * 1024 -- 100 KB
 						local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-						if ok and stats and stats.size > max_filesize then
-							return true
-						end
+						if ok and stats and stats.size > max_filesize then return true end
 					end,
 				},
 				autopairs = { enable = true },
@@ -57,9 +53,7 @@ return {
 		branch = "main",
 		event = "VeryLazy",
 		dependencies = { "nvim-treesitter/nvim-treesitter", branch = "main" },
-		init = function()
-			vim.g.no_plugin_maps = true
-		end,
+		init = function() vim.g.no_plugin_maps = true end,
 		config = function()
 			require("nvim-treesitter-textobjects").setup({
 				select = {
@@ -74,19 +68,19 @@ return {
 			})
 
 			local select = require("nvim-treesitter-textobjects.select")
-			vim.keymap.set({ "x", "o" }, "af", function()
-				select.select_textobject("@function.outer", "textobjects")
-			end)
-			vim.keymap.set({ "x", "o" }, "if", function()
-				select.select_textobject("@function.inner", "textobjects")
-			end)
+			vim.keymap.set(
+				{ "x", "o" },
+				"af",
+				function() select.select_textobject("@function.outer", "textobjects") end
+			)
+			vim.keymap.set(
+				{ "x", "o" },
+				"if",
+				function() select.select_textobject("@function.inner", "textobjects") end
+			)
 			local swap = require("nvim-treesitter-textobjects.swap")
-			vim.keymap.set("n", "[e", function()
-				swap.swap_next("@parameter.inner")
-			end)
-			vim.keymap.set("n", "]e", function()
-				swap.swap_previous("@parameter.outer")
-			end)
+			vim.keymap.set("n", "[e", function() swap.swap_next("@parameter.inner") end)
+			vim.keymap.set("n", "]e", function() swap.swap_previous("@parameter.outer") end)
 		end,
 	},
 }

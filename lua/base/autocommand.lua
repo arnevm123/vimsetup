@@ -8,12 +8,8 @@ autocmd("BufEnter", {
 		local excluded_buftypes = { "prompt", "nofile" }
 		local current_filetype = vim.bo.filetype
 		local current_buftype = vim.bo.buftype
-		if vim.tbl_contains(excluded_filetypes, current_filetype) then
-			return
-		end
-		if vim.tbl_contains(excluded_buftypes, current_buftype) then
-			return
-		end
+		if vim.tbl_contains(excluded_filetypes, current_filetype) then return end
+		if vim.tbl_contains(excluded_buftypes, current_buftype) then return end
 		vim.opt.formatoptions:remove({ "o" })
 		vim.opt.number = true
 		vim.opt.relativenumber = true
@@ -40,20 +36,12 @@ local ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" }
 vim.api.nvim_create_autocmd({ "BufWinEnter", "FileType" }, {
 	group = vim.api.nvim_create_augroup("reset_cursor", {}),
 	callback = function()
-		if vim.fn.line(".") > 1 then
-			return
-		end
-		if vim.tbl_contains(ignore_buftype, vim.bo.buftype) then
-			return
-		end
-		if vim.tbl_contains(ignore_filetype, vim.bo.filetype) then
-			return
-		end
+		if vim.fn.line(".") > 1 then return end
+		if vim.tbl_contains(ignore_buftype, vim.bo.buftype) then return end
+		if vim.tbl_contains(ignore_filetype, vim.bo.filetype) then return end
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
 		local buff_last_line = vim.api.nvim_buf_line_count(0)
-		if mark[1] > 0 and mark[1] <= buff_last_line then
-			vim.api.nvim_win_set_cursor(0, mark)
-		end
+		if mark[1] > 0 and mark[1] <= buff_last_line then vim.api.nvim_win_set_cursor(0, mark) end
 	end,
 })
 
@@ -82,14 +70,10 @@ autocmd("RecordingEnter", {
 })
 
 autocmd("RecordingLeave", {
-	callback = function()
-		vim.api.nvim_set_hl(0, "StatusLine", { bg = statusline_bg })
-	end,
+	callback = function() vim.api.nvim_set_hl(0, "StatusLine", { bg = statusline_bg }) end,
 })
 
 autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*.gitlab-ci*.{yml,yaml}",
-	callback = function()
-		vim.bo.filetype = "yaml.gitlab"
-	end,
+	callback = function() vim.bo.filetype = "yaml.gitlab" end,
 })

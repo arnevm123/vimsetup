@@ -79,9 +79,7 @@ return {
 					local branch = require("base.utils").git_main()
 					if not branch then
 						branch = vim.fn.input("No main branch found, enter branch name > ")
-						if not branch or branch == "" then
-							return
-						end
+						if not branch or branch == "" then return end
 					end
 					require("gitsigns").diffthis(branch)
 				end,
@@ -91,16 +89,12 @@ return {
 			{ "yob", "<cmd>Gitsigns toggle_current_line_blame<CR>", desc = "Toggle inline blame" },
 			{
 				"<leader>gal",
-				function()
-					require("gitsigns").blame_line({ full = true })
-				end,
+				function() require("gitsigns").blame_line({ full = true }) end,
 				desc = "Gitsigns blame full current line",
 			},
 			{
 				"<leader>gad",
-				function()
-					require("gitsigns").diffthis("~")
-				end,
+				function() require("gitsigns").diffthis("~") end,
 				desc = "",
 			},
 		},

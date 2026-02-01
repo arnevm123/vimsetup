@@ -1,4 +1,4 @@
-vim.api.nvim_command('compiler cargo')
+vim.api.nvim_command("compiler cargo")
 vim.opt_local.expandtab = true
 vim.opt.listchars:append({ leadmultispace = "·   " })
 vim.opt_local.shiftwidth = 4

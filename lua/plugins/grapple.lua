@@ -1,27 +1,17 @@
 local function get_scope(char)
-	if char:match("%u") or char == '"' then
-		return "git"
-	end
+	if char:match("%u") or char == '"' then return "git" end
 	return "git_branch"
 end
 
-local function is_valid_mark(char)
-	return char ~= "" and not vim.startswith(char, "<") and not vim.startswith(char, "")
-end
+local function is_valid_mark(char) return char ~= "" and not vim.startswith(char, "<") and not vim.startswith(char, "") end
 
-local function is_menu_char(char)
-	return char == "'" or char == '"'
-end
+local function is_menu_char(char) return char == "'" or char == '"' end
 
 local function save_mark()
 	local char = vim.fn.getcharstr()
-	if not is_valid_mark(char) then
-		return
-	end
+	if not is_valid_mark(char) then return end
 
-	if is_menu_char(char) then
-		return
-	end
+	if is_menu_char(char) then return end
 
 	local grapple = require("grapple")
 	local filepath = vim.api.nvim_buf_get_name(0)
@@ -35,21 +25,15 @@ local function save_mark()
 			return
 		end
 		local choice = vim.fn.confirm("Tag " .. char .. " already exists. Delete it?", "&Yes\n&No", 2)
-		if choice ~= 1 then
-			return
-		end
+		if choice ~= 1 then return end
 	end
 	grapple.tag(opts)
-	vim.defer_fn(function()
-		vim.notify("Marked " .. filename .. " as " .. char)
-	end, 10)
+	vim.defer_fn(function() vim.notify("Marked " .. filename .. " as " .. char) end, 10)
 end
 
 local function open_mark()
 	local char = vim.fn.getcharstr()
-	if not is_valid_mark(char) then
-		return
-	end
+	if not is_valid_mark(char) then return end
 	local grapple = require("grapple")
 	if is_menu_char(char) then
 		grapple.toggle_tags({ scope = get_scope(char) })
@@ -69,9 +53,7 @@ return {
 			scope = "git_branch",
 			command = function(path)
 				local bufnr = vim.fn.bufnr(path)
-				if bufnr == -1 then
-					bufnr = vim.fn.bufadd(path)
-				end
+				if bufnr == -1 then bufnr = vim.fn.bufadd(path) end
 				if not vim.api.nvim_buf_is_loaded(bufnr) then
 					vim.fn.bufload(bufnr)
 					vim.api.nvim_set_option_value("buflisted", true, {

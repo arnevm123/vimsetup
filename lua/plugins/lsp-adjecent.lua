@@ -30,12 +30,8 @@ return {
 					icon_style = "@method",
 					format_message = function(msg)
 						local message = msg.message
-						if not message then
-							message = msg.done and "✔" or "..."
-						end
-						if msg.percentage ~= nil then
-							message = string.format("%.0f%%", msg.percentage)
-						end
+						if not message then message = msg.done and "✔" or "..." end
+						if msg.percentage ~= nil then message = string.format("%.0f%%", msg.percentage) end
 						return message
 					end,
 				},
@@ -52,9 +48,7 @@ return {
 				comment = function(diag)
 					local code = diag.message:match("^(%w+):")
 					local cmt = string.format("// nolint:%s", diag.source)
-					if code then
-						return string.format("%s // %s", cmt, code)
-					end
+					if code then return string.format("%s // %s", cmt, code) end
 					return cmt
 				end,
 				location = "sameLine",

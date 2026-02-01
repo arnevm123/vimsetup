@@ -40,17 +40,13 @@ end
 function M.git_cwd()
 	local cwd = vim.loop.cwd()
 	local root = vim.fn.system("git rev-parse --show-toplevel")
-	if vim.v.shell_error == 0 and root ~= nil then
-		return string.gsub(root, "\n", "")
-	end
+	if vim.v.shell_error == 0 and root ~= nil then return string.gsub(root, "\n", "") end
 	return cwd
 end
 
 function M.git_main()
 	local root = vim.fn.system("git branch | cut -c 3- | grep -E '^master$|^main$'")
-	if vim.v.shell_error ~= 0 or root == nil then
-		return false
-	end
+	if vim.v.shell_error ~= 0 or root == nil then return false end
 	return root:gsub("^\n*", ""):gsub("\n*$", "")
 end
 
@@ -99,17 +95,13 @@ end
 function M:CToggle()
 	local qf_exists = false
 	for _, win in pairs(vim.fn.getwininfo()) do
-		if win["quickfix"] == 1 then
-			qf_exists = true
-		end
+		if win["quickfix"] == 1 then qf_exists = true end
 	end
 	if qf_exists == true then
 		vim.cmd("cclose")
 		return
 	end
-	if not vim.tbl_isempty(vim.fn.getqflist()) then
-		vim.cmd("copen")
-	end
+	if not vim.tbl_isempty(vim.fn.getqflist()) then vim.cmd("copen") end
 end
 
 local virtual_text_enabled = true
@@ -134,9 +126,7 @@ function M:DbuiToggle()
 		for _, win in ipairs(wins) do
 			local buf = vim.api.nvim_win_get_buf(win)
 			local buf_name = vim.api.nvim_buf_get_name(buf)
-			if buf_name:match("dbui") then
-				dbui_enabled = true
-			end
+			if buf_name:match("dbui") then dbui_enabled = true end
 		end
 	end
 	if not dbui_enabled then
@@ -159,9 +149,7 @@ function M:FlogToggle()
 				local cur_tab = vim.api.nvim_get_current_tabpage()
 				vim.api.nvim_set_current_tabpage(tab)
 				vim.cmd("tabclose")
-				if cur_tab ~= tab then
-					vim.api.nvim_set_current_tabpage(cur_tab)
-				end
+				if cur_tab ~= tab then vim.api.nvim_set_current_tabpage(cur_tab) end
 				return
 			end
 		end
@@ -172,9 +160,7 @@ end
 
 function M:isInTable(str, tbl)
 	for _, value in ipairs(tbl) do
-		if value == str then
-			return true
-		end
+		if value == str then return true end
 	end
 	return false
 end
@@ -190,14 +176,10 @@ function M:cspell_add()
 	for _, diagnostic in ipairs(diagnostics) do
 		if diagnostic.source == "cspell" then
 			local word = string.lower(diagnostic.message:match("%((.-)%)"))
-			if not M:isInTable(word, words) then
-				table.insert(words, word)
-			end
+			if not M:isInTable(word, words) then table.insert(words, word) end
 		end
 	end
-	if #words == 0 then
-		vim.notify("No error from cspell found", vim.log.levels.WARN)
-	end
+	if #words == 0 then vim.notify("No error from cspell found", vim.log.levels.WARN) end
 	local index = 1
 	if #words > 1 then
 		local inputList = { "Select word to add:" }
@@ -245,9 +227,7 @@ end
 ---@param search_folders? string | string[]
 ---@param case_insensitive? boolean
 function M:grep_string(search_string, search_folders, case_insensitive)
-	if search_string == nil or search_string == "" then
-		return
-	end
+	if search_string == nil or search_string == "" then return end
 	vim.fn.setqflist({}, "r")
 	local folders = search_folders or vim.fn.getcwd()
 	local cmd
@@ -277,9 +257,7 @@ function M:grep_string(search_string, search_folders, case_insensitive)
 	end
 	local opts = {
 		on_stdout = stdout_to_qf,
-		on_exit = function()
-			vim.cmd("copen")
-		end,
+		on_exit = function() vim.cmd("copen") end,
 	}
 	vim.fn.jobstart(cmd, opts)
 end
@@ -304,12 +282,8 @@ function M:rg(opts)
 		search_string = vim.fn.getreg("h")
 	end
 
-	if not search_string then
-		search_string = vim.fn.input("Grep For > ")
-	end
-	if opts.ask_folder then
-		search_folder = M:check_folder(vim.fn.input("Search in folder > "), cwd)
-	end
+	if not search_string then search_string = vim.fn.input("Grep For > ") end
+	if opts.ask_folder then search_folder = M:check_folder(vim.fn.input("Search in folder > "), cwd) end
 
 	M:grep_string(search_string, search_folder, opts.case_insensitive)
 end
@@ -318,16 +292,10 @@ end
 ---@return string | string[]
 function M:check_folder(folder, cwd)
 	local sep = require("plenary.path").path.sep
-	if vim.fn.isdirectory(folder) == 1 then
-		return folder
-	end
-	if vim.fn.isdirectory(cwd .. sep .. folder) == 1 then
-		return cwd .. sep .. folder
-	end
+	if vim.fn.isdirectory(folder) == 1 then return folder end
+	if vim.fn.isdirectory(cwd .. sep .. folder) == 1 then return cwd .. sep .. folder end
 	local search_folder = M:search_folder(folder, cwd)
-	if search_folder then
-		return search_folder
-	end
+	if search_folder then return search_folder end
 	return M:check_folder(vim.fn.input("Folder not found: try again > "))
 end
 
@@ -336,15 +304,11 @@ end
 ---@return string | nil
 function M:search_folder(folder, root)
 	local search = string.sub(folder, 1, 1) == "?"
-	if not search then
-		return nil
-	end
+	if not search then return nil end
 	local search_path = folder:gsub("%?", ""):gsub("^%s+", ""):gsub("/", ".*"):gsub(" ", ".*")
 	local command = "fd -p -t d " .. search_path .. " " .. root
 	local handle = io.popen(command)
-	if handle == nil then
-		return nil
-	end
+	if handle == nil then return nil end
 	local folders = ""
 	for line in handle:lines() do
 		folders = folders .. " " .. line
@@ -358,9 +322,7 @@ function M.fzf_fd()
 		"fd -t f | fzf-tmux -w100% -h100% --layout=reverse --border=top --preview-window=up:75%,border-top --preview 'cat {}'"
 
 	local handle = io.popen(command)
-	if handle == nil then
-		return
-	end
+	if handle == nil then return end
 	for line in handle:lines() do
 		if line and line ~= "" then
 			vim.cmd("e " .. line)
@@ -395,9 +357,7 @@ local function can_lsp_rename()
 	for _, client in ipairs(clients) do
 		if client.server_capabilities.renameProvider then
 			local resp = client.request_sync("textDocument/prepareRename", params, 1000, 0)
-			if resp and resp.result then
-				return true
-			end
+			if resp and resp.result then return true end
 		end
 	end
 	return false

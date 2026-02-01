@@ -4,37 +4,27 @@ return {
 		keys = {
 			{
 				"<leader>os",
-				function()
-					require("nvim-quick-switcher").find(".service.ts")
-				end,
+				function() require("nvim-quick-switcher").find(".service.ts") end,
 				desc = "Go to service",
 			},
 			{
 				"<leader>ou",
-				function()
-					require("nvim-quick-switcher").find(".component.ts")
-				end,
+				function() require("nvim-quick-switcher").find(".component.ts") end,
 				desc = "Go to TS",
 			},
 			{
 				"<leader>oo",
-				function()
-					require("nvim-quick-switcher").find(".component.html")
-				end,
+				function() require("nvim-quick-switcher").find(".component.html") end,
 				desc = "Go to html",
 			},
 			{
 				"<leader>op",
-				function()
-					require("nvim-quick-switcher").find(".module.ts")
-				end,
+				function() require("nvim-quick-switcher").find(".module.ts") end,
 				desc = "Go to module",
 			},
 			{
 				"<leader>ol",
-				function()
-					require("nvim-quick-switcher").find("*util.*")
-				end,
+				function() require("nvim-quick-switcher").find("*util.*") end,
 				desc = "Go to util",
 			},
 			{
@@ -46,16 +36,12 @@ return {
 						local file_name = p.full_prefix
 						if string.find(file_name, "linux") ~= nil then
 							local pth = path .. string.gsub(file_name, "linux", "windows") .. "." .. extension
-							if not io.open(pth, "r") then
-								vim.cmd(":e " .. pth)
-							end
+							if not io.open(pth, "r") then vim.cmd(":e " .. pth) end
 							return pth
 						end
 						if string.find(file_name, "windows") ~= nil then
 							local pth = path .. string.gsub(file_name, "windows", "linux") .. "." .. extension
-							if not io.open(pth, "r") then
-								vim.cmd(":e " .. pth)
-							end
+							if not io.open(pth, "r") then vim.cmd(":e " .. pth) end
 							return pth
 						end
 						return path .. file_name
@@ -83,9 +69,7 @@ return {
 								.. file_name
 								.. "."
 								.. extension
-							if not io.open(test_path, "r") then
-								vim.cmd(":e " .. test_path)
-							end
+							if not io.open(test_path, "r") then vim.cmd(":e " .. test_path) end
 							return test_path
 						end
 						if extension == "go" then
@@ -96,9 +80,7 @@ return {
 
 							-- name does not contain test -> add it
 							local test_path = path .. file_name .. "_test." .. extension
-							if not io.open(test_path, "r") then
-								vim.cmd(":e " .. test_path)
-							end
+							if not io.open(test_path, "r") then vim.cmd(":e " .. test_path) end
 							return test_path
 						end
 						return path .. file_name

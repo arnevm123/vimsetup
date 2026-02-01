@@ -37,9 +37,7 @@ local function highlight_subject_overflow()
 	vim.api.nvim_buf_clear_namespace(buf, ns_overflow, 0, -1)
 
 	local subject = vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1]
-	if not subject or #subject <= 50 then
-		return
-	end
+	if not subject or #subject <= 50 then return end
 
 	vim.api.nvim_buf_set_extmark(buf, ns_overflow, 0, 50, {
 		end_row = 0,

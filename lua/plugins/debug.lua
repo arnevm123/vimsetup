@@ -82,17 +82,13 @@ return {
 			},
 			{
 				"<leader>dh",
-				function()
-					require("dap.ui.widgets").hover(nil, { border = "single" })
-				end,
+				function() require("dap.ui.widgets").hover(nil, { border = "single" }) end,
 				-- "<cmd>lua require('dap.ui.widgets').hover(nil, { border = 'rounded' })<CR>",
 				desc = "Debug show hover",
 			},
 			{
 				"<leader>dp",
-				function()
-					require("dap.ui.widgets").preview(nil)
-				end,
+				function() require("dap.ui.widgets").preview(nil) end,
 				desc = "Debug preview",
 			},
 			-- { "<leader>de", "lua :require('dapui').eval(nil, { enter = true })<CR>" },

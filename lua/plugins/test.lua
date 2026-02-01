@@ -11,9 +11,7 @@ return {
 			{
 				"fredrikaverpil/neotest-golang",
 				version = "*",
-				build = function()
-					vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait()
-				end,
+				build = function() vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait() end,
 			},
 			"rouge8/neotest-rust",
 		},

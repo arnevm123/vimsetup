@@ -88,13 +88,9 @@ return {
 		config = function()
 			local function get_build_root()
 				local ok, clients = pcall(vim.lsp.get_clients)
-				if not ok or not clients or #clients == 0 then
-					return nil
-				end
+				if not ok or not clients or #clients == 0 then return nil end
 				local root = clients[1].config and clients[1].config.cmd_cwd
-				if root and vim.fn.isdirectory(root) == 1 then
-					return root
-				end
+				if root and vim.fn.isdirectory(root) == 1 then return root end
 				return nil
 			end
 			local function run_compile(cmd)
@@ -111,24 +107,12 @@ return {
 			local nosilent = { noremap = true }
 			local opts = { noremap = true, silent = true }
 			local keymap = vim.keymap.set
-			keymap("n", "<leader>bu", function()
-				run_compile("make build")
-			end, nosilent)
-			keymap("n", "<leader>bt", function()
-				run_compile("make test")
-			end, nosilent)
-			keymap("n", "<leader>bl", function()
-				run_compile("make lint")
-			end, nosilent)
-			keymap("n", "<leader>bg", function()
-				run_compile()
-			end, nosilent)
-			keymap("n", "<leader>br", function()
-				run_compile("LOG_LEVEL=trace make run")
-			end, nosilent)
-			keymap("n", "<leader>be", function()
-				run_compile("recompile")
-			end, nosilent)
+			keymap("n", "<leader>bu", function() run_compile("make build") end, nosilent)
+			keymap("n", "<leader>bt", function() run_compile("make test") end, nosilent)
+			keymap("n", "<leader>bl", function() run_compile("make lint") end, nosilent)
+			keymap("n", "<leader>bg", function() run_compile() end, nosilent)
+			keymap("n", "<leader>br", function() run_compile("LOG_LEVEL=trace make run") end, nosilent)
+			keymap("n", "<leader>be", function() run_compile("recompile") end, nosilent)
 			-- Other keymaps
 			keymap("n", "]x", ":lua require('compile-mode').next_error()<CR>", opts)
 			keymap("n", "[x", ":lua require('compile-mode').prev_error()<CR>", opts)
@@ -193,9 +177,7 @@ return {
 	},
 	{
 		"vihu/penview.nvim",
-		build = function()
-			require("penview.build").install()
-		end,
+		build = function() require("penview.build").install() end,
 		ft = "markdown",
 		config = function()
 			require("penview").setup({
@@ -223,33 +205,17 @@ return {
 			local map = vim.keymap.set
 			local prefix = "<leader>h"
 			-- annotations
-			map("n", prefix .. "a", function()
-				haunt.annotate()
-			end, { desc = "Annotate" })
+			map("n", prefix .. "a", function() haunt.annotate() end, { desc = "Annotate" })
 
-			map("n", prefix .. "t", function()
-				haunt.toggle_annotation()
-			end, { desc = "Toggle annotation" })
-			map("n", prefix .. "T", function()
-				haunt.toggle_all_lines()
-			end, { desc = "Toggle all annotations" })
-			map("n", prefix .. "d", function()
-				haunt.delete()
-			end, { desc = "Delete bookmark" })
+			map("n", prefix .. "t", function() haunt.toggle_annotation() end, { desc = "Toggle annotation" })
+			map("n", prefix .. "T", function() haunt.toggle_all_lines() end, { desc = "Toggle all annotations" })
+			map("n", prefix .. "d", function() haunt.delete() end, { desc = "Delete bookmark" })
 
-			map("n", prefix .. "D", function()
-				haunt.clear_all()
-			end, { desc = "Delete all bookmarks" })
-			map("n", prefix .. "p", function()
-				haunt.prev()
-			end, { desc = "Previous bookmark" })
+			map("n", prefix .. "D", function() haunt.clear_all() end, { desc = "Delete all bookmarks" })
+			map("n", prefix .. "p", function() haunt.prev() end, { desc = "Previous bookmark" })
 
-			map("n", prefix .. "n", function()
-				haunt.next()
-			end, { desc = "Next bookmark" })
-			map("n", prefix .. "l", function()
-				haunt_picker.show()
-			end, { desc = "Show Picker" })
+			map("n", prefix .. "n", function() haunt.next() end, { desc = "Next bookmark" })
+			map("n", prefix .. "l", function() haunt_picker.show() end, { desc = "Show Picker" })
 		end,
 	},
 }

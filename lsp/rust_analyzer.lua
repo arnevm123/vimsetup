@@ -1,8 +1,8 @@
 return {
 	settings = {
 		["rust-analyzer"] = {
-            cargo = { allFeatures = true },
-            checkOnSave = true,
+			cargo = { allFeatures = true },
+			checkOnSave = true,
 		},
 	},
 }
