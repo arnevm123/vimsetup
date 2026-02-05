@@ -132,6 +132,7 @@ keymap("n", "<leader>tp", "<cmd>let $VIM_DIR=expand('%:p:h')<CR>:silent !tmux-po
 keymap("n", "<leader>GU", "<cmd>call setenv('GOOS', '')<CR>:LspRestart<CR>", nosilent)
 keymap("n", "<leader>GW", "<cmd>call setenv('GOOS', 'windows')<CR>:LspRestart<CR>", nosilent)
 keymap("n", "<leader>GL", "<cmd>call setenv('GOOS', 'linux')<CR>:LspRestart<CR>", nosilent)
+keymap("n", "yom", "<cmd>MarkdownPreviewToggle<CR>", opts)
 
 -- TPOPE RSI
 keymap("i", "<C-B>", "<Left>", opts)

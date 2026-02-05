@@ -176,20 +176,6 @@ return {
 		cmd = "CodeDiff",
 	},
 	{
-		"vihu/penview.nvim",
-		build = function() require("penview.build").install() end,
-		ft = "markdown",
-		config = function()
-			require("penview").setup({
-				browser = "firefox", -- Required: your browser command
-			})
-		end,
-		keys = {
-			{ "<leader>mo", "<cmd>PenviewStart<cr>", desc = "[M]arkown [O]pen" },
-			{ "<leader>mc", "<cmd>PenviewStop<cr>", desc = "[M]arkown [C]lose" },
-		},
-	},
-	{
 		"TheNoeTrevino/haunt.nvim",
 		event = "VeryLazy",
 		---@class HauntConfig
