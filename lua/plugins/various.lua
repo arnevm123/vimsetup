@@ -1,6 +1,6 @@
 return {
 	{ "nvim-tree/nvim-web-devicons", opts = { color_icons = false } },
-	{ "catgoose/nvim-colorizer.lua", event = "VeryLazy", opts = { lazy_load = true } },
+	{ "catgoose/nvim-colorizer.lua", event = "VeryLazy", opts = { options = { lazy_load = true } } },
 	{ "nanotee/sqls.nvim", lazy = false },
 	{ "tpope/vim-eunuch", event = "VeryLazy" }, -- :Remove
 	{ "tpope/vim-dispatch", event = "VeryLazy" }, -- :Make
@@ -9,7 +9,6 @@ return {
 	{ "chrisbra/csv.vim", ft = "csv" },
 	{ "pearofducks/ansible-vim", ft = "yaml" },
 	{ "chentoast/marks.nvim", event = "VeryLazy", opts = { default_mappings = false } },
-	-- { "nvim.undotree", event = "VeryLazy", keys = { { "<leader>eu", "<cmd>Undotree<CR>" } } },
 	{
 		"johmsalas/text-case.nvim",
 		dependencies = { "nvim-telescope/telescope.nvim" },

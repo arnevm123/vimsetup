@@ -11,15 +11,19 @@ return {
 				goimports_reviser = {
 					command = "goimports-reviser",
 					args = function()
-						local pkg_name = vim.fn.system("go list"):gsub("%s+", "")
-						return { "-rm-unused", "-set-alias", "-project-name", pkg_name, "$FILENAME" }
+						-- local pkg_name = vim.fn.system("go list -m"):gsub("%s+", "")
+						-- return { "-rm-unused", "-set-alias", "-project-name", pkg_name, "$FILENAME" }
+						return { "-rm-unused", "-set-alias", "$FILENAME" }
 					end,
 					stdin = false,
 				},
 				gofumpt = { prepend_args = { "-extra" } },
+				golines = {
+					args = { "-m", "80" },
+				},
 			},
 			formatters_by_ft = {
-				go = { "golangci-lint", "gofumpt", "goimports", "goimports_reviser" },
+				go = { "golangci-lint", "gofumpt", "goimports", "goimports_reviser", "golines" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				html = { "prettierd", "prettier", stop_after_first = true },

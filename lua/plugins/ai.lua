@@ -42,10 +42,45 @@ return {
 			},
 			{
 				"<c-.>",
-				function() require("sidekick.cli").toggle({ name = "codex", focus = true }) end,
+				function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end,
 				mode = { "n", "x", "i", "t" },
 				desc = "Sidekick Switch Focus",
 			},
 		},
+	},
+	{
+		"ThePrimeagen/99",
+		event = "VeryLazy",
+		config = function()
+			local _99 = require("99")
+			local cwd = vim.uv.cwd()
+			local basename = vim.fs.basename(cwd)
+			_99.setup({
+				provider = _99.Providers.ClaudeCodeProvider,  -- default: OpenCodeProvider
+				logger = {
+					level = _99.DEBUG,
+					path = "/tmp/" .. basename .. ".99.debug",
+					print_on_error = true,
+				},
+				tmp_dir = "./tmp",
+
+				completion = {
+					custom_rules = {
+						"scratch/custom_rules/",
+					},
+
+					files = { },
+					source = "blink", -- "native" (default), "cmp", or "blink"
+				},
+				md_files = {
+					"AGENT.md",
+				},
+			})
+			vim.keymap.set("v", "<leader>av", function() _99.visual() end)
+			vim.keymap.set("n", "<leader>ax", function() _99.stop_all_requests() end)
+			vim.keymap.set("n", "<leader>as", function() _99.search() end)
+			vim.keymap.set("n", "<leader>ao", function() _99.open() end)
+			vim.keymap.set("n", "<leader>ai", function() _99.open() end)
+		end,
 	},
 }

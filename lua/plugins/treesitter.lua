@@ -13,7 +13,6 @@ return {
 		end,
 		event = "VeryLazy",
 		config = function()
-			require("nvim-treesitter").install("all")
 			require("nvim-treesitter").setup({
 				modules = {},
 				sync_install = true,

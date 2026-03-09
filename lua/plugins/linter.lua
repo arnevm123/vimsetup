@@ -20,15 +20,6 @@ return {
 				"~/.config/linters/cspell.json",
 				"--gitignore",
 			}
-			lint.linters.vale.args = {
-				"--no-exit",
-				"--output",
-				"JSON",
-				"--ext",
-				"." .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":e"),
-				"--config",
-				"/home/arne/.config/linters/vale/vale.ini",
-			}
 			lint.linters_by_ft = {
 				go = { "golangcilint", "cspell" },
 				lua = { "selene" },
@@ -39,7 +30,7 @@ return {
 				-- yaml = { "yamllint" },
 				gitcommit = { "commitlint" },
 				NeogitCommitMessage = { "commitlint" },
-				markdown = { "vale", "cspell" },
+				markdown = { "cspell" },
 				-- ["yaml.docker-compose"] = { "dclint" },
 				["yaml.ansible"] = { "ansible_lint" },
 			}

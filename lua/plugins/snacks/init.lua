@@ -4,26 +4,14 @@ return {
 		lazy = false,
 		---@type snacks.Config
 		dependencies = {
-			{ "2kabhishek/seeker.nvim", opts = {} },
-			{
-				"dmtrKovalenko/fff.nvim",
-				build = function()
-					-- this will download prebuild binary or try to use existing rustup toolchain to build from source
-					-- (if you are using lazy you can use gb for rebuilding a plugin if needed)
-					require("fff.download").download_or_build_binary()
-				end,
-				lazy = false,
-				opts = {
-					prompt = "> ",
-					layout = {
-						width = 1,
-						height = 1,
-						prompt_position = "top",
-						preview_position = "top",
-					},
+			{ "2kabhishek/seeker.nvim", opts = {
+				picker_opts = {
+					hidden = true,
+					ignored = true,
+					ignorecase = true,
+					smartcase = true,
 				},
-			},
-			{ "madmaxieee/fff-snacks.nvim", cmd = "FFFSnacks", config = true },
+			} },
 		},
 		opts = {
 			zen = { enabled = false },
@@ -85,7 +73,6 @@ return {
 				desc = "toggle lsp words",
 			},
 			{ "<leader>ff", "<cmd>lua Snacks.picker.resume()<CR>", desc = "Resume picker" },
-			-- { "<leader>fd", "<cmd>FFFSnacks <cr>", desc = "Find files" },
 			{ "<leader>fd", "<cmd>Seeker files<cr>", desc = "Find files" },
 			{ "<leader>fs", "<cmd>Seeker grep<CR>", desc = "Live grep" },
 			{
