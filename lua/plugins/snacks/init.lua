@@ -4,14 +4,17 @@ return {
 		lazy = false,
 		---@type snacks.Config
 		dependencies = {
-			{ "2kabhishek/seeker.nvim", opts = {
-				picker_opts = {
-					hidden = true,
-					ignored = true,
-					ignorecase = true,
-					smartcase = true,
+			{
+				"2kabhishek/seeker.nvim",
+				opts = {
+					picker_opts = {
+						hidden = true,
+						ignored = true,
+						ignorecase = true,
+						smartcase = true,
+					},
 				},
-			} },
+			},
 		},
 		opts = {
 			zen = { enabled = false },
@@ -52,7 +55,11 @@ return {
 				layouts = { ivy_split = { layout = { height = 0.25 } } },
 				layout = { preset = "ivy_split" },
 			},
-			bigfile = { enabled = true },
+			bigfile = {
+				enabled = true,
+				size = 5 * 1024 * 1024,
+				line_length = 100000, -- average line length (useful for minified files)
+			},
 			quickfile = { enabled = true },
 		},
 		keys = {

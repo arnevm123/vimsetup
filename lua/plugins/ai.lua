@@ -46,6 +46,12 @@ return {
 				mode = { "n", "x", "i", "t" },
 				desc = "Sidekick Switch Focus",
 			},
+			{
+				"<leader>AV",
+				function() require("sidekick.cli").send({ msg = "{selection}" }) end,
+				mode = { "x" },
+				desc = "Send Visual Selection",
+			},
 		},
 	},
 	{
@@ -56,7 +62,7 @@ return {
 			local cwd = vim.uv.cwd()
 			local basename = vim.fs.basename(cwd)
 			_99.setup({
-				provider = _99.Providers.ClaudeCodeProvider,  -- default: OpenCodeProvider
+				provider = _99.Providers.ClaudeCodeProvider, -- default: OpenCodeProvider
 				logger = {
 					level = _99.DEBUG,
 					path = "/tmp/" .. basename .. ".99.debug",
@@ -69,7 +75,7 @@ return {
 						"scratch/custom_rules/",
 					},
 
-					files = { },
+					files = {},
 					source = "blink", -- "native" (default), "cmp", or "blink"
 				},
 				md_files = {
