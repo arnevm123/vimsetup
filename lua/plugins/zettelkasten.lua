@@ -1,4 +1,5 @@
 return {
+	{
 	"zk-org/zk-nvim",
 	name = "zk",
 	opts = {
@@ -14,5 +15,6 @@ return {
 				enabled = true,
 			},
 		},
+	},
 	},
 }

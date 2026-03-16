@@ -3,7 +3,7 @@ return {
 		plugins = {
 			{
 				name = "@vue/typescript-plugin",
-				location = "/usr/local/lib/node_modules/@vue/language-server",
+				location = vim.fn.trim(vim.fn.system("npm root -g")) .. "/@vue/language-server",
 				languages = { "vue" },
 			},
 		},

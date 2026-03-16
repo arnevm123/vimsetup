@@ -5,10 +5,6 @@ return {
 			local lint = require("lint")
 			lint.linters.commitlint.args = {
 				"--config",
-				"/home/arne/.config/linters/commitlint.config.os",
-			}
-			lint.linters.commitlint.args = {
-				"--config",
 				require("base.utils").git_cwd() .. "pyproject.toml",
 			}
 			lint.linters.cspell.args = {

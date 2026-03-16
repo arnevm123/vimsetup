@@ -1,8 +1,7 @@
 local ls = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
-local ok, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
-if not ok then error("Please install nvim-treesitter") end
-local ts_locals = require("nvim-treesitter.locals")
+local _, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
+local _, ts_locals = pcall(require, "nvim-treesitter.locals")
 local rep = require("luasnip.extras").rep
 local ai = require("luasnip.nodes.absolute_indexer")
 
@@ -125,6 +124,7 @@ local function set_query()
 end
 
 local function return_value_nodes(info)
+	if not ts_utils or not ts_locals then return ls.t({ "" }) end
 	set_query()
 	local cursor_node = ts_utils.get_node_at_cursor()
 	local scope_tree = ts_locals.get_scope_tree(cursor_node, 0)
@@ -150,6 +150,7 @@ local function return_value_nodes(info)
 end
 
 local function is_in_function()
+	if not ts_utils then return false end
 	local current_node = ts_utils.get_node_at_cursor()
 	if not current_node then return false end
 	local expr = current_node

@@ -75,7 +75,7 @@ return {
 					buffer = { name = "[BFR]" },
 					omni = { name = "[OMN]" },
 					cmdline = { name = "[CMD]" },
-					snippets = { name = "[SNP]", opts = { search_paths = { "~/.config/nvim/snippets" } } },
+					snippets = { name = "[SNP]", opts = { search_paths = { vim.fn.stdpath("config") .. "/snippets" } } },
 					lazydev = { name = "[LZD]", module = "lazydev.integrations.blink", score_offset = 100 },
 					go_deep = { name = "[GOD]", module = "blink.compat.source", opts = { cmp_name = "go_deep" } },
 				},

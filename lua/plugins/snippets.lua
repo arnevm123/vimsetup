@@ -2,7 +2,7 @@ return {
 	{
 		"chrisgrieser/nvim-scissors",
 		opts = {
-			snippetDir = "~/.config/nvim/snippets",
+			snippetDir = vim.fn.stdpath("config") .. "/snippets",
 		},
 		keys = {
 			{

@@ -98,10 +98,10 @@ function M:CToggle()
 		if win["quickfix"] == 1 then qf_exists = true end
 	end
 	if qf_exists == true then
-		vim.cmd("cclose")
+		vim.cmd.cclose()
 		return
 	end
-	if not vim.tbl_isempty(vim.fn.getqflist()) then vim.cmd("copen") end
+	if not vim.tbl_isempty(vim.fn.getqflist()) then vim.cmd.copen() end
 end
 
 local virtual_text_enabled = true
@@ -130,11 +130,11 @@ function M:DbuiToggle()
 		end
 	end
 	if not dbui_enabled then
-		vim.cmd("tabnew")
-		vim.cmd("DBUI")
+		vim.cmd.tabnew()
+		vim.cmd.DBUI()
 		return
 	end
-	vim.cmd("tabnext")
+	vim.cmd.tabnext()
 end
 
 function M:FlogToggle()
@@ -148,14 +148,14 @@ function M:FlogToggle()
 			if buf_name:match("flog") then
 				local cur_tab = vim.api.nvim_get_current_tabpage()
 				vim.api.nvim_set_current_tabpage(tab)
-				vim.cmd("tabclose")
+				vim.cmd.tabclose()
 				if cur_tab ~= tab then vim.api.nvim_set_current_tabpage(cur_tab) end
 				return
 			end
 		end
 	end
 
-	vim.cmd("Flog")
+	vim.cmd.Flog()
 end
 
 function M:isInTable(str, tbl)
@@ -182,12 +182,12 @@ function M:cspell_add()
 	if #words == 0 then vim.notify("No error from cspell found", vim.log.levels.WARN) end
 	local index = 1
 	if #words > 1 then
-		local inputList = { "Select word to add:" }
+		local input_list = { "Select word to add:" }
 		for i, word in ipairs(words) do
-			table.insert(inputList, string.format("%d. %s", i, word))
+			table.insert(input_list, string.format("%d. %s", i, word))
 		end
 
-		index = vim.fn.inputlist(inputList)
+		index = vim.fn.inputlist(input_list)
 
 		if index <= 0 then
 			vim.notify("No word selected", vim.log.levels.INFO)
@@ -207,9 +207,11 @@ end
 
 function M:open_last_file()
 	local files = vim.v.oldfiles
+	local ok_plenary, plenary_path = pcall(require, "plenary.path")
+	if not ok_plenary then return end
+	local cwd = vim.loop.cwd() .. plenary_path.path.sep
 	for _, file in ipairs(files) do
 		local file_stat = vim.loop.fs_stat(file)
-		local cwd = vim.loop.cwd() .. require("plenary.path").path.sep
 		if
 			file_stat
 			and file_stat.type == "file"
@@ -217,7 +219,7 @@ function M:open_last_file()
 			and not string.find(file, ".git/COMMIT_EDITMSG")
 			and vim.fn.matchstrpos(file, cwd)[2] ~= -1
 		then
-			vim.cmd("e " .. file)
+			vim.cmd.edit(file)
 			return
 		end
 	end
@@ -257,7 +259,7 @@ function M:grep_string(search_string, search_folders, case_insensitive)
 	end
 	local opts = {
 		on_stdout = stdout_to_qf,
-		on_exit = function() vim.cmd("copen") end,
+		on_exit = function() vim.cmd.copen() end,
 	}
 	vim.fn.jobstart(cmd, opts)
 end
@@ -291,7 +293,9 @@ end
 ---@param folder string
 ---@return string | string[]
 function M:check_folder(folder, cwd)
-	local sep = require("plenary.path").path.sep
+	local ok_plenary, plenary_path = pcall(require, "plenary.path")
+	if not ok_plenary then return folder end
+	local sep = plenary_path.path.sep
 	if vim.fn.isdirectory(folder) == 1 then return folder end
 	if vim.fn.isdirectory(cwd .. sep .. folder) == 1 then return cwd .. sep .. folder end
 	local search_folder = M:search_folder(folder, cwd)
@@ -307,26 +311,21 @@ function M:search_folder(folder, root)
 	if not search then return nil end
 	local search_path = folder:gsub("%?", ""):gsub("^%s+", ""):gsub("/", ".*"):gsub(" ", ".*")
 	local command = "fd -p -t d " .. search_path .. " " .. root
-	local handle = io.popen(command)
-	if handle == nil then return nil end
-	local folders = ""
-	for line in handle:lines() do
-		folders = folders .. " " .. line
-	end
-	handle:close()
-	return folders
+	local output = vim.fn.system(command)
+	if not output then return nil end
+	return output:gsub("\n", " "):gsub(" +", " ")
 end
 
 function M.fzf_fd()
 	local command =
 		"fd -t f | fzf-tmux -w100% -h100% --layout=reverse --border=top --preview-window=up:75%,border-top --preview 'cat {}'"
 
-	local handle = io.popen(command)
-	if handle == nil then return end
-	for line in handle:lines() do
+	local output = vim.fn.system(command)
+	if not output or output == "" then return end
+	for line in vim.split(output, "\n") do
 		if line and line ~= "" then
-			vim.cmd("e " .. line)
-			vim.cmd("mod")
+			vim.cmd.edit(line)
+			vim.cmd.mode() -- equivalent to "mod"
 			return
 		end
 	end
@@ -369,7 +368,7 @@ function M.try_lsp_rename(case)
 			require("textcase").lsp_rename(case)
 			return
 		end
-		vim.cmd("TextCaseOpenTelescopeLSPChange")
+		vim.cmd.TextCaseOpenTelescopeLSPChange()
 		return
 	end
 
@@ -377,7 +376,7 @@ function M.try_lsp_rename(case)
 		require("textcase").current_word(case)
 		return
 	end
-	vim.cmd("TextCaseOpenTelescopeQuickChange")
+	vim.cmd.TextCaseOpenTelescopeQuickChange()
 end
 
 return M

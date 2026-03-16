@@ -35,7 +35,7 @@ keymap("i", "<C-l>", function()
 		local row, col = node:end_()
 		pcall(vim.api.nvim_win_set_cursor, 0, { row + 1, col })
 	else
-		print("no node found")
+		vim.notify("no node found", vim.log.levels.WARN)
 	end
 end, { desc = "insjump" })
 -- Correct spelling in insert mode

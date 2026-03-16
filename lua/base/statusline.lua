@@ -125,7 +125,8 @@ local function left_section() return file_section() .. diagnostic() .. unsaved_b
 
 ---@param opts? { scope?: string }
 local function grapple_statusline(opts)
-	local grapple = require("grapple")
+	local grapple_ok, grapple = pcall(require, "grapple")
+	if not grapple_ok then return "" end
 
 	---@diagnostic disable-next-line: param-type-mismatch
 	local tags, err = grapple.tags(opts)
@@ -140,8 +141,8 @@ local function grapple_statusline(opts)
 
 	local output = {}
 	for _, tag in ipairs(tags) do
-        -- stylua: ignore
-        local tag_str = tag.name and tag.name
+		-- stylua: ignore
+		local tag_str = tag.name and tag.name
 		if current and current.path == tag.path then
 			table.insert(output, "[" .. tag_str .. "]")
 		elseif tag_str then
