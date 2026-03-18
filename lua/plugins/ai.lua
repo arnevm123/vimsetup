@@ -83,11 +83,13 @@ return {
 					"AGENT.md",
 				},
 			})
-			vim.keymap.set("v", "<leader>av", function() _99.visual() end)
-			vim.keymap.set("n", "<leader>ax", function() _99.stop_all_requests() end)
-			vim.keymap.set("n", "<leader>as", function() _99.search() end)
-			vim.keymap.set("n", "<leader>ao", function() _99.open() end)
-			vim.keymap.set("n", "<leader>ai", function() _99.open() end)
 		end,
+		keys = {
+			{ "<leader>av", function() require("99").visual() end, mode = "v" },
+			{ "<leader>ax", function() require("99").stop_all_requests() end },
+			{ "<leader>as", function() require("99").search() end },
+			{ "<leader>ao", function() require("99").open() end },
+			{ "<leader>ai", function() require("99").open() end },
+		},
 	},
 }

@@ -182,25 +182,17 @@ return {
 			sign = "·",
 			sign_hl = "DiagnosticInfo",
 			virt_text_hl = "DiagnosticInfo",
-			annotation_prefix = "     ",
+			annotation_prefix = "     ",
 		},
-		init = function()
-			local haunt = require("haunt.api")
-			local haunt_picker = require("haunt.picker")
-			local map = vim.keymap.set
-			local prefix = "<leader>h"
-			-- annotations
-			map("n", prefix .. "a", function() haunt.annotate() end, { desc = "Annotate" })
-
-			map("n", prefix .. "t", function() haunt.toggle_annotation() end, { desc = "Toggle annotation" })
-			map("n", prefix .. "T", function() haunt.toggle_all_lines() end, { desc = "Toggle all annotations" })
-			map("n", prefix .. "d", function() haunt.delete() end, { desc = "Delete bookmark" })
-
-			map("n", prefix .. "D", function() haunt.clear_all() end, { desc = "Delete all bookmarks" })
-			map("n", prefix .. "p", function() haunt.prev() end, { desc = "Previous bookmark" })
-
-			map("n", prefix .. "n", function() haunt.next() end, { desc = "Next bookmark" })
-			map("n", prefix .. "l", function() haunt_picker.show() end, { desc = "Show Picker" })
-		end,
+		keys = {
+			{ "<leader>ha", function() require("haunt.api").annotate() end, desc = "Annotate" },
+			{ "<leader>ht", function() require("haunt.api").toggle_annotation() end, desc = "Toggle annotation" },
+			{ "<leader>hT", function() require("haunt.api").toggle_all_lines() end, desc = "Toggle all annotations" },
+			{ "<leader>hd", function() require("haunt.api").delete() end, desc = "Delete bookmark" },
+			{ "<leader>hD", function() require("haunt.api").clear_all() end, desc = "Delete all bookmarks" },
+			{ "<leader>hp", function() require("haunt.api").prev() end, desc = "Previous bookmark" },
+			{ "<leader>hn", function() require("haunt.api").next() end, desc = "Next bookmark" },
+			{ "<leader>hl", function() require("haunt.picker").show() end, desc = "Show Picker" },
+		},
 	},
 }
