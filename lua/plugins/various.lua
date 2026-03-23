@@ -197,17 +197,12 @@ return {
 	},
 	{
 		"OXY2DEV/markview.nvim",
-		dependencies = { "saghen/blink.cmp" },
+		lazy = false,
+		opts = { preview = { enable = false } },
 		keys = {
 			{
 				"yop",
-				function()
-					if vim.g.markview_yoM_invoked then
-						vim.cmd("Markview Toggle")
-					else
-						vim.g.markview_yoM_invoked = true
-					end
-				end,
+				function() vim.cmd("Markview Toggle") end,
 				desc = "Toggle markview",
 			},
 		},

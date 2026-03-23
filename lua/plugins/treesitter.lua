@@ -7,31 +7,19 @@ return {
 				config = function() vim.g.matchup_matchparen_offscreen = {} end,
 			},
 		},
-		build = function()
-			require("nvim-treesitter").install("stable")
-			require("nvim-treesitter").update()
-		end,
-		event = "VeryLazy",
-		config = function()
-			require("nvim-treesitter").setup({
-				modules = {},
-				sync_install = true,
-				auto_install = true,
-				ensure_installed = "all",
-				highlight = {
-					enable = true,
-					disable = function(_, buf)
-						local max_filesize = 100 * 1024 -- 100 KB
-						local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-						if ok and stats and stats.size > max_filesize then return true end
-					end,
-				},
-				autopairs = { enable = true },
-				autotag = { enable = true },
-				matchup = { enable = true, disable_virtual_text = true },
-				indent = { enable = true, disable = { "css" } },
-			})
-		end,
+		build = ":TSUpdate",
+		lazy = false,
+		opts = {
+			ensure_installed = "stable",
+			highlight = {
+				enable = true,
+				disable = function(_, buf)
+					local max_filesize = 100 * 1024 -- 100 KB
+					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+					if ok and stats and stats.size > max_filesize then return true end
+				end,
+			},
+		},
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
