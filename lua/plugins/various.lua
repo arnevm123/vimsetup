@@ -195,4 +195,21 @@ return {
 			{ "<leader>hl", function() require("haunt.picker").show() end, desc = "Show Picker" },
 		},
 	},
+	{
+		"OXY2DEV/markview.nvim",
+		dependencies = { "saghen/blink.cmp" },
+		keys = {
+			{
+				"yop",
+				function()
+					if vim.g.markview_yoM_invoked then
+						vim.cmd("Markview Toggle")
+					else
+						vim.g.markview_yoM_invoked = true
+					end
+				end,
+				desc = "Toggle markview",
+			},
+		},
+	},
 }

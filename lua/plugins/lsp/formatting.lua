@@ -18,12 +18,12 @@ return {
 					stdin = false,
 				},
 				gofumpt = { prepend_args = { "-extra" } },
-				golines = {
-					args = { "-m", "80" },
-				},
+				-- golines = {
+				-- 	args = { "-m", "80" },
+				-- },
 			},
 			formatters_by_ft = {
-				go = { "golangci-lint", "gofumpt", "goimports", "goimports_reviser", "golines" },
+				go = { "golangci-lint", "gofumpt", "goimports", "goimports_reviser"--[[ , "golines" ]] },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				html = { "prettierd", "prettier", stop_after_first = true },
