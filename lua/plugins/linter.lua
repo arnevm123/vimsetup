@@ -12,6 +12,8 @@ return {
 				end
 				return diagnostics
 			end
+			table.insert(lint.linters.golangcilint.args, "--config")
+			table.insert(lint.linters.golangcilint.args, "~/.config/linters/golangci.yaml")
 			lint.linters.commitlint.args = {
 				"--config",
 				require("base.utils").git_cwd() .. "pyproject.toml",

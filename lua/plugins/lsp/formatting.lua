@@ -8,22 +8,10 @@ return {
 					args = { "fix", "--dialect=mysql", "-" },
 					stdin = true,
 				},
-				goimports_reviser = {
-					command = "goimports-reviser",
-					args = function()
-						-- local pkg_name = vim.fn.system("go list -m"):gsub("%s+", "")
-						-- return { "-rm-unused", "-set-alias", "-project-name", pkg_name, "$FILENAME" }
-						return { "-rm-unused", "-set-alias", "$FILENAME" }
-					end,
-					stdin = false,
-				},
-				gofumpt = { prepend_args = { "-extra" } },
-				-- golines = {
-				-- 	args = { "-m", "80" },
-				-- },
+				["golangci-lint"] = { prepend_args = { "--config", "~/.config/linters/golangci.yaml" } },
 			},
 			formatters_by_ft = {
-				go = { "golangci-lint", "gofumpt", "goimports", "goimports_reviser"--[[ , "golines" ]] },
+				go = { "golangci-lint" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				html = { "prettierd", "prettier", stop_after_first = true },
