@@ -44,17 +44,6 @@ return {
 		"chrisgrieser/nvim-rulebook",
 		event = "VeryLazy",
 		config = function()
-			local golangci = {
-				comment = function(diag)
-					local code = diag.message:match("^(%w+):")
-					local cmt = string.format("//nolint:%s", diag.source)
-					if code then return string.format("%s // %s", cmt, code) end
-					return cmt
-				end,
-				location = "sameLine",
-				doesNotUseCodes = true,
-				multiRuleSeparator = ",",
-			}
 			require("rulebook").setup({ ---@diagnostic disable-line: missing-fields
 				forwSearchLines = 10,
 				ignoreComments = {
@@ -64,20 +53,12 @@ return {
 						multiRuleIgnore = true,
 						multiRuleSeparator = ",",
 					},
-					contextcheck = golangci,
-					errcheck = golangci,
-					errname = golangci,
-					exhaustive = golangci,
-					forbidigo = golangci,
-					gocritic = golangci,
-					gosec = golangci,
-					ineffassign = golangci,
-					mnd = golangci,
-					prealloc = golangci,
-					revive = golangci,
-					unused = golangci,
-					unusedfunc = golangci,
-					wastedassign = golangci,
+					["golangci-lint"] = { ---@diagnostic disable-line: missing-fields
+						comment = "//nolint:%s",
+						location = "sameLine",
+						multiRuleIgnore = true,
+						multiRuleSeparator = ",",
+					},
 				},
 				ruleDocs = {
 					fallback = function(diag)

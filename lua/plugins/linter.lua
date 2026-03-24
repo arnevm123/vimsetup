@@ -3,6 +3,15 @@ return {
 		"mfussenegger/nvim-lint",
 		config = function()
 			local lint = require("lint")
+			local golangci_parser = lint.linters.golangcilint.parser
+			lint.linters.golangcilint.parser = function(output, bufnr, cwd)
+				local diagnostics = golangci_parser(output, bufnr, cwd)
+				for _, diag in ipairs(diagnostics) do
+					diag.code = diag.source
+					diag.source = "golangci-lint"
+				end
+				return diagnostics
+			end
 			lint.linters.commitlint.args = {
 				"--config",
 				require("base.utils").git_cwd() .. "pyproject.toml",
@@ -33,6 +42,16 @@ return {
 
 			local ns = require("lint").get_namespace("cspell")
 			vim.diagnostic.config({ virtual_text = false }, ns)
+
+			local gc_format = function(diag)
+				local src = diag.code and tostring(diag.code) or diag.source or ""
+				return src .. ": " .. diag.message
+			end
+			local ns_gc = require("lint").get_namespace("golangcilint")
+			vim.diagnostic.config({
+				virtual_text = { source = false, format = gc_format },
+				float = { source = false, format = gc_format },
+			}, ns_gc)
 
 			local function fidget_linters(h)
 				local handlers = h or {}
