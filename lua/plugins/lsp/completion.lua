@@ -3,6 +3,7 @@ return {
 		"saghen/blink.cmp",
 		lazy = false, -- lazy loading handled internally
 		build = "cargo build --release",
+		version = "1.*",
 		dependencies = {
 			{ "rafamadriz/friendly-snippets" },
 			{ "saghen/blink.compat" },
