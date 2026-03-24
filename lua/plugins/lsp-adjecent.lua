@@ -47,12 +47,13 @@ return {
 			local golangci = {
 				comment = function(diag)
 					local code = diag.message:match("^(%w+):")
-					local cmt = string.format("// nolint:%s", diag.source)
+					local cmt = string.format("//nolint:%s", diag.source)
 					if code then return string.format("%s // %s", cmt, code) end
 					return cmt
 				end,
 				location = "sameLine",
 				doesNotUseCodes = true,
+				multiRuleSeparator = ",",
 			}
 			require("rulebook").setup({ ---@diagnostic disable-line: missing-fields
 				forwSearchLines = 10,
@@ -65,13 +66,18 @@ return {
 					},
 					contextcheck = golangci,
 					errcheck = golangci,
+					errname = golangci,
 					exhaustive = golangci,
 					forbidigo = golangci,
 					gocritic = golangci,
 					gosec = golangci,
+					ineffassign = golangci,
 					mnd = golangci,
+					prealloc = golangci,
 					revive = golangci,
+					unused = golangci,
 					unusedfunc = golangci,
+					wastedassign = golangci,
 				},
 				ruleDocs = {
 					fallback = function(diag)
