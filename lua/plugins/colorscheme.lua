@@ -1,16 +1,10 @@
 local colorscheme
 -- colorscheme = "vague"
--- colorscheme = "seoulbones"
--- colorscheme = "jo"
-colorscheme = "mel"
--- colorscheme = "shadow"
+colorscheme = "seoulbones"
+-- colorscheme = "mel"
 -- colorscheme = "jb"
 -- colorscheme = "vscode-gruber"
--- colorscheme = "studio"
--- colorscheme = "grey"
 -- colorscheme = "envy"
--- colorscheme = "zen"
--- colorscheme = "koda"
 return {
 	{
 		"vague2k/vague.nvim",
@@ -88,19 +82,6 @@ return {
 		end,
 	},
 	{
-		"rjshkhr/shadow.nvim",
-		lazy = colorscheme ~= "shadow",
-		priority = 1000,
-		config = function()
-			vim.opt.termguicolors = true
-			vim.cmd.colorscheme("shadow")
-			require("base.utils").remove_bg()
-			vim.api.nvim_set_hl(0, "Visual", { bg = "#3B3B3B" })
-			-- local visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
-			vim.api.nvim_set_hl(0, "VisualNonText", { fg = "#5B5B5B", bg = "#3B3B3B" })
-		end,
-	},
-	{
 		"nickkadutskyi/jb.nvim",
 		lazy = colorscheme ~= "jb",
 		priority = 1000,
@@ -126,21 +107,6 @@ return {
 		end,
 	},
 	{
-		"jnz/studio98",
-		lazy = colorscheme ~= "studio",
-		priority = 1000,
-		config = function() vim.cmd.colorscheme("studio98") end,
-	},
-	{
-		"yorickpeterse/nvim-grey",
-		lazy = colorscheme ~= "grey",
-		priority = 1000,
-		config = function()
-			vim.o.background = "light"
-			vim.cmd.colorscheme("grey")
-		end,
-	},
-	{
 		"kkga/vim-envy",
 		lazy = colorscheme ~= "envy",
 		priority = 1000,
@@ -149,25 +115,6 @@ return {
 			vim.cmd.colorscheme("envy")
 			local statusline_bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
 			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = statusline_bg })
-		end,
-	},
-	{
-		"nendix/zen.nvim",
-		lazy = colorscheme ~= "zen",
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("zen")
-			-- local statusline_bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
-			-- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = statusline_bg })
-		end,
-	},
-	{
-		"oskarnurm/koda.nvim",
-		lazy = colorscheme ~= "koda",
-		priority = 1000,
-		config = function()
-			require("koda").setup({ bold = true, italic = true })
-			vim.cmd.colorscheme("koda")
 		end,
 	},
 }

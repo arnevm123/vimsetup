@@ -3,19 +3,6 @@ return {
 		"folke/snacks.nvim",
 		lazy = false,
 		---@type snacks.Config
-		dependencies = {
-			{
-				"2kabhishek/seeker.nvim",
-				opts = {
-					picker_opts = {
-						hidden = true,
-						ignored = true,
-						ignorecase = true,
-						smartcase = true,
-					},
-				},
-			},
-		},
 		opts = {
 			zen = { enabled = false },
 			words = { enabled = false },
@@ -28,24 +15,6 @@ return {
 				enabled = true,
 				sources = {
 					select = {
-						-- config = function(opts)
-						-- 	opts.layout.config = function(layout)
-						-- 		for _, box in ipairs(layout.layout) do
-						-- 			if box.win == "list" then
-						-- 				box.height = math.max(math.min(#opts.items, vim.o.lines * 0.8 - 10), 2)
-						-- 			end
-						-- 		end
-						-- 	end
-						-- end,
-						-- config = function(opts)
-						-- 	local max = math.floor(vim.o.lines * 0.8 - 10)
-						-- 	-- Hack: this is to work around these two issues
-						-- 	-- https://github.com/folke/snacks.nvim/issues/2035
-						-- 	-- https://github.com/folke/snacks.nvim/issues/902#issuecomment-2649284650
-						-- 	-- the vscode layout has an extra 0.5 of height, so we take the existing max
-						-- 	-- and use that
-						-- 	opts.layout.layout.height = math.min(max, opts.layout.layout.height + 0.5)
-						-- end,
 						layout = {
 							preset = "ivy_split",
 							hidden = { "preview" },
@@ -80,8 +49,8 @@ return {
 				desc = "toggle lsp words",
 			},
 			{ "<leader>ff", "<cmd>lua Snacks.picker.resume()<CR>", desc = "Resume picker" },
-			{ "<leader>fd", "<cmd>Seeker files<cr>", desc = "Find files" },
-			{ "<leader>fs", "<cmd>Seeker grep<CR>", desc = "Live grep" },
+			{ "<leader>fd", "<cmd>lua Snacks.picker.files()<CR>", desc = "Find files" },
+			{ "<leader>fs", "<cmd>lua Snacks.picker.grep()<CR>", desc = "Live grep" },
 			{
 				"<leader>fo",
 				function()

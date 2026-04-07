@@ -19,6 +19,11 @@ return {
 				"<cmd>lua require('base.utils').toggle_case_rename()<CR>",
 				desc = "lsp toggle case rename",
 			},
+			{
+				"<leader>ls",
+				"<cmd>lua require('base.utils').revive_rename()<CR>",
+				desc = "lsp revivie rename",
+			},
 		},
 		config = function()
 			for _, server in pairs(servers.manually_install) do

@@ -1,4 +1,15 @@
 return {
+	{
+		"Sang-it/fluoride",
+		config = true,
+		keys = {
+			{ "yof", "<cmd>FluorideToggle<CR>", desc = "Toggle Fluoride" },
+		},
+		cmd = {
+			"FluorideToggle",
+			"Fluoride",
+		},
+	},
 	{ "nvim-tree/nvim-web-devicons", opts = { color_icons = false } },
 	{ "catgoose/nvim-colorizer.lua", event = "VeryLazy", opts = { options = { lazy_load = true } } },
 	{ "nanotee/sqls.nvim", lazy = false },
@@ -205,6 +216,13 @@ return {
 				function() vim.cmd("Markview Toggle") end,
 				desc = "Toggle markview",
 			},
+		},
+	},
+	{
+		"Loukis-13/paint.nvim",
+		opts = {},
+		cmd = {
+			"Paint",
 		},
 	},
 }

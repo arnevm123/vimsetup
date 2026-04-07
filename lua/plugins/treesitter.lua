@@ -9,17 +9,23 @@ return {
 		},
 		build = ":TSUpdate",
 		lazy = false,
-		opts = {
-			ensure_installed = "stable",
-			highlight = {
-				enable = true,
-				disable = function(_, buf)
-					local max_filesize = 100 * 1024 -- 100 KB
-					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-					if ok and stats and stats.size > max_filesize then return true end
+		config = function()
+			require("nvim-treesitter").install("stable")
+
+			vim.api.nvim_create_autocmd("FileType", {
+				group = vim.api.nvim_create_augroup("treesitter.setup", {}),
+				callback = function(args)
+					local buf = args.buf
+					local filetype = args.match
+					local language = vim.treesitter.language.get_lang(filetype) or filetype
+					if not vim.treesitter.language.add(language) then return end
+					vim.wo.foldmethod = "expr"
+					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+					vim.treesitter.start(buf, language)
+					vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 				end,
-			},
-		},
+			})
+		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",

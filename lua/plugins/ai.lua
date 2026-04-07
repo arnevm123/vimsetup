@@ -65,7 +65,6 @@ return {
 				"folke/snacks.nvim",
 				optional = true,
 				opts = {
-					input = {}, -- Enhances `ask()`
 					picker = { -- Enhances `select()`
 						actions = {
 							opencode_send = function(...) return require("opencode").snacks_picker_send(...) end,
@@ -89,12 +88,12 @@ return {
 
 			vim.o.autoread = true -- Required for `opts.events.reload`
 			-- Recommended/example keymaps
-			vim.keymap.set(
-				{ "n", "x" },
-				"<C-x>",
-				function() require("opencode").select() end,
-				{ desc = "Execute opencode action…" }
-			)
+			-- vim.keymap.set(
+			-- 	{ "n", "x" },
+			-- 	"<C-x>",
+			-- 	function() require("opencode").select() end,
+			-- 	{ desc = "Execute opencode action…" }
+			-- )
 			vim.keymap.set(
 				{ "n", "t" },
 				"<C-.>",
@@ -152,6 +151,12 @@ return {
 			{ "<leader>as", function() require("99").search() end },
 			{ "<leader>ao", function() require("99").open() end },
 			{ "<leader>ai", function() require("99").open() end },
+			{
+				"<leader>af",
+				function() require("base.utils"):ai_fix_lint() end,
+				mode = { "n", "v" },
+				desc = "AI fix lint error",
+			},
 		},
 	},
 }

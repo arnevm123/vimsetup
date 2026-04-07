@@ -342,11 +342,44 @@ function M.toggle_case_rename()
 		first_char = first_char:lower()
 	end
 
-	local new_name = first_char .. rest
+	vim.lsp.buf.rename(first_char .. rest)
+end
 
-	local rename_cmd = string.format(":lua vim.lsp.buf.rename('%s')<CR>", new_name)
+function M:revive_rename()
+	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+	if #diagnostics == 0 then
+		vim.notify("No diagnostics", vim.log.levels.WARN)
+		return
+	end
 
-	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(rename_cmd, true, true, true), "n", true)
+	local renames = {}
+	for _, diag in ipairs(diagnostics) do
+		if diag.source == "golangci-lint" and diag.code == "revive" then
+			local suggested = diag.message:match("should be (%S+)")
+			if suggested then table.insert(renames, suggested) end
+		end
+	end
+
+	if #renames == 0 then
+		vim.notify("No revive var-naming diagnostic found", vim.log.levels.WARN)
+		return
+	end
+
+	local new_name = renames[1]
+	if #renames > 1 then
+		local input_list = { "Select rename:" }
+		for i, name in ipairs(renames) do
+			table.insert(input_list, string.format("%d. %s", i, name))
+		end
+		local index = vim.fn.inputlist(input_list)
+		if index <= 0 then
+			vim.notify("No rename selected", vim.log.levels.INFO)
+			return
+		end
+		new_name = renames[index]
+	end
+
+	vim.lsp.buf.rename(new_name)
 end
 
 local function can_lsp_rename()
@@ -360,6 +393,65 @@ local function can_lsp_rename()
 		end
 	end
 	return false
+end
+
+function M:ai_fix_lint()
+	local is_visual = vim.fn.mode() == "v" or vim.fn.mode() == "V" or vim.fn.mode() == "\22"
+	local diagnostics
+
+	if is_visual then
+		vim.cmd([[noautocmd sil norm "hy]])
+		local start_line = vim.fn.line("'<") - 1
+		local end_line = vim.fn.line("'>") - 1
+		local diags = {}
+		for lnum = start_line, end_line do
+			for _, d in ipairs(vim.diagnostic.get(0, { lnum = lnum })) do
+				table.insert(diags, d)
+			end
+		end
+		diagnostics = diags
+	else
+		local lnum = vim.fn.line(".") - 1
+		diagnostics = vim.diagnostic.get(0, { lnum = lnum })
+	end
+
+	if #diagnostics == 0 then
+		vim.notify("No diagnostics", vim.log.levels.WARN)
+		return
+	end
+
+	local function send_fix(diag)
+		local src = diag.source or "unknown"
+		local prompt = "Fix the following linting error:\n- [" .. src .. "] " .. diag.message
+
+		if is_visual then
+			vim.cmd("normal! gv")
+		else
+			local min_lnum = diag.lnum
+			local max_lnum = diag.end_lnum or diag.lnum
+			vim.api.nvim_win_set_cursor(0, { min_lnum + 1, 0 })
+			vim.cmd("normal! V")
+			if max_lnum > min_lnum then vim.api.nvim_win_set_cursor(0, { max_lnum + 1, 0 }) end
+		end
+
+		require("99").visual({ additional_prompt = prompt })
+	end
+
+	if #diagnostics == 1 then
+		send_fix(diagnostics[1])
+		return
+	end
+
+	vim.ui.select(diagnostics, {
+		prompt = "Select diagnostic to fix:",
+		format_item = function(d)
+			local src = d.source or "unknown"
+			return "[" .. src .. "] " .. d.message
+		end,
+	}, function(choice)
+		if not choice then return end
+		send_fix(choice)
+	end)
 end
 
 function M.try_lsp_rename(case)
