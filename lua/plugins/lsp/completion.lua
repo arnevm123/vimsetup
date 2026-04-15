@@ -13,7 +13,6 @@ return {
 				completion = { menu = { draw = { columns = { { "label" } } } } },
 				keymap = {
 					["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-					["<C-e>"] = { "hide" },
 					["<C-y>"] = { "select_and_accept" },
 					["<C-p>"] = { "show_and_insert", "select_prev", "fallback" },
 					["<C-n>"] = { "show_and_insert", "select_next", "fallback" },
@@ -24,7 +23,6 @@ return {
 			snippets = { preset = "default" },
 			keymap = {
 				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-				["<C-e>"] = { "hide" },
 				["<C-y>"] = { "select_and_accept" },
 				["<C-p>"] = { "show_and_insert", "select_prev", "fallback" },
 				["<C-n>"] = { "show_and_insert", "select_next", "fallback" },

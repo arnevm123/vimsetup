@@ -97,6 +97,7 @@ keymap(
 )
 
 keymap("n", "<leader>ro", utils.open_last_file, nosilent)
+keymap("n", "<leader>rr", utils.restart_with_current_file, nosilent)
 
 -- Visual --
 -- Stay in indent mode
@@ -133,6 +134,21 @@ keymap("n", "<leader>GU", "<cmd>call setenv('GOOS', '')<CR>:LspRestart<CR>", nos
 keymap("n", "<leader>GW", "<cmd>call setenv('GOOS', 'windows')<CR>:LspRestart<CR>", nosilent)
 keymap("n", "<leader>GL", "<cmd>call setenv('GOOS', 'linux')<CR>:LspRestart<CR>", nosilent)
 keymap("n", "yom", "<cmd>MarkdownPreviewToggle<CR>", opts)
+keymap("n", "<leader>GE", function()
+  local clients = vim.lsp.get_clients({ name = "gopls" })
+  for _, client in ipairs(clients) do
+    local settings = client.config.settings or {}
+    settings.gopls = settings.gopls or {}
+    local flags = settings.gopls.buildFlags or {}
+    if vim.tbl_contains(flags, "-tags=e2e") then
+      settings.gopls.buildFlags = {}
+    else
+      settings.gopls.buildFlags = { "-tags=e2e" }
+    end
+    client.config.settings = settings
+    client.notify("workspace/didChangeConfiguration", { settings = settings })
+  end
+end, { desc = "Toggle e2e build tag for gopls" })
 
 -- TPOPE RSI
 keymap("i", "<C-B>", "<Left>", opts)

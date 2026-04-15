@@ -225,6 +225,18 @@ function M:open_last_file()
 	end
 end
 
+function M.restart_with_current_file()
+	local file = vim.fn.fnameescape(vim.fn.expand("%:p"))
+	-- stylua: ignore
+	local cmd = "lua vim.api.nvim_create_autocmd('User', "
+		.."{ pattern = 'VeryLazy', once = true, callback = function() "
+		.. "vim.defer_fn(function() "
+		.. "vim.cmd.edit('" .. file .. "') "
+		.. "end, 50) "
+		.. "end })"
+	vim.cmd("restart " .. cmd)
+end
+
 ---@param search_string string | string[]
 ---@param search_folders? string | string[]
 ---@param case_insensitive? boolean
@@ -345,54 +357,80 @@ function M.toggle_case_rename()
 	vim.lsp.buf.rename(first_char .. rest)
 end
 
-function M:revive_rename()
+local function can_lsp_rename()
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
+
+	for _, client in ipairs(clients) do
+		if client.server_capabilities.renameProvider then
+			local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+			local resp = client:request_sync("textDocument/prepareRename", params, 1000, 0)
+			if resp and resp.result then return true end
+		end
+	end
+	return false
+end
+
+function M:lint_fix()
 	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
 	if #diagnostics == 0 then
 		vim.notify("No diagnostics", vim.log.levels.WARN)
 		return
 	end
 
-	local renames = {}
+	local fixes = {}
 	for _, diag in ipairs(diagnostics) do
-		if diag.source == "golangci-lint" and diag.code == "revive" then
-			local suggested = diag.message:match("should be (%S+)")
-			if suggested then table.insert(renames, suggested) end
+		if diag.source == "golangci-lint" then
+			if diag.code == "revive" then
+				local suggested = diag.message:match("should be (%S+)")
+				if suggested then
+					table.insert(fixes, {
+						label = suggested .. " (revive)",
+						new_text = suggested,
+						kind = "rename",
+					})
+				end
+			elseif diag.code == "misspell" then
+				local original, replacement = diag.message:match("`(%S+)` is a misspelling of `(%S+)`")
+				if replacement then
+					table.insert(fixes, {
+						label = replacement .. " (misspell)",
+						old_text = original,
+						new_text = replacement,
+						kind = "misspell",
+						diag = diag,
+					})
+				end
+			end
 		end
 	end
 
-	if #renames == 0 then
-		vim.notify("No revive var-naming diagnostic found", vim.log.levels.WARN)
+	if #fixes == 0 then
+		vim.notify("No fixable golangci-lint diagnostic found", vim.log.levels.WARN)
 		return
 	end
 
-	local new_name = renames[1]
-	if #renames > 1 then
-		local input_list = { "Select rename:" }
-		for i, name in ipairs(renames) do
-			table.insert(input_list, string.format("%d. %s", i, name))
+	local fix = fixes[1]
+	if #fixes > 1 then
+		local input_list = { "Select fix:" }
+		for i, f in ipairs(fixes) do
+			table.insert(input_list, string.format("%d. %s", i, f.label))
 		end
 		local index = vim.fn.inputlist(input_list)
 		if index <= 0 then
-			vim.notify("No rename selected", vim.log.levels.INFO)
+			vim.notify("No fix selected", vim.log.levels.INFO)
 			return
 		end
-		new_name = renames[index]
+		fix = fixes[index]
 	end
 
-	vim.lsp.buf.rename(new_name)
-end
-
-local function can_lsp_rename()
-	local params = vim.lsp.util.make_position_params()
-	local clients = vim.lsp.get_clients({ bufnr = 0 })
-
-	for _, client in ipairs(clients) do
-		if client.server_capabilities.renameProvider then
-			local resp = client.request_sync("textDocument/prepareRename", params, 1000, 0)
-			if resp and resp.result then return true end
-		end
+	if can_lsp_rename() then
+		vim.lsp.buf.rename(fix.new_text)
+	elseif fix.kind == "misspell" then
+		local d = fix.diag
+		local line = vim.api.nvim_buf_get_lines(0, d.lnum, d.lnum + 1, false)[1]
+		local new_line = line:gsub(fix.old_text, fix.new_text, 1)
+		vim.api.nvim_buf_set_lines(0, d.lnum, d.lnum + 1, false, { new_line })
 	end
-	return false
 end
 
 function M:ai_fix_lint()

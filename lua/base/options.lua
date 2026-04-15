@@ -72,3 +72,4 @@ vim.opt.findfunc = "v:lua.Fd"
 vim.opt.grepprg = "rg --vimgrep --smart-case"
 
 vim.opt.path:append("**")
+

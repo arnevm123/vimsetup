@@ -21,8 +21,8 @@ return {
 			},
 			{
 				"<leader>ls",
-				"<cmd>lua require('base.utils').revive_rename()<CR>",
-				desc = "lsp revivie rename",
+				"<cmd>lua require('base.utils').lint_fix()<CR>",
+				desc = "lsp golangci-lint fix",
 			},
 		},
 		config = function()
